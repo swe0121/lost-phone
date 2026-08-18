@@ -1,53 +1,39 @@
 # Lost Phone
 
-yeah, it's called **Lost Phone** even though you find a laptop.
+definitely a normal game.
 
-don't think about it too much 😭
+you find some random laptop in the philippines and decide to go through it for... reasons.
 
-this is basically a found-device mystery game set in the Philippines.
+that's basically it.
 
-you find some random person's laptop and instead of being a decent human being and leaving it alone, you start looking through everything.
+there's probably normal stuff in there.
 
-at first it's mostly normal shit.
+school files, chats, random folders, whatever people keep on their laptops.
 
-school projects, random downloads, nba highlights, brainrot memes, family group chats, games, screenshots, browser history, unfinished assignments, relatives sending reels, random notes, dumb searches, and a bunch of files that probably mean absolutely nothing.
+maybe some of it is useful.
 
-then some stuff starts getting weird.
+maybe most of it is complete garbage.
 
-then interesting.
+idk.
 
-then you start noticing that certain things don't really line up.
+just explore it yourself.
 
-so yeah.
+click random shit.  
+read conversations.  
+open folders you probably shouldn't open.  
+look at old files.  
+check whatever looks interesting.
 
-**be nosy.**
+the game is set in the philippines too, so there might be some relatable stuff here and there.
 
-check messenger.  
-read old conversations.  
-open archived chats.  
-look through random folders.  
-check deleted stuff.  
-read timestamps.  
-look at browser history.  
-dig through hidden files.  
-click shit that looks completely useless.
+taglish, school shit, commuting, family gcs, basketball, random relatives, memes, everyday ph stuff.
 
-some clues are obvious.
+nothing unusual.
 
-some are buried under the most random garbage imaginable.
+probably.
 
-and a lot of stuff genuinely has nothing to do with anything.
+there's no need to know anything before playing.
 
-the game has a lot of Filipino references too. taglish chats, terminals, commuting, traffic, school projects, class suspensions, basketball, family gcs, titos spamming reels, relatives asking if you've eaten, expensive student meals, random rain, `final_final_REAL.docx`, and other normal everyday ph shit.
+just be nosy and figure out whatever's in the laptop yourself.
 
-there's no big objective marker telling you exactly what to do.
-
-just explore the laptop and figure everything out yourself.
-
-the more you look around, the more weird and interesting things start showing up.
-
-maybe there's a reasonable explanation for everything.
-
-maybe not.
-
-good luck being nosy.
+good luck ig.
