@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v37</title>
+<title>Lost Phone v39</title>
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
@@ -306,8 +306,8 @@ body{overflow:hidden}
 #fieldTalk{position:absolute;left:50%;bottom:72px;transform:translateX(-50%);width:min(780px,88%);z-index:100000;text-align:center;pointer-events:none;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 10px #000,0 2px 10px #000;isolation:isolate}
 
 /* v36 REAL CHEAT CODE CONSOLE */
-.cheat-shell{display:grid;grid-template-columns:minmax(250px,.9fr) minmax(320px,1.4fr);gap:12px;height:100%;min-height:0}
-.cheat-left,.cheat-right{min-width:0;min-height:0;overflow:auto}
+.cheat-shell{display:block;max-width:720px;margin:0 auto;height:100%;min-height:0}
+.cheat-left{min-width:0;min-height:0;overflow:auto}
 .cheat-entry{display:flex;gap:8px;align-items:center;position:sticky;top:0;background:#0c1017;padding:10px;border:1px solid #29313d;border-radius:10px;z-index:2}
 .cheat-entry input{flex:1;min-width:0;background:#080b10;border:1px solid #394456;color:#e8edf5;padding:10px 11px;border-radius:7px;font:inherit}
 .cheat-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all;color:#e9edf6}
@@ -315,7 +315,7 @@ body{overflow:hidden}
 .cheat-card b{display:block;margin-bottom:5px}.cheat-desc{color:#9ba8ba;font-size:12px;line-height:1.45}
 .cheat-log{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#070a0f;border:1px solid #29313d;border-radius:9px;padding:11px;min-height:100px}
 .cheat-warning{border-left:3px solid #69788f;padding-left:10px;color:#9ba8ba;font-size:12px}
-@media(max-width:700px){.cheat-shell{grid-template-columns:1fr}.cheat-left,.cheat-right{overflow:visible}.cheat-entry{position:relative}}
+@media(max-width:700px){.cheat-left{overflow:visible}.cheat-entry{position:relative}}
 
 #fieldTalk::before{content:"";position:absolute;inset:-10px -18px -11px;z-index:-1;border-radius:16px;background:linear-gradient(90deg,transparent,rgba(5,8,13,.84) 15%,rgba(5,8,13,.88) 85%,transparent);filter:drop-shadow(0 8px 20px rgba(0,0,0,.35))}
 #fieldTalk.show{opacity:1}
@@ -1324,12 +1324,12 @@ this rain is getting stupid though.</span></button>
         <div class="window-body content">
           <div class="cheat-shell">
             <div class="cheat-left">
-              <div class="cheat-entry"><input id="cheatInput" autocomplete="off" spellcheck="false" placeholder="type a long stupid word..." onkeydown="if(event.key==='Enter')submitCheatCode()"><button class="soft" onclick="submitCheatCode()">enter</button></div>
+              <div class="detail" style="margin:0 0 10px"><b>developer cheat console</b><p class="muted">enter a known code and press enter.</p></div>
+              <div class="cheat-entry"><input id="cheatInput" autocomplete="off" spellcheck="false" placeholder="enter cheat code..." onkeydown="if(event.key==='Enter')submitCheatCode()"><button class="soft" onclick="submitCheatCode()">enter</button></div>
               <div style="height:10px"></div>
               <div id="cheatLog" class="cheat-log">waiting for code...</div>
-              <p class="cheat-warning">these are real progression cheats. they can skip scenes and make later dialogue happen without earlier context. saves keep whatever a code changed.</p>
+              <p class="cheat-warning">codes are intentionally not listed in-game. progression cheats can skip scenes, alter unlocks, and persist in saves.</p>
             </div>
-            <div class="cheat-right"><div class="detail" style="margin-top:0"><b>available codes</b><p class="muted">case-insensitive. spaces and punctuation are ignored.</p></div><div id="cheatList"></div></div>
           </div>
         </div>
       </div>
@@ -2267,10 +2267,85 @@ function endingScreen(kicker,title,html,buttons){
   const a=document.getElementById("endingActions");a.innerHTML="";(buttons||[]).forEach(([label,fn])=>{const b=document.createElement("button");b.textContent=label;b.onclick=fn;a.appendChild(b)});
   document.getElementById("endingOverlay").classList.add("show");
 }
-function startEnding(kind){story.ending=kind;saveGame(false);if(kind==="unresolved")endingUnresolved(0);if(kind==="closure")endingClosure(0);if(kind==="foulplay")endingFoulPlay(0)}
-function endingCoda(){
+function startEnding(kind){
+  story.ending=kind;
+  saveGame(false);
+  if(kind==="unresolved")endingUnresolved(0);
+  if(kind==="closure")endingClosure(0);
+  if(kind==="foulplay")endingFoulPlay(0);
+}
+function endingChatHtml(lines){
+  return `<div class="chatScene">${lines.map(([speaker,text])=>`<div class="bubbleLine${speaker===playerCharacter?" me":""}"><b>${displaySpeaker(speaker)}:</b> ${text}</div>`).join("")}</div>`;
+}
+function endingHomeChat(kind,next){
+  const scenes={
+    unresolved:{
+      time:"3:18 am • both home",
+      lines:[
+        ["may","home."],
+        ["jc","same."],
+        ["may","u still thinking about the nine minutes"],
+        ["jc","yeah."],
+        ["may","i keep checking my phone like somebody's gonna message us."],
+        ["jc","security has our numbers."],
+        ["may","that's not what i meant."],
+        ["jc","i know."],
+        ["may","don't disappear rn."],
+        ["jc","i'm here."],
+        ["may","okay. goodnight."],
+        ["jc","goodnight."]
+      ],
+      note:"neither of them sleeps for a while."
+    },
+    closure:{
+      time:"3:11 am • both home",
+      lines:[
+        ["may","home."],
+        ["jc","same."],
+        ["may","that draft is still bothering me."],
+        ["jc","ma pauwi na ko sorry medyo"],
+        ["may","yeah. like he was trying to sound normal."],
+        ["jc","don't do that to yourself."],
+        ["may","says u 😭"],
+        ["jc","fair."],
+        ["may","if some random number calls tomorrow don't answer."],
+        ["jc","deal."],
+        ["may","actually promise."],
+        ["jc","promise."],
+        ["may","goodnight."],
+        ["jc","night."]
+      ],
+      note:"the laptop is no longer with them. the timestamps still are."
+    },
+    foulplay:{
+      time:"3:42 am • both home",
+      lines:[
+        ["may","home."],
+        ["jc","same."],
+        ["may","lock ur door."],
+        ["jc","already did."],
+        ["may","don't joke rn."],
+        ["jc","i'm not."],
+        ["may","that guy asked about a phone like five minutes before we found the bag."],
+        ["jc","i know."],
+        ["may","i hate that i know that."],
+        ["jc","put your phone on charge and try to sleep."],
+        ["may","why does charging matter 😭"],
+        ["jc","so u don't vanish from my notifications."],
+        ["may","that was almost sweet."],
+        ["jc","almost."],
+        ["may","goodnight."],
+        ["jc","goodnight."]
+      ],
+      note:"outside their separate houses, rainwater is still moving through the gutters."
+    }
+  };
+  const s=scenes[kind]||scenes.unresolved;
+  endingScreen(s.time,"messages",`${endingChatHtml(s.lines)}<p class="quiet">${s.note}</p>`,[["later",()=>next()]]);
+}
+function endingCoda(next=endingCredits){
   const thought=POV_THOUGHTS.food_coda?.[playerCharacter]||"";
-  endingScreen("that night, before they left","",`<p>the rain is lighter. a jeep idles near the curb.</p><p class="quiet">may: next time, actual food somewhere normal.</p><p class="quiet">jc: daylight?</p><p class="quiet">may: obviously.</p><p class="quiet"><b>may: and i'm picking the place.</b></p>${thought?`<p class="quiet"><i>${thought}</i></p>`:""}` ,[["credits",()=>endingCredits()]]);
+  endingScreen("before they leave the terminal","",`<p>the rain has weakened to a steady drizzle. engines finally start turning over again.</p><p>neither of them says anything about the laptop for almost a full minute.</p><p class="quiet">may: next time, actual food somewhere normal.</p><p class="quiet">jc: daylight?</p><p class="quiet">may: obviously.</p><p class="quiet"><b>may: and i'm picking the place.</b></p>${thought?`<p class="quiet"><i>${thought}</i></p>`:""}` ,[["go home",()=>endingHomeChat(story.ending,next)]]);
 }
 function endingCredits(){
   const otherDone=Boolean(completedPerspective[otherLead()]);
@@ -2278,21 +2353,29 @@ function endingCredits(){
   endingScreen("lost phone","thanks for playing",`<p class="quiet">some blanks stay blank.</p>${otherDone?`<p class="quiet">some just look different from the other side.</p>`:""}` ,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")],["new game",()=>restartForPerspective()]]);
 }
 function endingUnresolved(step){
-  if(step===0){endingScreen("local draft • 12:?? am","draft_message.txt",`<div class="draft">ma pauwi na ko sorry medyo</div><p class="quiet">no recipient response. no punctuation. the file ends there.</p>`,[["close the file",()=>endingUnresolved(1)]]);return}
-  if(step===1){endingScreen("2:31 am","handoff",`<p>jc and may give the bag and laptop to terminal security.</p><p>the guard writes niko de la cruz on a paper log and puts the bag behind the desk.</p><p>outside, the first jeep on may's route pulls in.</p><p>people walk past the bench where the bag was found.</p>`,[["continue",()=>endingUnresolved(2)]]);return}
-  endingScreen("later that night","UNRESOLVED",`<p>no clean answer reaches jc or may afterward.</p><p class="quiet">may: message me pag nakauwi ka.</p><p class="quiet">jc: ikaw din.</p><p>traffic keeps moving.</p>`,[["continue",()=>endingCoda()]]);
+  if(step===0){endingScreen("local draft • 11:56 pm","draft_message.txt",`<div class="draft">ma pauwi na ko sorry medyo</div><p class="quiet">no recipient survives in the file. no punctuation. no second sentence.</p><p>it is the closest thing on the laptop to a goodbye, which is exactly why jc refuses to call it one.</p>`,[["close the file",()=>endingUnresolved(1)]]);return}
+  if(step===1){endingScreen("2:31 am","handoff",`<p>jc and may give the bag and laptop to terminal security.</p><p>the guard writes <b>NIKO DE LA CRUZ</b> on a paper log, seals the charger and loose items in a clear evidence bag, and puts everything behind the desk.</p><p>jc takes one photo of the log number before they leave.</p><p>outside, the first jeep on may's route pulls in.</p><p class="quiet">the bench where the bag was found is already occupied by somebody else.</p>`,[["leave the terminal",()=>endingCoda(()=>endingUnresolved(2))]]);return}
+  if(step===2){endingScreen("8:46 am","the next morning",`<p>niko's mother reaches the terminal after sunrise.</p><p>the laptop is there.</p><p>his charger is there.</p><p>his papers are there.</p><p>his <b>phone, wallet and house keys are not.</b></p><p>security can tell her when the bag was logged. they cannot tell her where her son went.</p><p>a formal missing-person report begins with the same timestamps jc and may were staring at hours earlier.</p><p class="quiet">lia's last cached message still says: <b>call me when you're home if i'm still awake</b>.</p>`,[["six days later",()=>endingUnresolved(3)]]);return}
+  if(step===3){endingScreen("august 24, 2026","missing",`<p>a photocopied missing-person poster is taped beside the terminal entrance.</p><p>the rain stain from that night is still visible halfway up the concrete curb.</p><p>the coffee stall owner has told the same uncertain story enough times that he now starts it with, "i'm not sure."</p><p>the number ending in 4421 never contacts niko's accounts again.</p><p>no new login appears.</p><p>no bank transaction gives anyone a route.</p><p>no camera produces a clean face.</p><p class="quiet">there is no body. there is no call. there is no confirmed sighting that closes the gap.</p>`,[["continue",()=>endingUnresolved(4)]]);return}
+  endingScreen("ending","UNRESOLVED",`<p>eventually the story becomes a list of ordinary things that stopped happening.</p><p>bea stops sending "fries" messages to a chat that never answers.</p><p>mama keeps niko's room exactly the same because changing it feels too much like choosing an ending.</p><p>lia deletes the heart from his contact name, then leaves the thread archived instead of deleting it.</p><p>jc still has the photo of the terminal log number.</p><p>may still remembers the warm laptop under his hand.</p><p class="quiet"><b>12:14. 12:18. 12:23.</b></p><p class="quiet">three timestamps. no person between them.</p>`,[["credits",()=>endingCredits()]]);
 }
 function endingClosure(step){
-  if(step===0){endingScreen("later","NIKO DE LA CRUZ LOCATED SAFE",`<p>the message reaches jc through niko's family.</p><p>niko is alive. physically safe. he does not explain where he went.</p><p>for a few seconds, that is enough.</p>`,[["months later",()=>endingClosure(1)]]);return}
-  if(step===1){endingScreen("november 2026","lia",`<div class="chatScene"><div class="bubbleLine">he's okay naman.</div><div class="bubbleLine">just different.</div><div class="bubbleLine">he doesn't really go out alone anymore.</div><div class="bubbleLine">and he still won't tell anyone what happened that night.</div></div><p class="quiet">no explanation follows.</p>`,[["continue",()=>endingClosure(2)]]);return}
-  if(step===2){endingScreen("november 2026","maria",`<div class="chatScene"><div class="bubbleLine">GUYS</div><div class="bubbleLine">I GOT THE INTERNSHIP 😭😭😭</div><div class="bubbleLine">SHUT UPPPP</div><div class="bubbleLine">I'M ACTUALLY SHAKING</div><div class="bubbleLine">libre mo kami</div><div class="bubbleLine">NO 😭</div></div><p>niko is not mentioned once.</p>`,[["continue",()=>endingClosure(3)]]);return}
-  endingScreen("ending","FALSE CLOSURE",`<p>you helped somebody get home.</p><p><b>you did not repair them.</b></p><p class="quiet">weeks later, an unknown number calls jc. he watches it ring until it stops.</p><p class="quiet">may: u answer unknown numbers now?</p><p class="quiet">jc: sometimes.</p>`,[["continue",()=>endingCoda()]]);
+  if(step===0){endingScreen("2:36 am","family contact",`<p>they use the contact information on the laptop to reach niko's mother.</p><p>she answers on the third call.</p><p>jc explains where they found the bag. may fills in the parts he forgets.</p><p>security keeps the laptop until morning, but the family has the log number and the exact location.</p><p class="quiet">before hanging up, niko's mother asks one question twice: "his phone isn't there?"</p>`,[["leave the terminal",()=>endingCoda(()=>endingClosure(1))]]);return}
+  if(step===1){endingScreen("august 20, 2026","NIKO DE LA CRUZ LOCATED SAFE",`<p>two days later, a message reaches jc through niko's family.</p><p>niko walked into his cousin's print shop shortly before opening.</p><p>he was exhausted, dehydrated and missing his phone.</p><p>there was no injury serious enough to keep him in a hospital.</p><p>when asked where he had been, he said only:</p><p class="quiet"><b>"i don't want to talk about it."</b></p><p>for a few seconds, <i>alive</i> feels like a complete answer.</p><p>then everyone starts asking the next question.</p>`,[["september",()=>endingClosure(2)]]);return}
+  if(step===2){endingScreen("september 2026","after",`<p>niko attends one appointment with dr. reyes with his mother waiting outside.</p><p>he stops taking the terminal-side route entirely.</p><p>he checks the door twice before bed, then sometimes a third time because he cannot remember whether the second check felt real enough.</p><p>his replacement phone contains almost none of the old social apps.</p><p>he does not reinstall instagram for weeks.</p><p>he does reinstall steam.</p><p class="quiet">being home does not make the night smaller.</p>`,[["november",()=>endingClosure(3)]]);return}
+  if(step===3){endingScreen("november 2026","lia",`<div class="chatScene"><div class="bubbleLine">he's okay naman.</div><div class="bubbleLine">just different.</div><div class="bubbleLine">we're not together anymore.</div><div class="bubbleLine">not because of that night exactly.</div><div class="bubbleLine">he barely goes anywhere alone now.</div><div class="bubbleLine">and he still won't tell anyone where he was.</div><div class="bubbleLine">sometimes he starts to then just stops.</div></div><p class="quiet">lia does not ask jc what he thinks happened.</p>`,[["continue",()=>endingClosure(4)]]);return}
+  if(step===4){endingScreen("november 2026","maria",`<div class="chatScene"><div class="bubbleLine">GUYS</div><div class="bubbleLine">I GOT THE INTERNSHIP 😭😭😭</div><div class="bubbleLine">SHUT UPPPP</div><div class="bubbleLine">I'M ACTUALLY SHAKING</div><div class="bubbleLine">libre mo kami</div><div class="bubbleLine">NO 😭</div></div><p>niko is not mentioned once.</p><p class="quiet">people he hurt keep having lives after him. that is not cruelty. it is just time.</p>`,[["continue",()=>endingClosure(5)]]);return}
+  if(step===5){endingScreen("11:47 pm • weeks later","unknown caller",`<p>jc's phone lights up with an unknown number.</p><p>it rings once.</p><p>stops.</p><p>rings again thirty seconds later.</p><p>no voicemail arrives.</p>${endingChatHtml([["may","u answer unknown numbers now?"],["jc","not that one."],["may","good."],["jc","u awake?"],["may","obviously." ]])}<p class="quiet">the number never calls a third time.</p>`,[["continue",()=>endingClosure(6)]]);return}
+  endingScreen("ending","FALSE CLOSURE",`<p><b>safe</b> is the word everyone uses because nobody has a better one.</p><p>niko came home.</p><p>his family got to touch him, feed him, argue with him, hear his bedroom door close.</p><p>but whatever happened between the waiting shed and the print shop stays locked behind the same sentence:</p><p class="quiet">i don't want to talk about it.</p><p>you helped somebody get home.</p><p><b>you did not get the old version of him back.</b></p>`,[["credits",()=>endingCredits()]]);
 }
 function endingFoulPlay(step){
-  if(step===0){endingScreen("evidence review","FOUL PLAY",`<p>a camera from a business across the road catches a clearer angle than the terminal system.</p><p>niko leaves the waiting-shed area with the same blue-shirt man seen outside the bar.</p><p>investigators identify the man.</p><p>nothing in the footage shows an attack.</p><p>it is enough to establish that niko did not simply vanish alone.</p>`,[["continue",()=>endingFoulPlay(1)]]);return}
-  if(step===1){endingScreen("later","mama",`<p>niko's mother receives the laptop.</p><p>the desktop opens exactly where jc and may left it.</p><p>she clicks <b>miso_sleeping.jpg</b>.</p><p>orange cat. niko's backpack. file comment: <span class="quiet">useless animal ❤️</span></p><p>she looks at the folders for a while.</p><p>then she closes the lid.</p>`,[["continue",()=>endingFoulPlay(2)]]);return}
-  if(step===2){endingScreen("bag side pocket","",`<p>there is a house key on a faded basketball keychain.</p><p>she recognizes it immediately.</p><p class="quiet">nothing else is opened.</p>`,[["end",()=>endingFoulPlay(3)]]);return}
-  endingScreen("ending","FOUL PLAY",`<p>the occult images were unrelated graffiti, a metal poster, and random markings.</p><p>most of the repeated cars and symbols went nowhere.</p><p>the blue-shirt man did.</p><p class="quiet">it was just his laptop. his files. his life.</p>`,[["continue",()=>endingCoda()]]);
+  if(step===0){endingScreen("2:34 am","preserve evidence",`<p>jc stops opening files.</p><p>may writes down the last five timestamps they can verify while security calls the police desk.</p><p>the laptop stays powered on, photographed exactly as they found it, then goes into a sealed bag.</p><p>for the first time all night, nobody treats it like a puzzle.</p><p class="quiet">the guard asks both of them to repeat where the bag was found separately.</p>`,[["leave the terminal",()=>endingCoda(()=>endingFoulPlay(1))]]);return}
+  if(step===1){endingScreen("two days later","evidence review",`<p>a camera from a closed pharmacy across the road has a better angle than the terminal system.</p><p>the footage shows niko leaving the waiting-shed area with the same blue-shirt man described by rj.</p><p>niko looks back toward the terminal twice.</p><p>the man points toward the service road.</p><p>there is no audio.</p><p>nothing in the clip shows an attack.</p><p>but the man is identifiable.</p><p>when questioned, he initially says he never met niko.</p><p class="quiet">the footage makes that statement impossible.</p>`,[["continue",()=>endingFoulPlay(2)]]);return}
+  if(step===2){endingScreen("three days later","phone",`<p>workers clearing storm debris find niko's phone lodged behind a drainage grate off the service road.</p><p>the screen is shattered.</p><p>the device is powered off.</p><p>the SIM tray is empty.</p><p>water damage destroys most local data before it can be recovered.</p><p>the serial number matches niko's account records.</p><p class="quiet">the phone was not at the terminal when jc and may found the bag.</p><p class="quiet">now investigators know where one missing object ended up.</p>`,[["continue",()=>endingFoulPlay(3)]]);return}
+  if(step===3){endingScreen("case status","suspected foul play",`<p>the disappearance is no longer treated as a simple voluntary walk-off.</p><p>the blue-shirt man's movements, the recovered phone, witness accounts and the final laptop window are preserved as part of the same case.</p><p>investigators do not tell jc or may everything.</p><p>they do tell the family one thing:</p><p><b>niko did not simply leave the terminal alone and disappear by accident.</b></p><p class="quiet">that is more certainty than anyone had before.</p><p class="quiet">it is much less comforting than certainty sounded in their heads.</p>`,[["continue",()=>endingFoulPlay(4)]]);return}
+  if(step===4){endingScreen("later","mama",`<p>after the forensic copy is completed, niko's mother receives the laptop.</p><p>the desktop opens exactly where jc and may left it.</p><p>she clicks <b>miso_sleeping.jpg</b>.</p><p>orange cat. niko's backpack. file comment: <span class="quiet">useless animal ❤️</span></p><p>her cursor passes over Messenger, Notes, Downloads and the folders strangers had to search to find him.</p><p>she opens none of them.</p><p>then she closes the lid.</p>`,[["continue",()=>endingFoulPlay(5)]]);return}
+  if(step===5){endingScreen("bag side pocket","",`<p>there is a house key on a faded basketball keychain.</p><p>she recognizes it immediately.</p><p>it is the key niko was supposed to use when he came home.</p><p class="quiet">she holds it long enough for the metal to warm in her hand.</p><p class="quiet">nothing else is opened.</p>`,[["continue",()=>endingFoulPlay(6)]]);return}
+  endingScreen("ending","FOUL PLAY",`<p>the occult images were unrelated graffiti, a metal poster, random markings and a frightened person trying to make patterns behave.</p><p>most of the repeated cars, numbers and symbols went nowhere.</p><p>the blue-shirt man did.</p><p>the phone did.</p><p>the lie about never meeting niko did.</p><p>there is still no clean recording of what happened after the service road.</p><p>there is still no version of the night that gives the family everything back.</p><p class="quiet"><b>the case remains open.</b></p><p class="quiet">it was never a cursed laptop.</p><p class="quiet">it was just his laptop. his files. his life.</p><p class="quiet">and for nine minutes, it was the closest thing anyone had to where he went.</p>`,[["credits",()=>endingCredits()]]);
 }
 
 let talkTimer=null;
@@ -6144,10 +6227,9 @@ function cheatFullProgress(doSave=true){story.act=6;storyStage=10;storyMinutes=M
 function cheatEverythingLive(){cheatFullProgress(false);hotspotOn=true;if(typeof syncLiveMessages==="function")syncLiveMessages();if(typeof syncVinceLive==="function")syncVinceLive();cheatRefresh("everything unlocked + hotspot live")}
 function cheatDirectEnding(kind){storyPromptOpen=false;const sp=document.getElementById("storyPrompt");if(sp)sp.classList.remove("show");if(kind==="foulplay"&&!canFoulPlayEnding())cheatFullProgress(false);cheatLog(`launching ending • ${kind}`);startEnding(kind)}
 function cheatLog(msg){const el=document.getElementById("cheatLog");if(!el)return;const stamp=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});el.textContent=`[${stamp}] ${msg}\n`+el.textContent.replace(/^waiting for code\.\.\.\n?/,"")}
-/* v37 hotfix: cheat list renderer used esc(...) but no escape helper existed. */
-function esc(value){return String(value??"").replace(/[&<>"\']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","\'":"&#39;"}[ch]))}
-function renderCheats(){const list=document.getElementById("cheatList");if(!list)return;list.innerHTML=CHEAT_CODES.map(c=>`<div class="cheat-card"><b>${esc(c.name)}</b><div class="cheat-code">${esc(c.code)}</div><div class="cheat-desc">${esc(c.desc)}</div><button class="soft" style="margin-top:7px" onclick="copyCheatCode('${c.code}')">put in box</button></div>`).join("")}
-function copyCheatCode(code){const input=document.getElementById("cheatInput");if(input){input.value=code;input.focus();input.select()}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).catch(()=>{});cheatLog(`loaded code • ${code}`)}
+/* v38: cheat codes are secret; the in-game console never lists or autofills them. */
+function renderCheats(){}
+
 function submitCheatCode(){const input=document.getElementById("cheatInput");if(!input)return;const raw=input.value;const key=normalizeCheatCode(raw);const found=CHEAT_CODES.find(c=>normalizeCheatCode(c.code)===key);if(!found){cheatLog(`invalid code • ${raw||"(blank)"}`);input.select();return}cheatLog(`code recognized • ${found.code}`);input.value="";try{found.run()}catch(err){console.error(err);cheatLog(`code failed • ${String(err.message||err)}`)}}
 
 function renderAll(){
@@ -6159,7 +6241,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:18,
+    version:19,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
