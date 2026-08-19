@@ -1608,7 +1608,7 @@ function cheatingScore(){return ["chat_celine","chat_ash","chat_maria","chat_boy
 function mentalScore(){return ["chat_drreyes","chat_mika","file_therapy_notes","file_reality_check","file_sleep_notes_aug","file_odd_symbols","file_odd_333"].filter(k=>seen.has(k)).length}
 function foulScore(){return ["photo_glass","chat_rj","chat_vince","file_odd_calls","file_odd_route","photo_waitingshed","file_btlog","file_usblog","file_fileaccess1209"].filter(k=>seen.has(k)).length}
 function finalScore(){return ["file_cache_session","file_cache_sync","file_btlog","file_usblog","file_camevents","photo_terminal_glass","photo_waitingshed","photo_bagfloor","file_fileaccess1209"].filter(k=>seen.has(k)).length + (storyFlags.heardPhoneClue?1:0)}
-function canFoulPlayEnding(){return seen.has("photo_glass")&&seen.has("chat_rj")&&seen.has("chat_vince")&&seen.has("file_odd_route")&&seen.has("photo_waitingshed")&&storyFlags.heardPhoneClue&&finalScore()>=7}
+function canFoulPlayEnding(){return storyFlags.humanizedNiko&&storyFlags.mentalEstablished&&storyFlags.foulPlayPossible&&seen.has("photo_glass")&&seen.has("chat_rj")&&seen.has("chat_vince")&&seen.has("file_odd_route")&&seen.has("photo_waitingshed")&&storyFlags.heardPhoneClue&&finalScore()>=7}
 function setAct(n){
   if(n<=story.act)return;story.act=n;
   if(n===2){addJournal(storyTimeLabel()+" • jc and may have enough contradictions to know niko's messages cannot be taken at face value.");updateHint("some of niko's messages are lies. timestamps and independent sources matter more now.");}
@@ -1689,7 +1689,7 @@ function startEnding(kind){story.ending=kind;saveGame(false);if(kind==="unresolv
 function endingUnresolved(step){
   if(step===0){endingScreen("local draft • 12:?? am","draft_message.txt",`<div class="draft">ma pauwi na ko sorry medyo</div><p class="quiet">no recipient response. no punctuation. the file ends there.</p>`,[["close the file",()=>endingUnresolved(1)]]);return}
   if(step===1){endingScreen("2:31 am","handoff",`<p>jc and may give the bag and laptop to terminal security.</p><p>the guard writes niko de la cruz on a paper log and puts the bag behind the desk.</p><p>outside, the first jeep on may's route pulls in.</p><p>people walk past the bench where the bag was found.</p>`,[["continue",()=>endingUnresolved(2)]]);return}
-  endingScreen("weeks later","UNRESOLVED",`<p>no clean answer ever reaches jc or may.</p><p class="quiet">may: message me pag nakauwi ka.</p><p class="quiet">jc: ikaw din.</p><p>traffic keeps moving.</p>`,[["restart from save",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+  endingScreen("later that night","UNRESOLVED",`<p>no clean answer reaches jc or may afterward.</p><p class="quiet">may: message me pag nakauwi ka.</p><p class="quiet">jc: ikaw din.</p><p>traffic keeps moving.</p>`,[["restart from save",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
 }
 function endingClosure(step){
   if(step===0){endingScreen("later","NIKO DE LA CRUZ LOCATED SAFE",`<p>the message reaches jc through niko's family.</p><p>niko is alive. physically safe. he does not explain where he went.</p><p>for a few seconds, that is enough.</p>`,[["months later",()=>endingClosure(1)]]);return}
@@ -2191,7 +2191,11 @@ function progressStory(){
   }else if(storyStage===8 && timelineKnownCount()>=8){
     storyStage=9;advanceStory(16);storyFlags.toldGuard=true;storyFlags.heardPhoneClue=true;markEvidence("world_phoneclue");addJournal(storyTimeLabel()+" • security remembers a soaked man asking around 12:18 if anyone had turned in a PHONE. dark cap/jacket. no name.");fieldTalk("security","around 12:18 a soaked guy asked if anyone turned in a phone. dark cap, dark jacket. could be unrelated. i didn't get a name.",6200);
   }else if(storyStage===9 && finalScore()>=6){
-    storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • may's route begins limited service. the coffee stall is closed and most benches are empty.");showStoryPrompt("may","my route's moving again. we have to leave soon. one last thing: do we hand this over now, or keep enough of the timeline to explain why this feels wrong?",[["open our timeline",()=>openWindow("timeline")],["decide what to do",()=>offerEndingChoice()],["five more minutes",()=>fieldTalk("jc","five. then we go.")]]);
+    storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • may's route begins limited service. the coffee stall is closed and most benches are empty.");showStoryPrompt("may",`my route's moving again. we have to leave soon.
+
+also next time we hang out, i want actual food somewhere normal. daylight. zero abandoned laptops. that's non-negotiable.
+
+one last thing: do we hand this over now, or keep enough of the timeline to explain why this feels wrong?`,[["open our timeline",()=>openWindow("timeline")],["decide what to do",()=>offerEndingChoice()],["five more minutes",()=>fieldTalk("jc","five. then we go. and yeah... normal food next time. deal.",4000)]]);
   }
   updateTerminalStatus();renderTimeline();
 }
