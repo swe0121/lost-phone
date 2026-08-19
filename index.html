@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v28</title>
-<!-- v27: true perspective-specific intro routes; May POV now controls May choices instead of JC replies; preserves v26 protected dialogue layers -->
+<title>Lost Phone v31</title>
+<!-- v29: dedicated in-app detail viewer layers for Files/Photos/Recycle/Memes/Weather; fixes bottom-appended previews and folder selection state; preserves v28 universal scrolling and v27 true POV routes -->
 <style>
 :root{
   --bg:#06080c;--panel:#10141b;--panel2:#171c25;--panel3:#202734;
@@ -157,6 +157,8 @@ body{overflow:hidden}
 .task-left,.task-right{display:flex;align-items:center;gap:7px}
 .task-btn{border:0;background:transparent;color:#e7ebf0;border-radius:8px;padding:7px 9px;cursor:pointer}
 .task-btn:hover{background:#252c36}
+.task-btn.locked{opacity:.42;filter:saturate(.35);cursor:not-allowed}
+.task-btn.locked:hover{background:transparent}
 #clock{font-size:11px;text-align:right;color:#d8dde5;line-height:1.2;min-width:115px}
 #hint{
   position:absolute;right:14px;top:13px;padding:8px 10px;border-radius:10px;background:rgba(12,15,20,.84);
@@ -427,6 +429,35 @@ pre,code{
 .chat-panel,.chat-left{min-width:0;min-height:0}
 
 /* =========================================================
+   v29 DEDICATED APP DETAIL VIEWERS
+   Clicked content opens in a readable layer inside its app
+   instead of being appended underneath a long grid/list.
+   ========================================================= */
+.app-detail-layer{
+  position:absolute;left:0;right:0;top:42px;bottom:0;z-index:9500;
+  display:none;flex-direction:column;min-width:0;min-height:0;
+  background:rgba(10,13,18,.995);
+}
+.app-detail-layer.show{display:flex}
+#win-files > .app-detail-layer{left:225px;border-left:1px solid var(--line)}
+.app-detail-toolbar{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:44px;padding:8px 12px;border-bottom:1px solid var(--line);background:#11161e;
+}
+.app-detail-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 12px "Courier New",monospace;color:#dfe5ec}
+.app-detail-close{border:1px solid #364254;background:#171d26;color:#fff;border-radius:8px;padding:7px 10px;cursor:pointer;font:11px "Courier New",monospace}
+.app-detail-close:hover{background:#252e3b}
+.app-detail-scroll{
+  flex:1;min-width:0;min-height:0;overflow-y:auto;overflow-x:hidden;padding:16px 18px 34px;
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#465166 #11161e;
+}
+.app-detail-scroll::-webkit-scrollbar{width:9px;height:9px}
+.app-detail-scroll::-webkit-scrollbar-thumb{background:#465166;border:2px solid #11161e;border-radius:10px}
+.app-detail-scroll::-webkit-scrollbar-track{background:#11161e}
+.app-detail-scroll > .detail{margin-top:0;max-width:980px}
+.app-detail-scroll .detail{overflow-wrap:anywhere;word-break:break-word}
+
+/* =========================================================
    MOBILE / TOUCH SUPPORT
    ========================================================= */
 :root{
@@ -615,6 +646,12 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
     height:calc(100% - 48px);
     min-height:0;
   }
+  .app-detail-layer,#win-files > .app-detail-layer{
+    left:0;right:0;top:48px;bottom:0;border-left:0;
+  }
+  .app-detail-toolbar{min-height:46px;padding:8px 10px}
+  .app-detail-scroll{padding:13px 13px calc(34px + env(safe-area-inset-bottom))}
+
 
   .content{
     padding:11px;
@@ -1339,7 +1376,7 @@ this rain is getting stupid though.</span></button>
         <span class="muted" style="font-size:11px">niko laptop</span>
       </div>
       <div class="task-right">
-        <button class="task-btn" id="wifiBtn" onclick="toggleHotspot()">wifi ✕</button>
+        <button class="task-btn locked" id="wifiBtn" onclick="toggleHotspot()" title="hotspot unavailable until you speak with terminal security">wifi 🔒</button>
         <button class="task-btn" onclick="toast('volume','42%')">🔊</button>
         <button class="task-btn" id="batteryBtn" onclick="toast('battery',batteryPercent+'% remaining')">🔋 61%</button>
         <div id="clock"></div>
@@ -1368,6 +1405,37 @@ function bringWindowToFront(w){
   }
   w.style.zIndex=String(++z);
 }
+function detailTitleFromHTML(html,fallback="preview"){
+  try{
+    const tmp=document.createElement("div");tmp.innerHTML=html||"";
+    return (tmp.querySelector("h4,h3,b")?.textContent||fallback).trim();
+  }catch(e){return fallback}
+}
+function ensureWindowDetail(name){
+  const w=document.getElementById("win-"+name);if(!w)return null;
+  let layer=w.querySelector(":scope > .app-detail-layer");
+  if(!layer){
+    layer=document.createElement("div");
+    layer.className="app-detail-layer";
+    layer.innerHTML=`<div class="app-detail-toolbar"><div class="app-detail-title">preview</div><button class="app-detail-close" type="button">← back</button></div><div class="app-detail-scroll"></div>`;
+    layer.querySelector(".app-detail-close").onclick=()=>closeWindowDetail(name);
+    w.appendChild(layer);
+  }
+  return layer;
+}
+function showWindowDetail(name,html,title){
+  const layer=ensureWindowDetail(name);if(!layer)return;
+  const t=layer.querySelector(".app-detail-title");
+  const body=layer.querySelector(".app-detail-scroll");
+  if(t)t.textContent=title||detailTitleFromHTML(html,"preview");
+  if(body){body.innerHTML=html||`<div class="detail muted">nothing to show.</div>`;body.scrollTop=0;}
+  layer.classList.add("show");
+}
+function closeWindowDetail(name){
+  const w=document.getElementById("win-"+name);
+  const layer=w?.querySelector(":scope > .app-detail-layer");
+  if(layer)layer.classList.remove("show");
+}
 let storyMinutes=0, storyStage=0, hotspotOn=false, batteryPercent=61, storyPromptOpen=false;
 let playerCharacter=null;
 const completedPerspective={jc:false,may:false};
@@ -1381,7 +1449,8 @@ const storyFlags={
   foundIdentity:false,heardMamaVoicemail:false,foundLia:false,cheatingEstablished:false,
   beaBikeUnlocked:false,sawBeaBike:false,sawMiso:false,humanizedNiko:false,mentalEstablished:false,
   foulPlayPossible:false,timelineUnlocked:false,finalWindowComplete:false,contactedFamily:false,
-  securityEscalated:false,quietTurn:false,mayAteMemory:false,tahoBought:false
+  securityEscalated:false,quietTurn:false,mayAteMemory:false,tahoBought:false,
+  metSecurity:false,hotspotUnlocked:false
 };
 const evidence=new Set();
 const seen=new Set(), journal=[];
@@ -1835,9 +1904,23 @@ function advanceStory(mins){
 }
 function updateConnectionUI(){
   const b=document.getElementById("wifiBtn");
-  if(b)b.textContent=hotspotOn?"wifi • jc-phone":"wifi ✕";
+  if(b){
+    const unlocked=Boolean(storyFlags.hotspotUnlocked);
+    b.classList.toggle("locked",!unlocked);
+    b.setAttribute("aria-disabled",unlocked?"false":"true");
+    b.title=unlocked?"jc-phone hotspot":"hotspot unavailable until you speak with terminal security";
+    b.textContent=!unlocked?"wifi 🔒":hotspotOn?"wifi • jc-phone":"wifi ✕";
+  }
   const bat=document.getElementById("batteryBtn");
   if(bat)bat.textContent="🔋 "+batteryPercent+"%";
+}
+function unlockHotspotFromSecurity(){
+  if(storyFlags.hotspotUnlocked)return;
+  storyFlags.metSecurity=true;
+  storyFlags.hotspotUnlocked=true;
+  updateConnectionUI();
+  addJournal(storyTimeLabel()+" • after speaking with terminal security, jc can use his phone hotspot if they need to contact niko's people. the terminal wifi is not being used.");
+  toast("wifi","jc-phone hotspot is now available");
 }
 function setBattery(n){batteryPercent=Math.max(5,Math.min(100,n));updateConnectionUI()}
 function addIncoming(k,text){
@@ -1862,7 +1945,11 @@ function syncVinceLive(){
   toast("messenger","vince sent new messages");
 }
 function connectHotspot(){
-  if(hotspotOn)return;
+  if(!storyFlags.hotspotUnlocked){
+    toast("wifi","not available yet • talk to terminal security first");
+    return false;
+  }
+  if(hotspotOn)return true;
   hotspotOn=true;
   updateConnectionUI();
   toast("wifi","connected to jc-phone hotspot");
@@ -1870,8 +1957,13 @@ function connectHotspot(){
   syncLiveMessages();
   if(storyStage>=7)syncVinceLive();
   if(currentChat)openChat(currentChat);
+  return true;
 }
 function toggleHotspot(){
+  if(!storyFlags.hotspotUnlocked){
+    toast("wifi","locked for now • speak with terminal security first");
+    return;
+  }
   if(!hotspotOn){connectHotspot();return}
   hotspotOn=false;updateConnectionUI();toast("wifi","disconnected from jc-phone hotspot");
   if(currentChat)openChat(currentChat);
@@ -1903,7 +1995,7 @@ function openWindow(name){
   w.classList.add("active");bringWindowToFront(w);
   if(name==="yourphone")markExtra("your_phone_open");else markSeen("app_"+name);
   if(name==="browser") browserHome();
-  if(name==="files") renderFolder("recent");
+  if(name==="files") renderFolder(currentFileFolder||"recent");
   if(name==="messenger"){renderChats(document.getElementById('msgSearch')?.value||''); if(!currentChat){const first=Object.keys(chats).find(k=>chats[k].kind===chatMode&&isChatUnlocked(k));if(first)setTimeout(()=>openChat(first),0);}}
   if(name==="news") renderNews(currentNewsFilter||'all');
   if(name==="videos") renderVideos();
@@ -1918,7 +2010,7 @@ function openWindow(name){
     else renderTimeline();
   }
 }
-function closeWindow(name){document.getElementById("win-"+name).classList.remove("active")}
+function closeWindow(name){closeWindowDetail(name);document.getElementById("win-"+name).classList.remove("active")}
 document.querySelectorAll(".window").forEach(w=>w.addEventListener("mousedown",()=>bringWindowToFront(w)));
 
 function refreshDesktopShortcuts(){
@@ -2131,79 +2223,196 @@ function endingFoulPlay(step){
 
 let talkTimer=null;
 let talkIndex=0;
-const relationshipTalkIndex={1:0,2:0,3:0,4:0,5:0,6:0};
-const relationshipTalkByAct={
+/* v31: ambient dialogue is scene-based, not one random line per discovery. */
+const relationshipTalkIndex={1:0,2:0,3:0,4:0,5:0,6:0}; // legacy save compatibility
+const ambientSceneIndex={1:0,2:0,3:0,4:0,5:0,6:0};
+let ambientTimer=null;
+let ambientSceneToken=0;
+let ambientSceneActive=false;
+let ambientLastExploreCount=-999;
+let ambientLastPlayedAt=0;
+let triggeredDialogueSerial=0;
+
+const ambientScenesByAct={
   1:[
-    ["may","btw i still don't believe that whole 'i'm scared of women' thing. u really don't act like it 😭"],
-    ["jc","that's because the panic is internal. very efficient system."],
-    ["may","efficient?? u just say something dumb then stare at the floor 😭"],
-    ["jc","that's called recovery time."],
-    ["may","keep talking and i'm gonna block u again."],
-    ["jc","AGAIN?? put me on a subscription plan at this point."],
-    ["may","renewal is automatic when you're annoying."],
-    ["jc","terrible terms and conditions."]
+    [
+      ["may",`we really went from awkward second meet to opening a stranger's laptop in like ten minutes.`],
+      ["jc",`efficient use of meetup number two.`],
+      ["may",`do NOT call this efficient 😭`],
+      ["jc",`memorable, then.`],
+      ["may",`unfortunately.`]
+    ],
+    [
+      ["may",`btw, for someone who's "scared of women," you're very comfortable arguing with me.`],
+      ["jc",`you don't count.`],
+      ["may",`WHAT DOES THAT MEAN 😭`],
+      ["jc",`i mean i'm already used to you. that sounded worse out loud.`],
+      ["may",`horrible save.`],
+      ["jc",`internal panic. professional exterior.`]
+    ],
+    [
+      ["jc",`still funny your parents don't even know who i am.`],
+      ["may",`they know i'm stuck in a flood. that's currently more useful information 😭`],
+      ["jc",`unnamed side character survives another scene.`],
+      ["may",`barely.`]
+    ]
   ],
   2:[
-    ["may","if u ever make a spreadsheet about me i'm actually blocking u permanently."],
-    ["jc","mine would have one row: may — mood changes every four minutes."],
-    ["may","BLOCKED."],
-    ["jc","see? live demonstration 😭"],
-    ["may","u joke but you're the one who goes 'alright' like customer service when u get nonchalant."],
-    ["jc","thank you for contacting jc support. your complaint has been ignored."],
-    ["may","i hate u 😭"],
-    ["jc","ticket closed."]
+    [
+      ["may",`if u ever make a spreadsheet about me i'm actually blocking u permanently.`],
+      ["jc",`mine would have one row: may — mood changes every four minutes.`],
+      ["may",`BLOCKED.`],
+      ["jc",`see? live demonstration 😭`]
+    ],
+    [
+      ["may",`u joke but you're the one who goes "alright" like customer service when u get nonchalant.`],
+      ["jc",`thank you for contacting jc support. your complaint has been ignored.`],
+      ["may",`i hate u 😭`],
+      ["jc",`ticket closed.`]
+    ],
+    [
+      ["may",`every time this man says "it's complicated" i get annoyed.`],
+      ["jc",`at least i say go with the flow.`],
+      ["may",`THAT IS NOT BETTER 😭`],
+      ["jc",`takes two to tango nga diba.`],
+      ["may",`that is somehow an even worse answer.`]
+    ]
   ],
   3:[
-    ["may","almost a year of talking and i'm still learning random shit about u on meet number two."],
-    ["jc","that's called content longevity."],
-    ["may","that's called low attendance 😭"],
-    ["jc","high retention though."],
-    ["may","paasa marketing strategy."],
-    ["jc","we'll see how things work out nga. organic growth."],
-    ["may","do NOT turn 'go with the flow' into business terminology 😭"]
+    [
+      ["may",`almost a year of talking and i'm still learning random shit about u on meet number two.`],
+      ["jc",`that's called content longevity.`],
+      ["may",`that's called low attendance 😭`],
+      ["jc",`high retention though.`],
+      ["may",`paasa marketing strategy.`]
+    ],
+    [
+      ["jc",`this is the part where the laptop starts feeling like an actual person's stuff again.`],
+      ["may",`yeah. family, school, games, cat.`],
+      ["jc",`then fifty terrible decisions in messenger.`],
+      ["may",`people are annoyingly capable of being more than one thing.`]
+    ],
+    [
+      ["may",`when we get out of here i want actual food somewhere normal.`],
+      ["jc",`normal as in no abandoned electronics?`],
+      ["may",`that is the minimum requirement.`],
+      ["jc",`fair.`]
+    ]
   ],
   4:[
-    ["may","btw if u disappear mid convo tonight after all that ranting i did, i'm actually done 😭"],
-    ["jc","i'm literally beside u. where am i gonna disappear to."],
-    ["may","you'd find a way. midnight hits and suddenly your soul logs out."],
-    ["jc","sleep has excellent timing."],
-    ["may","one second we're talking, next morning it's 'morning' like u didn't abandon the whole conversation."],
-    ["jc","morning continuity. we've discussed this."],
-    ["may","i rejected that explanation the first time."]
+    [
+      ["may",`not comparing your dumb sleep habits to what niko's dealing with, but u disappearing mid convo every midnight still pisses me off 😭`],
+      ["jc",`i'm literally beside u right now. where am i gonna disappear to.`],
+      ["may",`you'd find a way. midnight hits and your soul logs out.`],
+      ["jc",`sleep has excellent timing.`],
+      ["may",`one second we're talking, next morning it's just "morning" like nothing happened.`],
+      ["jc",`morning continuity.`],
+      ["may",`rejected.`]
+    ],
+    [
+      ["may",`if i say i'm not scared, don't start analyzing me okay.`],
+      ["jc",`wasn't gonna.`],
+      ["may",`liar. u notice everything then act nonchalant about noticing it.`],
+      ["jc",`that's an extremely specific allegation.`],
+      ["may",`because i've had basically a year of evidence 😭`]
+    ],
+    [
+      ["jc",`this got serious fast.`],
+      ["may",`yeah.`],
+      ["jc",`you okay?`],
+      ["may",`ask me again when we're not standing in a flooded terminal reading a stranger's therapy notes.`],
+      ["jc",`fair.`]
+    ]
   ],
   5:[
-    ["may","if i say i'm not scared, don't start analyzing me okay."],
-    ["jc","wasn't gonna."],
-    ["may","liar. u notice everything then act nonchalant about noticing it."],
-    ["jc","that's an extremely specific allegation."],
-    ["may","because i've had basically a year of evidence 😭"],
-    ["jc","and only two in-person samples. scientifically weak."],
-    ["may","shut up nerd."]
+    [
+      ["may",`okay. the part i hate is other people are confirming pieces now.`],
+      ["jc",`yeah. it's not just niko writing that he noticed someone anymore.`],
+      ["may",`and you're doing that nonchalant voice again.`],
+      ["jc",`i'm trying not to make it worse.`],
+      ["may",`...okay. that one i believe.`]
+    ],
+    [
+      ["jc",`you grabbed my sleeve again.`],
+      ["may",`no i didn't.`],
+      ["jc",`you literally still have it.`],
+      ["may",`shut up and look at the screen 😭`],
+      ["jc",`noted.`]
+    ],
+    [
+      ["may",`if this actually turns into something serious, you're talking to security with me.`],
+      ["jc",`with you? i thought you were assigning me the whole conversation.`],
+      ["may",`absolutely not. you'll say "uh hi" twice and forget the important part.`],
+      ["jc",`one incident. permanent reputation.`]
+    ]
   ],
   6:[
-    ["may","if u ghost after tonight i'm blocking u for real."],
-    ["jc","after surviving a flood and this laptop? that's my reward?"],
-    ["may","character development test."],
-    ["jc","do i at least get probation."],
-    ["may","no."],
-    ["jc","takes two to tango nga diba."],
-    ["may","STOP USING THAT WHEN U DON'T HAVE AN ANSWER 😭"],
-    ["jc","but technically—"],
-    ["may","i'm gonna block u before the jeep even arrives."]
+    [
+      ["may",`if u ghost after tonight i'm blocking u for real.`],
+      ["jc",`after surviving a flood and this laptop? that's my reward?`],
+      ["may",`character development test.`],
+      ["jc",`do i at least get probation.`],
+      ["may",`no.`],
+      ["jc",`takes two to tango nga diba.`],
+      ["may",`STOP USING THAT WHEN U DON'T HAVE AN ANSWER 😭`]
+    ],
+    [
+      ["jc",`we're not gonna fill every blank, are we.`],
+      ["may",`probably not.`],
+      ["jc",`weirdly hate that less than i did an hour ago.`],
+      ["may",`good. some blanks are just blanks.`]
+    ]
   ]
 };
-function maybeRelationshipTalk(){
-  const act=Math.max(1,Math.min(6,story.act||1));
-  const cadence=act<=2?7:act<=4?8:10;
-  if(exploreCount<3||exploreCount%cadence!==0)return false;
-  const pool=relationshipTalkByAct[act]||[];
-  const idx=relationshipTalkIndex[act]||0;
-  if(idx>=pool.length)return false;
-  const item=pool[idx];relationshipTalkIndex[act]=idx+1;
-  setTimeout(()=>fieldTalk(item[0],item[1],3900),350);
+
+function cancelAmbientDialogue(){
+  if(ambientTimer){clearTimeout(ambientTimer);ambientTimer=null;}
+  if(ambientSceneActive){ambientSceneToken++;ambientSceneActive=false;}
+}
+function playDialogueScene(lines,{kind="ambient",gap=260}={}){
+  if(!Array.isArray(lines)||!lines.length||storyPromptOpen||story.ending)return false;
+  if(kind==="ambient"&&ambientSceneActive)return false;
+  const token=++ambientSceneToken;
+  ambientSceneActive=kind==="ambient";
+  if(kind==="ambient"){
+    ambientLastExploreCount=exploreCount;
+    ambientLastPlayedAt=Date.now();
+  }
+  const step=(i)=>{
+    if(token!==ambientSceneToken)return;
+    if(i>=lines.length){if(kind==="ambient")ambientSceneActive=false;return;}
+    if(storyPromptOpen||story.ending){if(kind==="ambient")ambientSceneActive=false;return;}
+    const [sp,txt,dur]=lines[i];
+    const duration=Number(dur||3500);
+    fieldTalk(sp,txt,duration,kind);
+    setTimeout(()=>step(i+1),duration+gap);
+  };
+  step(0);
   return true;
 }
-const randomTalk=[
+function playNextAmbientScene(){
+  if(storyPromptOpen||story.ending||ambientSceneActive)return false;
+  const act=Math.max(1,Math.min(6,story.act||1));
+  const pool=ambientScenesByAct[act]||[];
+  const idx=ambientSceneIndex[act]||0;
+  if(idx>=pool.length)return false;
+  ambientSceneIndex[act]=idx+1;
+  return playDialogueScene(pool[idx],{kind:"ambient",gap:260});
+}
+function scheduleAmbientDialogue(){
+  if(ambientTimer){clearTimeout(ambientTimer);ambientTimer=null;}
+  if(storyPromptOpen||story.ending||ambientSceneActive||exploreCount<3)return;
+  const act=Math.max(1,Math.min(6,story.act||1));
+  const needed=act<=2?4:act<=4?5:6;
+  if(exploreCount-ambientLastExploreCount<needed)return;
+  if(Date.now()-ambientLastPlayedAt<30000)return;
+  ambientTimer=setTimeout(()=>{
+    ambientTimer=null;
+    if(storyPromptOpen||story.ending||ambientSceneActive)return;
+    playNextAmbientScene();
+  },6200);
+}
+const legacyRandomTalk_UNUSED=[
   ["may","you know we're supposed to be finding the owner, right? not doing a full background check 😭"],
   ["jc","i'm literally looking for a name. this guy just has 900 files for no reason."],
   ["may","your laptop probably looks worse."],
@@ -2636,7 +2845,9 @@ const randomTalk=[
   ["may","because you're not mysterious. you're just wet and annoying."]
 ];
 
-function fieldTalk(speaker,text,duration=3300){
+function fieldTalk(speaker,text,duration=3300,source="triggered"){
+  /* Triggered dialogue always wins. It can interrupt ambient banter because it has an actual cause. */
+  if(source!=="ambient"){cancelAmbientDialogue();triggeredDialogueSerial++;}
   clearTimeout(talkTimer);
   fieldSpeaker.textContent=displaySpeaker(speaker);
   fieldText.textContent=text;
@@ -2650,22 +2861,8 @@ function fieldTalk(speaker,text,duration=3300){
   talkTimer=setTimeout(()=>fieldTalkEl.classList.remove("show"),duration);
 }
 const fieldTalkEl=document.getElementById("fieldTalk");
-function maybeRandomTalk(){
-  if(exploreCount<2)return;
-  if(maybeRelationshipTalk())return;
-  const cadence=story.act>=6?7:story.act>=5?6:story.act>=4?5:3;
-  if(exploreCount%cadence!==0)return;
-  if(story.act>=6){
-    const quiet=[
-      ["may","you're quiet."],["jc","yeah."],["may","..."],["jc","..."],["may","it's okay."],
-      ["may","rain's not as loud anymore."],["jc","yeah. i can hear the jeeps now."],
-      ["jc","we don't have to fill every blank."],["may","good. because some of them are gonna stay blank."]
-    ];
-    const item=quiet[talkIndex%quiet.length];talkIndex++;setTimeout(()=>fieldTalk(item[0],item[1],3600),350);return;
-  }
-  const max=story.act<=2?120:story.act===3?190:randomTalk.length;
-  const item=randomTalk[talkIndex%Math.min(max,randomTalk.length)];talkIndex++;if(!item)return;setTimeout(()=>fieldTalk(item[0],item[1]),350);
-}
+/* Kept as an alias for older code paths. v31 no longer emits isolated random lines. */
+function maybeRandomTalk(){scheduleAmbientDialogue();}
 
 
 const hintPool=[
@@ -2702,14 +2899,16 @@ function updateHint(forceText=null){
 
 function markSeen(k){
   if(seen.has(k))return;
+  const dialogueBefore=triggeredDialogueSerial;
   seen.add(k);exploreCount++;
   updateStoryFlags(k);
   renderChats();
-  maybeRandomTalk();
   if(exploreCount%5===0)updateHint();
+  /* Story/clue reactions get first chance to speak. Ambient dialogue only schedules when this discovery did not immediately trigger dialogue. */
   evaluateActProgress();
   progressStory();
   renderTimeline();
+  if(triggeredDialogueSerial===dialogueBefore)scheduleAmbientDialogue();
   if(typeof autosaveGame==="function")autosaveGame();
 }
 function progressCreep(){return;}
@@ -2718,7 +2917,7 @@ function progressStory(){
   if(storyStage===0 && storyFlags.foundIdentity){
     storyStage=1;advanceStory(7);addJournal(storyTimeLabel()+" • terminal announcement: several routes are temporarily suspended because water is rising on nearby roads.");fieldTalk("terminal","attention: some routes are temporarily suspended due to flooding. passengers are advised to remain under the covered area.",4300);
   }else if(storyStage===1 && storyFlags.heardMamaVoicemail){
-    storyStage=2;advanceStory(8);showStoryPrompt("may","cached messages only tell us so much. if we actually need to contact somebody later, use your hotspot?",[["connect jc's hotspot",()=>{connectHotspot();fieldTalk("may","okay. normal sync only. nothing spooky. just messages that were waiting.");}],["keep it offline for now",()=>fieldTalk("jc","cached stuff first. we can connect later.")]]);
+    storyStage=2;advanceStory(8);fieldTalk("may","cached messages only tell us so much. keep it offline for now. if this gets serious, we ask security first.",4700);
   }else if(storyStage===2 && story.act>=2){
     storyStage=3;advanceStory(9);storyFlags.mayAteMemory=true;addJournal(storyTimeLabel()+" • may's mom called to ask about the flood and whether rides were moving. she did not ask who may was with.");
     fieldTalk("may","my mom literally just asked 'baha pa ba' and told me to stay dry. see? she does not care who i'm meeting 😭",4700);
@@ -2728,7 +2927,7 @@ function progressStory(){
     setTimeout(()=>fieldTalk("jc","there's a quiz now??",3000),19100);
     setTimeout(()=>fieldTalk("may","we've talked basically a year. u should know at least SOME lore 😭",4200),22200);
   }else if(storyStage===3 && story.act>=3){
-    storyStage=4;advanceStory(12);showStoryPrompt("may","that security guard keeps looking over here. should we log where we found the bag?",[["tell the guard",()=>{storyFlags.toldGuard=true;addJournal(storyTimeLabel()+" • terminal security logged the bag. the side bench is outside the useful terminal camera angle.");fieldTalk("security","that side bench isn't in our useful angle. road camera mostly faces traffic. keep it with you while we log it.",5200);}],["not yet",()=>fieldTalk("may","fine. but if this gets more serious we're telling him.")]]);
+    storyStage=4;advanceStory(12);showStoryPrompt("may","that security guard keeps looking over here. should we talk to him about where we found the bag?",[["log the bag with security",()=>{storyFlags.toldGuard=true;storyFlags.metSecurity=true;addJournal(storyTimeLabel()+" • terminal security logged the bag. the side bench is outside the useful terminal camera angle.");fieldTalk("security","that side bench isn't in our useful angle. road camera mostly faces traffic. keep it with you while we log it. terminal wifi's down, so if you need to contact the owner, use your own data.",6200);unlockHotspotFromSecurity();setTimeout(()=>fieldTalk("may","okay. NOW your hotspot makes sense. only if we actually need to message somebody.",4200),6400);}],["ask about the cameras first",()=>{storyFlags.metSecurity=true;addJournal(storyTimeLabel()+" • jc and may spoke with terminal security about the side bench. the useful cameras mostly face traffic, not the bench.");fieldTalk("security","the side bench isn't in our useful angle. road camera mostly faces traffic. if you're trying to reach the owner, terminal wifi's down—use your own data.",6000);unlockHotspotFromSecurity();setTimeout(()=>fieldTalk("may","alright. hotspot's an option now. cached stuff first unless we really need it.",4200),6200);}]]);
   }else if(storyStage===4 && story.act>=4){
     storyStage=5;advanceStory(13);const mayAskLabel=playerCharacter==="may"?"ask him yourself":"let may ask";const jcAskLabel=playerCharacter==="jc"?"ask him yourself":"let jc ask";showStoryPrompt("jc","coffee stall guy's been here since before us. ask if he saw anyone by the bench?",[[mayAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor vaguely remembers someone near the side bench around midnight, but rain blocked his view.");fieldTalk("may","he said maybe someone was there. dark top. that's it. rain ruined everything else.",5000);maybeTahoCallback();}],[jcAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor remembers almost nothing useful through the rain.");fieldTalk("may","wow you talked to a stranger without narrating a puddle first 😭",4200);maybeTahoCallback();}]]);
   }else if(storyStage===5 && story.act>=5){
@@ -2952,12 +3151,14 @@ odd:[
 ]
 };
 
+let currentFileFolder="recent";
 function renderFileSidebar(){
   let names=["recent","desktop","documents","downloads","pictures","school","random","personal"];
   if(story.act>=2)names.splice(5,0,"backup");
   if(story.act>=4)names.push("odd");
   if(showHiddenFiles&&story.act>=2)names.push(".cache");
-  fileSidebar.innerHTML=names.map((n,i)=>`<div class="side-item ${i===0?"sel":""}" onclick="renderFolder('${n}',this)">${n}</div>`).join("")+
+  if(!names.includes(currentFileFolder))currentFileFolder="recent";
+  fileSidebar.innerHTML=names.map(n=>`<div class="side-item ${n===currentFileFolder?"sel":""}" data-folder="${n}" onclick="renderFolder('${n}',this)">${n}</div>`).join("")+
     (story.act>=2?`<div style="border-top:1px solid #29313d;margin:9px 0"></div><div class="side-item" onclick="toggleHiddenItems()">${showHiddenFiles?"✓ ":""}show hidden items</div>`:"");
 }
 function toggleHiddenItems(){
@@ -2966,10 +3167,12 @@ function toggleHiddenItems(){
   if(showHiddenFiles){renderFolder(".cache");addJournal("hidden items are visible now.");setTimeout(()=>fieldTalk("may","hidden files. okay. now this feels less like finding an email address 😭"),200)}else renderFolder("recent");
 }
 function renderFolder(name,el){
-  if(el){document.querySelectorAll("#fileSidebar .side-item").forEach(x=>x.classList.remove("sel"));el.classList.add("sel")}
+  currentFileFolder=name;
+  closeWindowDetail("files");
+  document.querySelectorAll("#fileSidebar .side-item[data-folder]").forEach(x=>x.classList.toggle("sel",x.dataset.folder===name));
   markSeen("folder_"+name);
   let list=[...(folders[name]||[])].filter(f=>isFileUnlocked(name,f[3]));
-  fileContent.innerHTML=`<h3 style="margin-top:0">${name}</h3><div class="file-grid">${list.map(f=>`<div class="file-card" onclick="openFile('${f[3]}')"><div class="file-ico">${f[0]}</div><div class="fn">${f[1]}</div><div class="fm">${f[2]}</div></div>`).join("")}</div>${list.length?"":`<div class="detail muted">nothing else here makes sense yet.</div>`}<div id="fileDetail"></div>`;
+  fileContent.innerHTML=`<h3 style="margin-top:0">${name}</h3><div class="file-grid">${list.map(f=>`<div class="file-card" onclick="openFile('${f[3]}')"><div class="file-ico">${f[0]}</div><div class="fn">${f[1]}</div><div class="fm">${f[2]}</div></div>`).join("")}</div>${list.length?"":`<div class="detail muted">nothing else here makes sense yet.</div>`}`;
 }
 
 function openFile(k){
@@ -2983,7 +3186,7 @@ function openFile(k){
     resume:`<div class="detail"><h4>resume_niko.pdf</h4><p><b>niko de la cruz</b></p><p>information systems student</p><p>manila</p><p>niko.dc05@example.com</p></div>`,
     todo:`<div class="detail"><h4>todo.txt</h4><p>print activity</p><p>buy coffee</p><p>reply to mom</p><p>charger</p><p>bring umbrella</p><p>delete backup</p></div>`,
     private:`<div class="detail"><h4>private_notes.txt</h4><p>"keep everything separate."</p><p>"lia doesn't check laptop."</p><p>"never save real names if not needed."</p><p>"clear downloads after."</p></div>`,
-    backup:`<div class="detail"><h4>phone_backup.zip</h4><p>backup created from android phone.</p><p>contains chats, contacts, and media.</p><button class="soft" onclick="renderFolder('backup')">open backup</button></div>`,
+    backup:`<div class="detail"><h4>phone_backup.zip</h4><p>backup created from android phone.</p><p>contains chats, contacts, and media.</p><button class="soft" onclick="closeWindowDetail('files');renderFolder('backup')">open backup</button></div>`,
     latenightreceipt:`<div class="detail"><h4>late_receipt.pdf</h4><p>2 iced coffees</p><p>2 sandwiches</p><p>fries</p><p>paid cash</p><p>8:34 pm • aug 16</p><p class="muted">lia's chat that night says niko told her he was eating alone at home.</p></div>`,
     coffee2:`<div class="detail"><h4>coffee_receipt_0812.pdf</h4><p>2 drinks</p><p>1 pastry</p><p>paid cash</p><p>9:16 pm • aug 12</p></div>`,
     rainalert:`<div class="detail"><h4>rainfall_advisory_2248.html</h4><p><b>saved 10:48 pm • aug 17</b></p><p>cached weather advisory: heavy rain expected to continue through late evening. localized flooding possible on low-lying roads.</p><p class="muted">niko saved this before the final terminal searches. it shows he knew the weather was getting worse, not what he planned to do about it.</p></div>`,
@@ -2991,7 +3194,7 @@ function openFile(k){
     letter:`<div class="detail"><h4>draft.docx</h4><p>"ma, sorry if i didn't get home right away. i'm fixing something lang."</p><p>the rest is blank.</p></div>`,
     archive:`<div class="detail"><h4>archive_old.zip</h4><p>password protected.</p><p>hint: same as "m".</p></div>`,
     parking:`<div class="detail"><h4>parking_08.jpg</h4><p>dark parking area. two figures near a car.</p><p>one looks like niko.</p><p>the other person is holding his hoodie.</p></div>`,
-    randomfolder:`<div class="detail"><h4>random</h4><p>actual junk folder. mostly useless stuff.</p><button class="soft" onclick="renderFolder('random')">open random folder</button></div>`,
+    randomfolder:`<div class="detail"><h4>random</h4><p>actual junk folder. mostly useless stuff.</p><button class="soft" onclick="closeWindowDetail('files');renderFolder('random')">open random folder</button></div>`,
     schoolfolder:`<div class="detail"><h4>school</h4><p>assignments, reviewers, group files.</p></div>`,
     placeslist:`<div class="detail"><h4>places.txt</h4><p>cafe near station</p><p>parking area</p><p>bar back entrance</p><p>24h store</p><p>"don't use same place twice"</p></div>`,
     names:`<div class="detail"><h4>names.txt</h4><p>c</p><p>ash</p><p>m</p><p>j</p><p>lia</p><p class="muted">no explanation.</p></div>`,
@@ -3340,8 +3543,8 @@ function openFile(k){
     syncerrors:`<div class="detail"><h4>sync_errors.log</h4><p>11:38 pm • network lost</p><p>messenger cache pending</p><p>photo upload queued but never completed</p><p>map tiles unavailable</p><p class="muted">nothing in this log occurs after the bag was found.</p></div>`,
     restored:`<div class="detail"><h4>old_cache_note.txt</h4><p>"offline again. just keep local copies."</p><p>"sort downloads later."</p><p class="muted">ordinary note from aug 14.</p></div>`
   };
-  const fd=document.getElementById("fileDetail");
-  if(fd)fd.innerHTML=map[k]||`<div class="detail"><p>nothing useful.</p></div>`;
+  const fileHTML=map[k]||`<div class="detail"><p>nothing useful.</p></div>`;
+  showWindowDetail("files",fileHTML);
   if(k==="private")addJournal("private note says lia doesn't check the laptop.");
   if(k==="latenightreceipt")addJournal("late food receipt shows two meals on a night niko told lia he was home alone.");
   if(k==="voiceexport")addJournal("voice export strongly suggests another girl knew about lia.");
@@ -3878,7 +4081,7 @@ function openChat(k){
     addReply("we found niko's laptop near the terminal",()=>replyVince(1));
     addReply("where did niko go after the bar?",()=>replyVince(2));
   }else if((k==="lia"||k==="mama"||k==="vince")&&!hotspotOn){
-    replyBar.innerHTML=`<span class="muted" style="font-size:11px">offline cached chat • connect jc's hotspot to send a message</span>`;
+    replyBar.innerHTML=`<span class="muted" style="font-size:11px">${storyFlags.hotspotUnlocked?"offline cached chat • connect jc's hotspot to send a message":"offline cached chat • hotspot unavailable until you speak with terminal security"}</span>`;
   }else{
     replyBar.innerHTML=`<span class="muted" style="font-size:11px">${hotspotOn?"online • maybe don't message random people":"offline cached chat • maybe don't message random people"}</span>`;
   }
@@ -4145,7 +4348,7 @@ function renderNotes(){
 }
 function openNote(i){
   markSeen("note_"+i);
-  noteView.innerHTML=`<h3>${notes[i][0]}</h3><div style="white-space:pre-line">${notes[i][2]}</div>`;
+  noteView.innerHTML=`<h3>${notes[i][0]}</h3><div style="white-space:pre-line">${notes[i][2]}</div>`;noteView.scrollTop=0;
   if(i===4)addJournal("weird rules about deleting chats and not taking the same person to the same place.");
   if(i===5)addJournal("niko literally kept a list of excuses.");
 }
@@ -4214,7 +4417,7 @@ function openPhoto(id){
     waitingshed:`<div class="detail"><h4>12:07 am</h4><p>rain-smeared photo facing a covered waiting shed near the terminal-side road.</p><p>a person with an umbrella is visible at the far edge of the frame.</p><p>face, clothes, and direction of travel can't be made out.</p><p class="muted">the same bench area where jc and may later find the bag appears farther down the road.</p></div>`,
     bagfloor:`<div class="detail"><h4>12:11 am</h4><p>inside of a black bag. blurry zipper and laptop corner.</p><p class="muted">photo orientation is sideways.</p></div>`,
   };
-  photoDetail.innerHTML=map[id]||"";
+  showWindowDetail("photos",map[id]||`<div class="detail muted">nothing useful.</div>`);
   if(id==="hallway"||id==="hoodie"||id==="hands")addJournal("more photos don't line up with what niko told lia.");
   if(id==="hallway_empty"||id==="window_zoom"||id==="samecar")addJournal("several photos look like niko was documenting people or places he felt suspicious about, but the images themselves don't prove anyone was following him.");
   if(id==="underpass_symbol"||id==="goat_poster"||id==="chalk_circle"||id==="bar_symbol")addJournal("niko photographed several occult-looking symbols, but the wider images and his own notes suggest they may be unrelated graffiti, posters, or coincidence.");
@@ -4431,7 +4634,7 @@ function renderMail(){
 }
 function openMail(i){
   markSeen("mail_"+i);
-  mailView.innerHTML=`<h3>${mails[i][1]}</h3><p class="muted">from ${mails[i][0]}</p><div style="white-space:pre-line">${mails[i][2]}</div>`;
+  mailView.innerHTML=`<h3>${mails[i][1]}</h3><p class="muted">from ${mails[i][0]}</p><div style="white-space:pre-line">${mails[i][2]}</div>`;mailView.scrollTop=0;
   if(i===5)addJournal("food receipt shows two drinks and two meals on aug 16.");
 }
 
@@ -4493,7 +4696,7 @@ function openContact(i){
   if(c[0]==="printshop")extra=`<p>cousin's print shop.</p><p>note: "help weekends if needed"</p>`;
   if(c[0]==="bartender")extra=`<p>number has no profile image.</p><p>saved from bar receipt / staff contact.</p>`;
   if(["enilec","hsa","airam","alleb","enaj","anail"].includes(c[0]))extra=`<p>name looks intentionally reversed.</p><p>no surname shown.</p><p>last edited this month.</p>`;
-  contactView.innerHTML=`<h3>${c[1]}</h3><p class="muted">${c[2]}</p>${extra}`;
+  contactView.innerHTML=`<h3>${c[1]}</h3><p class="muted">${c[2]}</p>${extra}`;contactView.scrollTop=0;
   if(c[0]==="celine"||c[0]==="c2")addJournal("celine is saved twice under different names.");
 }
 
@@ -4588,8 +4791,8 @@ function renderRecycle(){
 function openRecycle(i){
   markSeen("recycle_"+i);
   let arr=[...recycleBase];
-  const r=arr[i],div=document.createElement("div");
-  div.className="detail";div.innerHTML=`<h4>${r[0]}</h4><p>${r[2]}</p>`;recycleList.appendChild(div);
+  const r=arr[i];
+  showWindowDetail("recycle",`<div class="detail"><h4>${r[0]}</h4><p>${r[2]}</p></div>`);
   if(r[0]==="c_chat.txt"||r[0]==="deleted_chatshot.png")addJournal("deleted files make niko's lies look more deliberate.");
 }
 
@@ -5102,28 +5305,23 @@ function maybeTahoCallback(){
 }
 
 function openExtraFile(k){
-  const box=document.getElementById("fileDetail");if(!box)return;
+  let html="";
   if(k==="meta_mystery_game"){
     markExtra("meta_mystery_game");
-    box.innerHTML=`<div class="detail extra-note"><h4>mystery_game_notes.html</h4><p>how to make a mystery game:</p><p>1. leave the computer unlocked for an extremely convenient reason</p><p>2. add 400 text files</p><p>3. call at least three of them final_final_REAL.txt</p><p>4. use ??? whenever you don't know what to write</p><p>5. if the player gets confused, add rain</p><p class="muted">niko: this game would suck</p><p class="extra-warning">optional joke • not evidence</p></div>`;
-    return;
-  }
-  if(k==="wrong_guess"){
+    html=`<div class="detail extra-note"><h4>mystery_game_notes.html</h4><p>how to make a mystery game:</p><p>1. leave the computer unlocked for an extremely convenient reason</p><p>2. add 400 text files</p><p>3. call at least three of them final_final_REAL.txt</p><p>4. use ??? whenever you don't know what to write</p><p>5. if the player gets confused, add rain</p><p class="muted">niko: this game would suck</p><p class="extra-warning">optional joke • not evidence</p></div>`;
+  }else if(k==="wrong_guess"){
     extraClicks.questionMarks=(extraClicks.questionMarks||0)+1;markExtra("wrong_guess");
     const n=extraClicks.questionMarks;
     const body=n===1?"???":n===2?"still ???":"you have learned nothing.";
-    box.innerHTML=`<div class="detail extra-note"><h4>???.txt</h4><p>${body}</p><button class="soft" onclick="openExtraFile('wrong_guess')">open again</button><p class="extra-warning">optional joke • this never fills a timeline blank</p></div>`;
-    return;
-  }
-  if(k==="devcredits"){
+    html=`<div class="detail extra-note"><h4>???.txt</h4><p>${body}</p><button class="soft" onclick="openExtraFile('wrong_guess')">open again</button><p class="extra-warning">optional joke • this never fills a timeline blank</p></div>`;
+  }else if(k==="devcredits"){
     markExtra("devcredits");
-    box.innerHTML=`<div class="detail extra-note"><h4>readme_old.tmp</h4><p>you really opened everything huh</p><p>thanks for playing lost phone.</p><p>— dev</p><p class="extra-warning">optional dev note • not evidence</p></div>`;
-    return;
-  }
-  if(k==="r_numbers"){
+    html=`<div class="detail extra-note"><h4>readme_old.tmp</h4><p>you really opened everything huh</p><p>thanks for playing lost phone.</p><p>— dev</p><p class="extra-warning">optional dev note • not evidence</p></div>`;
+  }else if(k==="r_numbers"){
     markExtra("jersey_numbers");
-    box.innerHTML=`<div class="detail extra-note"><h4>random_numbers.txt</h4><p>23</p><p>30</p><p>34</p><p>0</p><p class="muted">these are jersey numbers. stop.</p><p class="extra-warning">optional joke • not evidence</p></div>`;
+    html=`<div class="detail extra-note"><h4>random_numbers.txt</h4><p>23</p><p>30</p><p>34</p><p>0</p><p class="muted">these are jersey numbers. stop.</p><p class="extra-warning">optional joke • not evidence</p></div>`;
   }
+  if(html)showWindowDetail("files",html);
 }
 
 const phoneOlderChat=[
@@ -5186,8 +5384,7 @@ function renderYourPhone(){
 
 function openMetaMeme(){
   markExtra("meta_ui_meme");
-  const d=document.getElementById("memeDetail");if(!d)return;
-  d.innerHTML=`<div class="detail"><h4>found_weird_desktop_game.png</h4><div class="mini-desktop"><div class="mini-icons"><span>📁</span><span>💬</span><span>🚏</span><span>🖼️</span><span>🌐</span><span>✉️</span><span>🎙️</span><span>🗑️</span><span>🧮</span><span>😂</span></div><div class="mini-badge">12:59 am<br>heavy rain • ~33 waiting</div></div><p>POV u find someone's unlocked laptop and suddenly think you're a detective</p><p class="muted">comments:</p><p>just turn it in 😭</p><p>op opened the recycle bin before contacts</p><p>average information systems student</p><p class="extra-warning">optional joke • not evidence</p></div>`;
+  showWindowDetail("memes",`<div class="detail"><h4>found_weird_desktop_game.png</h4><div class="mini-desktop"><div class="mini-icons"><span>📁</span><span>💬</span><span>🚏</span><span>🖼️</span><span>🌐</span><span>✉️</span><span>🎙️</span><span>🗑️</span><span>🧮</span><span>😂</span></div><div class="mini-badge">12:59 am<br>heavy rain • ~33 waiting</div></div><p>POV u find someone's unlocked laptop and suddenly think you're a detective</p><p class="muted">comments:</p><p>just turn it in 😭</p><p>op opened the recycle bin before contacts</p><p>average information systems student</p><p class="extra-warning">optional joke • not evidence</p></div>`);
 }
 
 function renderGames(){
@@ -5220,7 +5417,7 @@ function openDiscord(i){
     `<p><b>cam:</b> where are you</p><p><b>niko:</b> inside</p><p><b>cam:</b> can't see u</p><p><b>niko:</b> wait</p>`,
     `<p class="muted">cached server messages unavailable beyond the last sync.</p>`
   ][i];
-  discordView.innerHTML=`<div class="detail"><b>offline cache</b>${msgs}</div>`;
+  discordView.innerHTML=`<div class="detail"><b>offline cache</b>${msgs}</div>`;discordView.scrollTop=0;
   if(i===2||i===3)addJournal("cached discord messages connect vince and cam to niko's night out.");
 }
 
@@ -5241,7 +5438,7 @@ function openWeatherSnapshot(i){
     "this matches rainfall_advisory_2248.html in Downloads. niko knew low roads might flood before his final route searches.",
     "last successful weather refresh was 11:34 pm. internet disappears four minutes later."
   ][i]||"cached weather entry.";
-  const box=document.getElementById("weatherDetail");if(box)box.innerHTML=`<div class="detail">${detail}</div>`;
+  showWindowDetail("weathercache",`<div class="detail"><h4>${["3:31 pm","8:42 pm","10:48 pm","11:34 pm"][i]||"weather snapshot"}</h4><p>${detail}</p></div>`);
   if(i===2)addJournal("weather cache and the saved advisory both show niko knew the rain could flood low roads before he chose a terminal-side route.");
 }
 
@@ -5291,7 +5488,7 @@ function calcPress(k){
 }
 
 function renderAll(){
-  updateClock();renderFileSidebar();renderFolder("recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderYourPhone();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
+  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderYourPhone();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
 const SAVE_KEY="lost_phone_save_v20";
@@ -5299,7 +5496,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:10,
+    version:13,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -5309,10 +5506,11 @@ function createSaveData(){
     currentChat,
     currentNewsFilter,
     showHiddenFiles,
+    currentFileFolder,
     talkIndex,
     hintIndex,
     storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence],
-    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex}
+    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex}
   };
 }
 
@@ -5360,6 +5558,7 @@ function applySaveData(data){
   currentChat=data.currentChat||null;
   currentNewsFilter=data.currentNewsFilter||"all";
   showHiddenFiles=Boolean(data.showHiddenFiles);
+  currentFileFolder=data.currentFileFolder||"recent";
   talkIndex=Number(data.talkIndex||0);
   hintIndex=Number(data.hintIndex||0);
   storyMinutes=Number(data.storyMinutes||0);
@@ -5371,8 +5570,25 @@ function applySaveData(data){
   extrasSeen.clear();(data.extrasSeen||[]).forEach(x=>extrasSeen.add(x));
   Object.assign(extraClicks,data.extraClicks||{});
   Object.assign(storyFlags,data.storyFlags||{});
+  // v30+ migration: hotspot is a story-gated tool. Old saves past the security beat keep access;
+  // old pre-security saves are forced back offline so the live sync cannot happen early.
+  if(Number(data.version||0)<12){
+    if(storyStage>=4||storyFlags.toldGuard||storyFlags.heardPhoneClue){
+      storyFlags.metSecurity=true;
+      storyFlags.hotspotUnlocked=true;
+    }else{
+      hotspotOn=false;
+      storyFlags.liveSynced=false;
+      storyFlags.vinceLive=false;
+      storyFlags.metSecurity=false;
+      storyFlags.hotspotUnlocked=false;
+    }
+  }
+  if(!storyFlags.hotspotUnlocked)hotspotOn=false;
   Object.assign(story,data.story||{});
   Object.assign(relationshipTalkIndex,data.relationshipTalkIndex||{});
+  if(Number(data.version||0)>=13)Object.assign(ambientSceneIndex,data.ambientSceneIndex||{});
+  else Object.keys(ambientSceneIndex).forEach(k=>ambientSceneIndex[k]=0);
   evidence.clear();(data.evidence||[]).forEach(x=>evidence.add(x));
   const ensureMsg=(k,text)=>{if(chats[k]&&!chats[k].msgs.some(m=>m[1]===text))chats[k].msgs.push(["them",text]);};
   if(storyFlags.liveSynced){
