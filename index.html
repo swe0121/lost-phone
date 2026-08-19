@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v33</title>
-<!-- v29: dedicated in-app detail viewer layers for Files/Photos/Recycle/Memes/Weather; fixes bottom-appended previews and folder selection state; preserves v28 universal scrolling and v27 true POV routes -->
+<title>Lost Phone v34</title>
+<!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
   --bg:#06080c;--panel:#10141b;--panel2:#171c25;--panel3:#202734;
@@ -4360,6 +4360,87 @@ stop skipping legs`],
 people overrate rings
 never trust a 2k random
 pineapple on pizza is fine idc`],
+ ["nba agenda","aug 17",`SGA IS NOT A FOUL BAITER
+he drives all game. defenders reach. that's literally what happens when u live in the paint.
+
+lebron sucks idc
+washed + overhyped + every conversation becomes about him somehow
+
+luka is fat
+elite obviously but brother please discover cardio
+
+defense matters more in playoffs when jumpers die
+rings discourse is fake because everyone changes the rules for their favorite player
+
+bookmark this before playoffs`],
+ ["nba predictions i refuse to delete","aug 17",`hornets win a playoff series before boston wins another title
+wemby already peaked
+jokic retires mid-season for horse racing
+3pt revolution dies by 2028
+nba adds a 4pt line anyway somehow
+knicks trade half the team for one guy and still lose round 2
+expansion team makes conference finals fast
+coach gets fired at halftime eventually
+
+THESE ARE PREDICTIONS NOT PROMISES 😭`],
+ ["football agenda","aug 16",`messi sucks
+not in my goat conversation
+
+infantino carried messi / argentina in 2022
+YES I KNOW HOW THIS SOUNDS
+
+lamine yamal ain't shit
+media is doing way too much because of the age
+
+possession without threat = cardio with statistics
+prem refs discourse is astrology for men
+every fanbase thinks commentators hate them`],
+ ["football predictions","aug 16",`real madrid europa league within two seasons
+premier league sprint speed cap because everyone keeps getting injured
+saudi clubs in champions league by 2028
+VAR + goal line tech abolished because football decides chaos was better
+goalkeeper wins ballon d'or before another defender
+7-7 champions league aggregate happens
+club hires content creator as assistant coach
+ronaldo still gets linked to clubs at 50`],
+ ["baseball rant","aug 15",`DODGERS DID NOTHING WRONG
+use the rules or stop crying about the rules
+
+other owners are cheap as hell
+u get revenue sharing and still don't spend?? skill issue
+
+salary cap talk is owner propaganda
+SPEND MONEY THEN
+
+baseball fans secretly love being mad at payrolls
+
+ghost runner in extras is spiritually illegal!!!!!!!!!!!!!!`],
+ ["baseball predictions","aug 15",`30 second batter shot clock where u HAVE to swing
+vegas athletics win world series before yankees
+shohei starts pitching left handed somehow
+all fences moved back 50 feet because manfred gets bored
+position player pitches 10 times in one season
+robot umps become normal then everyone wants humans back
+someone steals home in a world series elimination game
+sponsor logo gets put on the pitch clock`],
+ ["sports argument rules","aug 17",`1. never say "bookmark this" unless willing to be screenshotted forever
+2. injuries count unless i'm defending my own prediction
+3. if somebody sends a stat i don't like ask if they watched the game
+4. if i lose badly say sample size
+5. if prediction somehow hits repost immediately
+6. never delete old takes. deleting means they won
+7. exception: delete truly catastrophic takes before ken sees them`],
+ ["takes to argue about later","aug 17",`SGA whistle discourse
+rings vs peak
+luka conditioning
+lebron old man agenda
+wemby ceiling
+messi goat discourse
+VAR makes everyone miserable
+Dodgers payroll morality
+robot umps
+
+DO NOT START THESE IN THE FAMILY GC AGAIN`],
  ["hair","aug 13",`don't let barber cut top too short again
 low taper maybe
 keep fringe`],
@@ -5340,29 +5421,97 @@ function watchYT(i){
 }
 
 const sportsItems=[
- ["nba saved clips","17 clips"],
- ["old playoff bracket","1 spreadsheet"],
- ["favorite players","5 names"],
- ["2k screenshots","12 images"],
- ["basketball memes","23 images"]
+ ["🏀","nba hot takes","7 agenda items","nba_takes"],
+ ["🔮","nba prediction graveyard","8 predictions","nba_predictions"],
+ ["⚽","football hot takes","7 agenda items","football_takes"],
+ ["🔮","football prediction graveyard","8 predictions","football_predictions"],
+ ["⚾","mlb hot takes","5 agenda items","mlb_takes"],
+ ["🔮","mlb prediction graveyard","8 predictions","mlb_predictions"],
+ ["🎬","nba saved clips","17 clips","nba_clips"],
+ ["📊","old playoff bracket","1 spreadsheet","bracket"],
+ ["⭐","players i argue about","9 names","favorites"],
+ ["🗯️","sports argument screenshots","31 images","arguments"],
+ ["🎮","2k screenshots","12 images","2k"],
+ ["😂","basketball memes","23 images","memes"]
 ];
 function renderSports(){
-  sportsBody.innerHTML=`<h3 style="margin-top:0">basketball</h3>
-  <div class="detail"><b>offline sports cache</b><p>no live scores. last synced aug 17, 10:05 pm.</p></div>`+
-  sportsItems.map((x,i)=>`<div class="index-row" onclick="openSports(${i})"><b>${x[0]}</b><small>${x[1]}</small></div>`).join("");
+  closeWindowDetail("sports");
+  sportsBody.innerHTML=`<h3 style="margin-top:0">sports</h3>
+  <div class="detail"><b>offline sports cache</b><p>no live scores. last synced aug 17, 10:05 pm.</p><p class="muted">niko apparently uses this app as a personal propaganda archive. saved takes are opinions, jokes, arguments, and predictions — not case evidence.</p></div>`+
+  sportsItems.map((x,i)=>`<div class="index-row" onclick="openSports(${i})"><b>${x[0]} ${x[1]}</b><small>${x[2]}</small></div>`).join("");
 }
 function openSports(i){
-  markSeen("sports_"+i);
-  if(i===0)setTimeout(()=>fieldTalk("may","you've been on this section way too long."),250);
-  if(i===1)setTimeout(()=>fieldTalk("jc","wait his bracket is actually terrible 😭"),250);
-  const bodies=[
-    "saved short clips: dunks, crossovers, blocks, missed game winners, funny bench reactions.",
-    "old bracket predictions. niko got a bunch wrong and wrote 'never betting my takes again'.",
-    "names list: curry, kyrie, shai, luka, ant.",
-    "2k build screenshots and badge layouts.",
-    "mostly reaction images and low quality nba memes."
-  ];
-  toast("sports",bodies[i]);
+  const item=sportsItems[i];if(!item)return;
+  const key=item[3];markSeen("sports_"+key);
+  const pages={
+    nba_takes:`<div class="detail"><h4>🏀 horrible nba takes & hot takes</h4><p class="muted">notes synced from niko's phone • “agenda until proven otherwise”</p>
+      <p><b>SGA is NOT a foul baiter.</b><br>he gets to the line because he lives at the rim. footwork + pace make defenders reach. calling every whistle baiting is lazy.</p>
+      <p><b>LeBron James sucks.</b><br>over-hyped, washed, and at this point niko insists every team has to bend itself around him.</p>
+      <p><b>Luka Dončić is fat.</b><br>niko's exact wording: “generational player built like he just left a buffet.” he keeps ranting that conditioning limits him.</p>
+      <p><b>rings discourse is fake.</b><br>people use rings when it helps their favorite player and immediately invent context when it doesn't.</p>
+      <p><b>defense matters more in the playoffs than people admit.</b><br>“when the jumper dies u better be able to guard somebody.”</p>
+      <p><b>most ‘bag’ discourse is just difficult-shot propaganda.</b><br>niko hates when people confuse a hard move with a good possession.</p>
+      <p><b>he still says he knows ball.</b><br>multiple old brackets suggest otherwise.</p>
+      <p class="extra-warning">niko's sports opinions • not evidence</p></div>`,
+    nba_predictions:`<div class="detail"><h4>🔮 horrible nba predictions</h4><p class="muted">last edited aug 17 • niko refuses to delete failed predictions</p>
+      <p><b>1. Charlotte wins a playoff series before Boston wins another title.</b><br>his argument: apron penalties blow up Boston faster than expected while Charlotte somehow builds a real contender.</p>
+      <p><b>2. Victor Wembanyama has already peaked.</b><br>“teams figure out the body, force him outside, glorified 7'4 spot-up shooter.”</p>
+      <p><b>3. Nikola Jokić retires mid-season to race horses.</b><br>niko has written “THIS ONE IS HALF A JOKE” beside it three times.</p>
+      <p><b>4. the 3-point revolution dies by 2028.</b><br>he predicts switching and length bring back ugly mid-range isolation basketball.</p>
+      <p><b>5. the NBA adds a four-point line before 2032.</b><br>direct contradiction with prediction #4. niko wrote “both can happen shut up.”</p>
+      <p><b>6. the Knicks trade half their roster for one superstar and still lose in round two.</b></p>
+      <p><b>7. an expansion team reaches the conference finals within three seasons.</b></p>
+      <p><b>8. one day a coach gets fired during halftime.</b><br>“not technically impossible.”</p>
+      <p class="extra-warning">prediction graveyard • not evidence</p></div>`,
+    football_takes:`<div class="detail"><h4>⚽ football hot takes</h4><p class="muted">file header: “football agenda. do not send this to normal people.”</p>
+      <p><b>Lionel Messi sucks.</b><br>niko calls him overrated and says he shouldn't be in the GOAT conversation.</p>
+      <p><b>Gianni Infantino carried Messi.</b><br>his conspiracy-flavored take is that FIFA basically handed Argentina the 2022 World Cup. another line underneath says: “yes i know how this sounds.”</p>
+      <p><b>Lamine Yamal ain't shit.</b><br>niko thinks the age/media hype is doing too much and predicts he won't sustain elite status.</p>
+      <p><b>penalty shootouts are not a real measure of the better team.</b><br>“it's five anxiety attacks with a goalkeeper.”</p>
+      <p><b>Premier League referee discourse is just astrology for men.</b></p>
+      <p><b>possession without threat is cardio with statistics.</b></p>
+      <p><b>every fanbase thinks the commentators hate them.</b></p>
+      <p class="extra-warning">niko's opinions • not evidence</p></div>`,
+    football_predictions:`<div class="detail"><h4>🔮 horrible football predictions</h4>
+      <p><b>1. Real Madrid drops to the Europa League within two seasons.</b><br>too many stars, bad balance, locker-room collapse. niko wrote “this will age beautifully” beside it.</p>
+      <p><b>2. the Premier League caps sprint speeds to prevent injuries.</b><br>his fake future rule includes wearable tech yelling at players for running too fast.</p>
+      <p><b>3. Saudi Pro League clubs get Champions League wildcards by 2028.</b><br>“money eventually beats geography.”</p>
+      <p><b>4. goal-line technology and VAR are completely abolished.</b><br>football intentionally returns to pure referee chaos.</p>
+      <p><b>5. a goalkeeper wins a Ballon d'Or before another defender does.</b></p>
+      <p><b>6. a Champions League knockout match ends 7-7 on aggregate then 0-0 after extra time.</b></p>
+      <p><b>7. one major club hires a full-time social-media creator as an assistant coach.</b></p>
+      <p><b>8. Ronaldo is still posting gym videos at 50 and somebody asks if he can come off the bench.</b></p>
+      <p class="extra-warning">prediction graveyard • not evidence</p></div>`,
+    mlb_takes:`<div class="detail"><h4>⚾ mlb hot takes</h4>
+      <p><b>The Dodgers did nothing wrong.</b><br>niko says deferrals, spending, and market advantage are just teams using the rules available to them.</p>
+      <p><b>cheap owners & skill issues.</b><br>“if your billionaire owner takes revenue sharing and still fields garbage that's not LA's moral problem.”</p>
+      <p><b>salary-cap whining is owner propaganda.</b><br>he has “SPEND MONEY THEN” typed in all caps underneath.</p>
+      <p><b>baseball fans secretly enjoy being angry about payrolls.</b></p>
+      <p><b>extra innings ghost runner is spiritually illegal.</b><br>no explanation. just 14 angry exclamation marks.</p>
+      <p class="extra-warning">niko's opinions • not evidence</p></div>`,
+    mlb_predictions:`<div class="detail"><h4>🔮 horrible mlb predictions</h4>
+      <p><b>1. MLB introduces a 30-second shot clock for batters to swing.</b><br>niko imagines an automatic strikeout if a batter refuses to swing in time.</p>
+      <p><b>2. Las Vegas/Oakland Athletics win a World Series before the Yankees win another.</b><br>“vegas devil magic vs permanent yankees dysfunction.”</p>
+      <p><b>3. Shohei Ohtani starts pitching left-handed to prolong his career.</b><br>apparently he simply unlocks another arm and throws 95.</p>
+      <p><b>4. every home-run fence gets moved back 50 feet.</b><br>Manfred decides home runs are too common and accidentally creates warning-track baseball.</p>
+      <p><b>5. a position player reaches 10 pitching appearances in one season because his team gives up constantly.</b></p>
+      <p><b>6. robot umps become normal and fans immediately start demanding human umps back.</b></p>
+      <p><b>7. somebody steals home in a World Series elimination game and becomes either immortal or unemployed.</b></p>
+      <p><b>8. an MLB team sells a sponsorship for the pitch clock itself.</b></p>
+      <p class="extra-warning">prediction graveyard • not evidence</p></div>`,
+    nba_clips:`<div class="detail"><h4>nba saved clips</h4><p>17 short clips: dunks, crossovers, blocks, missed game winners, funny bench reactions, and three SGA drive compilations apparently saved for arguments.</p><p class="muted">folder comment: “WATCH THE ACTUAL DRIVE BEFORE SAYING FOUL BAIT.”</p></div>`,
+    bracket:`<div class="detail"><h4>old playoff bracket</h4><p>half the picks are crossed out.</p><p>cells include “i know ball”, “LOCK”, “free money”, then later “nvm”, “delete this”, and “injuries don't count.”</p><p>one failed pick has been highlighted red with: “THE PROCESS WAS RIGHT.”</p></div>`,
+    favorites:`<div class="detail"><h4>players i argue about</h4><p>shai • curry • kyrie • ant • jokic • luka • lebron • wemby • kd</p><p class="muted">this is not actually a favorites list. half the names are here because niko keeps arguing about them.</p></div>`,
+    arguments:`<div class="detail"><h4>sports argument screenshots</h4><p>31 screenshots from group chats, comments, and DMs.</p><p>recurring phrases from niko:</p><p>“watch games not box scores”</p><p>“u moved the goalpost”</p><p>“context suddenly matters now?”</p><p>“bookmark this”</p><p>“i'm coming back to this in june”</p><p>“DELETE THAT SCREENSHOT”</p><p class="muted">several screenshots show friends reposting his old predictions after they failed.</p></div>`,
+    "2k":`<div class="detail"><h4>2k screenshots</h4><p>12 build screenshots and badge layouts.</p><p>one folder is named DEFENSE_IS_A_TEAM_STAT even though his own build has terrible perimeter defense.</p></div>`,
+    memes:`<div class="detail"><h4>basketball memes</h4><p>23 low-quality reaction images, legacy slander, missed-free-throw edits, fake trade graphics, and screenshots of niko losing sports arguments.</p></div>`
+  };
+  showWindowDetail("sports",pages[key]||`<div class="detail">nothing cached.</div>`,item[1]);
+  if(key==="nba_takes")setTimeout(()=>fieldTalk("may","oh my god he has an AGENDA folder 😭",3400),250);
+  if(key==="nba_predictions")setTimeout(()=>fieldTalk("jc","jokic retiring mid-season for horses might be the least impossible one here somehow."),250);
+  if(key==="football_takes")setTimeout(()=>fieldTalk("may","yeah no i'm not getting involved in the messi argument. that's how friendships end."),250);
+  if(key==="mlb_takes")setTimeout(()=>fieldTalk("jc","'SPEND MONEY THEN' in all caps is crazy 😭"),250);
+  if(key==="bracket")setTimeout(()=>fieldTalk("jc","wait his bracket is actually terrible 😭"),250);
 }
 
 const autocadDrawings=[
@@ -5746,7 +5895,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:15,
+    version:16,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
