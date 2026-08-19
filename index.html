@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v45</title>
+<title>Lost Phone v48</title>
 <!-- v44: clean spoiler-free README + detailed gameplay-focused How to Play. -->
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
@@ -1065,6 +1065,34 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
 .case-tools{margin-top:14px}.case-tools h4{margin:0 0 7px;font-size:12px}.case-note{font-size:10px;color:#8f99a8;line-height:1.45}.case-bookmarks,.case-contradictions,.case-evidence{margin-top:12px}.case-list{display:flex;flex-direction:column;gap:6px}.case-row{border:1px solid #29313d;background:#0d1219;border-radius:8px;padding:8px 9px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}.case-row-main{min-width:0}.case-row-name{font-size:11px;color:#e7ebf1;overflow-wrap:anywhere}.case-row-key{font:9px "Courier New",monospace;color:#687383;margin-top:3px;overflow-wrap:anywhere}.case-row-controls{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.case-select{background:#090d12;color:#cdd5df;border:1px solid #374253;border-radius:6px;padding:5px 6px;font:9px "Courier New",monospace}.case-bookmark{border:1px solid #374253;background:#111720;color:#9da9b8;border-radius:6px;padding:5px 7px;cursor:pointer;font:9px "Courier New",monospace}.case-bookmark.on{color:#fff;border-color:#8b98aa;background:#27303c}.contradiction-row{border-left:3px solid #9a6b72;background:#121014;padding:9px 10px;margin-top:6px;font-size:11px;line-height:1.55}.contradiction-row b{display:block;font-size:10px;margin-bottom:3px;color:#d9b7bc}.bookmark-empty{font-size:10px;color:#697382;padding:4px 0}.case-scroll{max-height:330px;overflow:auto;padding-right:2px}
 @media(max-width:760px){#mainMenu{padding-top:28px}.menu-cheat{margin-top:26px}#helpButton{right:7px;top:92px}.case-row{grid-template-columns:1fr}.case-row-controls{justify-content:flex-start}.case-scroll{max-height:280px}}
 
+
+/* v48 keeps required early case mechanics + slow rewarding progression; trims repetitive guidance */
+#journal{z-index:95000}
+.journal-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;position:sticky;top:-12px;background:rgba(11,14,19,.98);padding:10px 0 7px;z-index:2}
+.journal-head h4{margin:0!important}
+.journal-actions{display:flex;gap:6px}
+.journal-actions button{border:1px solid #3a4453;background:#151b24;color:#dbe2ec;border-radius:7px;padding:5px 8px;font:inherit;font-size:10px;cursor:pointer}
+.msg-tab:disabled,.msg-tab.locked{opacity:.45;cursor:not-allowed;filter:saturate(.45)}
+.timeline-row{grid-template-columns:70px 1fr auto!important}
+.timeline-flag{border:1px solid #394456;background:#111720;color:#b7c2d1;border-radius:7px;min-width:34px;height:28px;cursor:pointer}
+.timeline-flag.on{color:#fff;background:#2a3443}
+.case-tools details{margin-top:10px;border-top:1px solid #29313d;padding-top:10px}
+.case-tools summary{cursor:pointer;font-weight:700;color:#dce4ef}
+.case-required{font-size:10px;color:#d6c58a;font-weight:700;margin-left:6px}
+.case-progress-card{border:1px solid #384252;background:#0d1219;border-radius:9px;padding:10px 11px;margin:0 0 12px}
+.case-progress-card h4{margin:0 0 7px;font-size:12px}
+.case-progress-line{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:11px;border-bottom:1px solid #202733}
+.case-progress-line:last-child{border-bottom:0}
+.case-progress-line .done{font-weight:700}
+.case-progress-tip{font-size:10px;color:#9aa5b5;line-height:1.5;margin-top:7px}
+.case-review{margin-top:7px;border:1px solid #3b4657;background:#151c25;color:#dbe3ec;border-radius:6px;padding:5px 8px;font:9px "Courier New",monospace;cursor:pointer}
+.case-review.done{opacity:.7;cursor:default}
+.journal-case-progress{border:1px solid #303947;background:#101620;border-radius:8px;padding:8px 9px;margin:0 0 9px;font-size:10px;line-height:1.45;color:#b8c2cf}
+.journal-case-progress b{color:#f1f4f7}
+.case-simple-note strong{color:#eee}
+.case-optional{font-size:10px;color:#9ba8ba;font-weight:400;margin-left:6px}
+.case-simple-note{padding:9px 10px;border:1px solid #2b3543;border-radius:8px;background:#0d1219;color:#aeb9c7;margin:8px 0 12px}
+
 </style>
 </head>
 <body>
@@ -1173,220 +1201,85 @@ this rain is getting stupid though.</span></button>
 <div id="howToPlayOverlay">
   <div class="howto-card">
     <h2>how to play</h2>
-    <div class="howto-sub">complete control guide • what every investigation control does and where to find it • no clue walkthrough</div>
+    <div class="howto-sub">simple control guide • no clue locations • no easter-egg spoilers</div>
     <div class="howto-copy">
-      <div class="howto-tagline">play by opening the laptop, inspecting whatever you want, and using the case tools to organize what you personally think the evidence means.</div>
-      <p>This page explains the <b>controls and mechanics</b>. It does not tell you which files are clues, where hidden content is, or what theory to believe.</p>
+      <div class="howto-tagline">the game moves slowly on purpose. explore, then use a few simple case controls to show how you are organizing what you found.</div>
 
       <div class="howto-section">
-        <h3>controls at a glance</h3>
+        <h3>the easy version</h3>
+        <div class="howto-callout"><b>start → choose JC or May → explore → reach the current clue target → use the case control shown in Our Notes → the next part opens → repeat until the final decision.</b></div>
+        <p>You still <b>do not need to read every file</b>. The game asks for a small number of strong discoveries in each section, then one simple case action when needed.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>main controls</h3>
         <div class="howto-control-grid">
-          <div class="howto-control"><span class="key">click / tap</span><b>interact</b><p>open apps, files, chats, photos, tabs, dialogue choices, buttons, and case controls.</p></div>
-          <div class="howto-control"><span class="key">scroll</span><b>move inside an app</b><p>use the mouse wheel/trackpad, or swipe inside the panel on touch screens. many apps have their own scroll area.</p></div>
-          <div class="howto-control"><span class="key">⊞</span><b>start menu</b><p>opens the laptop Start menu for another way to launch apps and access save/load.</p></div>
-          <div class="howto-control"><span class="key">☷</span><b>our notes</b><p>opens or closes JC and May's automatically recorded investigation notes.</p></div>
-          <div class="howto-control"><span class="key">💾</span><b>quick save</b><p>saves the current playthrough immediately without opening the Save app.</p></div>
-          <div class="howto-control"><span class="key">☷💾</span><b>save / load panel</b><p>opens the full Save app for save, load, export, import, or delete-save controls.</p></div>
-          <div class="howto-control"><span class="key">📱</span><b>your phone</b><p>opens JC/May's phone material when available. it is separate from Niko's laptop apps.</p></div>
-          <div class="howto-control"><span class="key">wifi 🔒</span><b>connection control</b><p>shows the fictional laptop connection state. it stays locked until the story makes the hotspot available.</p></div>
-          <div class="howto-control"><span class="key">?</span><b>help</b><p>reopens this How to Play page from the laptop desktop.</p></div>
-          <div class="howto-control"><span class="key">_ / ×</span><b>close a laptop window</b><p>either top-right button hides the current app. reopen it from the desktop, taskbar, or Start menu.</p></div>
-          <div class="howto-control"><span class="key">← back</span><b>leave a detail view</b><p>when a file/photo/detail opens over an app, use Back to return to that app's list without closing the whole app.</p></div>
-          <div class="howto-control"><span class="key">🔊 / 🔋</span><b>status buttons</b><p>show the current volume or remaining laptop battery. battery can change as the in-game night progresses.</p></div>
+          <div class="howto-control"><span class="key">click / tap</span><b>open or choose</b><p>apps, files, chats, photos, dialogue choices, buttons.</p></div>
+          <div class="howto-control"><span class="key">scroll</span><b>move inside the current app</b><p>mouse wheel/trackpad or swipe inside the panel.</p></div>
+          <div class="howto-control"><span class="key">← back</span><b>return to the app list</b><p>use this after opening a file/photo/detail.</p></div>
+          <div class="howto-control"><span class="key">_ / ×</span><b>close the app window</b><p>nothing is deleted; just reopen the app later.</p></div>
+          <div class="howto-control"><span class="key">⊞</span><b>start menu</b><p>another way to open laptop apps.</p></div>
+          <div class="howto-control"><span class="key">?</span><b>help</b><p>opens this guide again.</p></div>
         </div>
       </div>
 
       <div class="howto-section">
-        <h3>1. start, continue, and choose a pov</h3>
-        <p>On the main menu:</p>
-        <div class="howto-steps">
-          <div class="howto-step"><b><span class="howto-ui">start</span></b><p>begins a new playthrough and sends you to character selection.</p></div>
-          <div class="howto-step"><b><span class="howto-ui">continue</span></b><p>only appears when a local save exists. it loads that saved playthrough.</p></div>
-          <div class="howto-step"><b>JC / May cards</b><p>click the character whose point of view you want to control. both investigate the same laptop, but personal dialogue and some choices are different.</p></div>
-          <div class="howto-step"><b>dialogue choices</b><p>when response buttons appear, click one to continue. ordinary dialogue choices can change tone and character moments; they are not a hidden evidence-rating system.</p></div>
-        </div>
+        <h3>☷ our notes</h3>
+        <p>Click <span class="howto-ui">☷</span> on the taskbar. <b>Our Notes</b> is an automatic list of important things JC and May have already noticed.</p>
+        <p>You do not type in it. Scroll through it when you forget what happened.</p>
+        <p>If you are stuck, click <span class="howto-ui">need a lead?</span> inside Our Notes. It gives one optional next-step hint based on your current progress.</p>
       </div>
 
       <div class="howto-section">
-        <h3>2. desktop + window controls</h3>
-        <p>After the opening conversation, the laptop desktop becomes your main play area.</p>
+        <h3>messenger: inbox / archived / requests</h3>
+        <p>At the beginning, you only have the locally available <b>inbox cache</b>.</p>
         <ul class="howto-list">
-          <li><b>desktop icon:</b> click/tap once to open that app or file shortcut.</li>
-          <li><b>taskbar shortcut:</b> the bottom bar has quick buttons for common apps and game controls.</li>
-          <li><b><span class="howto-ui">⊞</span> Start:</b> opens a larger app list if you do not want to hunt through desktop icons.</li>
-          <li><b>click an already-open window:</b> brings it in front of other laptop windows.</li>
-          <li><b><span class="howto-ui">_</span> or <span class="howto-ui">×</span>:</b> closes/hides that app window. neither deletes anything.</li>
-          <li><b><span class="howto-ui">← back</span>:</b> closes only the file/photo/detail viewer and returns to the list underneath.</li>
+          <li><b>inbox</b> — available from the start.</li>
+          <li><b>archived</b> — unlocks later when the investigation reaches the account's deeper cached history.</li>
+          <li><b>requests</b> — not locally cached at first; it only becomes available after the laptop legitimately reconnects.</li>
         </ul>
-        <p>You can jump between apps whenever you want. There is no requirement to finish one app before opening another.</p>
+        <p>If a tab has a lock, keep playing. You are not missing a control.</p>
       </div>
 
       <div class="howto-section">
-        <h3>3. opening files, chats, photos, and tabs</h3>
-        <p>Most apps use rows, cards, tabs, sidebars, or folders.</p>
-        <div class="howto-steps">
-          <div class="howto-step"><b>files</b><p>choose a folder/location from the sidebar, then click a file. a detail viewer opens over the list. press <span class="howto-ui">← back</span> to return.</p></div>
-          <div class="howto-step"><b>messenger / social apps</b><p>click a conversation or profile on the left/list side. use tabs such as Inbox, Archived, Profile, Messages, Following, etc. when an app provides them.</p></div>
-          <div class="howto-step"><b>photos / screenshots / videos</b><p>click an item to inspect the information available for it. if the game provides a button inside the viewer, that button is an actual interaction and can be used normally.</p></div>
-          <div class="howto-step"><b>long content</b><p>scroll <b>inside the currently active panel</b>. if the page itself does not move, move your pointer/finger over the app content and scroll there.</p></div>
-        </div>
+        <h3>🧷 case board → our timeline</h3>
+        <p>The <b>Case Board</b> appears early, after the basic owner/contact setup. At first it is just your discovered evidence and case controls.</p>
+        <p>Later, when the final-night investigation becomes important, the same app expands into <b>Our Timeline</b>. Known events show a time and description; unknown sections stay <b>???</b>.</p>
+        <p>Each evidence/timeline row can be organized with the controls below. The game only asks you to use a few of them, not label everything.</p>
       </div>
 
       <div class="howto-section">
-        <h3>4. discoveries + progression</h3>
-        <p>Some first-time opens are recorded as discoveries. Enough relevant discoveries can advance the story, unlock more conversations, reveal additional folders/chats, or make new tools available.</p>
-        <div class="howto-callout"><b>control:</b> there is no separate "collect clue" button. <b>opening the relevant item is the interaction.</b> If it counts, the game records it automatically.</div>
-        <p>Opening the same item repeatedly usually does not create additional progression. You are also not required to reach 100% completion; plenty of clickable things are ordinary laptop clutter.</p>
+        <h3>case tools — required, but simple</h3>
+        <div class="howto-warning"><b>none of the case tools grade you or secretly pick your ending — they're just for keeping your own head straight.</b></div>
+        <p>When Our Notes tells you a case action is required, open <b>🧷 Case Board / Our Timeline</b>. There is a confidence dropdown beside each clue, a <b>☆ flag</b> button for anything you want to keep nearby, and a <b>review comparison</b> button when the board puts two discovered pieces together.</p>
+        <p>You only have to use the small number shown in the current-step box. The story still waits for those actions before moving on.</p>
       </div>
 
       <div class="howto-section">
-        <h3>5. our notes — the ☷ button</h3>
-        <p>The taskbar button <span class="howto-ui">☷</span> opens <b>Our Notes</b>.</p>
-        <p>These are automatic short notes created when JC and May notice something worth remembering. You do <b>not</b> type into this panel yourself.</p>
-        <ul class="howto-list">
-          <li>click <span class="howto-ui">☷</span> once to open it.</li>
-          <li>scroll through previously recorded notes.</li>
-          <li>click <span class="howto-ui">☷</span> again to hide it.</li>
-        </ul>
-        <p>Our Notes is different from the later Case Tools: notes are automatic story observations, while confidence labels and revisit flags are your own organization choices.</p>
+        <h3>wifi / hotspot</h3>
+        <p>Wi-Fi stays locked until the story unlocks it — you'll know when it does. After that, the taskbar button connects the laptop to JC's hotspot so uncached information can arrive.</p>
       </div>
 
       <div class="howto-section">
-        <h3>6. our timeline</h3>
-        <p><b>Our Timeline</b> unlocks after enough investigation progress. When it becomes available, open the <span class="howto-ui">🧷 our timeline</span> desktop icon.</p>
-        <p>The upper part arranges discovered events by their in-game time. Unknown parts stay unknown until supporting information has actually been found.</p>
-        <div class="howto-example">
-          <p><b>timeline control flow:</b></p>
-          <p>open <span class="howto-ui">🧷 our timeline</span> → review chronological entries → scroll downward to <b>Case Tools</b> → label or flag discovered evidence.</p>
-        </div>
-        <p>The timeline is a review tool. You normally discover information in the original apps first; the timeline then helps you compare it chronologically.</p>
+        <h3>saving</h3>
+        <p><span class="howto-ui">💾</span> quick-saves immediately. <span class="howto-ui">☷💾</span> opens the full Save / Load window.</p>
+        <p>The game also autosaves. Continue on the main menu loads your local save.</p>
       </div>
 
       <div class="howto-section">
-        <h3>7. confidence controls — confirmed / likely / possible / speculation</h3>
-        <p>Inside <b>Our Timeline → Case Tools → Discovered Evidence</b>, each evidence row has a dropdown.</p>
-        <div class="howto-steps">
-          <div class="howto-step"><b>step 1</b><p>find the evidence row you want to organize.</p></div>
-          <div class="howto-step"><b>step 2</b><p>click the confidence dropdown beside it.</p></div>
-          <div class="howto-step"><b>step 3</b><p>choose <b>confirmed</b>, <b>likely</b>, <b>possible</b>, <b>speculation</b>, or return it to <b>unmarked</b>.</p></div>
-        </div>
-        <ul class="howto-list">
-          <li><b>confirmed</b> — you personally consider the fact directly established by what you found.</li>
-          <li><b>likely</b> — strongly supported, but you still see room for another explanation.</li>
-          <li><b>possible</b> — it fits the evidence, but alternatives are still reasonable.</li>
-          <li><b>speculation</b> — mainly a theory you want to remember.</li>
-          <li><b>unmarked</b> — removes your confidence label.</li>
-        </ul>
-        <div class="howto-warning"><b>important:</b> this dropdown does not tell the game what is objectively true. your label does not change evidence, unlock a route, add score, or force an ending. it is a personal case-board annotation.</div>
+        <h3>if you get stuck</h3>
+        <ol class="howto-list">
+          <li>open <b>☷ Our Notes</b>.</li>
+          <li>press <b>need a lead?</b>.</li>
+          <li>try another normal app instead of repeatedly clicking the same file.</li>
+          <li>when Timeline exists, review the known timestamps and flagged items.</li>
+        </ol>
+        <p>Check the current progress line in Our Notes or the Case Board. You still need the full clue target for each act, but you should always be able to see what kind of progress is missing.</p>
       </div>
 
       <div class="howto-section">
-        <h3>8. manual flag control — ☆ revisit / ★ revisit</h3>
-        <p>This is the player's actual <b>flag/bookmark mechanic</b>.</p>
-        <p>Go to <b>Our Timeline → Case Tools → Discovered Evidence</b>. Every evidence row has a button:</p>
-        <div class="howto-example">
-          <p><span class="howto-ui">☆ revisit</span> = not currently flagged.</p>
-          <p><span class="howto-ui">★ revisit</span> = currently flagged to come back to.</p>
-        </div>
-        <div class="howto-steps">
-          <div class="howto-step"><b>flag it</b><p>click <span class="howto-ui">☆ revisit</span>. it changes to <span class="howto-ui">★ revisit</span>.</p></div>
-          <div class="howto-step"><b>find it again</b><p>the same evidence is added to the <b>Revisit Later</b> section near the top of Case Tools, so you do not have to search through the full evidence list again.</p></div>
-          <div class="howto-step"><b>remove the flag</b><p>click <span class="howto-ui">★ revisit</span> again. it returns to <span class="howto-ui">☆ revisit</span> and disappears from Revisit Later.</p></div>
-        </div>
-        <p>The flag is saved with your playthrough. It does not increase story progression and it does not mean the game considers the evidence important — <b>you</b> are the one deciding to revisit it.</p>
-      </div>
-
-      <div class="howto-section">
-        <h3>9. automatic contradiction flags</h3>
-        <p>This is separate from the manual <span class="howto-ui">☆ revisit</span> flag.</p>
-        <p>When the game has seen both sides of certain comparisons, a box can appear under <b>Case Tools → Contradiction Flags</b> with the label:</p>
-        <div class="howto-example"><p><b>automatic flag • [comparison]</b></p></div>
-        <p>You do not click a button to create these. They appear automatically after the required pieces have been discovered.</p>
-        <div class="howto-warning"><b>automatic flag does not mean automatic lie.</b> it only means two discovered pieces deserve comparison. the player still decides how to interpret the mismatch.</div>
-      </div>
-
-      <div class="howto-section">
-        <h3>10. using confidence + revisit + contradictions together</h3>
-        <p>The three case tools are meant to work together:</p>
-        <div class="howto-example">
-          <p><b>confidence dropdown</b> = "how strongly do I believe this?"</p>
-          <p><b>☆ / ★ revisit</b> = "I want this kept near the top so I can compare it later."</p>
-          <p><b>automatic contradiction flag</b> = "the game noticed two discovered facts/accounts that should be compared."</p>
-        </div>
-        <p>You can flag something and also give it a confidence label. They are independent controls.</p>
-      </div>
-
-      <div class="howto-section">
-        <h3>11. offline / hotspot control</h3>
-        <p>The taskbar Wi-Fi button also acts as the story's connection control.</p>
-        <ul class="howto-list">
-          <li><span class="howto-ui">wifi 🔒</span> — hotspot access is not available yet. clicking it will not bypass story progression.</li>
-          <li><span class="howto-ui">wifi ✕</span> — hotspot has become available but is currently disconnected.</li>
-          <li><span class="howto-ui">wifi • jc-phone</span> — laptop is connected to JC's hotspot.</li>
-        </ul>
-        <p>Once the control is legitimately unlocked, click the Wi-Fi button to connect/disconnect. Going online can allow newer fictional information to sync into some apps.</p>
-        <div class="howto-callout"><b>mechanic:</b> cached/offline material and information received after live reconnection can belong to different points in time. the game tracks that distinction automatically.</div>
-      </div>
-
-      <div class="howto-section">
-        <h3>12. save controls</h3>
-        <p>You have two taskbar save controls:</p>
-        <ul class="howto-list">
-          <li><span class="howto-ui">💾</span> — <b>quick save</b>. saves immediately.</li>
-          <li><span class="howto-ui">☷💾</span> — opens the full <b>Save / Load</b> window.</li>
-        </ul>
-        <p>Inside Save / Load:</p>
-        <ul class="howto-list">
-          <li><b>save now</b> — overwrite/update your local browser save with the current state.</li>
-          <li><b>load save</b> — return to the stored local save.</li>
-          <li><b>export save file</b> — download a JSON backup of the current save.</li>
-          <li><b>import save file</b> — choose a previously exported JSON save and load it.</li>
-          <li><b>delete save</b> — removes the local playthrough save.</li>
-        </ul>
-        <p>The game also autosaves after a few new discoveries. Confidence tags and revisit flags are included in the saved state.</p>
-      </div>
-
-      <div class="howto-section">
-        <h3>13. dialogue + story prompts during laptop use</h3>
-        <p>JC and May can talk while an app is open. Important dialogue appears above the laptop interface, so you do not need to close the current window.</p>
-        <p>If a large story prompt appears with choices, click one of the displayed buttons before normal exploration continues.</p>
-        <p>Some normal conversations happen during quieter moments; evidence-triggered dialogue takes priority when needed.</p>
-      </div>
-
-      <div class="howto-section">
-        <h3>14. reaching the final decision</h3>
-        <p>There is no "solve case" button. Keep exploring and establishing enough of the night until the story eventually asks what JC and May should do with the laptop.</p>
-        <p>Click one of the available decision buttons when that prompt appears. Some options only appear if their evidence requirements were actually reached.</p>
-        <p>If an option you expected is missing, continue investigating rather than changing your confidence tags — the tags themselves do not unlock endings.</p>
-      </div>
-
-      <div class="howto-section">
-        <h3>15. cheat-code controls</h3>
-        <p>There are two places to enter a code:</p>
-        <ul class="howto-list">
-          <li>the small <b>code</b> field on the main menu.</li>
-          <li>the <b>🧪 Cheat Codes</b> laptop app.</li>
-        </ul>
-        <p>Click the field, type a code you already know, then press <b>Enter</b> or the on-screen <b>enter</b> button.</p>
-        <p>The game intentionally does not show a code list, suggestions, or autofill. Cheats are optional development/testing shortcuts and are not needed for normal play.</p>
-      </div>
-
-      <div class="howto-section">
-        <h3>16. mobile + touch controls</h3>
-        <ul class="howto-list">
-          <li><b>tap</b> instead of clicking.</li>
-          <li><b>swipe inside the app</b> to scroll long lists or documents.</li>
-          <li>the Files sidebar becomes a horizontally scrollable location bar on small screens.</li>
-          <li>the taskbar can scroll horizontally so its controls remain reachable.</li>
-          <li>detail views use the same <span class="howto-ui">← back</span> button.</li>
-          <li>landscape gives the fake-laptop interface more space, but it is optional.</li>
-        </ul>
-      </div>
-
-      <div class="howto-section">
-        <h3>full gameplay loop</h3>
-        <div class="howto-callout"><b>start → choose JC or May → use desktop/apps → click items to discover information → check ☷ Our Notes → unlock 🧷 Our Timeline → use confidence dropdowns + ☆ revisit flags + automatic contradiction flags → use hotspot when the story unlocks it → save → keep investigating → choose what to do when the final decision appears.</b></div>
-        <p>That is the full control loop. The game itself is figuring out what all the information means.</p>
+        <h3>cheat codes</h3>
+        <p>The main menu and laptop both have a code field. Type a code you already know and press Enter. The game never shows or suggests the codes.</p>
       </div>
     </div>
     <button class="soft howto-back" onclick="closeHowToPlay()">back</button>
@@ -1528,7 +1421,7 @@ this rain is getting stupid though.</span></button>
         </div>
       </div>
 
-      <div id="journal"><h4>our notes</h4><div id="journalLines"></div></div>
+      <div id="journal"><div class="journal-head"><h4>our notes</h4><div class="journal-actions"><button type="button" onclick="openCaseFromNotes()">case</button><button type="button" onclick="showNextLead()">need a lead?</button><button type="button" onclick="toggleJournal()">×</button></div></div><div id="journalCaseProgress" class="journal-case-progress"></div><div id="journalLines"></div></div>
       <div id="toast"><b id="toastTitle"></b><span id="toastText"></span></div>
 
       <div class="window" id="win-files">
@@ -1796,7 +1689,7 @@ this rain is getting stupid though.</span></button>
       </div>
 
       <div class="window" id="win-timeline">
-        <div class="window-bar"><div class="window-title">🧷 our timeline</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('timeline')">_</button><button class="win-btn close" onclick="closeWindow('timeline')">×</button></div></div>
+        <div class="window-bar"><div class="window-title" id="caseWindowTitle">🧷 case board</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('timeline')">_</button><button class="win-btn close" onclick="closeWindow('timeline')">×</button></div></div>
         <div class="window-body content"><div id="timelineBody"></div></div>
       </div>
 
@@ -1895,12 +1788,14 @@ const storyFlags={
   beaBikeUnlocked:false,sawBeaBike:false,sawMiso:false,humanizedNiko:false,mentalEstablished:false,
   foulPlayPossible:false,timelineUnlocked:false,finalWindowComplete:false,contactedFamily:false,
   securityEscalated:false,quietTurn:false,mayAteMemory:false,tahoBought:false,
-  metSecurity:false,hotspotUnlocked:false,noteRevisionRevealed:false
+  metSecurity:false,hotspotUnlocked:false,noteRevisionRevealed:false,
+  caseBoardUnlocked:false,usedConfidence:false,usedBookmark:false,reviewedComparison:false,timelineOpened:false
 };
 const evidence=new Set();
 const seen=new Set(), journal=[];
 const confidenceTags={};
 const bookmarkedEvidence=new Set();
+const reviewedComparisons=new Set();
 let howToPlayReturn="menu";
 let pendingFreshStart=false;
 
@@ -2443,6 +2338,7 @@ function updateConnectionUI(){
   }
   const bat=document.getElementById("batteryBtn");
   if(bat)bat.textContent="🔋 "+batteryPercent+"%";
+  if(typeof renderChatTabs==="function")renderChatTabs();
 }
 function unlockHotspotFromSecurity(){
   if(storyFlags.hotspotUnlocked)return;
@@ -2539,8 +2435,8 @@ function openWindow(name){
   if(name==="yourphone") renderYourPhone();
   if(name==="terminal") renderTerminalStatus();
   if(name==="timeline") {
-    if(!storyFlags.timelineUnlocked){timelineBody.innerHTML=`<div class="detail"><b>nothing built yet</b><p>no formal timeline has been started yet. the final-night timestamps need more context first.</p></div>`;}
-    else renderTimeline();
+    if(story.act<2){timelineBody.innerHTML=`<div class="detail"><b>nothing built yet</b><p>identify the owner and closest contacts first.</p></div>`;}
+    else {if(storyFlags.timelineUnlocked)storyFlags.timelineOpened=true;renderTimeline();renderJournalCaseProgress();}
   }
 }
 function closeWindow(name){closeWindowDetail(name);document.getElementById("win-"+name).classList.remove("active")}
@@ -2551,7 +2447,13 @@ function refreshDesktopShortcuts(){
     const m=(btn.getAttribute("onclick")||"").match(/openDesktopFile\('([^']+)'\)/);
     if(!m)return;btn.style.display=isFileUnlocked("desktop",m[1])?"":"none";
   });
-  const ti=document.getElementById("timelineIcon");if(ti)ti.style.display=storyFlags.timelineUnlocked?"":"none";
+  const ti=document.getElementById("timelineIcon");
+  if(ti){
+    const available=story.act>=2||storyFlags.caseBoardUnlocked||storyFlags.timelineUnlocked;
+    ti.style.display=available?"":"none";
+    const lbl=ti.querySelector(".lbl");if(lbl)lbl.textContent=storyFlags.timelineUnlocked?"our timeline":"case board";
+    const wt=document.getElementById("caseWindowTitle");if(wt)wt.textContent=storyFlags.timelineUnlocked?"🧷 our timeline":"🧷 case board";
+  }
 }
 function openDesktopFile(k){
   if(!isFileUnlocked("desktop",k)){toast("files","that shortcut is not available yet");return}
@@ -2571,7 +2473,39 @@ function addJournal(text){
   journal.push(text);
   const d=document.createElement("div");d.className="logline";d.textContent=text;journalLines.appendChild(d);
 }
-function toggleJournal(){journal.style.display=journal.style.display==="block"?"none":"block"}
+function toggleJournal(){
+  const panel=document.getElementById("journal");
+  if(!panel)return;
+  const open=panel.style.display==="block";
+  panel.style.display=open?"none":"block";
+  if(!open)panel.scrollTop=panel.scrollHeight;
+}
+function openCaseFromNotes(){
+  if(story.act<2){toast("our notes","finish the owner/contact setup first");return}
+  openWindow("timeline");
+}
+function showNextLead(){
+  let text="try another normal app and look for something you have not opened yet.";
+  if(!storyFlags.foundIdentity)text="start simple: identify the owner. Settings or the resume in Files can do that.";
+  else if(!storyFlags.heardMamaVoicemail)text="now that you know the owner, check Recorder for a recent family voicemail.";
+  else if(!storyFlags.foundLia)text="check Messenger. one close contact becomes useful after the family voicemail.";
+  else if(story.act===2){
+    if(cheatingScore()<3)text=`relationship pattern: ${cheatingScore()}/3. archived chats and relationship files can add strong contradictions.`;
+    else if(!storyFlags.usedConfidence)text="you have 3/3. open 🧷 Case Board and give one discovered clue a confidence label.";
+    else if(!storyFlags.usedBookmark)text="you have 3/3. in 🧷 Case Board, press ☆ flag on one item you want to revisit.";
+    else text="the relationship pattern is organized. one more normal discovery should let the next beat settle in.";
+  }
+  else if(story.act===3)text="slow down for the personal side. Bea's bike video and Miso are the two things that move this section.";
+  else if(story.act===4){
+    if(mentalScore()<3)text=`context: ${mentalScore()}/3. therapy, sleep, perception and reality-check material are the useful category here.`;
+    else if(!storyFlags.reviewedComparison)text="you have 3/3. open 🧷 Case Board and review one automatic comparison before moving on.";
+    else text="context is organized. keep exploring normally and the next part will open.";
+  }
+  else if(story.act===5)text=`outside confirmation: ${foulScore()}/4. witnesses, route information and terminal-side technical/media evidence are the useful category.`;
+  else if(story.act>=6&&!story.endingReady)text=`final window: ${finalScore()}/6. keep anchoring the late-night technical/photo events and check Our Timeline as it fills in.`;
+  else if(story.endingReady)text="you have enough to make a decision. open Terminal Status or Our Timeline.";
+  toast("next lead",text);
+}
 
 function terminalSnapshot(){
   const stages=[
@@ -2668,17 +2602,29 @@ function discoveredEvidenceKeys(){
 }
 function setConfidence(key,value){
   if(!key)return;
-  if(!value)delete confidenceTags[key];else confidenceTags[key]=value;
-  renderTimeline();if(typeof saveGame==="function")saveGame(false);
+  if(!value)delete confidenceTags[key];else {confidenceTags[key]=value;storyFlags.usedConfidence=true;}
+  renderTimeline();renderJournalCaseProgress();evaluateActProgress();
+  if(value)toast("case board","confidence label saved");
+  if(typeof saveGame==="function")saveGame(false);
 }
 function toggleEvidenceBookmark(key){
   if(!key)return;
-  if(bookmarkedEvidence.has(key))bookmarkedEvidence.delete(key);else bookmarkedEvidence.add(key);
-  renderTimeline();if(typeof saveGame==="function")saveGame(false);
+  if(bookmarkedEvidence.has(key))bookmarkedEvidence.delete(key);
+  else {bookmarkedEvidence.add(key);storyFlags.usedBookmark=true;}
+  renderTimeline();renderJournalCaseProgress();evaluateActProgress();
+  if(typeof saveGame==="function")saveGame(false);
+}
+function reviewComparison(id){
+  if(!id||reviewedComparisons.has(id))return;
+  reviewedComparisons.add(id);storyFlags.reviewedComparison=true;
+  toast("case board","comparison reviewed • compare, don't automatically accuse");
+  renderTimeline();renderJournalCaseProgress();evaluateActProgress();
+  if(typeof saveGame==="function")saveGame(false);
 }
 function contradictionFlags(){
   const out=[];
   const has=k=>seen.has(k)||evidence.has(k);
+  if(has("chat_lia")&&cheatingScore()>=1)out.push({id:"lia_vs_overlap",title:"lia's relationship context vs overlapping conversations",text:"lia's thread reads like a serious relationship, while separate discoveries show niko was maintaining other conversations at the same time. compare the accounts; this establishes overlap, not every motive or promise."});
   if(has("chat_lia")&&(has("file_latenightreceipt")||has("photo_food")))out.push({id:"lia_home_food",title:"lia's account vs physical receipt/photo",text:"lia's cached context says niko told her he was eating alone at home. the saved food evidence shows two meals elsewhere. that supports a lie about where/how he ate, not who he was with."});
   if(has("chat_lia")&&has("file_cache_session"))out.push({id:"lia_home_timeline",title:"“on my way home” vs later laptop activity",text:"lia has niko saying he was on his way home before midnight, while local laptop activity continues through 12:14. this is a timing mismatch, not proof the message itself was false; being ‘on the way’ is not an arrival time."});
   if(has("photo_underpass_symbol")&&has("photo_bar_symbol")&&has("file_odd_compare"))out.push({id:"symbol_mismatch",title:"similar symbols vs niko's own comparison",text:"the cropped symbol photos can feel connected, but niko's later comparison notes that the shapes do not actually match. the creepy first impression is weaker than the wider evidence."});
@@ -2688,17 +2634,34 @@ function contradictionFlags(){
 function evidenceRowHtml(key){
   const tag=confidenceTags[key]||"";
   const on=bookmarkedEvidence.has(key);
-  const options=["","confirmed","likely","possible","speculation"].map(v=>`<option value="${v}" ${tag===v?"selected":""}>${v||"unmarked"}</option>`).join("");
-  return `<div class="case-row"><div class="case-row-main"><div class="case-row-name">${evidenceLabel(key)}</div><div class="case-row-key">${key}</div></div><div class="case-row-controls"><select class="case-select" onchange="setConfidence('${key}',this.value)" aria-label="confidence">${options}</select><button class="case-bookmark ${on?"on":""}" onclick="toggleEvidenceBookmark('${key}')">${on?"★ revisit":"☆ revisit"}</button></div></div>`;
+  const options=[["","— no label"],["confirmed","✓ confirmed"],["likely","~ likely"],["possible","? possible"],["speculation","… theory"]].map(([v,label])=>`<option value="${v}" ${tag===v?"selected":""}>${label}</option>`).join("");
+  return `<div class="case-row"><div class="case-row-main"><div class="case-row-name">${evidenceLabel(key)}</div></div><div class="case-row-controls"><select class="case-select" onchange="setConfidence('${key}',this.value)" aria-label="optional confidence label">${options}</select><button class="case-bookmark ${on?"on":""}" onclick="toggleEvidenceBookmark('${key}')">${on?"★ flagged":"☆ flag"}</button></div></div>`;
+}
+function caseProgressHtml(){
+  if(story.act<2)return `<div class="case-progress-card"><h4>current step</h4><div class="case-progress-tip">identify the owner, hear the family voicemail, and find the closest relationship thread first.</div></div>`;
+  if(story.act===2)return `<div class="case-progress-card"><h4>current step • relationship pattern</h4><div class="case-progress-line"><span>strong contradictions</span><span class="${cheatingScore()>=3?"done":""}">${Math.min(cheatingScore(),3)}/3</span></div><div class="case-progress-line"><span>label one clue</span><span class="${storyFlags.usedConfidence?"done":""}">${storyFlags.usedConfidence?"✓":"0/1"}</span></div><div class="case-progress-line"><span>flag one clue to revisit</span><span class="${storyFlags.usedBookmark?"done":""}">${storyFlags.usedBookmark?"✓":"0/1"}</span></div><div class="case-progress-tip">all three rows are required. you only have to label and flag one item each.</div></div>`;
+  if(story.act===3)return `<div class="case-progress-card"><h4>current step • person behind the mess</h4><div class="case-progress-line"><span>bea bike video</span><span class="${storyFlags.sawBeaBike?"done":""}">${storyFlags.sawBeaBike?"✓":"—"}</span></div><div class="case-progress-line"><span>miso</span><span class="${storyFlags.sawMiso?"done":""}">${storyFlags.sawMiso?"✓":"—"}</span></div><div class="case-progress-tip">this part is intentionally slower and more ordinary.</div></div>`;
+  if(story.act===4)return `<div class="case-progress-card"><h4>current step • context</h4><div class="case-progress-line"><span>sleep / therapy / perception context</span><span class="${mentalScore()>=3?"done":""}">${Math.min(mentalScore(),3)}/3</span></div><div class="case-progress-line"><span>review one comparison</span><span class="${storyFlags.reviewedComparison?"done":""}">${storyFlags.reviewedComparison?"✓":"0/1"}</span></div><div class="case-progress-tip">a comparison means “look at both,” not “somebody lied.”</div></div>`;
+  if(story.act===5)return `<div class="case-progress-card"><h4>current step • outside confirmation</h4><div class="case-progress-line"><span>independent final-night clues</span><span class="${foulScore()>=4?"done":""}">${Math.min(foulScore(),4)}/4</span></div><div class="case-progress-tip">the full timeline is now active. evidence from outside niko's own notes matters most here.</div></div>`;
+  return `<div class="case-progress-card"><h4>current step • final window</h4><div class="case-progress-line"><span>anchored final-window clues</span><span class="${finalScore()>=6?"done":""}">${Math.min(finalScore(),6)}/6</span></div><div class="case-progress-line"><span>timeline opened</span><span class="${storyFlags.timelineOpened?"done":""}">${storyFlags.timelineOpened?"✓":"—"}</span></div><div class="case-progress-tip">six strong anchors are required. unknown blanks are allowed to remain unknown.</div></div>`;
+}
+function renderJournalCaseProgress(){
+  const el=document.getElementById("journalCaseProgress");if(!el)return;
+  if(story.act<2){el.innerHTML=`<b>current goal</b><br>identify the owner and closest contacts.`;return}
+  if(story.act===2){el.innerHTML=`<b>relationship pattern</b> • ${Math.min(cheatingScore(),3)}/3<br>label one: ${storyFlags.usedConfidence?"✓":"not yet"} • flag one: ${storyFlags.usedBookmark?"✓":"not yet"}`;return}
+  if(story.act===3){el.innerHTML=`<b>personal context</b><br>bea video: ${storyFlags.sawBeaBike?"✓":"—"} • miso: ${storyFlags.sawMiso?"✓":"—"}`;return}
+  if(story.act===4){el.innerHTML=`<b>context</b> • ${Math.min(mentalScore(),3)}/3<br>review comparison: ${storyFlags.reviewedComparison?"✓":"not yet"}`;return}
+  if(story.act===5){el.innerHTML=`<b>outside confirmation</b> • ${Math.min(foulScore(),4)}/4<br>🧷 Our Timeline is now active.`;return}
+  el.innerHTML=`<b>final window</b> • ${Math.min(finalScore(),6)}/6<br>keep anchoring the late-night sequence.`;
 }
 function renderCaseWorkbench(){
   const all=discoveredEvidenceKeys();
   const flagged=all.filter(k=>bookmarkedEvidence.has(k));
   const contradictions=contradictionFlags();
-  const bookmarkHtml=flagged.length?flagged.map(evidenceRowHtml).join(""):`<div class="bookmark-empty">nothing flagged yet.</div>`;
-  const contradictionHtml=contradictions.length?contradictions.map(c=>`<div class="contradiction-row"><b>automatic flag • ${c.title}</b>${c.text}</div>`).join(""):`<div class="bookmark-empty">no contradiction flags from the evidence you've opened yet.</div>`;
+  const bookmarkHtml=flagged.length?flagged.map(evidenceRowHtml).join(""):`<div class="bookmark-empty">nothing flagged yet. use ☆ on an evidence row.</div>`;
+  const contradictionHtml=contradictions.length?contradictions.map(c=>{const reviewed=reviewedComparisons.has(c.id);return `<div class="contradiction-row"><b>automatic comparison • ${c.title}</b>${c.text}<button class="case-review ${reviewed?"done":""}" ${reviewed?"disabled":""} onclick="reviewComparison('${c.id}')">${reviewed?"✓ reviewed":"review comparison"}</button></div>`}).join(""):`<div class="bookmark-empty">no automatic comparisons yet.</div>`;
   const allHtml=all.length?all.map(evidenceRowHtml).join(""):`<div class="bookmark-empty">open evidence first.</div>`;
-  return `<div class="case-tools"><div class="detail"><h4>your evidence labels</h4><div class="case-note">confirmed / likely / possible / speculation are your own annotations. they never change what the laptop actually proves or alter ending requirements.</div><div class="case-bookmarks"><h4>revisit later</h4><div class="case-list">${bookmarkHtml}</div></div><div class="case-contradictions"><h4>contradiction flags</h4><div class="case-note">automatic comparisons only appear after both sides have been discovered. contradiction does not automatically mean somebody lied.</div>${contradictionHtml}</div><div class="case-evidence"><h4>discovered evidence</h4><div class="case-scroll"><div class="case-list">${allHtml}</div></div></div></div></div>`;
+  return `${caseProgressHtml()}<div class="case-tools"><div class="detail"><h4>case tools <span class="case-required">required</span></h4><div class="case-simple-note">the current-step box above shows the small case action needed before the story moves on.</div><div class="case-evidence"><h4>discovered evidence</h4><div class="case-note">dropdown = confidence • ☆ = keep for later</div><div class="case-scroll"><div class="case-list">${allHtml}</div></div></div><div class="case-bookmarks"><h4>flagged for later</h4><div class="case-list">${bookmarkHtml}</div></div><div class="case-contradictions"><h4>automatic comparisons</h4>${contradictionHtml}</div></div></div>`;
 }
 
 function timelineKnown(key){
@@ -2709,8 +2672,12 @@ function timelineKnown(key){
 function timelineKnownCount(){return timelineDefs.filter(x=>timelineKnown(x[3])).length}
 function renderTimeline(){
   const body=document.getElementById("timelineBody");if(!body)return;
-  if(!storyFlags.timelineUnlocked){body.innerHTML=`<div class="detail">jc hasn't built this yet.</div>`;return}
-  const rows=timelineDefs.map(([time,label,kind,key])=>timelineKnown(key)?`<div class="timeline-row ${["device","witness","photo"].includes(kind)?"critical":""}"><span class="t">${time}</span><span>${label}</span></div>`:`<div class="timeline-row unknown"><span class="t">${time}</span><span>???</span></div>`).join("");
+  if(story.act<2){body.innerHTML=`<div class="detail">identify the owner and closest contacts first.</div>`;return}
+  if(!storyFlags.timelineUnlocked){
+    body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">case board</h3><span class="timeline-score">organize what you know</span></div><div class="detail"><p>this starts simple. the full final-night timeline will appear later.</p><p class="muted">for now, use the current-step box and only the case controls it asks for.</p></div>${renderCaseWorkbench()}`;
+    return
+  }
+  const rows=timelineDefs.map(([time,label,kind,key])=>timelineKnown(key)?`<div class="timeline-row ${["device","witness","photo"].includes(kind)?"critical":""}"><span class="t">${time}</span><span>${label}</span><button class="timeline-flag ${bookmarkedEvidence.has(key)?"on":""}" onclick="event.stopPropagation();toggleEvidenceBookmark('${key}')" title="flag for later">${bookmarkedEvidence.has(key)?"★":"☆"}</button></div>`:`<div class="timeline-row unknown"><span class="t">${time}</span><span>???</span><span></span></div>`).join("");
   const count=timelineKnownCount();
   body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">11:33 pm → 12:23 am</h3><span class="timeline-score">${count}/${timelineDefs.length} anchored</span></div><div class="detail"><p class="muted">jc only adds entries they actually found. blanks stay blank.</p>${rows}</div>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">we need to decide what to do</button>`:""}${renderCaseWorkbench()}`;
 }
@@ -2722,28 +2689,38 @@ function finalScore(){return ["file_cache_session","file_cache_sync","file_btlog
 function canFoulPlayEnding(){return storyFlags.humanizedNiko&&storyFlags.mentalEstablished&&storyFlags.foulPlayPossible&&seen.has("photo_glass")&&seen.has("chat_rj")&&seen.has("chat_vince")&&seen.has("file_odd_route")&&seen.has("photo_waitingshed")&&storyFlags.heardPhoneClue&&finalScore()>=7}
 function setAct(n){
   if(n<=story.act)return;story.act=n;
-  if(n===2){addJournal(storyTimeLabel()+" • jc and may have enough contradictions to know niko's messages cannot be taken at face value.");updateHint("some of niko's messages are lies. timestamps and independent sources matter more now.");}
+  if(n===2){storyFlags.caseBoardUnlocked=true;addJournal(storyTimeLabel()+" • jc and may open a simple Case Board to keep the growing mess organized.");fieldTalk("jc","okay. before this becomes fifty tabs in my head, i'm making a tiny case board. label one thing and flag one thing when we have enough.",4700);updateHint("case board unlocked. this section needs 3 strong relationship contradictions + one confidence label + one revisit flag.");}
   if(n===3){storyFlags.beaBikeUnlocked=true;addJournal(storyTimeLabel()+" • bea's old chat points to a bike video in niko's videos folder.");fieldTalk("may","wait. bea mentioned some old bike video. can we look at one thing that isn't relationship warfare for a second?",4700);}
   if(n===4){addJournal(storyTimeLabel()+" • the investigation shifts from niko's relationships to notes about sleep, perception, therapy and the odd folder.");updateHint("what niko experienced and what objectively happened are not always the same thing.");}
-  if(n===5){addJournal(storyTimeLabel()+" • outside witnesses begin confirming parts of niko's last night. this is no longer explainable by his private notes alone.");updateHint("look for independent witnesses: rj, vince, cam, photos, route data.");}
-  if(n===6){storyFlags.timelineUnlocked=true;const ti=document.getElementById("timelineIcon");if(ti)ti.style.display="";addJournal(storyTimeLabel()+" • our_timeline.txt is started with every unfound interval left as ???.");fieldTalk("jc","okay. no more guessing. i'm making a timeline with only shit we can actually anchor.",4400);updateHint("fill the timeline with evidence. some gaps are supposed to stay gaps.");}
-  renderFileSidebar();renderChats();renderContacts();renderPhotos();renderVideos();renderRecorder();renderMail();renderCalendar();renderDiscord();renderSticky();renderRecycle();renderSettings();renderMusic();renderSnips();renderClockApp();refreshDesktopShortcuts();updateTerminalStatus();renderTimeline();
+  if(n===5){addJournal(storyTimeLabel()+" • outside witnesses begin confirming parts of niko's last night. this is no longer explainable by his private notes alone.");storyFlags.timelineUnlocked=true;const ti=document.getElementById("timelineIcon");if(ti){ti.style.display="";const lbl=ti.querySelector(".lbl");if(lbl)lbl.textContent="our timeline";}addJournal(storyTimeLabel()+" • the Case Board expands into Our Timeline now that the final-night pieces matter.");fieldTalk("jc","okay. case board's becoming a timeline now. four independent final-night clues before we call anything a pattern.",4300);updateHint("our timeline is active. this section needs 4 independent final-night clues.");}
+  if(n===6){updateHint("focus on the final window. 6 anchored technical/photo events are required; blanks can still stay blank.");}
+  renderFileSidebar();renderChats();renderContacts();renderPhotos();renderVideos();renderRecorder();renderMail();renderCalendar();renderDiscord();renderSticky();renderRecycle();renderSettings();renderMusic();renderSnips();renderClockApp();refreshDesktopShortcuts();updateTerminalStatus();renderTimeline();renderJournalCaseProgress();
 }
 function evaluateActProgress(){
   if(storyFlags.foundIdentity&&storyFlags.heardMamaVoicemail&&storyFlags.foundLia)setAct(2);
-  if(story.act>=2&&cheatingScore()>=3){storyFlags.cheatingEstablished=true;setAct(3)}
-  if(story.act>=3&&storyFlags.sawBeaBike&&storyFlags.sawMiso){storyFlags.humanizedNiko=true;setAct(4)}
-  if(story.act>=4&&mentalScore()>=3){storyFlags.mentalEstablished=true;setAct(5)}
-  if(story.act>=5&&foulScore()>=4){storyFlags.foulPlayPossible=true;setAct(6)}
+  if(story.act===2&&cheatingScore()>=3&&storyFlags.usedConfidence&&storyFlags.usedBookmark){storyFlags.cheatingEstablished=true;setAct(3)}
+  if(story.act===3&&storyFlags.sawBeaBike&&storyFlags.sawMiso){storyFlags.humanizedNiko=true;setAct(4)}
+  if(story.act===4&&mentalScore()>=3&&storyFlags.reviewedComparison){storyFlags.mentalEstablished=true;setAct(5)}
+  if(story.act===5&&foulScore()>=4){storyFlags.foulPlayPossible=true;setAct(6)}
   if(story.act>=6&&finalScore()>=6){storyFlags.finalWindowComplete=true}
   if(story.act>=6&&storyStage>=10&&finalScore()>=6){story.endingReady=true}
-  updateTerminalStatus();renderTimeline();
+  updateTerminalStatus();renderTimeline();renderJournalCaseProgress();
 }
 function updateStoryFlags(k){
   if(["file_resume","app_settings","chat_familygc"].includes(k)&&!storyFlags.foundIdentity){storyFlags.foundIdentity=true;markEvidence("identity");renderRecorder();renderChats();renderContacts();addJournal("owner identified: niko de la cruz, 21, civil engineering student.");setTimeout(()=>fieldTalk("may","okay. niko de la cruz. at least we have a name now. wait, recorder has a recent voicemail from 'mama'.",4700),260)}
   if(k==="chat_lia")storyFlags.foundLia=true;
   if(k==="file_miso")storyFlags.sawMiso=true;
   if(k.startsWith("photo_")||k.startsWith("file_")||k.startsWith("chat_"))markEvidence(k);
+}
+function announceCaseProgress(k,actBefore){
+  const cheatingKeys=new Set(["chat_celine","chat_ash","chat_maria","chat_boys","file_girlmatrix","file_copylog","file_templates"]);
+  const mentalKeys=new Set(["chat_drreyes","chat_mika","file_therapy_notes","file_reality_check","file_sleep_notes_aug","file_odd_symbols","file_odd_333"]);
+  const foulKeys=new Set(["photo_glass","chat_rj","chat_vince","file_odd_calls","file_odd_route","photo_waitingshed","file_btlog","file_usblog","file_fileaccess1209"]);
+  const finalKeys=new Set(["file_cache_session","file_cache_sync","file_btlog","file_usblog","file_camevents","photo_terminal_glass","photo_waitingshed","photo_bagfloor","file_fileaccess1209"]);
+  if(actBefore===2&&cheatingKeys.has(k)){const n=Math.min(cheatingScore(),3);toast("case progress",`relationship contradictions • ${n}/3${n===3?" • now finish the two tiny Case Board actions":""}`);}
+  else if(actBefore===4&&mentalKeys.has(k)){const n=Math.min(mentalScore(),3);toast("case progress",`context • ${n}/3${n===3&&!storyFlags.reviewedComparison?" • review one comparison in Case Board":""}`);}
+  else if(actBefore===5&&foulKeys.has(k)){toast("case progress",`outside confirmation • ${Math.min(foulScore(),4)}/4`);}
+  else if(actBefore>=6&&finalKeys.has(k)){toast("case progress",`final window • ${Math.min(finalScore(),6)}/6`);}
 }
 function isChatUnlocked(k){
   const cheating=["boys","celine","ash","maria","bella","jane","liana","sarah","nicole","kyla","trisha","grace"];
@@ -3593,14 +3570,16 @@ function updateHint(forceText=null){
 function markSeen(k){
   if(seen.has(k))return;
   const dialogueBefore=triggeredDialogueSerial;
+  const actBefore=story.act;
   seen.add(k);exploreCount++;
   updateStoryFlags(k);
+  announceCaseProgress(k,actBefore);
   renderChats();
   if(exploreCount%5===0)updateHint();
   /* Story/clue reactions get first chance to speak. Ambient dialogue only schedules when this discovery did not immediately trigger dialogue. */
   evaluateActProgress();
   progressStory();
-  renderTimeline();
+  renderTimeline();renderJournalCaseProgress();
   if(triggeredDialogueSerial===dialogueBefore)scheduleAmbientDialogue();
   if(typeof autosaveGame==="function")autosaveGame();
 }
@@ -3627,7 +3606,7 @@ function progressStory(){
     storyStage=6;advanceStory(14);setBattery(49);addJournal(storyTimeLabel()+" • terminal lights blinked and the generator kicked in. laptop battery: 49%.");toast("terminal power","brief outage • generator active");fieldTalk("jc","terminal power. not the laptop. nothing supernatural happened. battery's at 49 though.",4300);
     setTimeout(()=>fieldTalk("may","and don't u dare use low battery as an excuse to disappear mid convo later 😭",4200),4600);
     setTimeout(()=>fieldTalk("jc","i'm never escaping this allegation am i.",3300),9000);
-  }else if(storyStage===6 && foulScore()>=2){
+  }else if(storyStage===6 && foulScore()>=3){
     storyStage=7;advanceStory(15);if(hotspotOn){syncVinceLive();addJournal(storyTimeLabel()+" • vince sent new messages asking where the laptop was found.");}else fieldTalk("may","we should probably connect your hotspot soon. people are actually looking for him.",4500);
   }else if(storyStage===7 && story.act>=6){
     storyStage=8;advanceStory(14);addJournal(storyTimeLabel()+" • terminal is noticeably emptier. may freezes when she sees a stranger in blue, then jc makes her look at what is actually in front of them: delivery helmet, food bag, different person.");
@@ -4775,18 +4754,45 @@ const chats={
  ]}
 }
 
+function isChatModeAvailable(mode){
+  if(mode==="inbox")return true;
+  if(mode==="archived")return story.act>=2;
+  if(mode==="requests")return hotspotOn;
+  return false;
+}
+function renderChatTabs(){
+  const states={inbox:true,archived:isChatModeAvailable("archived"),requests:isChatModeAvailable("requests")};
+  const labels={inbox:"inbox",archived:states.archived?"archived":"🔒 archived",requests:states.requests?"requests":"🔒 requests"};
+  Object.entries(states).forEach(([mode,ok])=>{
+    const b=document.getElementById("tab-"+mode);if(!b)return;
+    b.disabled=!ok;b.classList.toggle("locked",!ok);b.textContent=labels[mode];
+  });
+}
 function setChatMode(mode){
+  if(!isChatModeAvailable(mode)){
+    toast("messenger",mode==="requests"?"message requests were not cached • reconnect the laptop first":"archived cache is not available yet");
+    return;
+  }
   chatMode=mode;
   document.querySelectorAll('.msg-tab').forEach(x=>x.classList.remove('active'));
   const tab=document.getElementById('tab-'+mode);if(tab)tab.classList.add('active');
   renderChats(document.getElementById('msgSearch')?.value||'');
 }
 function renderChats(filter=""){
+  if(!isChatModeAvailable(chatMode))chatMode="inbox";
+  if(currentChat&&(!chats[currentChat]||!isChatUnlocked(currentChat)||!isChatModeAvailable(chats[currentChat].kind))){
+    currentChat=null;
+    if(typeof chatHead!=="undefined")chatHead.textContent="select a chat";
+    if(typeof messages!=="undefined")messages.innerHTML=`<div class="bubble sys">nothing selected</div>`;
+    if(typeof replyBar!=="undefined")replyBar.innerHTML="";
+  }
+  renderChatTabs();
+  document.querySelectorAll('.msg-tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('tab-'+chatMode)?.classList.add('active');
   const q=(filter||"").trim().toLowerCase();
-  let keys=Object.keys(chats).filter(k=>chats[k].kind===chatMode && isChatUnlocked(k));
+  let keys=Object.keys(chats).filter(k=>chats[k].kind===chatMode && isChatModeAvailable(chats[k].kind) && isChatUnlocked(k));
   if(q){
-    keys=Object.keys(chats).filter(k=>{
-      if(!isChatUnlocked(k))return false;
+    keys=keys.filter(k=>{
       const c=chats[k];
       const hay=(c.name+' '+c.preview+' '+c.msgs.map(m=>m[1]).join(' ')).toLowerCase();
       return hay.includes(q);
@@ -4795,11 +4801,11 @@ function renderChats(filter=""){
   chatList.innerHTML=keys.map(k=>{
     const c=chats[k];
     const unread={lia:3,maria:12,vince:4,cam:5,celine:2,drreyes:4}[k]||0;
-    return `<div class="chat-row" onclick="openChat('${k}')"><strong>${c.name}</strong>${unread?`<span class="unread">${unread}</span>`:""}<small>${c.preview}</small><div class="chat-kind">${q?c.kind:""}</div></div>`;
-  }).join("") || `<div class="bubble sys" style="margin:20px">no cached chats found</div>`;
+    return `<div class="chat-row" onclick="openChat('${k}')"><strong>${c.name}</strong>${unread?`<span class="unread">${unread}</span>`:""}<small>${c.preview}</small></div>`;
+  }).join("") || `<div class="bubble sys" style="margin:20px">${chatMode==="requests"?"no message requests loaded":"no cached chats in this section"}</div>`;
 }
 function openChat(k){
-  if(!chats[k]||!isChatUnlocked(k)){toast("messenger","that cached thread isn't available yet");return}
+  if(!chats[k]||!isChatUnlocked(k)||!isChatModeAvailable(chats[k].kind)){toast("messenger",chats[k]?.kind==="requests"?"that message was not cached • reconnect first":"that cached thread isn't available yet");return}
   currentChat=k;
   markSeen("chat_"+k);
   chatHead.textContent=chats[k].name;
@@ -6807,7 +6813,7 @@ function submitMenuCheat(){
 
 
 function renderAll(){
-  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderCheats();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
+  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderCheats();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();renderJournalCaseProgress();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
 const SAVE_KEY="lost_phone_save_v20";
@@ -6815,7 +6821,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:21,
+    version:23,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -6829,7 +6835,7 @@ function createSaveData(){
     talkIndex,
     hintIndex,
     storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence],
-    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex},noteViewCounts:{...noteViewCounts},confidenceTags:{...confidenceTags},bookmarkedEvidence:[...bookmarkedEvidence]
+    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex},noteViewCounts:{...noteViewCounts},confidenceTags:{...confidenceTags},bookmarkedEvidence:[...bookmarkedEvidence],reviewedComparisons:[...reviewedComparisons]
   };
 }
 
@@ -6905,6 +6911,12 @@ function applySaveData(data){
   }
   if(!storyFlags.hotspotUnlocked)hotspotOn=false;
   Object.assign(story,data.story||{});
+  // v46 migration: locked message sections cannot remain selected offline.
+  if(Number(data.version||0)<22&&story.act>=5)storyFlags.timelineUnlocked=true;
+  // v48: Case Board exists from act 2, but the full timeline still starts at act 5.
+  if(story.act>=2)storyFlags.caseBoardUnlocked=true;
+  if(story.act>=5)storyFlags.timelineUnlocked=true;
+  if(!isChatModeAvailable(chatMode))chatMode="inbox";
   Object.assign(relationshipTalkIndex,data.relationshipTalkIndex||{});
   if(Number(data.version||0)>=13)Object.assign(ambientSceneIndex,data.ambientSceneIndex||{});
   else Object.keys(ambientSceneIndex).forEach(k=>ambientSceneIndex[k]=0);
@@ -6913,6 +6925,13 @@ function applySaveData(data){
   Object.keys(confidenceTags).forEach(k=>delete confidenceTags[k]);
   Object.assign(confidenceTags,data.confidenceTags||{});
   bookmarkedEvidence.clear();(data.bookmarkedEvidence||[]).forEach(k=>bookmarkedEvidence.add(k));
+  reviewedComparisons.clear();(data.reviewedComparisons||[]).forEach(k=>reviewedComparisons.add(k));
+  if(Object.keys(confidenceTags).some(k=>confidenceTags[k]))storyFlags.usedConfidence=true;
+  if(bookmarkedEvidence.size)storyFlags.usedBookmark=true;
+  if(reviewedComparisons.size)storyFlags.reviewedComparison=true;
+  // Saves that had already progressed beyond these gates keep that progress without forcing retroactive clicks.
+  if(Number(data.version||0)<23&&story.act>=3){storyFlags.usedConfidence=true;storyFlags.usedBookmark=true;}
+  if(Number(data.version||0)<23&&story.act>=5)storyFlags.reviewedComparison=true;
   evidence.clear();(data.evidence||[]).forEach(x=>evidence.add(x));
   const ensureMsg=(k,text)=>{if(chats[k]&&!chats[k].msgs.some(m=>m[1]===text))chats[k].msgs.push(["them",text]);};
   if(storyFlags.liveSynced){
@@ -6965,7 +6984,7 @@ function applySaveData(data){
   renderMemes();
   renderSnips();
   renderNews(currentNewsFilter);
-  updateClock();updateConnectionUI();evaluateActProgress();refreshDesktopShortcuts();updateTerminalStatus();renderTimeline();
+  updateClock();updateConnectionUI();evaluateActProgress();refreshDesktopShortcuts();updateTerminalStatus();renderTimeline();renderJournalCaseProgress();
 
   document.querySelectorAll('.msg-tab').forEach(x=>x.classList.remove('active'));
   const tab=document.getElementById('tab-'+chatMode);
