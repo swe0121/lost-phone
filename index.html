@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v40</title>
+<title>Lost Phone v41</title>
+<!-- v41: main menu + how-to-play + confidence/bookmark/contradiction case tools; preserves v40 restraint/12:14 mechanics. -->
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
@@ -999,12 +1000,46 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
 .social-badge.replied{color:#79d6a2}.social-badge.seen{color:#d3ae70}.social-badge.unread{color:#9fb7ff}
 @media(max-width:760px){.ig-post-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.social-avatar{width:48px;height:48px}.social-stats{gap:11px}.social-bubble{max-width:88%}}
 
+
+
+/* =========================================================
+   v41 FRONT MENU + PLAYER CASE TOOLS
+   ========================================================= */
+#mainMenu{width:min(720px,92vw);font-family:"Courier New",Courier,monospace;text-align:center;margin:auto 0;padding:48px 0 64px}
+#mainMenu h1{font-size:clamp(34px,7vw,68px);line-height:1;margin:0 0 14px;font-weight:700;letter-spacing:-2px;text-transform:lowercase}
+.main-tagline{font-size:12px;line-height:1.7;color:#858b95;margin:0 auto 34px;max-width:560px}
+.main-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
+.main-actions button{font-family:"Courier New",Courier,monospace;border:1px solid #4b4b4b;background:#050505;color:#e4e4e4;padding:10px 18px;cursor:pointer;min-width:110px}
+.main-actions button:hover{background:#111;border-color:#858585}.main-actions button[hidden]{display:none!important}
+.menu-cheat{width:min(460px,92%);margin:34px auto 0;padding-top:18px;border-top:1px solid #222;text-align:left}
+.menu-cheat label{display:block;font-size:9px;letter-spacing:1.4px;color:#555;margin-bottom:7px;text-transform:uppercase}
+.menu-cheat-row{display:flex;gap:7px}.menu-cheat-row input{flex:1;min-width:0;border:1px solid #292929;background:#020202;color:#aaa;padding:8px 10px;font:11px "Courier New",monospace;outline:none}.menu-cheat-row button{border:1px solid #292929;background:#050505;color:#777;padding:7px 10px;font:10px "Courier New",monospace;cursor:pointer}.menu-cheat-row input:focus{border-color:#555;color:#ddd}.menu-cheat-status{min-height:16px;margin-top:7px;font:9px/1.4 "Courier New",monospace;color:#555}
+#howToPlayOverlay{position:fixed;inset:0;z-index:300000;background:#000;display:none;align-items:flex-start;justify-content:center;padding:24px;overflow:auto;overscroll-behavior:contain}
+#howToPlayOverlay.show{display:flex}.howto-card{width:min(760px,94vw);padding:34px 0 70px;font-family:"Courier New",Courier,monospace}.howto-card h2{font-size:28px;margin:0 0 6px;text-transform:lowercase}.howto-card .howto-sub{font-size:10px;color:#666;margin-bottom:26px}.howto-copy{font-size:13px;line-height:1.75;color:#d2d2d2}.howto-copy p{margin:0 0 16px}.howto-copy b{color:#fff}.howto-back{margin-top:24px}
+#helpButton{position:absolute;right:14px;top:105px;z-index:8;width:32px;height:32px;border:1px solid #303846;background:rgba(12,15,20,.88);color:#9ea9b8;border-radius:50%;cursor:pointer;font:bold 12px "Courier New",monospace}#helpButton:hover{background:#171d26;color:#fff}
+.case-tools{margin-top:14px}.case-tools h4{margin:0 0 7px;font-size:12px}.case-note{font-size:10px;color:#8f99a8;line-height:1.45}.case-bookmarks,.case-contradictions,.case-evidence{margin-top:12px}.case-list{display:flex;flex-direction:column;gap:6px}.case-row{border:1px solid #29313d;background:#0d1219;border-radius:8px;padding:8px 9px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}.case-row-main{min-width:0}.case-row-name{font-size:11px;color:#e7ebf1;overflow-wrap:anywhere}.case-row-key{font:9px "Courier New",monospace;color:#687383;margin-top:3px;overflow-wrap:anywhere}.case-row-controls{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.case-select{background:#090d12;color:#cdd5df;border:1px solid #374253;border-radius:6px;padding:5px 6px;font:9px "Courier New",monospace}.case-bookmark{border:1px solid #374253;background:#111720;color:#9da9b8;border-radius:6px;padding:5px 7px;cursor:pointer;font:9px "Courier New",monospace}.case-bookmark.on{color:#fff;border-color:#8b98aa;background:#27303c}.contradiction-row{border-left:3px solid #9a6b72;background:#121014;padding:9px 10px;margin-top:6px;font-size:11px;line-height:1.55}.contradiction-row b{display:block;font-size:10px;margin-bottom:3px;color:#d9b7bc}.bookmark-empty{font-size:10px;color:#697382;padding:4px 0}.case-scroll{max-height:330px;overflow:auto;padding-right:2px}
+@media(max-width:760px){#mainMenu{padding-top:28px}.menu-cheat{margin-top:26px}#helpButton{right:7px;top:92px}.case-row{grid-template-columns:1fr}.case-row-controls{justify-content:flex-start}.case-scroll{max-height:280px}}
+
 </style>
 </head>
 <body>
 
 <div id="intro">
-  <div id="characterSelect">
+  <div id="mainMenu">
+    <h1>lost phone</h1>
+    <div class="main-tagline">a laptop. a stranger. nine minutes nobody can explain.</div>
+    <div class="main-actions">
+      <button onclick="startFromMenu()">start</button>
+      <button id="mainContinue" onclick="continueSavedGame()" hidden>continue</button>
+      <button onclick="openHowToPlay('menu')">how to play</button>
+    </div>
+    <div class="menu-cheat">
+      <label for="menuCheatInput">code</label>
+      <div class="menu-cheat-row"><input id="menuCheatInput" autocomplete="off" spellcheck="false" placeholder="enter code" onkeydown="if(event.key==='Enter')submitMenuCheat()"><button onclick="submitMenuCheat()">enter</button></div>
+      <div id="menuCheatStatus" class="menu-cheat-status"></div>
+    </div>
+  </div>
+  <div id="characterSelect" style="display:none">
     <div id="selectTime" class="select-sub">tuesday, august 18, 2026</div>
     <h1>lost phone</h1>
     <div class="select-sub">choose whose side of tonight you remember</div>
@@ -1025,12 +1060,30 @@ this rain is getting stupid though.</span></button>
   </div>
 </div>
 
+<div id="howToPlayOverlay">
+  <div class="howto-card">
+    <h2>how to play</h2>
+    <div class="howto-sub">read this or don't. the laptop won't wait for you.</div>
+    <div class="howto-copy">
+      <p><b>pay attention to everything.</b></p>
+      <p>you're exploring a found laptop, not following a checklist. click around. open apps, files, chats, photos, notes, browser history, downloads, and anything else that looks useful.</p>
+      <p>not everything you find is a clue. some things are just somebody's life, some things are red herrings, and some details only make sense after you find something else.</p>
+      <p>the game is set in the philippines. the laptop starts offline, so cached apps and local files are all you have at first. some things can change once you find a reason to go online.</p>
+      <p>check timestamps. compare what people say with what the laptop can actually prove. one weird detail is not automatically an answer.</p>
+      <p>there are multiple endings. you might miss something.</p>
+      <p><b>go explore on ur own.</b></p>
+    </div>
+    <button class="soft howto-back" onclick="closeHowToPlay()">back</button>
+  </div>
+</div>
+
 <div id="laptopWrap">
   <div id="laptop">
     <div id="webcam"></div>
     <div id="desktop">
       <div id="hint">maybe start with something normal. name, email, contacts.</div>
       <button id="worldBadge" onclick="openWindow('terminal')"><b>12:23 am</b><br>heavy rain • ~50 waiting</button>
+      <button id="helpButton" onclick="openHowToPlay('game')" title="how to play">?</button>
 
       <div id="desktopIcons">
         <button class="desktop-icon" onclick="openWindow('files')"><span class="ico">📁</span><span class="lbl">files</span></button>
@@ -1530,6 +1583,10 @@ const storyFlags={
 };
 const evidence=new Set();
 const seen=new Set(), journal=[];
+const confidenceTags={};
+const bookmarkedEvidence=new Set();
+let howToPlayReturn="menu";
+let pendingFreshStart=false;
 
 function displaySpeaker(name){
   if((name==="jc"||name==="may")&&playerCharacter)return name===playerCharacter?"you":name;
@@ -1564,16 +1621,36 @@ function introThoughtFor(text){
   if(playerCharacter==="jc"&&text.includes("just find the owner first"))return "you already know you're going to open more than the owner's email.";
   return "";
 }
+function showMainMenu(){
+  loadMeta();
+  document.getElementById("intro").style.display="flex";
+  document.getElementById("mainMenu").style.display="block";
+  document.getElementById("characterSelect").style.display="none";
+  document.getElementById("dialogue").style.display="none";
+  const c=document.getElementById("mainContinue");
+  if(c)c.hidden=!(typeof SAVE_KEY!=="undefined"&&localStorage.getItem(SAVE_KEY));
+}
+function startFromMenu(){
+  pendingFreshStart=true;
+  document.getElementById("mainMenu").style.display="none";
+  showCharacterSelect();
+}
 function showCharacterSelect(){
   loadMeta();
+  document.getElementById("mainMenu").style.display="none";
   document.getElementById("characterSelect").style.display="block";
   document.getElementById("dialogue").style.display="none";
-  const c=document.getElementById("characterContinue");c.innerHTML="";
-  if(typeof SAVE_KEY!=="undefined"&&localStorage.getItem(SAVE_KEY)){
-    const b=document.createElement("button");b.className="soft";b.textContent="continue saved night";b.onclick=()=>continueSavedGame();c.appendChild(b);
-  }
+  const c=document.getElementById("characterContinue");if(c)c.innerHTML="";
+}
+function openHowToPlay(from="menu"){
+  howToPlayReturn=from;
+  const o=document.getElementById("howToPlayOverlay");if(o)o.classList.add("show");
+}
+function closeHowToPlay(){
+  const o=document.getElementById("howToPlayOverlay");if(o)o.classList.remove("show");
 }
 function selectCharacter(ch){
+  if(pendingFreshStart){try{localStorage.removeItem(SAVE_KEY)}catch(e){}pendingFreshStart=false;}
   playerCharacter=ch;
   activeIntro=ch==="may"?introMay:introJC;
   document.getElementById("characterSelect").style.display="none";
@@ -2231,6 +2308,77 @@ const timelineDefs=[
  ["12:18","man asks security about a phone","witness","world_phoneclue"],
  ["12:23","jc and may find the bag","base","world_found"]
 ];
+
+const EVIDENCE_LABELS={
+  identity:"owner identity • niko de la cruz",
+  chat_lia:"lia messenger thread",
+  chat_rj:"rj witness messages",
+  chat_vince:"vince messages",
+  chat_cam:"cam messages",
+  chat_drreyes:"dr. reyes thread",
+  file_latenightreceipt:"late receipt • two meals",
+  photo_food:"dinner photo • two plates",
+  file_odd_calls:"unknown calls • 4421",
+  file_odd_route:"11:36 route screenshot",
+  file_btlog:"bluetooth history • xphone_6b",
+  file_oldbtscan:"older xphone_6b scan",
+  file_usblog:"11:58–12:02 usb history",
+  file_camevents:"camera events / 12:14 lid close",
+  file_fileaccess1209:"12:09 local file activity",
+  file_cache_sync:"11:38 network loss",
+  file_cache_session:"12:14 session end",
+  photo_terminal_glass:"12:05 terminal glass photo",
+  photo_waitingshed:"12:07 waiting shed photo",
+  photo_bagfloor:"12:11 inside-bag photo",
+  world_phoneclue:"12:18 man asking about a phone",
+  history_terminal_last:"11:34 terminal last-trip search",
+  history_terminal_route:"11:35 back-road route search"
+};
+function evidenceLabel(key){
+  if(EVIDENCE_LABELS[key])return EVIDENCE_LABELS[key];
+  return String(key||"evidence").replace(/^(file|photo|chat|history)_/,"").replace(/^clock_entry_\d+_/,"clock • ").replace(/_/g," ");
+}
+function discoveredEvidenceKeys(){
+  const keys=[...evidence].filter(Boolean);
+  if(storyFlags.heardPhoneClue&&!keys.includes("world_phoneclue"))keys.push("world_phoneclue");
+  if(!keys.includes("world_found"))keys.push("world_found");
+  return keys;
+}
+function setConfidence(key,value){
+  if(!key)return;
+  if(!value)delete confidenceTags[key];else confidenceTags[key]=value;
+  renderTimeline();if(typeof saveGame==="function")saveGame(false);
+}
+function toggleEvidenceBookmark(key){
+  if(!key)return;
+  if(bookmarkedEvidence.has(key))bookmarkedEvidence.delete(key);else bookmarkedEvidence.add(key);
+  renderTimeline();if(typeof saveGame==="function")saveGame(false);
+}
+function contradictionFlags(){
+  const out=[];
+  const has=k=>seen.has(k)||evidence.has(k);
+  if(has("chat_lia")&&(has("file_latenightreceipt")||has("photo_food")))out.push({id:"lia_home_food",title:"lia's account vs physical receipt/photo",text:"lia's cached context says niko told her he was eating alone at home. the saved food evidence shows two meals elsewhere. that supports a lie about where/how he ate, not who he was with."});
+  if(has("chat_lia")&&has("file_cache_session"))out.push({id:"lia_home_timeline",title:"“on my way home” vs later laptop activity",text:"lia has niko saying he was on his way home before midnight, while local laptop activity continues through 12:14. this is a timing mismatch, not proof the message itself was false; being ‘on the way’ is not an arrival time."});
+  if(has("photo_underpass_symbol")&&has("photo_bar_symbol")&&has("file_odd_compare"))out.push({id:"symbol_mismatch",title:"similar symbols vs niko's own comparison",text:"the cropped symbol photos can feel connected, but niko's later comparison notes that the shapes do not actually match. the creepy first impression is weaker than the wider evidence."});
+  if(has("file_btlog")&&has("file_oldbtscan"))out.push({id:"xphone_repeat",title:"same bluetooth name, uncertain device",text:"xphone_6b appears near the print shop weeks earlier and again during the final window. the repeated broadcast name is real; whether it was the same physical phone is not established."});
+  return out;
+}
+function evidenceRowHtml(key){
+  const tag=confidenceTags[key]||"";
+  const on=bookmarkedEvidence.has(key);
+  const options=["","confirmed","likely","possible","speculation"].map(v=>`<option value="${v}" ${tag===v?"selected":""}>${v||"unmarked"}</option>`).join("");
+  return `<div class="case-row"><div class="case-row-main"><div class="case-row-name">${evidenceLabel(key)}</div><div class="case-row-key">${key}</div></div><div class="case-row-controls"><select class="case-select" onchange="setConfidence('${key}',this.value)" aria-label="confidence">${options}</select><button class="case-bookmark ${on?"on":""}" onclick="toggleEvidenceBookmark('${key}')">${on?"★ revisit":"☆ revisit"}</button></div></div>`;
+}
+function renderCaseWorkbench(){
+  const all=discoveredEvidenceKeys();
+  const flagged=all.filter(k=>bookmarkedEvidence.has(k));
+  const contradictions=contradictionFlags();
+  const bookmarkHtml=flagged.length?flagged.map(evidenceRowHtml).join(""):`<div class="bookmark-empty">nothing flagged yet.</div>`;
+  const contradictionHtml=contradictions.length?contradictions.map(c=>`<div class="contradiction-row"><b>automatic flag • ${c.title}</b>${c.text}</div>`).join(""):`<div class="bookmark-empty">no contradiction flags from the evidence you've opened yet.</div>`;
+  const allHtml=all.length?all.map(evidenceRowHtml).join(""):`<div class="bookmark-empty">open evidence first.</div>`;
+  return `<div class="case-tools"><div class="detail"><h4>your evidence labels</h4><div class="case-note">confirmed / likely / possible / speculation are your own annotations. they never change what the laptop actually proves or alter ending requirements.</div><div class="case-bookmarks"><h4>revisit later</h4><div class="case-list">${bookmarkHtml}</div></div><div class="case-contradictions"><h4>contradiction flags</h4><div class="case-note">automatic comparisons only appear after both sides have been discovered. contradiction does not automatically mean somebody lied.</div>${contradictionHtml}</div><div class="case-evidence"><h4>discovered evidence</h4><div class="case-scroll"><div class="case-list">${allHtml}</div></div></div></div></div>`;
+}
+
 function timelineKnown(key){
   if(key==="world_found")return true;
   if(key==="world_phoneclue")return storyFlags.heardPhoneClue;
@@ -2242,7 +2390,7 @@ function renderTimeline(){
   if(!storyFlags.timelineUnlocked){body.innerHTML=`<div class="detail">jc hasn't built this yet.</div>`;return}
   const rows=timelineDefs.map(([time,label,kind,key])=>timelineKnown(key)?`<div class="timeline-row ${["device","witness","photo"].includes(kind)?"critical":""}"><span class="t">${time}</span><span>${label}</span></div>`:`<div class="timeline-row unknown"><span class="t">${time}</span><span>???</span></div>`).join("");
   const count=timelineKnownCount();
-  body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">11:33 pm → 12:23 am</h3><span class="timeline-score">${count}/${timelineDefs.length} anchored</span></div><div class="detail"><p class="muted">jc only adds entries they actually found. blanks stay blank.</p>${rows}</div>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">we need to decide what to do</button>`:""}`;
+  body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">11:33 pm → 12:23 am</h3><span class="timeline-score">${count}/${timelineDefs.length} anchored</span></div><div class="detail"><p class="muted">jc only adds entries they actually found. blanks stay blank.</p>${rows}</div>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">we need to decide what to do</button>`:""}${renderCaseWorkbench()}`;
 }
 function markEvidence(id){if(id)evidence.add(id)}
 function cheatingScore(){return ["chat_celine","chat_ash","chat_maria","chat_boys","file_girlmatrix","file_copylog","file_templates"].filter(k=>seen.has(k)).length}
@@ -6321,6 +6469,20 @@ function cheatLog(msg){const el=document.getElementById("cheatLog");if(!el)retur
 function renderCheats(){}
 
 function submitCheatCode(){const input=document.getElementById("cheatInput");if(!input)return;const raw=input.value;const key=normalizeCheatCode(raw);const found=CHEAT_CODES.find(c=>normalizeCheatCode(c.code)===key);if(!found){cheatLog(`invalid code • ${raw||"(blank)"}`);input.select();return}cheatLog(`code recognized • ${found.code}`);input.value="";try{found.run()}catch(err){console.error(err);cheatLog(`code failed • ${String(err.message||err)}`)}}
+function submitMenuCheat(){
+  const input=document.getElementById("menuCheatInput"),status=document.getElementById("menuCheatStatus");if(!input)return;
+  const raw=input.value,key=normalizeCheatCode(raw);const found=CHEAT_CODES.find(c=>normalizeCheatCode(c.code)===key);
+  if(!found){if(status)status.textContent=raw?"invalid code":"enter a code";input.select();return;}
+  input.value="";if(status)status.textContent="accepted";
+  try{
+    if(!playerCharacter)playerCharacter="jc";
+    document.getElementById("mainMenu").style.display="none";
+    introEl.style.display="none";laptopWrap.style.display="flex";
+    startTerminalAmbience();renderAll();
+    found.run();
+  }catch(err){console.error(err);if(status)status.textContent="code failed";}
+}
+
 
 function renderAll(){
   updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderCheats();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
@@ -6331,7 +6493,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:20,
+    version:21,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -6345,7 +6507,7 @@ function createSaveData(){
     talkIndex,
     hintIndex,
     storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence],
-    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex},noteViewCounts:{...noteViewCounts}
+    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex},noteViewCounts:{...noteViewCounts},confidenceTags:{...confidenceTags},bookmarkedEvidence:[...bookmarkedEvidence]
   };
 }
 
@@ -6426,6 +6588,9 @@ function applySaveData(data){
   else Object.keys(ambientSceneIndex).forEach(k=>ambientSceneIndex[k]=0);
   Object.keys(noteViewCounts).forEach(k=>delete noteViewCounts[k]);
   Object.assign(noteViewCounts,data.noteViewCounts||{});
+  Object.keys(confidenceTags).forEach(k=>delete confidenceTags[k]);
+  Object.assign(confidenceTags,data.confidenceTags||{});
+  bookmarkedEvidence.clear();(data.bookmarkedEvidence||[]).forEach(k=>bookmarkedEvidence.add(k));
   evidence.clear();(data.evidence||[]).forEach(x=>evidence.add(x));
   const ensureMsg=(k,text)=>{if(chats[k]&&!chats[k].msgs.some(m=>m[1]===text))chats[k].msgs.push(["them",text]);};
   if(storyFlags.liveSynced){
@@ -6581,6 +6746,8 @@ function continueSavedGame(){
 
   try{
     const data=JSON.parse(raw);
+    const menu=document.getElementById("mainMenu");if(menu)menu.style.display="none";
+    const help=document.getElementById("howToPlayOverlay");if(help)help.classList.remove("show");
     introEl.style.display="none";
     laptopWrap.style.display="flex";
     startTerminalAmbience();
@@ -6593,7 +6760,7 @@ function continueSavedGame(){
   }
 }
 
-showCharacterSelect();
+showMainMenu();
 </script>
 </body>
 </html>
