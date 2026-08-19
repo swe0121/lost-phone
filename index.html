@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v41</title>
-<!-- v41: main menu + how-to-play + confidence/bookmark/contradiction case tools; preserves v40 restraint/12:14 mechanics. -->
+<title>Lost Phone v42</title>
+<!-- v42: expanded large-font how-to-play with mechanics, spoiler-light hints, and easter-egg nudges; preserves v41 case tools and v40 restraint mechanics. -->
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
@@ -1015,7 +1015,20 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
 .menu-cheat label{display:block;font-size:9px;letter-spacing:1.4px;color:#555;margin-bottom:7px;text-transform:uppercase}
 .menu-cheat-row{display:flex;gap:7px}.menu-cheat-row input{flex:1;min-width:0;border:1px solid #292929;background:#020202;color:#aaa;padding:8px 10px;font:11px "Courier New",monospace;outline:none}.menu-cheat-row button{border:1px solid #292929;background:#050505;color:#777;padding:7px 10px;font:10px "Courier New",monospace;cursor:pointer}.menu-cheat-row input:focus{border-color:#555;color:#ddd}.menu-cheat-status{min-height:16px;margin-top:7px;font:9px/1.4 "Courier New",monospace;color:#555}
 #howToPlayOverlay{position:fixed;inset:0;z-index:300000;background:#000;display:none;align-items:flex-start;justify-content:center;padding:24px;overflow:auto;overscroll-behavior:contain}
-#howToPlayOverlay.show{display:flex}.howto-card{width:min(760px,94vw);padding:34px 0 70px;font-family:"Courier New",Courier,monospace}.howto-card h2{font-size:28px;margin:0 0 6px;text-transform:lowercase}.howto-card .howto-sub{font-size:10px;color:#666;margin-bottom:26px}.howto-copy{font-size:13px;line-height:1.75;color:#d2d2d2}.howto-copy p{margin:0 0 16px}.howto-copy b{color:#fff}.howto-back{margin-top:24px}
+#howToPlayOverlay.show{display:flex}
+.howto-card{width:min(900px,94vw);padding:34px 0 80px;font-family:"Courier New",Courier,monospace}
+.howto-card h2{font-size:clamp(34px,5vw,50px);margin:0 0 8px;text-transform:lowercase;letter-spacing:-1px}
+.howto-card .howto-sub{font-size:14px;line-height:1.6;color:#7c8591;margin-bottom:28px}
+.howto-copy{font-size:18px;line-height:1.78;color:#d7dbe1}
+.howto-copy p{margin:0 0 16px}.howto-copy b{color:#fff}
+.howto-section{border-top:1px solid #242a33;padding-top:22px;margin-top:28px}
+.howto-section h3{font-size:24px;line-height:1.25;margin:0 0 14px;color:#fff;text-transform:lowercase}
+.howto-section h4{font-size:18px;line-height:1.35;margin:18px 0 8px;color:#e9edf3;text-transform:lowercase}
+.howto-callout{border:1px solid #303846;background:#0b0f15;border-radius:10px;padding:14px 16px;margin:16px 0;font-size:17px;line-height:1.65;color:#cdd5df}
+.howto-callout b{color:#fff}.howto-muted{color:#8f99a8}.howto-list{margin:10px 0 18px;padding-left:22px}.howto-list li{margin:8px 0}
+.howto-tagline{font-size:20px;line-height:1.55;color:#fff;margin:12px 0 20px}
+.howto-back{margin-top:30px;font-size:15px;padding:10px 16px}
+@media(max-width:760px){.howto-card{width:min(94vw,900px);padding-top:20px}.howto-copy{font-size:16px;line-height:1.72}.howto-section h3{font-size:21px}.howto-section h4{font-size:17px}.howto-callout{font-size:15px}.howto-card .howto-sub{font-size:13px}}
 #helpButton{position:absolute;right:14px;top:105px;z-index:8;width:32px;height:32px;border:1px solid #303846;background:rgba(12,15,20,.88);color:#9ea9b8;border-radius:50%;cursor:pointer;font:bold 12px "Courier New",monospace}#helpButton:hover{background:#171d26;color:#fff}
 .case-tools{margin-top:14px}.case-tools h4{margin:0 0 7px;font-size:12px}.case-note{font-size:10px;color:#8f99a8;line-height:1.45}.case-bookmarks,.case-contradictions,.case-evidence{margin-top:12px}.case-list{display:flex;flex-direction:column;gap:6px}.case-row{border:1px solid #29313d;background:#0d1219;border-radius:8px;padding:8px 9px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}.case-row-main{min-width:0}.case-row-name{font-size:11px;color:#e7ebf1;overflow-wrap:anywhere}.case-row-key{font:9px "Courier New",monospace;color:#687383;margin-top:3px;overflow-wrap:anywhere}.case-row-controls{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.case-select{background:#090d12;color:#cdd5df;border:1px solid #374253;border-radius:6px;padding:5px 6px;font:9px "Courier New",monospace}.case-bookmark{border:1px solid #374253;background:#111720;color:#9da9b8;border-radius:6px;padding:5px 7px;cursor:pointer;font:9px "Courier New",monospace}.case-bookmark.on{color:#fff;border-color:#8b98aa;background:#27303c}.contradiction-row{border-left:3px solid #9a6b72;background:#121014;padding:9px 10px;margin-top:6px;font-size:11px;line-height:1.55}.contradiction-row b{display:block;font-size:10px;margin-bottom:3px;color:#d9b7bc}.bookmark-empty{font-size:10px;color:#697382;padding:4px 0}.case-scroll{max-height:330px;overflow:auto;padding-right:2px}
 @media(max-width:760px){#mainMenu{padding-top:28px}.menu-cheat{margin-top:26px}#helpButton{right:7px;top:92px}.case-row{grid-template-columns:1fr}.case-row-controls{justify-content:flex-start}.case-scroll{max-height:280px}}
@@ -1063,15 +1076,128 @@ this rain is getting stupid though.</span></button>
 <div id="howToPlayOverlay">
   <div class="howto-card">
     <h2>how to play</h2>
-    <div class="howto-sub">read this or don't. the laptop won't wait for you.</div>
+    <div class="howto-sub">spoiler-light guide • mechanics, investigation tips, hidden hints, and easter-egg nudges</div>
     <div class="howto-copy">
-      <p><b>pay attention to everything.</b></p>
-      <p>you're exploring a found laptop, not following a checklist. click around. open apps, files, chats, photos, notes, browser history, downloads, and anything else that looks useful.</p>
-      <p>not everything you find is a clue. some things are just somebody's life, some things are red herrings, and some details only make sense after you find something else.</p>
-      <p>the game is set in the philippines. the laptop starts offline, so cached apps and local files are all you have at first. some things can change once you find a reason to go online.</p>
-      <p>check timestamps. compare what people say with what the laptop can actually prove. one weird detail is not automatically an answer.</p>
-      <p>there are multiple endings. you might miss something.</p>
-      <p><b>go explore on ur own.</b></p>
+      <div class="howto-tagline">you found somebody's laptop. the game does not tell you which parts of his life matter.</div>
+      <p>click around and build the story yourself. open apps, chats, files, photos, notes, browser history, downloads, games, social apps, logs, and whatever else looks worth checking. there is no single required click order.</p>
+      <p><b>important:</b> not everything is evidence. some files are useful, some are red herrings, some are embarrassing normal-person clutter, and some only become meaningful after you learn something else.</p>
+
+      <div class="howto-section">
+        <h3>core investigation mechanics</h3>
+        <h4>1. explore + revisit</h4>
+        <p>the game rewards rereading. a file that looks useless in act 1 can feel completely different in act 5. if something feels important but you don't understand it yet, come back later.</p>
+        <div class="howto-callout"><b>rule:</b> finding more information does not always create a new clue. sometimes it changes the meaning of an old one.</div>
+
+        <h4>2. confidence tags</h4>
+        <p>once the case tools are available, you can mark discovered evidence as <b>confirmed</b>, <b>likely</b>, <b>possible</b>, or <b>speculation</b>.</p>
+        <ul class="howto-list">
+          <li><b>confirmed</b> = the evidence itself directly establishes it.</li>
+          <li><b>likely</b> = several things support it, but there is still room to be wrong.</li>
+          <li><b>possible</b> = it fits, but there are other reasonable explanations.</li>
+          <li><b>speculation</b> = mostly your theory right now.</li>
+        </ul>
+        <p>these labels are yours. they do <b>not</b> secretly choose an ending or make your theory canon.</p>
+
+        <h4>3. revisit later</h4>
+        <p>use the star/bookmark control to flag evidence you want to return to. flagged items show up together in the case section so you don't have to remember which cursed folder you found something in three acts ago.</p>
+
+        <h4>4. contradiction flags</h4>
+        <p>some contradictions appear automatically after you discover both sides of them. a contradiction does <b>not</b> automatically mean somebody lied. people can be vague, mistaken, emotional, or talking about different parts of the same event.</p>
+        <div class="howto-callout">compare <b>what somebody says</b> with <b>what a hard log actually proves</b>. those are not always the same kind of evidence.</div>
+
+        <h4>5. the timeline</h4>
+        <p>the timeline becomes more useful as you progress. timestamps are some of the strongest anchors in the game, but even a timestamp has limits.</p>
+        <p>a file opening proves a file opened. a bluetooth connection proves a connection happened. a lid closing proves the lid closed. none of those automatically tells you <b>who</b> caused it.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>offline / online mechanic</h3>
+        <p>the laptop begins offline. early Messenger, social apps, browser data, and other information can be cached rather than live.</p>
+        <p>you cannot just turn on JC's hotspot immediately. keep playing until there is an actual in-story reason for internet access.</p>
+        <p>once live sync becomes possible, remember this:</p>
+        <div class="howto-callout"><b>something received after reconnection is not proof that it was present when the laptop was abandoned.</b></div>
+      </div>
+
+      <div class="howto-section">
+        <h3>photos + technical evidence</h3>
+        <p>there is no magic enhance button. if an image is blurry, dark, reflected, rain-covered, or badly compressed, the game will not invent detail that isn't there.</p>
+        <p>sometimes the important part of a photo is not <b>what is visible</b>. it can be the timestamp, orientation, source, motion, or the fact that somebody chose to take it at all.</p>
+        <p>same rule for USB, bluetooth, caches, and file history: technical logs usually prove <b>an event</b>, not the entire story surrounding that event.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>people</h3>
+        <p>don't decide too early that somebody is completely trustworthy or completely suspicious.</p>
+        <p>also don't decide too early that Niko was imagining everything, or that he was right about everything. some of his interpretations are clearly weak. that does not automatically make every later concern false.</p>
+        <div class="howto-callout">one of the main questions in this game is: <b>what do i actually know, and what am i adding myself?</b></div>
+      </div>
+
+      <div class="howto-section">
+        <h3>spoiler-light hints</h3>
+        <p class="howto-muted">these are nudges, not solutions. skip this section if you want to go in completely blind.</p>
+        <ul class="howto-list">
+          <li>pay attention to <b>what the laptop was already showing</b> before you start opening everything.</li>
+          <li>an old alarm can matter even when the date looks irrelevant.</li>
+          <li>the same device name appearing twice does not automatically mean the same physical device.</li>
+          <li>if a photo refuses to give you more detail, stop trying to identify a face and think about <b>how the photo was taken</b>.</li>
+          <li>the bag contains ordinary objects. eventually, what is <b>not</b> there may be worth thinking about too.</li>
+          <li>if you swear a note used to say something slightly different, don't immediately assume the game is haunted. computers keep versions.</li>
+          <li>somebody asking for an exact location can be totally normal. it can also feel different after you learn what happened there.</li>
+          <li>12:23 am is when JC and May find the bag. it is <b>not necessarily the most important timestamp.</b></li>
+        </ul>
+      </div>
+
+      <div class="howto-section">
+        <h3>easter eggs + optional shit</h3>
+        <p>there are small callbacks and dumb details scattered everywhere. most do not affect endings.</p>
+        <ul class="howto-list">
+          <li>Niko's games, Steam chats, Instagram, memes, engineering files, AutoCAD naming, and sports arguments are mostly there to make him feel like an actual person instead of a folder called <b>victim_lore</b>.</li>
+          <li>some filenames, notes, game names, character names, and repeated jokes reference other parts of Niko's life.</li>
+          <li>Miso shows up in places that have absolutely nothing to do with the mystery.</li>
+          <li>Niko still calls EA Sports FC “FIFA.” this is not evidence of anything except stubbornness.</li>
+          <li>his engineering file/layer names get increasingly stupid. yes, that is intentional.</li>
+          <li>sports predictions and argument rules are optional. they are also terrible.</li>
+          <li>JC and May have dialogue callbacks that mean more if you replay from the other POV.</li>
+          <li>there are a few details designed specifically to make a second playthrough feel different because you finally know what you're looking at.</li>
+        </ul>
+        <div class="howto-callout"><b>easter-egg rule:</b> funny or weird does not automatically mean clue. the game has a lot of shit that exists just because people keep dumb shit on their computers.</div>
+      </div>
+
+      <div class="howto-section">
+        <h3>endings</h3>
+        <p>there are multiple endings, but they are not arranged as simple bad / good / true ending tiers.</p>
+        <p>different endings represent different amounts and kinds of certainty. sometimes learning more gives you a darker answer, not a happier one.</p>
+        <p>if an ending option is missing, you probably have not established enough of the relevant chain yet.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>first playthrough advice</h3>
+        <ul class="howto-list">
+          <li>start with normal owner-identification stuff before going full detective.</li>
+          <li>read timestamps instead of only reading the dramatic text.</li>
+          <li>bookmark things you don't understand.</li>
+          <li>don't treat every woman in Niko's messages as a suspect.</li>
+          <li>don't treat creepy imagery as proof of anything supernatural.</li>
+          <li>don't assume a witness is lying just because two accounts don't line up perfectly.</li>
+          <li>when the final-night timeline starts forming, slow down and compare <b>before / during / after</b>.</li>
+        </ul>
+        <p><b>pay attention to everything. don't believe everything.</b></p>
+      </div>
+
+      <div class="howto-section">
+        <h3>cheat codes</h3>
+        <p>there is a code box on the main menu and a cheat console in the laptop.</p>
+        <p><b>the game will not show you the codes.</b> if you know one, type it. if you don't, play normally.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>last thing</h3>
+        <p>you're going through somebody's private laptop because you're trying to answer a simple question:</p>
+        <div class="howto-callout"><b>where did Niko go?</b></div>
+        <p>by the end, you may know his family, girlfriend, lies, games, schoolwork, fears, cat, stupid sports takes, and things he never meant strangers to see.</p>
+        <p>that still doesn't guarantee you understand what happened to him.</p>
+        <p><b>go explore on ur own.</b></p>
+      </div>
     </div>
     <button class="soft howto-back" onclick="closeHowToPlay()">back</button>
   </div>
