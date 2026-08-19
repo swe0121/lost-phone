@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Lost Phone</title>
-<!-- v17: grounded mystery, flood/terminal setup, expanded mental-health and foul-play clues -->
+<!-- v20: act/state story engine, gated evidence, terminal progression, timeline, branching grounded endings -->
 <style>
 :root{
   --bg:#06080c;--panel:#10141b;--panel2:#171c25;--panel3:#202734;
@@ -281,6 +281,46 @@ body{overflow:hidden}
 #fieldTalk.show{opacity:1}
 #fieldSpeaker{font-family:"Courier New",Courier,monospace;font-size:12px;color:#8fb2ff;margin-bottom:5px}
 #fieldText{font-family:"Courier New",Courier,monospace;font-size:15px;line-height:1.45;color:white}
+#storyPrompt{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);width:min(620px,88%);z-index:190;background:rgba(10,13,18,.985);border:1px solid #3b4658;border-radius:14px;padding:13px 14px;box-shadow:0 22px 70px rgba(0,0,0,.65);display:none}
+#storyPrompt.show{display:block}
+#storyPromptSpeaker{font-family:"Courier New",Courier,monospace;font-size:11px;color:#8fb2ff;margin-bottom:6px}
+#storyPromptText{font-family:"Courier New",Courier,monospace;font-size:13px;line-height:1.5;color:#f0f2f5;white-space:pre-line}
+#storyPromptChoices{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+#storyPromptChoices button{border:1px solid #364254;background:#171d26;color:#fff;border-radius:9px;padding:8px 10px;cursor:pointer;font-size:11px}
+#storyPromptChoices button:hover{background:#252e3b}
+
+#worldBadge{
+  position:absolute;right:14px;top:57px;z-index:7;border:1px solid #303846;background:rgba(12,15,20,.88);
+  color:#cbd3dd;border-radius:10px;padding:8px 10px;font:11px/1.35 "Courier New",monospace;cursor:pointer;text-align:left;
+  min-width:185px;box-shadow:0 10px 30px rgba(0,0,0,.22)
+}
+#worldBadge:hover{background:#171d26}
+#worldBadge b{color:#fff}
+.timeline-row{display:grid;grid-template-columns:74px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid #242c36;font-size:12px}
+.timeline-row .t{font-family:"Courier New",monospace;color:#9fb8df}
+.timeline-row.unknown{color:#6f7987}
+.timeline-row.critical{background:rgba(255,110,120,.045)}
+.timeline-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.timeline-score{font:11px "Courier New",monospace;color:#9aa5b5}
+.status-grid{display:grid;grid-template-columns:130px 1fr;gap:7px 12px;font-size:12px}
+.status-grid b{font-weight:600;color:#9ba7b7}
+.status-grid span{color:#eef2f6}
+#endingOverlay{position:absolute;inset:0;z-index:260;background:#05070a;display:none;align-items:center;justify-content:center;padding:24px;overflow:auto}
+#endingOverlay.show{display:flex}
+#endingCard{width:min(820px,94vw);max-height:88vh;overflow:auto;border:1px solid #303846;background:#0d1117;padding:24px;box-shadow:0 28px 100px rgba(0,0,0,.72)}
+#endingKicker{font:11px "Courier New",monospace;color:#8190a1;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+#endingTitle{font:700 clamp(24px,4vw,40px)/1.15 "Courier New",monospace;margin:0 0 18px}
+#endingBody{font:14px/1.75 "Courier New",monospace;color:#dce2e8;white-space:normal}
+#endingBody p{margin:10px 0}
+#endingBody .quiet{color:#9099a5}
+#endingBody .draft{font-size:clamp(18px,3vw,28px);padding:20px 0;color:#f2f2f2}
+#endingBody .chatScene{border:1px solid #2d3542;background:#10141b;padding:14px;margin:16px 0}
+#endingBody .chatScene .bubbleLine{padding:7px 10px;margin:6px 0;background:#242b35;width:max-content;max-width:82%}
+#endingBody .chatScene .bubbleLine.me{margin-left:auto;background:#315fa8}
+#endingActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+#endingActions button{border:1px solid #3b4658;background:#151b24;color:#fff;padding:10px 13px;cursor:pointer;font:12px "Courier New",monospace}
+#endingActions button:hover{background:#242d3a}
+@media(max-width:760px){#worldBadge{top:48px;right:7px;min-width:0;width:145px;font-size:8.5px;padding:6px 7px}#endingCard{padding:16px;max-height:92vh}.status-grid{grid-template-columns:105px 1fr}}
 
 @media(max-width:980px){
   #desktopIcons{grid-template-columns:repeat(5,88px);grid-auto-rows:84px}
@@ -673,6 +713,12 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
   }
   #fieldSpeaker{font-size:10px}
   #fieldText{font-size:12.5px;line-height:1.4}
+  #storyPrompt{
+    left:6px;right:6px;bottom:calc(var(--mobile-taskbar) + 70px + env(safe-area-inset-bottom));
+    transform:none;width:auto;max-height:42dvh;overflow-y:auto;padding:11px;
+  }
+  #storyPromptText{font-size:11.5px}
+  #storyPromptChoices button{flex:1 1 130px;min-height:40px}
 
   /* horizontal-scroll taskbar so every shortcut stays accessible */
   #taskbar{
@@ -770,11 +816,14 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
     <div id="webcam"></div>
     <div id="desktop">
       <div id="hint">maybe start with something normal. name, email, contacts.</div>
+      <button id="worldBadge" onclick="openWindow('terminal')"><b>12:23 am</b><br>heavy rain • ~50 waiting</button>
 
       <div id="desktopIcons">
         <button class="desktop-icon" onclick="openWindow('files')"><span class="ico">📁</span><span class="lbl">files</span></button>
         <button class="desktop-icon" onclick="openWindow('messenger')"><span class="ico">💬</span><span class="lbl">messenger</span></button>
         <button class="desktop-icon" onclick="openWindow('news')"><span class="ico">📰</span><span class="lbl">news</span></button>
+        <button class="desktop-icon" onclick="openWindow('terminal')"><span class="ico">🚏</span><span class="lbl">terminal status</span></button>
+        <button class="desktop-icon" id="timelineIcon" style="display:none" onclick="openWindow('timeline')"><span class="ico">🧷</span><span class="lbl">our timeline</span></button>
         <button class="desktop-icon" onclick="openWindow('photos')"><span class="ico">🖼️</span><span class="lbl">photos</span></button>
         <button class="desktop-icon" onclick="openWindow('notes')"><span class="ico">📝</span><span class="lbl">notes</span></button>
         <button class="desktop-icon" onclick="openWindow('browser')"><span class="ico">🌐</span><span class="lbl">browser</span></button>
@@ -1105,9 +1154,21 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
         <div class="window-body content"><div id="clockBody"></div></div>
       </div>
 
+      <div class="window" id="win-terminal">
+        <div class="window-bar"><div class="window-title">🚏 terminal status</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('terminal')">_</button><button class="win-btn close" onclick="closeWindow('terminal')">×</button></div></div>
+        <div class="window-body content"><div id="terminalBody"></div></div>
+      </div>
+
+      <div class="window" id="win-timeline">
+        <div class="window-bar"><div class="window-title">🧷 our timeline</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('timeline')">_</button><button class="win-btn close" onclick="closeWindow('timeline')">×</button></div></div>
+        <div class="window-body content"><div id="timelineBody"></div></div>
+      </div>
+
     </div>
 
     <div id="fieldTalk"><div id="fieldSpeaker"></div><div id="fieldText"></div></div>
+    <div id="storyPrompt"><div id="storyPromptSpeaker"></div><div id="storyPromptText"></div><div id="storyPromptChoices"></div></div>
+    <div id="endingOverlay"><div id="endingCard"><div id="endingKicker"></div><h2 id="endingTitle"></h2><div id="endingBody"></div><div id="endingActions"></div></div></div>
 
     <div id="taskbar">
       <div class="task-left">
@@ -1122,9 +1183,9 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
         <span class="muted" style="font-size:11px">niko laptop</span>
       </div>
       <div class="task-right">
-        <button class="task-btn" onclick="toast('wifi','no internet. no known network in range.')">wifi ✕</button>
+        <button class="task-btn" id="wifiBtn" onclick="toggleHotspot()">wifi ✕</button>
         <button class="task-btn" onclick="toast('volume','42%')">🔊</button>
-        <button class="task-btn" onclick="toast('battery','61%, about 2 hours left')">🔋 61%</button>
+        <button class="task-btn" id="batteryBtn" onclick="toast('battery',batteryPercent+'% remaining')">🔋 61%</button>
         <div id="clock"></div>
       </div>
     </div>
@@ -1142,6 +1203,16 @@ window.visualViewport?.addEventListener("resize",syncMobileViewport,{passive:tru
 syncMobileViewport();
 
 let z=30, currentChat=null, exploreCount=0, creepStage=0, toastTimer=null, showHiddenFiles=false;
+let storyMinutes=0, storyStage=0, hotspotOn=false, batteryPercent=61, storyPromptOpen=false;
+const story={act:1,ending:null,endingReady:false};
+const storyFlags={
+  liveSynced:false,vinceLive:false,toldGuard:false,vendorAsked:false,heardPhoneClue:false,stayLonger:false,
+  foundIdentity:false,heardMamaVoicemail:false,foundLia:false,cheatingEstablished:false,
+  beaBikeUnlocked:false,sawBeaBike:false,sawMiso:false,humanizedNiko:false,mentalEstablished:false,
+  foulPlayPossible:false,timelineUnlocked:false,finalWindowComplete:false,contactedFamily:false,
+  securityEscalated:false,quietTurn:false
+};
+const evidence=new Set();
 const seen=new Set(), journal=[];
 
 const intro=[
@@ -1151,33 +1222,33 @@ this rain is getting stupid though.`,choices:[["keep walking",1]]},
 
  {speaker:"may",text:`yeah yeah. hanggang terminal lang.
 
-don't walk me all the way, my parents don't even know i'm with you 😭
+my parents don't even know who u are 😭 they just know i'm out.
 
-and if the terminal stops rides because of this rain i'm actually cooked.`,choices:[["wait what 😭",2],["just laugh",3]]},
+they don't really care who i'm meeting, they just care if i get home. and if the terminal stops rides because of this rain i'm actually cooked.
 
- {speaker:"jc",text:`wait what 😭
+also u know u don't have to comment on every puddle just so there isn't silence right 😭`,choices:[["damn i'm a random 😭",2],["just laugh",3]]},
 
-who do they think you're with then?`,choices:[["continue",4]]},
+ {speaker:"jc",text:`damn i'm literally just some random name they don't know 😭
 
- {speaker:"jc",text:`nah that's actually crazy 😭`,choices:[["continue",4]]},
+and i'm not commenting on every puddle. that last one was unusually deep.`,choices:[["continue",4]]},
 
- {speaker:"may",text:`friends.
+ {speaker:"jc",text:`nah that's kinda funny 😭`,choices:[["continue",4]]},
 
-which is technically true naman.
+ {speaker:"may",text:`exactly.
 
-they just don't know which friend.` ,choices:[["fair",5],["second time meeting btw",6]]},
+if they call they're gonna ask about the flood, not interrogate me about you.` ,choices:[["fair",5],["second time meeting btw",6]]},
 
  {speaker:"jc",text:`fair.
 
-i'm not tryna get questioned by someone's parents anyway.` ,choices:[["keep walking",7]]},
+less pressure for me then.` ,choices:[["keep walking",7]]},
 
  {speaker:"jc",text:`and this is literally only the second time we've met irl 😭
 
-imagine explaining that one.` ,choices:[["continue",8]]},
+so technically they don't even have anything to know yet.` ,choices:[["continue",8]]},
 
- {speaker:"may",text:`exactly 😭
+ {speaker:"may",text:`EXACTLY 😭
 
-"hi ma, this is jc. i've met him twice." absolutely not.` ,choices:[["keep walking",9]]},
+you're acting like my family has a case file on you.` ,choices:[["keep walking",9]]},
 
  {speaker:"may",text:`don't say it like that 😭
 
@@ -1332,15 +1403,86 @@ function showDialogue(i){
 function startDesktop(){
   introEl.style.display="none";
   laptopWrap.style.display="flex";
-  renderAll();
+  renderAll();updateConnectionUI();updateTerminalStatus();
   addJournal("12:23 am • heavy rain and flooding stalled the terminal. found niko's warm bag half under a bench near the terminal-side road. laptop was already unlocked.");
   addJournal("jc and may are stranded in the covered terminal area until the flooding goes down or rides start moving again.");
   setTimeout(()=>fieldTalk("may","yeah... we're not going anywhere rn. might as well figure out whose laptop this is."),700);
 }
 const introEl=document.getElementById("intro");
 
+function storyNow(){
+  return new Date(2026,7,18,0,23+storyMinutes,0,0);
+}
+function storyTimeLabel(){
+  return storyNow().toLocaleTimeString([], {hour:"numeric",minute:"2-digit",hour12:true}).toLowerCase();
+}
 function updateClock(){
-  clock.innerHTML="12:23 AM<br>Aug 18, 2026";
+  const d=storyNow();
+  clock.innerHTML=d.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",hour12:true})+"<br>Aug 18, 2026";
+}
+function advanceStory(mins){
+  storyMinutes+=mins;
+  updateClock();
+  updateTerminalStatus();
+}
+function updateConnectionUI(){
+  const b=document.getElementById("wifiBtn");
+  if(b)b.textContent=hotspotOn?"wifi • jc-phone":"wifi ✕";
+  const bat=document.getElementById("batteryBtn");
+  if(bat)bat.textContent="🔋 "+batteryPercent+"%";
+}
+function setBattery(n){batteryPercent=Math.max(5,Math.min(100,n));updateConnectionUI()}
+function addIncoming(k,text){
+  if(!chats[k])return;
+  chats[k].msgs.push(["them",text]);
+  if(currentChat===k){pushMsg("them",text)}
+  renderChats(document.getElementById('msgSearch')?.value||'');
+}
+function syncLiveMessages(){
+  if(storyFlags.liveSynced)return;
+  storyFlags.liveSynced=true;
+  setTimeout(()=>addIncoming("lia","niko? where are you"),350);
+  setTimeout(()=>addIncoming("vince","if u see this call me. seriously."),750);
+  setTimeout(()=>addIncoming("mama","anak update ka naman pag nakita mo to"),1100);
+  setTimeout(()=>toast("messenger","new messages synced through jc's hotspot"),1250);
+}
+function syncVinceLive(){
+  if(storyFlags.vinceLive)return;
+  storyFlags.vinceLive=true;
+  addIncoming("vince","whoever has niko's laptop, where exactly did you find it?");
+  addIncoming("vince","don't go down the side road rn. water's bad and i can't reach him.");
+  toast("messenger","vince sent new messages");
+}
+function connectHotspot(){
+  if(hotspotOn)return;
+  hotspotOn=true;
+  updateConnectionUI();
+  toast("wifi","connected to jc-phone hotspot");
+  addJournal(storyTimeLabel()+" • jc connected the laptop to his phone hotspot so they can contact the owner. everything before 12:23 remains historical/local evidence.");
+  syncLiveMessages();
+  if(storyStage>=7)syncVinceLive();
+  if(currentChat)openChat(currentChat);
+}
+function toggleHotspot(){
+  if(!hotspotOn){connectHotspot();return}
+  hotspotOn=false;updateConnectionUI();toast("wifi","disconnected from jc-phone hotspot");
+  if(currentChat)openChat(currentChat);
+}
+function showStoryPrompt(speakerName,text,choices){
+  storyPromptOpen=true;
+  const box=document.getElementById("storyPrompt");
+  const sp=document.getElementById("storyPromptSpeaker");
+  const tx=document.getElementById("storyPromptText");
+  const ch=document.getElementById("storyPromptChoices");
+  sp.textContent=speakerName;
+  tx.textContent=text;
+  ch.innerHTML="";
+  choices.forEach(([label,fn])=>{
+    const b=document.createElement("button");b.textContent=label;b.onclick=()=>{
+      box.classList.remove("show");storyPromptOpen=false;fn&&fn();evaluateActProgress();progressStory();updateTerminalStatus();renderTimeline();saveGame(false);
+    };ch.appendChild(b);
+  });
+  box.classList.add("show");
 }
 
 function toggleStart(){
@@ -1353,13 +1495,26 @@ function openWindow(name){
   markSeen("app_"+name);
   if(name==="browser") browserHome();
   if(name==="files") renderFolder("recent");
-  if(name==="messenger"){renderChats(document.getElementById('msgSearch')?.value||''); if(!currentChat) setTimeout(()=>openChat('lia'),0);}
+  if(name==="messenger"){renderChats(document.getElementById('msgSearch')?.value||''); if(!currentChat){const first=Object.keys(chats).find(k=>chats[k].kind===chatMode&&isChatUnlocked(k));if(first)setTimeout(()=>openChat(first),0);}}
   if(name==="news") renderNews(currentNewsFilter||'all');
+  if(name==="terminal") renderTerminalStatus();
+  if(name==="timeline") {
+    if(!storyFlags.timelineUnlocked){timelineBody.innerHTML=`<div class="detail"><b>nothing built yet</b><p>jc hasn't started a formal timeline. the final-night timestamps need more context first.</p></div>`;}
+    else renderTimeline();
+  }
 }
 function closeWindow(name){document.getElementById("win-"+name).classList.remove("active")}
 document.querySelectorAll(".window").forEach(w=>w.addEventListener("mousedown",()=>w.style.zIndex=++z));
 
+function refreshDesktopShortcuts(){
+  document.querySelectorAll(".file-shortcut").forEach(btn=>{
+    const m=(btn.getAttribute("onclick")||"").match(/openDesktopFile\('([^']+)'\)/);
+    if(!m)return;btn.style.display=isFileUnlocked("desktop",m[1])?"":"none";
+  });
+  const ti=document.getElementById("timelineIcon");if(ti)ti.style.display=storyFlags.timelineUnlocked?"":"none";
+}
 function openDesktopFile(k){
+  if(!isFileUnlocked("desktop",k)){toast("files","that shortcut is not available yet");return}
   openWindow("files");
   renderFolder("desktop");
   setTimeout(()=>openFile(k),0);
@@ -1378,6 +1533,177 @@ function addJournal(text){
 }
 function toggleJournal(){journal.style.display=journal.style.display==="block"?"none":"block"}
 
+function terminalSnapshot(){
+  const stages=[
+    {rain:"heavy",flood:"rising",route:"most routes delayed",waiting:"~50+",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"rising",route:"several suspended",waiting:"~48",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"high",route:"several suspended",waiting:"~42",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"high",route:"limited movement",waiting:"~38",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"high",route:"limited movement",waiting:"~33",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"stable",route:"limited movement",waiting:"~29",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"stable",route:"limited movement",waiting:"~24",coffee:"open",power:"generator"},
+    {rain:"moderate-heavy",flood:"slowly receding",route:"some routes testing",waiting:"~20",coffee:"open",power:"generator"},
+    {rain:"moderate",flood:"receding",route:"limited service",waiting:"~18",coffee:"closing",power:"generator"},
+    {rain:"moderate",flood:"receding",route:"limited service",waiting:"~14",coffee:"closed",power:"generator"},
+    {rain:"light-moderate",flood:"receding",route:"may's route resuming",waiting:"~10",coffee:"closed",power:"grid / generator standby"}
+  ];
+  return stages[Math.min(storyStage,stages.length-1)];
+}
+function updateTerminalStatus(){
+  const st=terminalSnapshot();
+  const b=document.getElementById("worldBadge");
+  if(b)b.innerHTML=`<b>${storyTimeLabel()}</b><br>${st.rain} rain • ${st.waiting} waiting`;
+  if(document.getElementById("win-terminal")?.classList.contains("active"))renderTerminalStatus();
+}
+function renderTerminalStatus(){
+  const st=terminalSnapshot();
+  const body=document.getElementById("terminalBody");if(!body)return;
+  body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">terminal-side waiting area</h3><span class="timeline-score">night status</span></div>
+  <div class="detail status-grid">
+    <b>time</b><span>${storyTimeLabel()} • aug 18, 2026</span>
+    <b>rain</b><span>${st.rain}</span>
+    <b>flood</b><span>${st.flood}</span>
+    <b>transport</b><span>${st.route}</span>
+    <b>waiting</b><span>${st.waiting} passengers</span>
+    <b>coffee stall</b><span>${st.coffee}</span>
+    <b>power</b><span>${st.power}</span>
+  </div>
+  <div class="detail"><p>${storyStage<6?"rain and announcements keep filling the covered terminal.":storyStage<9?"the terminal is getting quieter. individual footsteps and vehicles are easier to hear now.":"the night is visibly winding down. empty benches outnumber occupied ones."}</p>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">decide what to do with the laptop</button>`:""}</div>`;
+}
+
+const timelineDefs=[
+ ["11:33","unknown call","call","file_odd_calls"],
+ ["11:34","terminal last-trip search","search","history_terminal_last"],
+ ["11:35","back-road route search","search","history_terminal_route"],
+ ["11:36","receipt / route screenshot","route","file_odd_route"],
+ ["11:38","internet lost","base","file_cache_sync"],
+ ["11:49","unknown bluetooth device","device","file_btlog"],
+ ["11:52","ride cancelled","ride","file_taxi"],
+ ["11:56","unsent draft / unclear audio","draft","file_unsent_0817"],
+ ["11:58","removable storage mounted","device","file_usblog"],
+ ["12:03","camera opened","camera","file_camevents"],
+ ["12:05","terminal glass photo","photo","photo_terminal_glass"],
+ ["12:07","waiting shed / voices","photo","photo_waitingshed"],
+ ["12:09","local files opened","files","file_fileaccess1209"],
+ ["12:11","laptop photographed inside bag","photo","photo_bagfloor"],
+ ["12:14","lid closed / sleep","base","file_cache_session"],
+ ["12:18","man asks security about a phone","witness","world_phoneclue"],
+ ["12:23","jc and may find the bag","base","world_found"]
+];
+function timelineKnown(key){
+  if(key==="world_found")return true;
+  if(key==="world_phoneclue")return storyFlags.heardPhoneClue;
+  return seen.has(key)||evidence.has(key);
+}
+function timelineKnownCount(){return timelineDefs.filter(x=>timelineKnown(x[3])).length}
+function renderTimeline(){
+  const body=document.getElementById("timelineBody");if(!body)return;
+  if(!storyFlags.timelineUnlocked){body.innerHTML=`<div class="detail">jc hasn't built this yet.</div>`;return}
+  const rows=timelineDefs.map(([time,label,kind,key])=>timelineKnown(key)?`<div class="timeline-row ${["device","witness","photo"].includes(kind)?"critical":""}"><span class="t">${time}</span><span>${label}</span></div>`:`<div class="timeline-row unknown"><span class="t">${time}</span><span>???</span></div>`).join("");
+  const count=timelineKnownCount();
+  body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">11:33 pm → 12:23 am</h3><span class="timeline-score">${count}/${timelineDefs.length} anchored</span></div><div class="detail"><p class="muted">jc only adds entries they actually found. blanks stay blank.</p>${rows}</div>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">we need to decide what to do</button>`:""}`;
+}
+function markEvidence(id){if(id)evidence.add(id)}
+function cheatingScore(){return ["chat_celine","chat_ash","chat_maria","chat_boys","file_girlmatrix","file_copylog","file_templates"].filter(k=>seen.has(k)).length}
+function mentalScore(){return ["chat_drreyes","chat_mika","file_therapy_notes","file_reality_check","file_sleep_notes_aug","file_odd_symbols","file_odd_333"].filter(k=>seen.has(k)).length}
+function foulScore(){return ["photo_glass","chat_rj","chat_vince","file_odd_calls","file_odd_route","photo_waitingshed","file_btlog","file_usblog","file_fileaccess1209"].filter(k=>seen.has(k)).length}
+function finalScore(){return ["file_cache_session","file_cache_sync","file_btlog","file_usblog","file_camevents","photo_terminal_glass","photo_waitingshed","photo_bagfloor","file_fileaccess1209"].filter(k=>seen.has(k)).length + (storyFlags.heardPhoneClue?1:0)}
+function canFoulPlayEnding(){return seen.has("photo_glass")&&seen.has("chat_rj")&&seen.has("chat_vince")&&seen.has("file_odd_route")&&seen.has("photo_waitingshed")&&storyFlags.heardPhoneClue&&finalScore()>=7}
+function setAct(n){
+  if(n<=story.act)return;story.act=n;
+  if(n===2){addJournal(storyTimeLabel()+" • jc and may have enough contradictions to know niko's messages cannot be taken at face value.");updateHint("some of niko's messages are lies. timestamps and independent sources matter more now.");}
+  if(n===3){storyFlags.beaBikeUnlocked=true;addJournal(storyTimeLabel()+" • bea's old chat points to a bike video in niko's videos folder.");fieldTalk("may","wait. bea mentioned some old bike video. can we look at one thing that isn't relationship warfare for a second?",4700);}
+  if(n===4){addJournal(storyTimeLabel()+" • the investigation shifts from niko's relationships to notes about sleep, perception, therapy and the odd folder.");updateHint("what niko experienced and what objectively happened are not always the same thing.");}
+  if(n===5){addJournal(storyTimeLabel()+" • outside witnesses begin confirming parts of niko's last night. this is no longer explainable by his private notes alone.");updateHint("look for independent witnesses: rj, vince, cam, photos, route data.");}
+  if(n===6){storyFlags.timelineUnlocked=true;const ti=document.getElementById("timelineIcon");if(ti)ti.style.display="";addJournal(storyTimeLabel()+" • jc starts our_timeline.txt and leaves every unfound interval as ???.");fieldTalk("jc","okay. no more guessing. i'm making a timeline with only shit we can actually anchor.",4400);updateHint("fill the timeline with evidence. some gaps are supposed to stay gaps.");}
+  renderFileSidebar();renderChats();renderContacts();renderPhotos();renderVideos();renderRecorder();renderMail();renderCalendar();renderDiscord();renderSticky();renderRecycle();renderSettings();renderMusic();renderSnips();renderClockApp();refreshDesktopShortcuts();updateTerminalStatus();renderTimeline();
+}
+function evaluateActProgress(){
+  if(storyFlags.foundIdentity&&storyFlags.heardMamaVoicemail&&storyFlags.foundLia)setAct(2);
+  if(story.act>=2&&cheatingScore()>=3){storyFlags.cheatingEstablished=true;setAct(3)}
+  if(story.act>=3&&storyFlags.sawBeaBike&&storyFlags.sawMiso){storyFlags.humanizedNiko=true;setAct(4)}
+  if(story.act>=4&&mentalScore()>=3){storyFlags.mentalEstablished=true;setAct(5)}
+  if(story.act>=5&&foulScore()>=4){storyFlags.foulPlayPossible=true;setAct(6)}
+  if(story.act>=6&&finalScore()>=6){storyFlags.finalWindowComplete=true}
+  if(story.act>=6&&storyStage>=10&&finalScore()>=6){story.endingReady=true}
+  updateTerminalStatus();renderTimeline();
+}
+function updateStoryFlags(k){
+  if(["file_resume","app_settings","chat_familygc"].includes(k)&&!storyFlags.foundIdentity){storyFlags.foundIdentity=true;markEvidence("identity");renderRecorder();renderChats();renderContacts();addJournal("owner identified: niko de la cruz, 21, information systems student.");setTimeout(()=>fieldTalk("may","okay. niko de la cruz. at least we have a name now. wait, recorder has a recent voicemail from 'mama'.",4700),260)}
+  if(k==="chat_lia")storyFlags.foundLia=true;
+  if(k==="file_miso")storyFlags.sawMiso=true;
+  if(k.startsWith("photo_")||k.startsWith("file_")||k.startsWith("chat_"))markEvidence(k);
+}
+function isChatUnlocked(k){
+  const cheating=["boys","celine","ash","maria","bella","jane","liana","sarah","nicole","kyla","trisha","grace"];
+  const mental=["drreyes","mika","ari"];
+  const foul=["rj","vince","cam","paolo","toni"];
+  if(k==="mama")return storyFlags.heardMamaVoicemail;
+  if(k==="lia")return storyFlags.heardMamaVoicemail;
+  if(k==="bea")return story.act>=3;
+  if(cheating.includes(k))return story.act>=2;
+  if(mental.includes(k))return story.act>=4;
+  if(foul.includes(k))return story.act>=5;
+  return true;
+}
+function isContactUnlocked(id){
+  if(id==="mama")return storyFlags.foundIdentity;
+  if(id==="lia")return storyFlags.heardMamaVoicemail;
+  if(["celine","c2","ash","m","j","enilec","hsa","airam","alleb","enaj","anail"].includes(id))return story.act>=2;
+  if(["drreyes","clinic","mika","ari"].includes(id))return story.act>=4;
+  if(["vince","rj","cam","paolo","toni","bartender"].includes(id))return story.act>=5;
+  return true;
+}
+function isFileUnlocked(folder,key){
+  const cheating=["private","backup","latenightreceipt","photo4430","archive","parking","placeslist","names","templates","birthdays","screensend","excuses2","giftlist","calllog","girlmatrix","copylog","sentgrid","chatbackup1","chatbackup2","voiceexport"];
+  const mental=["therapy_notes","reality_check","rough_week","door_checks","same_people","sleep_notes_aug","appointment_plan","niko_raw"];
+  const finalRecent=["barreceipt","taxi","barvoice","unsent_0817","vince","voice3","letter"];
+  const finalOdd=["odd_calls","odd_wristband","odd_route","odd_bagcheck","odd_photogaps","odd_4421","odd_glass","odd_benchwide","odd_audioguess"];
+  const finalCache=["cache_notif","cache_places","cache_sync","cache_session","cache_thumbs","btlog","usblog","camevents","fileaccess1209","batteryhist","oldbtscan","mediaindex"];
+  if(cheating.includes(key)&&story.act<2)return false;
+  if(["bea_bike","dog_bark"].includes(key)&&story.act<3)return false;
+  if(mental.includes(key)&&story.act<4)return false;
+  if(finalRecent.includes(key)&&story.act<5)return false;
+  if(finalOdd.includes(key)&&story.act<5)return false;
+  if(finalCache.includes(key)&&story.act<5)return false;
+  if(folder==="odd"&&story.act<4)return false;
+  if(folder==="backup"&&story.act<2)return false;
+  return true;
+}
+function offerEndingChoice(){
+  if(!story.endingReady){toast("timeline","not enough of the final window is anchored yet");return}
+  const choices=[
+    ["hand it to terminal security now",()=>startEnding("unresolved")],
+    ["contact family and hand it over",()=>{storyFlags.contactedFamily=true;startEnding("closure")}],
+  ];
+  if(canFoulPlayEnding())choices.push(["preserve evidence + escalate",()=>{storyFlags.securityEscalated=true;startEnding("foulplay")}]);
+  choices.push(["keep looking a little longer",()=>fieldTalk("may","okay. but when my route actually moves, we go.",3300)]);
+  showStoryPrompt("may","rides are moving again. we have to decide what we're actually doing with this laptop.",choices);
+}
+function endingScreen(kicker,title,html,buttons){
+  document.getElementById("endingKicker").textContent=kicker;document.getElementById("endingTitle").textContent=title;document.getElementById("endingBody").innerHTML=html;
+  const a=document.getElementById("endingActions");a.innerHTML="";(buttons||[]).forEach(([label,fn])=>{const b=document.createElement("button");b.textContent=label;b.onclick=fn;a.appendChild(b)});
+  document.getElementById("endingOverlay").classList.add("show");
+}
+function startEnding(kind){story.ending=kind;saveGame(false);if(kind==="unresolved")endingUnresolved(0);if(kind==="closure")endingClosure(0);if(kind==="foulplay")endingFoulPlay(0)}
+function endingUnresolved(step){
+  if(step===0){endingScreen("local draft • 12:?? am","draft_message.txt",`<div class="draft">ma pauwi na ko sorry medyo</div><p class="quiet">no recipient response. no punctuation. the file ends there.</p>`,[["close the file",()=>endingUnresolved(1)]]);return}
+  if(step===1){endingScreen("2:31 am","handoff",`<p>jc and may give the bag and laptop to terminal security.</p><p>the guard writes niko de la cruz on a paper log and puts the bag behind the desk.</p><p>outside, the first jeep on may's route pulls in.</p><p>people walk past the bench where the bag was found.</p>`,[["continue",()=>endingUnresolved(2)]]);return}
+  endingScreen("weeks later","UNRESOLVED",`<p>no clean answer ever reaches jc or may.</p><p class="quiet">may: message me pag nakauwi ka.</p><p class="quiet">jc: ikaw din.</p><p>traffic keeps moving.</p>`,[["restart from save",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+}
+function endingClosure(step){
+  if(step===0){endingScreen("later","NIKO DE LA CRUZ LOCATED SAFE",`<p>the message reaches jc through niko's family.</p><p>niko is alive. physically safe. he does not explain where he went.</p><p>for a few seconds, that is enough.</p>`,[["months later",()=>endingClosure(1)]]);return}
+  if(step===1){endingScreen("november 2026","lia",`<div class="chatScene"><div class="bubbleLine">he's okay naman.</div><div class="bubbleLine">just different.</div><div class="bubbleLine">he doesn't really go out alone anymore.</div><div class="bubbleLine">and he still won't tell anyone what happened that night.</div></div><p class="quiet">no explanation follows.</p>`,[["continue",()=>endingClosure(2)]]);return}
+  if(step===2){endingScreen("november 2026","maria",`<div class="chatScene"><div class="bubbleLine">GUYS</div><div class="bubbleLine">I GOT THE INTERNSHIP 😭😭😭</div><div class="bubbleLine">SHUT UPPPP</div><div class="bubbleLine">I'M ACTUALLY SHAKING</div><div class="bubbleLine">libre mo kami</div><div class="bubbleLine">NO 😭</div></div><p>niko is not mentioned once.</p>`,[["continue",()=>endingClosure(3)]]);return}
+  endingScreen("ending","FALSE CLOSURE",`<p>you helped somebody get home.</p><p><b>you did not repair them.</b></p><p class="quiet">weeks later, an unknown number calls jc. he watches it ring until it stops.</p><p class="quiet">may: u answer unknown numbers now?</p><p class="quiet">jc: sometimes.</p>`,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+}
+function endingFoulPlay(step){
+  if(step===0){endingScreen("evidence review","FOUL PLAY",`<p>a camera from a business across the road catches a clearer angle than the terminal system.</p><p>niko leaves the waiting-shed area with the same blue-shirt man seen outside the bar.</p><p>investigators identify the man.</p><p>nothing in the footage shows an attack.</p><p>it is enough to establish that niko did not simply vanish alone.</p>`,[["continue",()=>endingFoulPlay(1)]]);return}
+  if(step===1){endingScreen("later","mama",`<p>niko's mother receives the laptop.</p><p>the desktop opens exactly where jc and may left it.</p><p>she clicks <b>miso_sleeping.jpg</b>.</p><p>orange cat. niko's backpack. file comment: <span class="quiet">useless animal ❤️</span></p><p>she looks at the folders for a while.</p><p>then she closes the lid.</p>`,[["continue",()=>endingFoulPlay(2)]]);return}
+  if(step===2){endingScreen("bag side pocket","",`<p>there is a house key on a faded basketball keychain.</p><p>she recognizes it immediately.</p><p class="quiet">nothing else is opened.</p>`,[["end",()=>endingFoulPlay(3)]]);return}
+  endingScreen("ending","FOUL PLAY",`<p>the occult images were unrelated graffiti, a metal poster, and random markings.</p><p>most of the repeated cars and symbols went nowhere.</p><p>the blue-shirt man did.</p><p class="quiet">it was just his laptop. his files. his life.</p>`,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+}
+
 let talkTimer=null;
 let talkIndex=0;
 const randomTalk=[
@@ -1393,15 +1719,10 @@ const randomTalk=[
   ["jc","YOU stopped to look at the bag first."],
   ["may","details."],
 
-  ["jc","your parents seriously don't know about me at all?"],
-  ["may","nope."],
-  ["jc","damn i'm classified information."],
-  ["may","more like unnecessary information 😭"],
-
-  ["jc","imagine your dad comes outside rn."],
-  ["may","i'm leaving you here with the laptop."],
-  ["jc","nah that's evil 😭"],
-  ["may","good luck explaining who you are."],
+  ["jc","your parents seriously don't know who i am at all?"],
+  ["may","nope 😭"],
+  ["jc","damn i'm literally an unnamed side character."],
+  ["may","they don't care who i'm meeting, relax. they care more if the road is flooded."],
 
   ["may","you're way quieter irl than in chat btw."],
   ["jc","i know 😭"],
@@ -1439,9 +1760,9 @@ const randomTalk=[
   ["may","you stepped on the bag."],
   ["jc","physics blamed me first."],
 
-  ["may","if my mom calls, don't make a sound."],
-  ["jc","what am i, a fugitive 😭"],
-  ["may","for like thirty seconds, yes."],
+  ["may","if my mom calls she's just gonna ask if the flood went down."],
+  ["jc","not gonna ask who's with you?"],
+  ["may","why would she 😭 she doesn't even know you exist."],
 
   ["jc","why does every guy have like twelve nba screenshots saved."],
   ["may","you literally sent me basketball edits last week."],
@@ -1510,11 +1831,9 @@ const randomTalk=[
   ["may","information systems student btw."],
   ["jc","leave my degree out of this."],
 
-  ["may","if my parents ask why i'm late i'm saying traffic."],
-  ["jc","technically there is traffic."],
-  ["may","exactly. not a lie."],
-  ["jc","that's some niko logic right there."],
-  ["may","EW don't compare me to him 😭"],
+  ["may","my parents already know i'm stuck because of the flood."],
+  ["jc","so i'm not involved in the explanation at all?"],
+  ["may","correct 😭 you're irrelevant to the weather report."],
 
   ["jc","you scared?"],
   ["may","no."],
@@ -1646,9 +1965,8 @@ const randomTalk=[
   ["may","skibidi is not healthy."],
 
   ["jc","his school project is about commuter queues."],
-  ["may","bro had terminal research and still couldn't figure out his own life."],
-  ["jc","don't say bro, that's my line 😭"],
-  ["may","ew no."],
+  ["may","he had terminal research and still couldn't figure out his own life 😭"],
+  ["jc","okay that's foul."],
 
   ["may","wait hint says timestamps."],
   ["jc","yeah, some shit overlaps."],
@@ -1744,7 +2062,42 @@ const randomTalk=[
 
   ["may","i checked the road again. water's still high."],
   ["jc","so we remain trapped with niko de la cruz and his seventeen questionable folders."],
-  ["may","unfortunately."]
+  ["may","unfortunately."],
+
+  ["may","kinda funny we barely knew what to talk about earlier and now we've been arguing over timestamps for an hour."],
+  ["jc","shared trauma but make it information systems."],
+  ["may","don't call snooping shared trauma 😭"],
+
+  ["jc","you were the one saying don't go full detective."],
+  ["may","yeah well now i wanna know who the blue shirt guy is."],
+  ["jc","character development."],
+
+  ["may","when we get out of here we're getting actual food."],
+  ["jc","that's assuming a jeep ever moves again."],
+  ["may","don't manifest that."],
+
+  ["jc","you keep checking the bench every time we find something."],
+  ["may","because it was NINE MINUTES."],
+  ["jc","okay fair."],
+
+  ["may","this is probably the most i've heard you talk irl."],
+  ["jc","apparently i just needed a missing-person laptop to become conversational."],
+  ["may","terrible requirement 😭"],
+
+  ["jc","if we tell a guard, you're doing the talking."],
+  ["may","of course. you'll say 'uh hi' twice again."],
+  ["jc","that happened ONE time."],
+
+  ["may","i'm not scared of the laptop. i'm scared that every normal person outside suddenly looks suspicious now."],
+  ["jc","yeah. that's worse actually."],
+
+  ["jc","if we leave before figuring this out you're gonna keep thinking about it."],
+  ["may","so are you."],
+  ["jc","...yeah."],
+
+  ["may","my mom literally just said 'baha pa ba' and that's it 😭"],
+  ["jc","see. zero questions about the mysterious man beside you."],
+  ["may","because you're not mysterious. you're just wet and annoying."]
 ];
 
 function fieldTalk(speaker,text,duration=3300){
@@ -1756,11 +2109,19 @@ function fieldTalk(speaker,text,duration=3300){
 }
 const fieldTalkEl=document.getElementById("fieldTalk");
 function maybeRandomTalk(){
-  if(exploreCount<2||exploreCount%3!==0)return;
-  const item=randomTalk[talkIndex%randomTalk.length];
-  talkIndex++;
-  if(!item)return;
-  setTimeout(()=>fieldTalk(item[0],item[1]),350);
+  if(exploreCount<2)return;
+  const cadence=story.act>=6?7:story.act>=5?6:story.act>=4?5:3;
+  if(exploreCount%cadence!==0)return;
+  if(story.act>=6){
+    const quiet=[
+      ["may","you're quiet."],["jc","yeah."],["may","..."],["jc","..."],["may","it's okay."],
+      ["may","rain's not as loud anymore."],["jc","yeah. i can hear the jeeps now."],
+      ["jc","we don't have to fill every blank."],["may","good. because some of them are gonna stay blank."]
+    ];
+    const item=quiet[talkIndex%quiet.length];talkIndex++;setTimeout(()=>fieldTalk(item[0],item[1],3600),350);return;
+  }
+  const max=story.act<=2?120:story.act===3?190:randomTalk.length;
+  const item=randomTalk[talkIndex%Math.min(max,randomTalk.length)];talkIndex++;if(!item)return;setTimeout(()=>fieldTalk(item[0],item[1]),350);
 }
 
 
@@ -1780,7 +2141,12 @@ const hintPool=[
   "a strange photo can be real without proving the story behind it.",
   "some notes describe what niko felt, not necessarily what objectively happened.",
   "11:38 to 12:14 is the part nobody can explain cleanly.",
-  "compare what friends say with what the timestamps actually show."
+  "compare what friends say with what the timestamps actually show.",
+  "if two clues agree, check whether they came from two independent sources.",
+  "a missing file is evidence that a file is missing. not evidence of what was inside it.",
+  "someone asking about a phone is weird. it still doesn't tell you whose phone.",
+  "the rain makes every eyewitness worse.",
+  "niko being wrong before doesn't prove he was wrong that night."
 ];
 let hintIndex=0;
 function updateHint(forceText=null){
@@ -1794,14 +2160,40 @@ function updateHint(forceText=null){
 function markSeen(k){
   if(seen.has(k))return;
   seen.add(k);exploreCount++;
+  updateStoryFlags(k);
   renderChats();
   maybeRandomTalk();
   if(exploreCount%5===0)updateHint();
+  evaluateActProgress();
+  progressStory();
+  renderTimeline();
   if(typeof autosaveGame==="function")autosaveGame();
 }
-function progressCreep(){
-  // v16: no live paranormal events. all strange evidence is pre-existing on the laptop.
-  return;
+function progressCreep(){return;}
+function progressStory(){
+  if(storyPromptOpen||story.ending)return;
+  if(storyStage===0 && storyFlags.foundIdentity){
+    storyStage=1;advanceStory(7);addJournal(storyTimeLabel()+" • terminal announcement: several routes are temporarily suspended because water is rising on nearby roads.");fieldTalk("terminal","attention: some routes are temporarily suspended due to flooding. passengers are advised to remain under the covered area.",4300);
+  }else if(storyStage===1 && storyFlags.heardMamaVoicemail){
+    storyStage=2;advanceStory(8);showStoryPrompt("may","cached messages only tell us so much. if we actually need to contact somebody later, use your hotspot?",[["connect jc's hotspot",()=>{connectHotspot();fieldTalk("may","okay. normal sync only. nothing spooky. just messages that were waiting.");}],["keep it offline for now",()=>fieldTalk("jc","cached stuff first. we can connect later.")]]);
+  }else if(storyStage===2 && story.act>=2){
+    storyStage=3;advanceStory(9);addJournal(storyTimeLabel()+" • may's mom called to ask about the flood and whether rides were moving. she did not ask who may was with.");fieldTalk("may","my mom literally just asked 'baha pa ba' and told me to stay dry. see? she does not care who i'm meeting 😭",4700);
+  }else if(storyStage===3 && story.act>=3){
+    storyStage=4;advanceStory(12);showStoryPrompt("may","that security guard keeps looking over here. should we log where we found the bag?",[["tell the guard",()=>{storyFlags.toldGuard=true;addJournal(storyTimeLabel()+" • terminal security logged the bag. the side bench is outside the useful terminal camera angle.");fieldTalk("security","that side bench isn't in our useful angle. road camera mostly faces traffic. keep it with you while we log it.",5200);}],["not yet",()=>fieldTalk("may","fine. but if this gets more serious we're telling him.")]]);
+  }else if(storyStage===4 && story.act>=4){
+    storyStage=5;advanceStory(13);showStoryPrompt("jc","coffee stall guy's been here since before us. ask if he saw anyone by the bench?",[["may asks",()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor vaguely remembers someone near the side bench around midnight, but rain blocked his view.");fieldTalk("may","he said maybe someone was there. dark top. that's it. rain ruined everything else.",5000);}],["jc asks",()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor remembers almost nothing useful through the rain.");fieldTalk("may","wow you talked to a stranger without narrating a puddle first 😭",4200);}]]);
+  }else if(storyStage===5 && story.act>=5){
+    storyStage=6;advanceStory(14);setBattery(49);addJournal(storyTimeLabel()+" • terminal lights blinked and the generator kicked in. laptop battery: 49%.");toast("terminal power","brief outage • generator active");fieldTalk("jc","terminal power. not the laptop. nothing supernatural happened. battery's at 49 though.",4300);
+  }else if(storyStage===6 && foulScore()>=2){
+    storyStage=7;advanceStory(15);if(hotspotOn){syncVinceLive();addJournal(storyTimeLabel()+" • vince sent new messages asking where the laptop was found.");}else fieldTalk("may","we should probably connect your hotspot soon. people are actually looking for him.",4500);
+  }else if(storyStage===7 && story.act>=6){
+    storyStage=8;advanceStory(14);addJournal(storyTimeLabel()+" • terminal is noticeably emptier. may briefly mistakes a stranger in blue for the bar man, then sees the shirt is different.");fieldTalk("may","blue shirt... wait. no. wrong guy. shit. now i'm doing the same pattern thing.",5200);
+  }else if(storyStage===8 && timelineKnownCount()>=8){
+    storyStage=9;advanceStory(16);storyFlags.toldGuard=true;storyFlags.heardPhoneClue=true;markEvidence("world_phoneclue");addJournal(storyTimeLabel()+" • security remembers a soaked man asking around 12:18 if anyone had turned in a PHONE. dark cap/jacket. no name.");fieldTalk("security","around 12:18 a soaked guy asked if anyone turned in a phone. dark cap, dark jacket. could be unrelated. i didn't get a name.",6200);
+  }else if(storyStage===9 && finalScore()>=6){
+    storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • may's route begins limited service. the coffee stall is closed and most benches are empty.");showStoryPrompt("may","my route's moving again. we have to leave soon. one last thing: do we hand this over now, or keep enough of the timeline to explain why this feels wrong?",[["open our timeline",()=>openWindow("timeline")],["decide what to do",()=>offerEndingChoice()],["five more minutes",()=>fieldTalk("jc","five. then we go.")]]);
+  }
+  updateTerminalStatus();renderTimeline();
 }
 
 const folders={
@@ -1927,6 +2319,10 @@ personal:[
  ["📄","camera_wishlist.txt","aug 10","camwishlist"],
  ["📄","bea_school.txt","aug 13","beaschool"],
  ["📄","old_goals.txt","jan 2","oldgoals"],
+ ["🎞️","bea_bike_2022.mp4","jul 2022","bea_bike"],
+ ["🎧","bingo_bark_old.m4a","2021","dog_bark"],
+ ["📄","appointment_plan_0819.pdf","aug 17","appointment_plan"],
+ ["📄","quiet.txt","aug 17","niko_raw"],
  ["📄","appointment_notes.txt","aug 17","therapy_notes"],
  ["📄","reality_check.txt","aug 14","reality_check"],
  ["📄","rough_week.txt","aug 15","rough_week"],
@@ -1950,7 +2346,12 @@ odd:[
   ["📄","unknown_calls.csv","aug 17","odd_calls"],
   ["🖼️","torn_wristband.jpg","aug 17","odd_wristband"],
   ["🖼️","route_markup.png","aug 17","odd_route"],
-  ["📄","saved_for_later.txt","aug 16","odd_saved"]
+  ["📄","saved_for_later.txt","aug 16","odd_saved"],
+  ["📄","night_bag_check.txt","aug 17","odd_bagcheck"],
+  ["📄","photo_index_gaps.txt","aug 18","odd_photogaps"],
+  ["📄","number_4421_notes.txt","aug 17","odd_4421"],
+  ["🖼️","terminal_glass.jpg","aug 18","odd_glass"],
+  ["🖼️","bench_wide.jpg","aug 18","odd_benchwide"]
 ],
 ".cache":[
  ["📄","notification_cache.txt","hidden","cache_notif"],
@@ -1969,27 +2370,32 @@ odd:[
  ["📄","message_stats.csv","hidden","msgstats"],
  ["📄","bluetooth_history.log","hidden","btlog"],
  ["📄","usb_history.log","hidden","usblog"],
- ["📄","camera_events.log","hidden","camevents"]
+ ["📄","camera_events.log","hidden","camevents"],
+ ["📄","battery_history.csv","hidden","batteryhist"],
+ ["📄","file_access_1209.log","hidden","fileaccess1209"],
+ ["📄","old_bluetooth_scan.log","hidden","oldbtscan"],
+ ["📄","media_index.log","hidden","mediaindex"]
 ]
 };
 
 function renderFileSidebar(){
-  let names=["recent","desktop","documents","downloads","pictures","school","backup","random","personal","odd"];
-  if(showHiddenFiles)names.push(".cache");
+  let names=["recent","desktop","documents","downloads","pictures","school","random","personal"];
+  if(story.act>=2)names.splice(5,0,"backup");
+  if(story.act>=4)names.push("odd");
+  if(showHiddenFiles&&story.act>=2)names.push(".cache");
   fileSidebar.innerHTML=names.map((n,i)=>`<div class="side-item ${i===0?"sel":""}" onclick="renderFolder('${n}',this)">${n}</div>`).join("")+
-    `<div style="border-top:1px solid #29313d;margin:9px 0"></div><div class="side-item" onclick="toggleHiddenItems()">${showHiddenFiles?"✓ ":""}show hidden items</div>`;
+    (story.act>=2?`<div style="border-top:1px solid #29313d;margin:9px 0"></div><div class="side-item" onclick="toggleHiddenItems()">${showHiddenFiles?"✓ ":""}show hidden items</div>`:"");
 }
 function toggleHiddenItems(){
-  showHiddenFiles=!showHiddenFiles;
-  renderFileSidebar();
-  if(showHiddenFiles){renderFolder(".cache");addJournal("hidden items are visible now.");setTimeout(()=>fieldTalk("may","oh wow. hidden files. very normal 😭"),200)}
-  else renderFolder("recent");
+  if(story.act<2){toast("files","nothing useful is exposed yet");return}
+  showHiddenFiles=!showHiddenFiles;renderFileSidebar();
+  if(showHiddenFiles){renderFolder(".cache");addJournal("hidden items are visible now.");setTimeout(()=>fieldTalk("may","hidden files. okay. now this feels less like finding an email address 😭"),200)}else renderFolder("recent");
 }
 function renderFolder(name,el){
   if(el){document.querySelectorAll("#fileSidebar .side-item").forEach(x=>x.classList.remove("sel"));el.classList.add("sel")}
   markSeen("folder_"+name);
-  let list=[...(folders[name]||[])];
-  fileContent.innerHTML=`<h3 style="margin-top:0">${name}</h3><div class="file-grid">${list.map(f=>`<div class="file-card" onclick="openFile('${f[3]}')"><div class="file-ico">${f[0]}</div><div class="fn">${f[1]}</div><div class="fm">${f[2]}</div></div>`).join("")}</div><div id="fileDetail"></div>`;
+  let list=[...(folders[name]||[])].filter(f=>isFileUnlocked(name,f[3]));
+  fileContent.innerHTML=`<h3 style="margin-top:0">${name}</h3><div class="file-grid">${list.map(f=>`<div class="file-card" onclick="openFile('${f[3]}')"><div class="file-ico">${f[0]}</div><div class="fn">${f[1]}</div><div class="fm">${f[2]}</div></div>`).join("")}</div>${list.length?"":`<div class="detail muted">nothing else here makes sense yet.</div>`}<div id="fileDetail"></div>`;
 }
 
 function openFile(k){
@@ -2198,6 +2604,10 @@ function openFile(k){
     camwishlist:`<div class="detail"><h4>camera_wishlist.txt</h4><p>used sony a6000</p><p>canon m50 if cheap</p><p>50mm lens eventually</p><p>"stop spending on food first"</p></div>`,
     beaschool:`<div class="detail"><h4>bea_school.txt</h4><p>bea project due friday</p><p>print colored pages</p><p>buy illustration board</p><p>"don't forget again"</p></div>`,
     oldgoals:`<div class="detail"><h4>old_goals.txt</h4><p>save money</p><p>fix sleep</p><p>stop lying when small truth would've been easier</p><p>go gym consistently</p><p>be better to people</p><p class="muted">created january. never edited again.</p></div>`,
+    bea_bike:`<div class="detail"><h4>bea_bike_2022.mp4</h4><p>bea wobbles down a quiet street on a bicycle while niko runs behind her holding the seat.</p><p><b>niko:</b> "PEDAL PEDAL PEDAL DON'T LOOK BACK 😭"</p><p>he lets go. bea keeps riding.</p><p><b>niko:</b> "AYYYY LET'S GO"</p><p class="muted">nothing else happens. no useful clue.</p></div>`,
+    dog_bark:`<div class="detail"><h4>bingo_bark_old.m4a</h4><p>00:06</p><p>an old dog barks twice. niko laughs in the background.</p><p class="muted">saved years ago. never deleted.</p></div>`,
+    appointment_plan:`<div class="detail"><h4>appointment_plan_0819.pdf</h4><p>sleep check</p><p>perceptual symptoms</p><p>missed appointments</p><p>ask permission to involve family / support person if symptoms continue</p><p>review safety plan</p><p class="muted">prepared for a follow-up that never happened.</p></div>`,
+    niko_raw:`<div class="detail"><h4>quiet.txt</h4><p>i hate that i can't tell anymore.</p><p>sometimes i know i'm probably connecting shit that isn't connected and it still feels obvious.</p><p>then when something actually happens i don't know if i'm supposed to trust myself.</p><p>i'm tired of asking people if they saw it too.</p><p>i just want my head quiet for one night.</p><p class="muted">no recipient. no title beyond the filename.</p></div>`,
     therapy_notes:`<div class="detail"><h4>appointment_notes.txt</h4><p>things to tell dr. reyes:</p><p>• heard my name again when nobody called me</p><p>• thought people outside were talking about me but couldn't make out actual words</p><p>• keep checking the hallway when i catch movement from the corner of my eye</p><p>• sleeping 3–4 hours makes everything louder / harder to sort out</p><p>• missed monday again</p><p class="muted">last edited aug 17, 3:41 am.</p></div>`,
     reality_check:`<div class="detail"><h4>reality_check.txt</h4><p><b>what happened / what i actually know / another explanation</b></p><p>heard 3 knocks at 2am / i heard knocks / pipes, neighbor, or actual knock</p><p>people laughed after i walked past / i heard laughing / could have nothing to do with me</p><p>felt phone vibrate / no notification / phantom vibration</p><p>heard my name in the kitchen / bea said she didn't call me / tv, outside voice, or i misheard it</p><p class="muted">the format looks copied from something discussed in therapy.</p></div>`,
     rough_week:`<div class="detail"><h4>rough_week.txt</h4><p>aug 12 • slept 4h. kept thinking somebody was outside the room. checked twice. nobody there.</p><p>aug 13 • fine most of the day.</p><p>aug 14 • heard my name in the shower again.</p><p>aug 15 • skipped calls. didn't wanna explain anything.</p><p>aug 16 • better after sleeping.</p><p class="muted">there is no entry explaining the disappearance.</p></div>`,
@@ -2220,6 +2630,11 @@ function openFile(k){
     odd_wristband:`<div class="detail"><h4>torn_wristband.jpg</h4><p>blue paper wristband, wet at one edge.</p><p>back has "500 - v" written in pen.</p><p class="muted">could relate to vince's ₱500 note, or not. handwriting is too small to compare.</p></div>`,
     odd_route:`<div class="detail"><h4>route_markup.png</h4><p>cached screenshot of two possible walks from the bar area toward the terminal.</p><p>one route uses the main road. the shorter route cuts through the terminal-side road near the bench.</p><p>there is a small circle near the waiting shed with no label.</p><p class="muted">the screenshot was saved at 11:36 pm, two minutes before the network dropped.</p></div>`,
     odd_saved:`<div class="detail"><h4>saved_for_later.txt</h4><p>"satanic panic explained"</p><p>"symbols that horror movies keep getting wrong"</p><p>"why repeated numbers feel meaningful"</p><p>"sleep paralysis / shadow figures"</p><p>"frequency illusion"</p><p>"old church symbols people mistake for occult signs"</p><p class="muted">a mix of horror-interest links and reality-checking material.</p></div>`,
+    odd_bagcheck:`<div class="detail"><h4>night_bag_check.txt</h4><p>laptop</p><p>charger</p><p>mouse</p><p>phone</p><p>wallet</p><p>keys</p><p>powerbank</p><p>umbrella</p><p>blue notebook?</p><p class="muted">last edited aug 17, 9:41 pm. the bag jc and may found contains the laptop, charger, mouse and loose papers. this list does not prove everything was packed.</p></div>`,
+    odd_photogaps:`<div class="detail"><h4>photo_index_gaps.txt</h4><p>IMG_4481 • indexed 12:03</p><p>IMG_4482 • missing</p><p>IMG_4483 • missing</p><p>IMG_4484 • indexed 12:07</p><p class="muted">the index only proves two expected filenames are absent. they may have been deleted, never fully written, or created on another device.</p></div>`,
+    odd_4421:`<div class="detail"><h4>number_4421_notes.txt</h4><p>last four: 4421</p><p>called 10:56 / 11:27 / 11:33</p><p>"no saved contact"</p><p>"could be bar? delivery? someone from before?"</p><p>"stop guessing"</p><p class="muted">niko never identified the number in this file.</p></div>`,
+    odd_glass:`<div class="detail"><h4>terminal_glass.jpg</h4><p>12:05 am • rain-covered glass near the terminal-side shelter.</p><p>one dark figure is visible outside, but the reflection doubles the shape and makes distance impossible to judge.</p><p class="muted">could be one person, a reflection, or two overlapping people.</p></div>`,
+    odd_benchwide:`<div class="detail"><h4>bench_wide.jpg</h4><p>12:09 am • blurry wide image of the side road and bench area.</p><p>the bench looks empty. there is a dark shape near one leg that could be a bag, shadow, or pooled water.</p><p class="muted">taken before the 12:11 inside-bag image.</p></div>`,
     privateshare:`<div class="detail"><h4>private_share.log</h4><p>lia_longmessage.png → boys gc</p><p>maria_voice_2.m4a → boys gc</p><p>ash_selfie.jpg → local downloads</p><p>celine_argument.png → boys gc</p><p class="muted">the log suggests private messages and media were copied out of chats.</p></div>`,
     presencewatch:`<div class="detail"><h4>presence_watch.db</h4><p>airam online 22:13</p><p>airam online 22:44</p><p>ecarg online 23:01</p><p>enilec online 23:10</p><p>lia online 23:11</p><p class="muted">entries look manually refreshed rather than automatically logged.</p></div>`,
     relnotes:`<div class="detail"><h4>relationship_notes.bak</h4><p>lia: serious, don't lose</p><p>celine: wants clarity, stall</p><p>maria: emotional, disappear then reassure</p><p>ash: thinks single, avoid details</p><p>nicole: asked exclusive, don't answer directly</p><p>sarah: jealous angle works both ways</p><p class="muted">backup copy. original file is missing.</p></div>`,
@@ -2227,6 +2642,10 @@ function openFile(k){
     btlog:`<div class="detail"><h4>bluetooth_history.log</h4><p>11:42 pm • wireless earbuds disconnected</p><p>11:49 pm • xphone_6b detected</p><p>11:51 pm • xphone_6b connected</p><p>12:10 am • xphone_6b disconnected</p><p class="muted">xphone_6b is not in saved devices. this log is historical, not a live connection.</p></div>`,
     usblog:`<div class="detail"><h4>usb_history.log</h4><p>11:58 pm • removable storage mounted</p><p>12:00 am • file explorer opened removable drive</p><p>12:01 am • recent-items cache changed</p><p>12:02 am • drive removed</p><p class="muted">the local log did not preserve a useful device name or serial. it does not show what, if anything, was copied.</p></div>`,
     camevents:`<div class="detail"><h4>camera_events.log</h4><p>11:32 pm • camera opened</p><p>12:03 am • camera opened</p><p>12:07 am • camera closed</p><p>12:14 am • lid closed</p><p class="muted">all entries are from before the bag was found.</p></div>`,
+    batteryhist:`<div class="detail"><h4>battery_history.csv</h4><p>11:37 pm • 86% • charging</p><p>11:39 pm • 85% • external power removed</p><p>11:58 pm • 80%</p><p>12:07 am • 77%</p><p>12:14 am • 74% • sleep</p><p class="muted">suggests the laptop was unplugged almost immediately after the network disappeared, but not why.</p></div>`,
+    fileaccess1209:`<div class="detail"><h4>file_access_1209.log</h4><p>12:09:03 • route_markup.png opened</p><p>12:09:21 • contacts_export.csv opened</p><p>12:09:44 • unsent_0817.txt modified</p><p>12:10:02 • file explorer focus changed</p><p class="muted">the local record cannot identify who was at the keyboard.</p></div>`,
+    oldbtscan:`<div class="detail"><h4>old_bluetooth_scan.log</h4><p>aug 2 • 7:18 pm • xphone_6b detected near print shop • no connection</p><p>aug 17 • 11:49 pm • xphone_6b detected</p><p class="muted">same broadcast name appeared once weeks earlier. that could mean the same device, a reused generic name, or coincidence.</p></div>`,
+    mediaindex:`<div class="detail"><h4>media_index.log</h4><p>11:57 • street image indexed • source unknown</p><p>12:05 • terminal_glass.jpg indexed • local media</p><p>12:07 • waiting shed image indexed • source unknown</p><p>12:09 • bench_wide.jpg indexed • local media</p><p>12:11 • bagfloor image indexed • camera app</p><p class="muted">the laptop does not preserve enough metadata to prove which device created every image.</p></div>`,
     templates:`<div class="detail"><h4>messages.txt</h4><p>"good morning pretty, hope u slept well"</p><p>"text me when u get home"</p><p>"you know i don't talk to anyone else like this"</p><p>"sorry i fell asleep"</p><p>"my battery died"</p><p class="muted">some lines have c, ash, m, and lia typed beside them.</p></div>`,
     birthdays:`<div class="detail"><h4>dates.txt</h4><p>lia • feb 4</p><p>c • jun 18</p><p>ash • oct 2</p><p>m • ???</p><p>"remember favorite drinks"</p></div>`,
     screensend:`<div class="detail"><h4>sent_3x.png</h4><p>three messenger windows side by side.</p><p>niko sent the exact same mirror selfie to three different chats within six minutes.</p><p>the visible replies are: "cute", "finally 😭", and "thought u were asleep?"</p></div>`,
@@ -2289,7 +2708,7 @@ function openFile(k){
     meme_coding:`<div class="detail"><h4>coding_3am.jpg</h4><p>sleep deprived coding meme.</p></div>`,
     meme_teacher:`<div class="detail"><h4>teacher_said_easy.png</h4><p>"sir: easy lang quiz"</p><p>next panel is a burning computer.</p></div>`,
     meme_budget:`<div class="detail"><h4>budget_meal_cope.png</h4><p>instant noodles captioned "financial recovery arc"</p></div>`,
-    meme_terminal:`<div class="detail"><h4>terminal_queue.jpg</h4><p>long terminal line with caption: "bro just walk home at this point"</p></div>`,
+    meme_terminal:`<div class="detail"><h4>terminal_queue.jpg</h4><p>long terminal line with caption: "just walk home at this point"</p></div>`,
     meme_cat88:`<div class="detail"><h4>random_cat_88.jpg</h4><p>cat staring at a wall.</p><p>no context.</p></div>`,
     meme_school:`<div class="detail"><h4>this_is_fine_school.png</h4><p>school deadline meme.</p></div>`,
 
@@ -2380,6 +2799,10 @@ function openFile(k){
   if(k==="camevents"){addJournal("camera log shows the camera was opened twice during the 36-minute offline window.");setTimeout(()=>fieldTalk("jc","camera at 12:03... okay. but who was even using this then?"),260);}
   if(k==="btlog"||k==="usblog"){addJournal("unknown device activity appears around the final midnight session.");}
   if(k==="oldgoals"){addJournal("an old goals file says niko once wrote that he wanted to stop lying and be better to people.");}
+  if(k==="bea_bike"){storyFlags.sawBeaBike=true;addJournal("bea_bike_2022.mp4 is completely useless to the case. it is also the first time the laptop feels less like a puzzle and more like someone's life.");setTimeout(()=>fieldTalk("may","...okay. that's just her kuya teaching her how to ride a bike.",4000),260);evaluateActProgress();}
+  if(k==="dog_bark"){addJournal("niko kept a six-second recording of the family's old dog barking for years.");}
+  if(k==="appointment_plan"){addJournal("dr. reyes had already planned to ask niko about involving family/support at the next appointment. there is no dramatic unsent confession, just a follow-up that never happened.");}
+  if(k==="niko_raw"){addJournal("a private note is unmistakably niko's own voice: exhausted by not knowing when to trust his interpretation of things.");}
   if(k==="therapy_notes"){addJournal("niko had been describing hearing his name, feeling watched or talked about, and trouble separating those experiences from ordinary explanations when sleep-deprived.");setTimeout(()=>fieldTalk("may","okay... this isn't relationship shit. he was actually struggling with something."),260);}
   if(k==="reality_check"){addJournal("a reality-check note looks like something niko was practicing with a therapist instead of automatically trusting every frightening thought or perception.");}
   if(k==="rough_week"){addJournal("niko's private notes show recurring perceptual/paranoid symptoms and very poor sleep, but nothing says why he disappeared.");}
@@ -2393,6 +2816,14 @@ function openFile(k){
   if(k==="odd_calls"){addJournal("the same unsaved number contacted niko three times before the network cut out. there is no surviving message tying the number to anyone.");setTimeout(()=>fieldTalk("may","and now we get another person who could be important or could be food delivery. amazing."),260);}
   if(k==="odd_route"){addJournal("a route screenshot saved at 11:36 shows the shorter terminal-side path near the bench where the bag was found.");}
   if(k==="odd_barsymbol"){setTimeout(()=>fieldTalk("may","if i was already looking for symbols i'd probably notice that too. still creepy though."),260);}
+  if(k==="odd_bagcheck"){addJournal("niko's aug 17 bag checklist includes a phone, wallet, keys and powerbank that were not in the bag jc and may found. the checklist does not prove they were packed.");setTimeout(()=>fieldTalk("jc","okay so the laptop bag is not necessarily the whole set of stuff he left with."),260);}
+  if(k==="odd_photogaps"){addJournal("two expected image filenames are missing between 12:03 and 12:07, but the index cannot show whether they were deleted or never completed.");}
+  if(k==="odd_4421"){addJournal("niko himself tried to identify the unsaved number ending 4421 and wrote several guesses, then told himself to stop guessing.");}
+  if(k==="odd_glass"||k==="odd_benchwide"){addJournal("more midnight images place the laptop near the terminal-side shelter, but rain, reflections and blur make the people/shapes useless for identification.");}
+  if(k==="batteryhist"){addJournal("battery log shows external power was removed at 11:39, one minute after internet dropped.");}
+  if(k==="fileaccess1209"){addJournal("12:09 local activity opened the route image and contacts export, then modified the unsent note. the log cannot identify the user.");}
+  if(k==="oldbtscan"){addJournal("xphone_6b's name appeared once weeks earlier near the print shop, making it stranger but not proving it was the same physical phone.");}
+  if(k==="mediaindex"){addJournal("media metadata mixes camera-app and unknown-source images during the offline window, suggesting more than one capture/import path but not necessarily more than one person.");}
 
   if(k==="aliases"){addJournal("hidden alias file maps the reversed names to real girls.");setTimeout(()=>fieldTalk("may","wait... so he literally renamed them backwards??"),250);}
   if(k==="sessionlog"){addJournal("session log ends at 12:14 am, nine minutes before we found the warm bag.");setTimeout(()=>fieldTalk("jc","12:14. we found this at 12:23... that's only nine minutes."),250);}
@@ -2410,8 +2841,10 @@ const chats={
   ["them","okay ingat"],["them","message me pag nasa house ka na"],["them","also don't forget tomorrow"],["me","i won't"],
   ["them","you said that last time 😭"],["me","i know i know"],["them","what time are you leaving tomorrow"],["me","around 2 maybe"],
   ["them","maybe??"],["me","2 😭"],["them","better"],["them","also did you eat"],["me","yeah"],["them","actual food?"],
-  ["me","yes mom"],["them","shut up 😭"],["them","call me when you're home if i'm still awake"],["me","okay"],
-  ["them","goodnight if i pass out"],["me","goodnight ❤️"]
+  ["me","yes mom"],["them","shut up 😭"],["them","also u barely slept last night"],["me","i'm fine"],
+  ["them","you've been asking me weird stuff like if i saw the same car outside"],["me","forget it"],
+  ["them","i'm not mad. i'm worried. just sleep when u get home"],["me","okay"],
+  ["them","call me when you're home if i'm still awake"],["me","okay"],["them","goodnight if i pass out"],["me","goodnight ❤️"]
  ]},
  mama:{kind:"inbox",name:"mama",preview:"did you eat?",msgs:[
   ["them","did you eat?"],["me","later"],["them","wag puro coffee"],["me","yeah ma"],["them","bring umbrella"],["me","i have one"],
@@ -2483,6 +2916,19 @@ const chats={
   ["them","u going out tonight?"],["me","yeah for a bit"],["them","sleep after pls"],["me","yes mom"],
   ["them","serious. u get way more freaked out when u don't sleep"],["me","i know"]
  ]},
+
+  paolo:{kind:"inbox",name:"paolo",preview:"u still need somewhere to crash?",msgs:[
+   ["them","u still need somewhere to crash?"],["me","nah okay na"],["them","sure? yesterday u were asking if u could sleep here"],
+   ["me","changed my mind"],["them","everything okay sa bahay?"],["me","yeah just didn't wanna be there for a bit"],
+   ["them","aight. offer stands"],["them","also u left class early again"],["me","head hurt"],["them","sleep man"],
+   ["them","if u disappear on group work i WILL fail u myself 😭"],["me","noted"]
+  ]},
+  toni:{kind:"inbox",name:"toni • print shop",preview:"you were jumpy earlier",msgs:[
+   ["them","you were jumpy earlier"],["me","was i"],["them","u asked me twice if the same guy was outside"],
+   ["me","looked familiar"],["them","i only saw delivery rider + two customers"],["me","yeah probably nothing"],
+   ["them","u also forgot your change again"],["me","keep it 😭"],["them","₱37 generational wealth thanks"],
+   ["them","serious tho go home and sleep"],["me","later"]
+  ]},
 
  familygc:{kind:"inbox",name:"family gc",preview:"sino may dala ng yelo",msgs:[
   ["them","good morning mga anak"],
@@ -2821,9 +3267,10 @@ function setChatMode(mode){
 }
 function renderChats(filter=""){
   const q=(filter||"").trim().toLowerCase();
-  let keys=Object.keys(chats).filter(k=>chats[k].kind===chatMode);
+  let keys=Object.keys(chats).filter(k=>chats[k].kind===chatMode && isChatUnlocked(k));
   if(q){
     keys=Object.keys(chats).filter(k=>{
+      if(!isChatUnlocked(k))return false;
       const c=chats[k];
       const hay=(c.name+' '+c.preview+' '+c.msgs.map(m=>m[1]).join(' ')).toLowerCase();
       return hay.includes(q);
@@ -2836,20 +3283,26 @@ function renderChats(filter=""){
   }).join("") || `<div class="bubble sys" style="margin:20px">no cached chats found</div>`;
 }
 function openChat(k){
+  if(!chats[k]||!isChatUnlocked(k)){toast("messenger","that cached thread isn't available yet");return}
   currentChat=k;
   markSeen("chat_"+k);
   chatHead.textContent=chats[k].name;
   messages.innerHTML=chats[k].msgs.map(([who,t])=>`<div class="bubble ${who==="me"?"me":""}">${t}</div>`).join("");
   replyBar.innerHTML="";
 
-  if(k==="lia"){
+  if(k==="lia" && hotspotOn){
     addReply("hi, we found niko's laptop",()=>replyLia(1));
     addReply("do you know niko?",()=>replyLia(2));
     addReply("don't reply yet",()=>replyLia(3));
-  }else if(k==="mama"){
+  }else if(k==="mama" && hotspotOn){
     addReply("hi po, we found this laptop",replyMama);
+  }else if(k==="vince" && hotspotOn){
+    addReply("we found niko's laptop near the terminal",()=>replyVince(1));
+    addReply("where did niko go after the bar?",()=>replyVince(2));
+  }else if((k==="lia"||k==="mama"||k==="vince")&&!hotspotOn){
+    replyBar.innerHTML=`<span class="muted" style="font-size:11px">offline cached chat • connect jc's hotspot to send a message</span>`;
   }else{
-    replyBar.innerHTML=`<span class="muted" style="font-size:11px">offline cached chat • maybe don't message random people</span>`;
+    replyBar.innerHTML=`<span class="muted" style="font-size:11px">${hotspotOn?"online • maybe don't message random people":"offline cached chat • maybe don't message random people"}</span>`;
   }
 
   messages.scrollTop=messages.scrollHeight;
@@ -2866,6 +3319,13 @@ function openChat(k){
   if(k==="ari"){
     addJournal("ari knows niko's occult/horror rabbit hole and repeatedly tells him the saved symbols are different things, not one repeated mark.");
     setTimeout(()=>fieldTalk("may","okay, so at least one friend was actively telling him not to connect all the creepy pictures together."),280);
+  }
+  if(k==="paolo"){
+    addJournal("paolo says niko had recently asked for somewhere else to sleep, then backed out without explaining why.");
+    setTimeout(()=>fieldTalk("may","that sounds like he wanted out of his house for a night... but it still doesn't tell us why."),280);
+  }
+  if(k==="toni"){
+    addJournal("toni at the print shop remembers niko asking whether the same person was outside, but toni only noticed ordinary customers and a delivery rider.");
   }
   if(k==="rj"){
     addJournal("rj says a man in a blue shirt spoke to niko outside the bar before niko vanished, but niko brushed off what the conversation was about.");
@@ -2928,16 +3388,38 @@ function pushMsg(who,text){
 }
 function replyLia(type){
   replyBar.innerHTML="";
-  if(type===3){addJournal("lia seems worried about niko. we didn't reply.");return}
+  if(type===3){addJournal("lia seems worried about niko. jc and may chose not to reply yet.");return}
   pushMsg("me",type===1?"hi, we found niko's laptop":"hi, do you know niko?");
-  setTimeout(()=>pushMsg("them",type===1?"what? where did you find it?":"yeah, why? sino to?"),500);
-  setTimeout(()=>{pushMsg("them","is he with you?");addJournal("lia knows niko and sounds worried. she asked if he's with us.");},1100);
+  setTimeout(()=>pushMsg("them",type===1?"what?? where did you find it?":"yeah. why? sino to?"),500);
+  setTimeout(()=>pushMsg("them","he told me he was on his way home before midnight"),950);
+  setTimeout(()=>pushMsg("them","is he with you?"),1350);
+  setTimeout(()=>pushMsg("them","you have no idea how many times he disappears then comes back acting normal"),1650);
+  setTimeout(()=>{pushMsg("them","how was i supposed to know when something was actually wrong");pushMsg("them","pls tell me if u see him");addJournal("lia says niko told her he was on his way home before midnight. her anger is not only about cheating; his normal pattern of lying and disappearing made a real crisis harder to recognize.");fieldTalk("may","okay. now somebody who actually knows him is saying he should've been home.",3600);},2200);
 }
 function replyMama(){
+  storyFlags.contactedFamily=true;
   replyBar.innerHTML="";
   pushMsg("me","hi po, we found this laptop. does it belong to niko?");
   setTimeout(()=>pushMsg("them","yes. sino po kayo?"),500);
-  setTimeout(()=>{pushMsg("them","where did you find it?");addJournal("niko's mom confirmed the laptop is his.");},1000);
+  setTimeout(()=>pushMsg("them","where did you find it?"),900);
+  setTimeout(()=>pushMsg("them","niko isn't home yet"),1350);
+  setTimeout(()=>{pushMsg("them","please keep it safe. i'm trying to call him.");addJournal("niko's mom confirmed the laptop is his and says he still has not come home.");fieldTalk("jc","yeah okay. this officially stopped being just a lost laptop.",3600);},1800);
+}
+function replyVince(type){
+  replyBar.innerHTML="";
+  if(type===1){
+    pushMsg("me","we found niko's laptop near the terminal. black bag by the side bench.");
+    setTimeout(()=>pushMsg("them","WHAT"),400);
+    setTimeout(()=>pushMsg("them","he had the bag when he walked out"),800);
+    setTimeout(()=>pushMsg("them","or at least i thought he did. rain was bad"),1200);
+    setTimeout(()=>{pushMsg("them","which bench exactly?");addJournal("vince thinks niko still had the black bag when he left the bar, but admits visibility was bad in the rain.");},1600);
+  }else{
+    pushMsg("me","where did niko go after the bar?");
+    setTimeout(()=>pushMsg("them","i don't know. terminal side i think"),450);
+    setTimeout(()=>pushMsg("them","cam saw him leave. blue shirt guy asked about him after"),900);
+    setTimeout(()=>pushMsg("them","that's literally all i know"),1350);
+    setTimeout(()=>{pushMsg("them","if u found the laptop tell security pls");addJournal("vince cannot say where niko went after leaving; he only repeats terminal-side, cam's sighting, and the blue-shirt man asking about him.");},1750);
+  }
 }
 
 const notes=[
@@ -3049,10 +3531,25 @@ boys gc mute always`],
 cam outside later
 cash 500
 don't stay too late
-bring bag`]
+bring bag`],
+ ["if i start doing this again","aug 17",`don't follow random people
+don't confront anyone alone
+call mika
+go somewhere crowded
+write down what actually happened first
+
+if there IS proof, deal with proof. not the story in my head.`],
+ ["4421","aug 17",`same number again
+3 sec / missed / 12 sec
+
+no message
+no name
+
+stop deciding who it is before u know`]
 ];
 function renderNotes(){
-  noteIndex.innerHTML=notes.map((n,i)=>`<div class="index-row" onclick="openNote(${i})"><b>${n[0]}</b><small>${n[1]}</small></div>`).join("");
+  const arr=notes.map((n,i)=>[n,i]).filter(([n])=>{const t=n[0];if(story.act<2&&["rules","excuses","sizes","things to delete"].includes(t))return false;if(story.act<5&&t==="places")return false;return true});
+  noteIndex.innerHTML=arr.map(([n,i])=>`<div class="index-row" onclick="openNote(${i})"><b>${n[0]}</b><small>${n[1]}</small></div>`).join("");
 }
 function openNote(i){
   markSeen("note_"+i);
@@ -3083,12 +3580,17 @@ const photosBase=[
  ["goat_poster","redish","aug 14, 11:48 pm"],
  ["chalk_circle","dark","aug 16, 2:18 am"],
  ["bar_symbol","redish","aug 17, 10:49 pm"],
+ ["terminal_glass","dark","aug 18, 12:05 am"],
+ ["bench_wide","dark","aug 18, 12:09 am"],
  ["street","dark","aug 17, 11:57 pm"],
  ["waitingshed","dark","aug 18, 12:07 am"],
  ["bagfloor","dark","aug 18, 12:11 am"]
 ];
 function renderPhotos(){
-  let arr=[...photosBase];
+  const cheating=["food","mirror","parking","hallway","hoodie","hands"];
+  const mental=["hallway_empty","window_zoom","samecar","underpass_symbol","black_candles","goat_poster","chalk_circle","bar_symbol"];
+  const foul=["barfront","glass","terminal_glass","bench_wide","street","waitingshed","bagfloor"];
+  let arr=photosBase.filter(p=>{if(cheating.includes(p[0])&&story.act<2)return false;if(mental.includes(p[0])&&story.act<4)return false;if(foul.includes(p[0])&&story.act<5)return false;return true});
   photoGrid.innerHTML=arr.map(p=>`<div class="photo ${p[1]}" onclick="openPhoto('${p[0]}')"><div class="cap">${p[2]}</div></div>`).join("");
 }
 function openPhoto(id){
@@ -3114,6 +3616,8 @@ function openPhoto(id){
     goat_poster:`<div class="detail"><h4>aug 14 • 11:48 pm</h4><p>torn horned-goat poster taped near a convenience store.</p><p>small print appears to advertise a metal event.</p><p class="muted">niko photographed only the symbol first, then the full poster thirty seconds later.</p></div>`,
     chalk_circle:`<div class="detail"><h4>aug 16 • 2:18 am</h4><p>faded chalk star/circle behind a parking structure.</p><p>several shoe prints cross it and a plastic cup is lying in the center.</p><p class="muted">nothing indicates who made it.</p></div>`,
     bar_symbol:`<div class="detail"><h4>aug 17 • 10:49 pm</h4><p>close-up of a marker symbol on the bar bathroom wall.</p><p>the uncropped image shows it surrounded by ordinary graffiti.</p><p class="muted">niko's own comparison file says this does not actually match the underpass symbol.</p></div>`,
+    terminal_glass:`<div class="detail"><h4>12:05 am</h4><p>rain-covered glass near the terminal-side shelter.</p><p>a dark figure outside is doubled by reflection. there is no useful face or clothing detail.</p><p class="muted">the image cannot establish whether one or two people are visible.</p></div>`,
+    bench_wide:`<div class="detail"><h4>12:09 am</h4><p>wide blurry view toward the bench and flooded curb.</p><p>the bench itself appears empty. a dark shape near the leg could be a bag, shadow, or pooled water.</p><p class="muted">two minutes later the laptop appears in an inside-bag image.</p></div>`,
     street:`<div class="detail"><h4>11:57 pm</h4><p>dark street photo. image is tilted like the phone was being put away.</p></div>`,
     waitingshed:`<div class="detail"><h4>12:07 am</h4><p>rain-smeared photo facing a covered waiting shed near the terminal-side road.</p><p>a person with an umbrella is visible at the far edge of the frame.</p><p>face, clothes, and direction of travel can't be made out.</p><p class="muted">the same bench area where jc and may later find the bag appears farther down the road.</p></div>`,
     bagfloor:`<div class="detail"><h4>12:11 am</h4><p>inside of a black bag. blurry zipper and laptop corner.</p><p class="muted">photo orientation is sideways.</p></div>`,
@@ -3124,6 +3628,7 @@ function openPhoto(id){
   if(id==="underpass_symbol"||id==="goat_poster"||id==="chalk_circle"||id==="bar_symbol")addJournal("niko photographed several occult-looking symbols, but the wider images and his own notes suggest they may be unrelated graffiti, posters, or coincidence.");
   if(id==="black_candles")setTimeout(()=>fieldTalk("jc","this looks evil until u notice the chips and cat 😭"),260);
   if(id==="waitingshed"){addJournal("12:07 am photo shows the terminal-side waiting shed in heavy rain, with one unidentifiable umbrella figure. the bench area is nearby.");setTimeout(()=>fieldTalk("may","that's basically where we are... but that person could be literally anybody."),260);}
+  if(id==="terminal_glass"||id==="bench_wide"){addJournal("midnight photos show the same terminal-side area through rain and reflections, but none identifies who was there.");}
 }
 
 const history=[
@@ -3215,6 +3720,12 @@ const history=[
  ["same symbol different places coincidence","aug 17, 10:43 pm"],
  ["baader meinhof effect symbols","aug 17, 10:45 pm"],
  ["how to tell if someone is actually following you or youre paranoid","aug 17, 10:47 pm"],
+ ["reverse lookup phone number philippines free","aug 17, 11:01 pm"],
+ ["can bluetooth device names be faked","aug 17, 11:08 pm"],
+ ["why would same bluetooth name appear weeks apart","aug 17, 11:11 pm"],
+ ["bar cctv retention how long","aug 17, 11:18 pm"],
+ ["does terminal cctv cover outside benches","aug 17, 11:21 pm"],
+ ["how to know if photo was deleted windows index","aug 17, 11:24 pm"],
  ["can archived chats still notify","aug 15, 10:56 pm"],
  ["why does my cat sit on laptop","jul 31, 9:10 pm"],
  ["used sony a6000 price philippines","jul 31, 8:54 pm"],
@@ -3231,11 +3742,19 @@ const history=[
 function browserHome(){
   markSeen("browser_home");
   address.textContent="offline • cached history";
-  browserBody.innerHTML="<div class='detail'><b>no internet</b><p>showing local browser history and cached pages only.</p></div><h3>history</h3>"+
-    history.map((x,i)=>`<div class="history-row" onclick="openHistory(${i})"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
+  const allowed=history.map((x,i)=>[x,i]).filter(([x])=>{
+    const q=x[0].toLowerCase();
+    if(story.act<4 && /(paranoia|hear my name|feel watched|pentagram|occult|333|symbols|sigil|satanic|frequency illusion|sleep make patterns)/.test(q))return false;
+    if(story.act<5 && /(terminal last trip|walking route terminal|cctv|bluetooth device names|following you|reverse lookup phone)/.test(q))return false;
+    return true;
+  });
+  browserBody.innerHTML="<div class='detail'><b>no internet</b><p>showing local browser history and cached pages only.</p></div><h3>history</h3>"+allowed.map(([x,i])=>`<div class="history-row" onclick="openHistory(${i})"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
 }
 
 function openHistory(i){
+  const q0=(history[i]?.[0]||"").toLowerCase();
+  if(q0==="terminal last trip time")markEvidence("history_terminal_last");
+  if(q0==="walking route terminal back road")markEvidence("history_terminal_route");
   markSeen("history_"+i);
   const q=history[i][0];
   let text="cached search results. internet is unavailable.";
@@ -3316,7 +3835,7 @@ aug 17 • 4:00 pm
 reply or call the clinic if you need to reschedule.`]
 ];
 function renderMail(){
-  mailIndex.innerHTML=mails.map((m,i)=>`<div class="index-row" onclick="openMail(${i})"><b>${m[0]}</b><small>${m[1]}</small></div>`).join("");
+  mailIndex.innerHTML=mails.map((m,i)=>[m,i]).filter(([m])=>story.act>=4||m[0]!=="mindwell clinic").map(([m,i])=>`<div class="index-row" onclick="openMail(${i})"><b>${m[0]}</b><small>${m[1]}</small></div>`).join("");
 }
 function openMail(i){
   markSeen("mail_"+i);
@@ -3327,6 +3846,7 @@ function openMail(i){
 const contacts=[
  ["lia","lia ❤️","girlfriend"],
  ["mama","mama","family"],
+ ["bea","bea","younger sister"],
  ["mara","mara","school"],
  ["ken","ken","school"],
  ["celine","celine","no label"],
@@ -3341,6 +3861,8 @@ const contacts=[
  ["clinic","mindwell clinic","clinic"],
  ["mika","mika","friend"],
  ["ari","ari","horror / music friend"],
+ ["paolo","paolo","school friend"],
+ ["toni","toni","cousin / print shop"],
  ["profsantos","prof. santos","school"],
  ["printshop","cousin print shop","family / work"],
  ["bartender","bar staff","no surname"],
@@ -3355,12 +3877,13 @@ const contacts=[
  ["anail","anail","archived alias"]
 ];
 function renderContacts(){
-  contactIndex.innerHTML=contacts.map((c,i)=>`<div class="index-row" onclick="openContact(${i})"><b>${c[1]}</b><small>${c[2]}</small></div>`).join("");
+  contactIndex.innerHTML=contacts.map((c,i)=>[c,i]).filter(([c])=>isContactUnlocked(c[0])).map(([c,i])=>`<div class="index-row" onclick="openContact(${i})"><b>${c[1]}</b><small>${c[2]}</small></div>`).join("");
 }
 function openContact(i){
   markSeen("contact_"+i);
   const c=contacts[i];let extra="";
   if(c[0]==="lia")extra=`<p>favorite: coffee</p><p>birthday reminder enabled</p>`;
+  if(c[0]==="bea")extra=`<p>younger sister.</p><p>old note: "bike video still funny"</p>`;
   if(c[0]==="celine")extra=`<p>same number as contact "c".</p>`;
   if(c[0]==="c2")extra=`<p>same number as celine.</p>`;
   if(c[0]==="ash")extra=`<p>contact created 3 weeks ago.</p>`;
@@ -3372,6 +3895,8 @@ function openContact(i){
   if(c[0]==="drreyes")extra=`<p>saved as therapist.</p><p>appointment: mondays, 4:00 pm.</p><p>last contact: aug 17.</p>`;
   if(c[0]==="clinic")extra=`<p>front desk number.</p><p>note: "reschedule through here if dr reyes doesn't answer"</p>`;
   if(c[0]==="mika")extra=`<p>friend.</p><p>frequent calls in july and august.</p>`;
+  if(c[0]==="paolo")extra=`<p>school friend.</p><p>niko recently asked if he could stay over, then backed out.</p>`;
+  if(c[0]==="toni")extra=`<p>cousin / print shop.</p><p>worked with niko earlier on aug 17.</p>`;
   if(c[0]==="profsantos")extra=`<p>system analysis instructor.</p>`;
   if(c[0]==="printshop")extra=`<p>cousin's print shop.</p><p>note: "help weekends if needed"</p>`;
   if(c[0]==="bartender")extra=`<p>number has no profile image.</p><p>saved from bar receipt / staff contact.</p>`;
@@ -3386,7 +3911,7 @@ function renderCalendar(){
     let e="";
     if(d===12)e=`<div class="event">coffee, 7:30 pm</div><div class="event">m, 9:00 pm</div>`;
     if(d===14)e=`<div class="event">meet, 9:00 pm</div>`;
-    if(d===17)e=`<div class="event">dr. reyes, 4:00 pm</div><div class="event">bar, 10:00 pm?</div>`;
+    if(d===17)e=`${story.act>=4?`<div class="event">dr. reyes, 4:00 pm</div>`:""}<div class="event">bar, 10:00 pm?</div>`;
     if(d===16)e=`<div class="event">lia, 4:00 pm</div><div class="event">m, 8:30 pm</div>`;
     if(d===17)e=`<div class="event">gym 5:00 pm</div><div class="event">bar 10:00 pm</div>`;
     if(d===18)e=`<div class="event">9:30 pm</div>`;
@@ -3395,9 +3920,10 @@ function renderCalendar(){
   calendarBody.innerHTML=h+"</div>";
 }
 
+function getMusicTracks(){const t=[["nights like this","2:49",0],["rainy commute playlist","38:11",1],["lecture recording 2","49:03",2]];if(story.act>=5)t.push(["untitled audio","0:12",3]);if(story.act>=2)t.push(["voice note export","0:08",4]);return t}
 function renderMusic(){
-  const tracks=[["nights like this","2:49"],["rainy commute playlist","38:11"],["lecture recording 2","49:03"],["untitled audio","0:12"],["voice note export","0:08"]];
-  musicList.innerHTML=tracks.map((t,i)=>`<div class="index-row" onclick="playTrack(${i})"><b>${t[0]}</b><small>${t[1]}</small></div>`).join("");
+  const tracks=getMusicTracks();
+  musicList.innerHTML=tracks.map(t=>`<div class="index-row" onclick="playTrack(${t[2]})"><b>${t[0]}</b><small>${t[1]}</small></div>`).join("");
 }
 function playTrack(i){
   markSeen("track_"+i);
@@ -3422,16 +3948,29 @@ const recordings=[
  ["rec_0818_0003","0:05","wind noise. something hits fabric. recording ends."],
  ["rec_0818_0007","0:14","heavy rain on metal roofing. footsteps pass close by. two voices are present but neither sentence is clear."]
 ];
+function getRecordings(){
+  const arr=[];
+  if(storyFlags.foundIdentity)arr.push(["mama_voicemail","0:12","niko, bumili ka rice tomorrow ha. and sabihin mo kay bea ibalik charger ko. wag ka rin masyado late. okay bye."]);
+  arr.push(...recordings.filter(r=>{
+    if(story.act<2&&r[0]==="export_0815")return false;
+    if(story.act<5&&["voice_002","voice_003","untitled"].includes(r[0]))return false;
+    if(story.act<5&&(r[0].startsWith("rec_0817_")||r[0].startsWith("rec_0818_")))return false;
+    return true;
+  }));
+  return arr;
+}
 function renderRecorder(){
-  recordingsEl.innerHTML=recordings.map((r,i)=>`<div class="index-row" onclick="openRecording(${i})"><b>${r[0]}</b><small>${r[1]}</small></div>`).join("");
+  const arr=getRecordings();
+  recordingsEl.innerHTML=arr.map((r,i)=>`<div class="index-row" onclick="openRecording(${i})"><b>${r[0]}</b><small>${r[1]}</small></div>`).join("");
 }
 const recordingsEl=document.getElementById("recordings");
 function openRecording(i){
-  markSeen("rec_"+i);
-  toast("recorder",recordings[i][2]);
-  if(i===4)addJournal("another voice recording points to niko lying to lia.");
-  if(recordings[i][0]==="rec_0817_2356")addJournal("11:56 recording contains an unclear distant voice; it might be saying niko's name, but the audio is too poor to know.");
-  if(recordings[i][0]==="rec_0818_0007")addJournal("12:07 recording captures heavy rain, nearby footsteps, and two indistinct voices near the end of the missing window.");
+  const arr=getRecordings(),r=arr[i];if(!r)return;
+  markSeen("rec_"+r[0]);toast("recorder",r[2]);
+  if(r[0]==="mama_voicemail"&&!storyFlags.heardMamaVoicemail){storyFlags.heardMamaVoicemail=true;addJournal("recent voicemail from niko's mother is completely ordinary: rice, bea's charger, don't be too late.");fieldTalk("may","that's just... a normal mom voicemail. okay. now we can check who else expected him somewhere.",4300);renderChats();renderContacts();evaluateActProgress();progressStory();}
+  if(r[0]==="export_0815")addJournal("another voice recording points to niko lying to lia.");
+  if(r[0]==="rec_0817_2356")addJournal("11:56 recording contains an unclear distant voice; it might be saying niko's name, but the audio is too poor to know.");
+  if(r[0]==="rec_0818_0007")addJournal("12:07 recording captures heavy rain, nearby footsteps, and two indistinct voices near the end of the missing window.");
 }
 
 function cameraAttempt(){
@@ -3449,9 +3988,10 @@ const recycleBase=[
  ["deleted_chatshot.png","deleted aug 13","cropped screenshot of a conversation. only 'miss u too' is readable."],
  ["c_chat.txt","deleted aug 15","'don't call me when you're with lia.'"]
 ];
+function getRecycle(){return recycleBase.map((r,i)=>[r,i]).filter(([r])=>story.act>=2||!["deleted_chatshot.png","c_chat.txt","chat_export.zip"].includes(r[0]));}
 function renderRecycle(){
-  let arr=[...recycleBase];
-  recycleList.innerHTML="<h3 style='margin-top:0'>recycle bin</h3>"+arr.map((r,i)=>`<div class="index-row" onclick="openRecycle(${i})"><b>${r[0]}</b><small>${r[1]}</small></div>`).join("");
+  const arr=getRecycle();
+  recycleList.innerHTML="<h3 style='margin-top:0'>recycle bin</h3>"+arr.map(([r,i])=>`<div class="index-row" onclick="openRecycle(${i})"><b>${r[0]}</b><small>${r[1]}</small></div>`).join("");
 }
 function openRecycle(i){
   markSeen("recycle_"+i);
@@ -3471,7 +4011,8 @@ function renderSticky(){
     "laundry\nrazors\ncoffee\nwater",
     "11:30 max\nleave before crowd"
   ];
-  stickyBody.innerHTML=ss.map((n,i)=>`<div class="sticky" onclick="stickyClick(${i})">${n.replace(/\n/g,"<br>")}</div>`).join("");
+  const allowed=ss.map((n,i)=>[n,i]).filter(([n,i])=>{if(story.act<2&&[1,2].includes(i))return false;if(story.act<5&&[4,6].includes(i))return false;return true});
+  stickyBody.innerHTML=allowed.map(([n,i])=>`<div class="sticky" onclick="stickyClick(${i})">${n.replace(/\n/g,"<br>")}</div>`).join("");
 }
 function stickyClick(i){
   markSeen("sticky_"+i);
@@ -3490,12 +4031,9 @@ function renderSettings(){
       <p><b>saved networks</b> home_5g, campus wifi, cafe two, public_wifi_2</p>
       <p><b>last sign in</b> aug 17, 6:42 pm</p>
       <p><b>require sign-in after sleep</b> never</p>
-      <p><b>internet</b> disconnected since 11:38 pm</p>
+      ${story.act>=5?`<p><b>internet</b> disconnected since 11:38 pm</p>`:""}
     </div>
-    <div class="detail">
-      <h4>recent activity</h4>
-      <p>11:38 pm • network lost</p><p>12:09 am • local files opened</p><p>12:14 am • sleep</p>
-    </div>`;
+    ${story.act>=5?`<div class="detail"><h4>recent activity</h4><p>11:38 pm • network lost</p><p>12:09 am • local files opened</p><p>12:14 am • sleep</p></div>`:`<div class="detail muted">system history is mostly ordinary device information.</div>`}`;
 }
 
 
@@ -3949,49 +4487,34 @@ function renderSnips(){
    ["watch_ref.png","cheap watch screenshot"],
    ["gym_meme.png","gym meme sent by ken"]
   ];
-  snipsBody.innerHTML="<h3 style='margin-top:0'>screenshots</h3>"+
-    snips.map((s,i)=>`<div class="index-row" onclick="openSnip(${i})"><b>${s[0]}</b><small>${s[1]}</small></div>`).join("");
+  const allowed=snips.map((x,i)=>[x,i]).filter(([x,i])=>{if(story.act<2&&i===8)return false;if(story.act<5&&i===9)return false;return true});
+  snipsBody.innerHTML="<h3 style='margin-top:0'>screenshots</h3>"+allowed.map(([x,i])=>`<div class="index-row" onclick="openSnip(${i})"><b>${x[0]}</b><small>${x[1]}</small></div>`).join("");
 }
 function openSnip(i){
   markSeen("snip_"+i);
-  const s=[
-   "2k badge layout and build stats.",
-   "niko arguing in comments about who is overrated.",
-   "white sneaker sale, size 10.",
-   "haircut reference with 'not too short' typed on it.",
-   "cpu and gpu temperature screenshot.",
-   "food delivery order screenshot.",
-   "song lyrics screenshot.",
-   "friend group gc meme.",
-   "lia: 'goodnight, message me tomorrow' niko: 'goodnight ❤️'",
-   "cached late-night map and convenience store results saved as a screenshot."
-  ][i];
-  toast("screenshots",s);
+  const desc=[
+   "2k badge layout and build stats.","niko arguing in comments about who is overrated.","white sneaker sale, size 10.","haircut reference with 'not too short' typed on it.","cpu and gpu temperature screenshot.","food delivery order screenshot.","song lyrics screenshot.","friend group gc meme.","lia: 'goodnight, message me tomorrow' niko: 'goodnight ❤️'","cached late-night map and convenience store results saved as a screenshot.","niko's prediction before a game.","sneakers left in cart.","old haircut selfie with 'never again' written on it.","ssd and ram prices.","friend group fast-food tier list.","horror movie list.","cheap watch screenshot.","gym meme sent by ken."
+  ][i]||"ordinary screenshot.";
+  toast("screenshots",desc);
 }
 
-function renderVideos(){
+function getVideos(){
   const vids=[
-    ["screen_recording_0815.mp4","0:42","messenger window recording. no audio."],
-    ["VID_4410.mp4","0:09","short cafe clip."],
-    ["VID_4414.mp4","0:18","street at night. traffic only."],
-    ["VID_4422.mp4","0:06","bar table. niko laughs off camera."],
-    ["VID_4423.mp4","0:04","dark clip. blue shirt guy passes frame."],
-    ["VID_4424.mp4","0:03","camera points at floor and cuts."]
+    ["screen_recording_0815.mp4","0:42","messenger window recording. no audio.","screen"],
+    ["VID_4410.mp4","0:09","short cafe clip.","cafe"],
+    ["VID_4414.mp4","0:18","street at night. traffic only.","street"]
   ];
-  videosBody.innerHTML="<h3 style='margin-top:0'>videos</h3>"+vids.map((v,i)=>`<div class="index-row" onclick="openVideo(${i})"><b>${v[0]}</b><small>${v[1]}</small><div class="muted" style="font-size:11px;margin-top:4px">${v[2]}</div></div>`).join("");
+  if(storyFlags.beaBikeUnlocked)vids.unshift(["bea_bike_2022.mp4","0:31","old family video. bea learning to ride a bike.","bea_bike"]);
+  if(story.act>=5)vids.push(["VID_4422.mp4","0:06","bar table. niko laughs off camera.","bar1"],["VID_4423.mp4","0:04","dark clip. blue-shirt man passes frame.","blue"],["VID_4424.mp4","0:03","camera points at floor and cuts.","floor"]);
+  return vids;
+}
+function renderVideos(){
+  const vids=getVideos();videosBody.innerHTML="<h3 style='margin-top:0'>videos</h3>"+vids.map((v,i)=>`<div class="index-row" onclick="openVideo(${i})"><b>${v[0]}</b><small>${v[1]}</small><div class="muted" style="font-size:11px;margin-top:4px">${v[2]}</div></div>`).join("");
 }
 function openVideo(i){
-  markSeen("video_"+i);
-  const desc=[
-    "screen recording shows niko switching between two messenger chats before minimizing the window.",
-    "cafe table. two drinks. someone's hand enters frame.",
-    "night street. nothing obvious.",
-    "bar table. a male voice says 'you staying?' niko laughs but answer is unclear.",
-    "a guy in a blue shirt crosses behind the camera.",
-    "camera points at pavement, then fabric, then cuts."
-  ][i];
-  toast("videos",desc);
-  if(i>=3)addJournal("late-night videos show the same bar area and a guy in a blue shirt.");
+  const v=getVideos()[i];if(!v)return;markSeen("video_"+v[3]);
+  if(v[3]==="bea_bike"){storyFlags.sawBeaBike=true;toast("videos","bea finally rides without niko holding the seat. niko yells 'AYYYY LET'S GO'.");addJournal("bea bike video has no clue in it at all. it only shows niko being her older brother.");fieldTalk("may","don't make a joke. just let this one be normal for a second.",3900);evaluateActProgress();return}
+  const desc={screen:"screen recording shows niko switching between two messenger chats before minimizing the window.",cafe:"cafe table. two drinks. someone's hand enters frame.",street:"night street. nothing obvious.",bar1:"bar table. a male voice says 'you staying?' niko laughs but answer is unclear.",blue:"a man in a blue shirt crosses behind the camera.",floor:"camera points at pavement, then fabric, then cuts."}[v[3]];toast("videos",desc);if(["bar1","blue","floor"].includes(v[3]))addJournal("late-night videos show the same bar area; one contains the blue-shirt man.");
 }
 
 function renderDownloadsApp(){
@@ -4018,14 +4541,14 @@ const discordChats=[
  ["random server","offline cached messages"]
 ];
 function renderDiscord(){
-  discordIndex.innerHTML=discordChats.map((d,i)=>`<div class="index-row" onclick="openDiscord(${i})"><b>${d[0]}</b><small>${d[1]}</small></div>`).join("");
+  discordIndex.innerHTML=discordChats.map((d,i)=>[d,i]).filter(([d,i])=>story.act>=5||i<2).map(([d,i])=>`<div class="index-row" onclick="openDiscord(${i})"><b>${d[0]}</b><small>${d[1]}</small></div>`).join("");
 }
 function openDiscord(i){
   markSeen("discord_"+i);
   const msgs=[
     `<p><b>ken:</b> sent the file already</p><p><b>niko:</b> got it</p>`,
     `<p><b>group vc:</b> join later?</p><p><b>niko:</b> maybe after</p>`,
-    `<p><b>vince:</b> u still coming tonight?</p><p><b>niko:</b> yeah around 10</p><p><b>vince:</b> aight blue shirt lang ako</p>`,
+    `<p><b>vince:</b> u still coming tonight?</p><p><b>niko:</b> yeah around 10</p><p><b>vince:</b> aight gray hoodie ako</p>`,
     `<p><b>cam:</b> where are you</p><p><b>niko:</b> inside</p><p><b>cam:</b> can't see u</p><p><b>niko:</b> wait</p>`,
     `<p class="muted">cached server messages unavailable beyond the last sync.</p>`
   ][i];
@@ -4040,7 +4563,7 @@ function renderWeatherCache(){
 
 function renderClockApp(){
   clockBody.innerHTML=`<h3 style="margin-top:0">clock</h3>
-    <div class="detail"><p><b>alarms</b></p><p>6:30 am weekdays</p><p>8:00 am saturday</p><p>9:15 pm aug 17 • label: leave</p></div>
+    <div class="detail"><p><b>alarms</b></p><p>6:30 am weekdays</p><p>8:00 am saturday</p>${story.act>=5?`<p>9:15 pm aug 17 • label: leave</p>`:""}</div>
     <div class="detail"><p><b>timers history</b></p><p>15 min</p><p>30 min</p><p>10 min</p></div>`;
 }
 
@@ -4063,15 +4586,15 @@ function calcPress(k){
 }
 
 function renderAll(){
-  updateClock();renderFileSidebar();renderFolder("recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();
+  updateClock();renderFileSidebar();renderFolder("recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
-const SAVE_KEY="lost_phone_save_v17";
+const SAVE_KEY="lost_phone_save_v20";
 let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:2,
+    version:4,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -4082,7 +4605,8 @@ function createSaveData(){
     currentNewsFilter,
     showHiddenFiles,
     talkIndex,
-    hintIndex
+    hintIndex,
+    storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence]
   };
 }
 
@@ -4132,6 +4656,23 @@ function applySaveData(data){
   showHiddenFiles=Boolean(data.showHiddenFiles);
   talkIndex=Number(data.talkIndex||0);
   hintIndex=Number(data.hintIndex||0);
+  storyMinutes=Number(data.storyMinutes||0);
+  storyStage=Number(data.storyStage||0);
+  hotspotOn=Boolean(data.hotspotOn);
+  batteryPercent=Number(data.batteryPercent||61);
+  Object.assign(storyFlags,data.storyFlags||{});
+  Object.assign(story,data.story||{});
+  evidence.clear();(data.evidence||[]).forEach(x=>evidence.add(x));
+  const ensureMsg=(k,text)=>{if(chats[k]&&!chats[k].msgs.some(m=>m[1]===text))chats[k].msgs.push(["them",text]);};
+  if(storyFlags.liveSynced){
+    ensureMsg("lia","niko? where are you");
+    ensureMsg("vince","if u see this call me. seriously.");
+    ensureMsg("mama","anak update ka naman pag nakita mo to");
+  }
+  if(storyFlags.vinceLive){
+    ensureMsg("vince","whoever has niko's laptop, where exactly did you find it?");
+    ensureMsg("vince","don't go down the side road rn. water's bad and i can't reach him.");
+  }
 
   seen.clear();
   (data.seen||[]).forEach(k=>seen.add(k));
@@ -4172,6 +4713,7 @@ function applySaveData(data){
   renderMemes();
   renderSnips();
   renderNews(currentNewsFilter);
+  updateClock();updateConnectionUI();evaluateActProgress();refreshDesktopShortcuts();updateTerminalStatus();renderTimeline();
 
   document.querySelectorAll('.msg-tab').forEach(x=>x.classList.remove('active'));
   const tab=document.getElementById('tab-'+chatMode);
@@ -4182,6 +4724,7 @@ function applySaveData(data){
   }
 
   updateSaveStatus(data);
+  if(story.ending)setTimeout(()=>startEnding(story.ending),80);
   return true;
 }
 
