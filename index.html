@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v42</title>
-<!-- v42: expanded large-font how-to-play with mechanics, spoiler-light hints, and easter-egg nudges; preserves v41 case tools and v40 restraint mechanics. -->
+<title>Lost Phone v44</title>
+<!-- v44: clean spoiler-free README + detailed gameplay-focused How to Play. -->
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
@@ -1029,6 +1029,27 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
 .howto-tagline{font-size:20px;line-height:1.55;color:#fff;margin:12px 0 20px}
 .howto-back{margin-top:30px;font-size:15px;padding:10px 16px}
 @media(max-width:760px){.howto-card{width:min(94vw,900px);padding-top:20px}.howto-copy{font-size:16px;line-height:1.72}.howto-section h3{font-size:21px}.howto-section h4{font-size:17px}.howto-callout{font-size:15px}.howto-card .howto-sub{font-size:13px}}
+#readMeOverlay{position:fixed;inset:0;z-index:300100;background:#020202;display:none;align-items:flex-start;justify-content:center;padding:24px;overflow:auto;overscroll-behavior:contain}
+#readMeOverlay.show{display:flex}
+.readme-card{width:min(760px,94vw);padding:42px 0 90px;font-family:"Courier New",Courier,monospace;color:#d8d8d8}
+.readme-card h2{font-size:clamp(36px,6vw,58px);line-height:1;margin:0 0 9px;letter-spacing:-2px;text-transform:lowercase}
+.readme-kicker{font-size:12px;color:#686868;letter-spacing:.7px;margin-bottom:34px}
+.readme-copy{font-size:18px;line-height:1.9}
+.readme-copy p{margin:0 0 20px}
+.readme-copy .quiet{color:#868686}
+.readme-copy .white{color:#fff}
+.readme-opening{font-size:21px;line-height:1.65;color:#f0f0f0;margin:8px 0 32px}
+.readme-line{padding:10px 0;border-bottom:1px solid #151515}
+.readme-line:last-child{border-bottom:0}
+.readme-break{height:1px;background:#202020;margin:34px 0}
+.readme-word{display:grid;grid-template-columns:minmax(90px,145px) minmax(0,1fr);gap:16px;padding:9px 0;align-items:start}
+.readme-word b{font-size:20px;color:#fff;font-weight:700;text-transform:lowercase}
+.readme-word span{color:#aaa}
+.readme-fragment{margin:30px 0;padding:18px 20px;border-left:2px solid #343434;background:#070707;line-height:1.85;color:#b8b8b8}
+.readme-fragment p{margin:0 0 7px}.readme-fragment p:last-child{margin-bottom:0}
+.readme-tiny{font-size:12px;line-height:1.7;color:#555;margin-top:34px}
+.readme-back{margin-top:28px;font-size:15px;padding:10px 16px}
+@media(max-width:760px){.readme-card{padding-top:24px}.readme-copy{font-size:16px;line-height:1.82}.readme-opening{font-size:19px}.readme-word{grid-template-columns:1fr;gap:2px}.readme-word b{font-size:18px}}
 #helpButton{position:absolute;right:14px;top:105px;z-index:8;width:32px;height:32px;border:1px solid #303846;background:rgba(12,15,20,.88);color:#9ea9b8;border-radius:50%;cursor:pointer;font:bold 12px "Courier New",monospace}#helpButton:hover{background:#171d26;color:#fff}
 .case-tools{margin-top:14px}.case-tools h4{margin:0 0 7px;font-size:12px}.case-note{font-size:10px;color:#8f99a8;line-height:1.45}.case-bookmarks,.case-contradictions,.case-evidence{margin-top:12px}.case-list{display:flex;flex-direction:column;gap:6px}.case-row{border:1px solid #29313d;background:#0d1219;border-radius:8px;padding:8px 9px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}.case-row-main{min-width:0}.case-row-name{font-size:11px;color:#e7ebf1;overflow-wrap:anywhere}.case-row-key{font:9px "Courier New",monospace;color:#687383;margin-top:3px;overflow-wrap:anywhere}.case-row-controls{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.case-select{background:#090d12;color:#cdd5df;border:1px solid #374253;border-radius:6px;padding:5px 6px;font:9px "Courier New",monospace}.case-bookmark{border:1px solid #374253;background:#111720;color:#9da9b8;border-radius:6px;padding:5px 7px;cursor:pointer;font:9px "Courier New",monospace}.case-bookmark.on{color:#fff;border-color:#8b98aa;background:#27303c}.contradiction-row{border-left:3px solid #9a6b72;background:#121014;padding:9px 10px;margin-top:6px;font-size:11px;line-height:1.55}.contradiction-row b{display:block;font-size:10px;margin-bottom:3px;color:#d9b7bc}.bookmark-empty{font-size:10px;color:#697382;padding:4px 0}.case-scroll{max-height:330px;overflow:auto;padding-right:2px}
 @media(max-width:760px){#mainMenu{padding-top:28px}.menu-cheat{margin-top:26px}#helpButton{right:7px;top:92px}.case-row{grid-template-columns:1fr}.case-row-controls{justify-content:flex-start}.case-scroll{max-height:280px}}
@@ -1044,6 +1065,7 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
     <div class="main-actions">
       <button onclick="startFromMenu()">start</button>
       <button id="mainContinue" onclick="continueSavedGame()" hidden>continue</button>
+      <button onclick="openReadMe()">read me</button>
       <button onclick="openHowToPlay('menu')">how to play</button>
     </div>
     <div class="menu-cheat">
@@ -1073,130 +1095,193 @@ this rain is getting stupid though.</span></button>
   </div>
 </div>
 
+<div id="readMeOverlay">
+  <div class="readme-card">
+    <h2>read me</h2>
+    <div class="readme-kicker">lost phone • spoiler-free overview</div>
+    <div class="readme-copy">
+      <div class="readme-opening">a found laptop. two people stuck at a terminal. an owner who is nowhere around.</div>
+
+      <p><span class="white">lost phone</span> is a single-file browser mystery game. you explore somebody else's laptop, figure out who it belongs to, and decide what information is actually useful before the night moves on.</p>
+      <p>the game is mostly text, fake desktop apps, cached messages, files, photos, logs, conversations, and choices. there is no combat and no fast reaction mechanic. most of the game is reading, comparing, remembering, and deciding what deserves your attention.</p>
+
+      <div class="readme-break"></div>
+
+      <p class="white"><b>starting a game</b></p>
+      <p>press <b>start</b> on the main menu, choose <b>JC</b> or <b>May</b>, then follow the opening conversation until the laptop desktop becomes available.</p>
+      <p>the two POVs share the same night and the same laptop, but their dialogue, choices, and some personal reactions are different. choosing one does not permanently lock the other.</p>
+      <p>if you already have local progress, the main menu shows <b>continue</b>. that resumes the saved game instead of beginning a new opening.</p>
+
+      <div class="readme-break"></div>
+
+      <p class="white"><b>what you actually do</b></p>
+      <p>use the laptop like a messy real computer. click desktop shortcuts, open folders, read chats, inspect photos, check logs, and move between apps. new information and new parts of the story become available as you discover enough relevant context.</p>
+      <p>you are not expected to read every single item. a lot of the laptop is ordinary clutter. if something seems useful, remember it, bookmark it when case tools become available, or return to it later.</p>
+      <p>there is no single perfect app order. if one area feels empty, close it and try something else.</p>
+
+      <div class="readme-break"></div>
+
+      <p class="white"><b>controls</b></p>
+      <p><b>mouse / touch:</b> click or tap buttons, files, chats, tabs, and choices.</p>
+      <p><b>scroll:</b> individual apps and document viewers can scroll independently. on mobile, drag inside the panel you want to move.</p>
+      <p><b>_ / ×:</b> either window control closes the current laptop window. reopening the shortcut brings it back.</p>
+      <p><b>?</b> on the desktop opens the full How to Play guide at any time.</p>
+
+      <div class="readme-break"></div>
+
+      <p class="white"><b>progress + saving</b></p>
+      <p>progress happens through discoveries, conversations, and story choices. the game tracks what you have already opened, so repeatedly clicking the same file will not normally count as new progression.</p>
+      <p>the game autosaves during play and also has a Save app for manual saving. saves are stored locally in your browser. clearing site data or changing browsers can remove them.</p>
+      <p>the Save app can also export a save file if you want a separate backup.</p>
+
+      <div class="readme-break"></div>
+
+      <p class="white"><b>internet inside the story</b></p>
+      <p>the HTML game itself does not need internet content to run. inside the fiction, however, the laptop can be offline or online. cached information and newly synced information are treated differently by the story.</p>
+
+      <div class="readme-break"></div>
+
+      <p class="white"><b>ending the game</b></p>
+      <p>the night eventually reaches a decision point. available choices depend on what you have actually established and which parts of the final situation you discovered.</p>
+      <p>there are multiple endings. they are not labeled as a simple good / bad / true hierarchy, and you do not need to see every one to finish a playthrough.</p>
+
+      <div class="readme-break"></div>
+
+      <p class="white"><b>codes</b></p>
+      <p>the main menu and laptop include a code entry field for development/testing shortcuts. the game does not display the codes or suggest one. normal players can ignore the field completely.</p>
+
+      <div class="readme-break"></div>
+
+      <p class="quiet">best first run: play normally, read what interests you, use the timeline when it appears, and don't worry about completing every folder.</p>
+      <p class="readme-tiny">everything needed to play is inside this HTML file. no installation is required beyond opening it in a modern browser.</p>
+    </div>
+    <button class="soft readme-back" onclick="closeReadMe()">back</button>
+  </div>
+</div>
+
 <div id="howToPlayOverlay">
   <div class="howto-card">
     <h2>how to play</h2>
-    <div class="howto-sub">spoiler-light guide • mechanics, investigation tips, hidden hints, and easter-egg nudges</div>
+    <div class="howto-sub">full gameplay guide • controls, progression, saves, and case tools</div>
     <div class="howto-copy">
-      <div class="howto-tagline">you found somebody's laptop. the game does not tell you which parts of his life matter.</div>
-      <p>click around and build the story yourself. open apps, chats, files, photos, notes, browser history, downloads, games, social apps, logs, and whatever else looks worth checking. there is no single required click order.</p>
-      <p><b>important:</b> not everything is evidence. some files are useful, some are red herrings, some are embarrassing normal-person clutter, and some only become meaningful after you learn something else.</p>
+      <div class="howto-tagline">your job is to explore the laptop, identify useful information, build the timeline, and decide what to do with what you found.</div>
 
       <div class="howto-section">
-        <h3>core investigation mechanics</h3>
-        <h4>1. explore + revisit</h4>
-        <p>the game rewards rereading. a file that looks useless in act 1 can feel completely different in act 5. if something feels important but you don't understand it yet, come back later.</p>
-        <div class="howto-callout"><b>rule:</b> finding more information does not always create a new clue. sometimes it changes the meaning of an old one.</div>
+        <h3>1. start or continue</h3>
+        <p>from the main menu, press <b>start</b> for a new playthrough. if a local save exists, <b>continue</b> appears automatically and loads that save.</p>
+        <p>after pressing start, choose <b>JC</b> or <b>May</b>. this decides whose side of the opening conversation and later personal dialogue you control. both characters investigate the same laptop.</p>
+        <p>during dialogue, click one of the available responses to continue. some choices change conversation tone or small character moments. investigation still continues afterward.</p>
+      </div>
 
-        <h4>2. confidence tags</h4>
-        <p>once the case tools are available, you can mark discovered evidence as <b>confirmed</b>, <b>likely</b>, <b>possible</b>, or <b>speculation</b>.</p>
+      <div class="howto-section">
+        <h3>2. use the laptop desktop</h3>
+        <p>once the opening finishes, you reach the laptop desktop. each icon opens an app or section of the computer.</p>
         <ul class="howto-list">
-          <li><b>confirmed</b> = the evidence itself directly establishes it.</li>
-          <li><b>likely</b> = several things support it, but there is still room to be wrong.</li>
-          <li><b>possible</b> = it fits, but there are other reasonable explanations.</li>
-          <li><b>speculation</b> = mostly your theory right now.</li>
+          <li><b>click an icon</b> to open its window.</li>
+          <li><b>click a row, file, chat, photo, or tab</b> inside an app to inspect it.</li>
+          <li><b>scroll inside the app</b> when its content is longer than the window.</li>
+          <li><b>press _ or ×</b> in the top-right of a window to close it.</li>
+          <li>reopen any closed app by clicking its desktop or Start-menu shortcut again.</li>
         </ul>
-        <p>these labels are yours. they do <b>not</b> secretly choose an ending or make your theory canon.</p>
-
-        <h4>3. revisit later</h4>
-        <p>use the star/bookmark control to flag evidence you want to return to. flagged items show up together in the case section so you don't have to remember which cursed folder you found something in three acts ago.</p>
-
-        <h4>4. contradiction flags</h4>
-        <p>some contradictions appear automatically after you discover both sides of them. a contradiction does <b>not</b> automatically mean somebody lied. people can be vague, mistaken, emotional, or talking about different parts of the same event.</p>
-        <div class="howto-callout">compare <b>what somebody says</b> with <b>what a hard log actually proves</b>. those are not always the same kind of evidence.</div>
-
-        <h4>5. the timeline</h4>
-        <p>the timeline becomes more useful as you progress. timestamps are some of the strongest anchors in the game, but even a timestamp has limits.</p>
-        <p>a file opening proves a file opened. a bluetooth connection proves a connection happened. a lid closing proves the lid closed. none of those automatically tells you <b>who</b> caused it.</p>
+        <p>you can move between apps whenever you want. the game does not require you to finish one entire app before opening another.</p>
       </div>
 
       <div class="howto-section">
-        <h3>offline / online mechanic</h3>
-        <p>the laptop begins offline. early Messenger, social apps, browser data, and other information can be cached rather than live.</p>
-        <p>you cannot just turn on JC's hotspot immediately. keep playing until there is an actual in-story reason for internet access.</p>
-        <p>once live sync becomes possible, remember this:</p>
-        <div class="howto-callout"><b>something received after reconnection is not proof that it was present when the laptop was abandoned.</b></div>
+        <h3>3. explore and make discoveries</h3>
+        <p>opening certain items records a discovery. discoveries are what gradually move the investigation forward and unlock additional conversations, files, chats, or tools.</p>
+        <p>not every clickable item advances the story. some content exists only to make the laptop feel like a real person's computer. if you stop finding anything useful in one place, check another app.</p>
+        <div class="howto-callout"><b>you do not need to click everything.</b> progression comes from finding enough relevant information, not from reaching 100% completion.</div>
+        <p>you can also reopen things you already read. this is useful when later information gives an older item more context.</p>
       </div>
 
       <div class="howto-section">
-        <h3>photos + technical evidence</h3>
-        <p>there is no magic enhance button. if an image is blurry, dark, reflected, rain-covered, or badly compressed, the game will not invent detail that isn't there.</p>
-        <p>sometimes the important part of a photo is not <b>what is visible</b>. it can be the timestamp, orientation, source, motion, or the fact that somebody chose to take it at all.</p>
-        <p>same rule for USB, bluetooth, caches, and file history: technical logs usually prove <b>an event</b>, not the entire story surrounding that event.</p>
+        <h3>4. dialogue while exploring</h3>
+        <p>JC and May occasionally talk while you investigate. normal conversations can happen during quieter exploration, while important discoveries can trigger their own dialogue.</p>
+        <p>when a dialogue choice appears, choose a response before continuing. story dialogue is shown above the laptop windows so you do not need to close your current app first.</p>
       </div>
 
       <div class="howto-section">
-        <h3>people</h3>
-        <p>don't decide too early that somebody is completely trustworthy or completely suspicious.</p>
-        <p>also don't decide too early that Niko was imagining everything, or that he was right about everything. some of his interpretations are clearly weak. that does not automatically make every later concern false.</p>
-        <div class="howto-callout">one of the main questions in this game is: <b>what do i actually know, and what am i adding myself?</b></div>
+        <h3>5. understand offline and live information</h3>
+        <p>the laptop begins with limited connectivity. many apps can still show information because it was already stored locally or cached before the laptop was found.</p>
+        <p>later, the story can make live connectivity available. when that happens, some apps may receive newer information.</p>
+        <div class="howto-callout">when comparing evidence, keep <b>cached information</b> and <b>information received after reconnection</b> separate. they come from different points in time.</div>
+        <p>you do not have to manually force internet access at the beginning. keep investigating and the relevant control becomes available through normal story progression.</p>
       </div>
 
       <div class="howto-section">
-        <h3>spoiler-light hints</h3>
-        <p class="howto-muted">these are nudges, not solutions. skip this section if you want to go in completely blind.</p>
+        <h3>6. use our timeline</h3>
+        <p><b>Our Timeline</b> appears after enough investigation progress. open it from the desktop whenever you want to review the night in chronological order.</p>
+        <p>timeline entries fill in as their supporting information is discovered. an unknown entry does not mean the game is broken; it means you have not established that part yet.</p>
+        <p>the timeline is especially useful when several apps describe events from different sources. use it to compare when things happened instead of relying only on the order you personally found them.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>7. confidence tags</h3>
+        <p>the case tools let you assign your own confidence level to discovered evidence:</p>
         <ul class="howto-list">
-          <li>pay attention to <b>what the laptop was already showing</b> before you start opening everything.</li>
-          <li>an old alarm can matter even when the date looks irrelevant.</li>
-          <li>the same device name appearing twice does not automatically mean the same physical device.</li>
-          <li>if a photo refuses to give you more detail, stop trying to identify a face and think about <b>how the photo was taken</b>.</li>
-          <li>the bag contains ordinary objects. eventually, what is <b>not</b> there may be worth thinking about too.</li>
-          <li>if you swear a note used to say something slightly different, don't immediately assume the game is haunted. computers keep versions.</li>
-          <li>somebody asking for an exact location can be totally normal. it can also feel different after you learn what happened there.</li>
-          <li>12:23 am is when JC and May find the bag. it is <b>not necessarily the most important timestamp.</b></li>
+          <li><b>confirmed</b> — you consider the fact directly established.</li>
+          <li><b>likely</b> — strongly supported, but not completely certain.</li>
+          <li><b>possible</b> — plausible, with other explanations still available.</li>
+          <li><b>speculation</b> — mainly your current theory.</li>
+          <li><b>unmarked</b> — no personal label yet.</li>
         </ul>
+        <p>select a level from the dropdown beside an evidence item. these labels are for organizing your thinking only. <b>they do not change the actual evidence, unlock content, or secretly select an ending.</b></p>
       </div>
 
       <div class="howto-section">
-        <h3>easter eggs + optional shit</h3>
-        <p>there are small callbacks and dumb details scattered everywhere. most do not affect endings.</p>
-        <ul class="howto-list">
-          <li>Niko's games, Steam chats, Instagram, memes, engineering files, AutoCAD naming, and sports arguments are mostly there to make him feel like an actual person instead of a folder called <b>victim_lore</b>.</li>
-          <li>some filenames, notes, game names, character names, and repeated jokes reference other parts of Niko's life.</li>
-          <li>Miso shows up in places that have absolutely nothing to do with the mystery.</li>
-          <li>Niko still calls EA Sports FC “FIFA.” this is not evidence of anything except stubbornness.</li>
-          <li>his engineering file/layer names get increasingly stupid. yes, that is intentional.</li>
-          <li>sports predictions and argument rules are optional. they are also terrible.</li>
-          <li>JC and May have dialogue callbacks that mean more if you replay from the other POV.</li>
-          <li>there are a few details designed specifically to make a second playthrough feel different because you finally know what you're looking at.</li>
-        </ul>
-        <div class="howto-callout"><b>easter-egg rule:</b> funny or weird does not automatically mean clue. the game has a lot of shit that exists just because people keep dumb shit on their computers.</div>
+        <h3>8. bookmark things to revisit</h3>
+        <p>case evidence can be marked with the <b>☆ revisit</b> button. clicking it changes the item to <b>★ revisit</b> and adds it to your Revisit Later list.</p>
+        <p>use this when you find something you want to compare with information from another app later. click the bookmark again to remove it.</p>
+        <p>bookmarks are saved with your game.</p>
       </div>
 
       <div class="howto-section">
-        <h3>endings</h3>
-        <p>there are multiple endings, but they are not arranged as simple bad / good / true ending tiers.</p>
-        <p>different endings represent different amounts and kinds of certainty. sometimes learning more gives you a darker answer, not a happier one.</p>
-        <p>if an ending option is missing, you probably have not established enough of the relevant chain yet.</p>
+        <h3>9. contradiction notes</h3>
+        <p>the case tools can automatically display a contradiction or mismatch after you discover both pieces needed for the comparison.</p>
+        <p>these notices are not accusations and they are not automatically proof that someone lied. they simply show that two discovered pieces of information deserve to be compared.</p>
+        <p>you do not need to create contradiction entries manually.</p>
       </div>
 
       <div class="howto-section">
-        <h3>first playthrough advice</h3>
-        <ul class="howto-list">
-          <li>start with normal owner-identification stuff before going full detective.</li>
-          <li>read timestamps instead of only reading the dramatic text.</li>
-          <li>bookmark things you don't understand.</li>
-          <li>don't treat every woman in Niko's messages as a suspect.</li>
-          <li>don't treat creepy imagery as proof of anything supernatural.</li>
-          <li>don't assume a witness is lying just because two accounts don't line up perfectly.</li>
-          <li>when the final-night timeline starts forming, slow down and compare <b>before / during / after</b>.</li>
-        </ul>
-        <p><b>pay attention to everything. don't believe everything.</b></p>
+        <h3>10. photos, files, and technical logs</h3>
+        <p>photos and logs work like evidence viewers, not puzzle minigames. click the item and read the information the game can actually establish from it.</p>
+        <p>if an image is unclear, the game will not invent extra visual detail. if a technical log records an event, treat the recorded event separately from assumptions about who caused it or why.</p>
+        <p>files can also have folders, hidden items, backups, or different versions. availability changes naturally as the story progresses.</p>
       </div>
 
       <div class="howto-section">
-        <h3>cheat codes</h3>
-        <p>there is a code box on the main menu and a cheat console in the laptop.</p>
-        <p><b>the game will not show you the codes.</b> if you know one, type it. if you don't, play normally.</p>
+        <h3>11. save your game</h3>
+        <p>the game periodically autosaves after exploration progress.</p>
+        <p>for a manual save, open the <b>Save</b> app and choose save. the same app shows whether a local save exists.</p>
+        <p>you can export your save as a file for backup and import it again later. browser local storage is still the normal save location.</p>
+        <p>deleting the local save removes your stored playthrough progress, so only use that option when you actually want to reset it.</p>
       </div>
 
       <div class="howto-section">
-        <h3>last thing</h3>
-        <p>you're going through somebody's private laptop because you're trying to answer a simple question:</p>
-        <div class="howto-callout"><b>where did Niko go?</b></div>
-        <p>by the end, you may know his family, girlfriend, lies, games, schoolwork, fears, cat, stupid sports takes, and things he never meant strangers to see.</p>
-        <p>that still doesn't guarantee you understand what happened to him.</p>
-        <p><b>go explore on ur own.</b></p>
+        <h3>12. reaching an ending</h3>
+        <p>keep exploring until the story reaches its final decision. the choices available there depend on the information and evidence chain you established during the playthrough.</p>
+        <p>if a particular choice is not available, continue investigating instead of assuming the game has bugged out.</p>
+        <p>after an ending, you can start again and choose another POV or approach if you want to see how a different playthrough feels.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>13. cheat code entry</h3>
+        <p>there is a small code field on the main menu and a Cheat Codes app on the laptop.</p>
+        <p>type a code you already know and press <b>enter</b>. valid development codes can alter progression or jump to testing states.</p>
+        <p><b>no code list is shown in-game.</b> you do not need cheats for a normal playthrough.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>14. mobile + smaller screens</h3>
+        <p>the game supports touch controls. tap icons and buttons normally, and swipe inside app panels to scroll them.</p>
+        <p>some laptop windows contain their own scroll area, so if the whole page does not move, place your finger inside the open app and scroll there.</p>
+        <p>landscape orientation can give the laptop interface more room, but it is not required.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>quick version</h3>
+        <div class="howto-callout"><b>start → choose JC or May → explore the laptop → open useful items → let new story content unlock → use Our Timeline and case tools → save → keep investigating until you have to decide what to do.</b></div>
+        <p>that's the actual gameplay loop. everything else is yours to discover while playing.</p>
       </div>
     </div>
     <button class="soft howto-back" onclick="closeHowToPlay()">back</button>
@@ -1767,6 +1852,12 @@ function showCharacterSelect(){
   document.getElementById("characterSelect").style.display="block";
   document.getElementById("dialogue").style.display="none";
   const c=document.getElementById("characterContinue");if(c)c.innerHTML="";
+}
+function openReadMe(){
+  const o=document.getElementById("readMeOverlay");if(o)o.classList.add("show");
+}
+function closeReadMe(){
+  const o=document.getElementById("readMeOverlay");if(o)o.classList.remove("show");
 }
 function openHowToPlay(from="menu"){
   howToPlayReturn=from;
@@ -6874,6 +6965,7 @@ function continueSavedGame(){
     const data=JSON.parse(raw);
     const menu=document.getElementById("mainMenu");if(menu)menu.style.display="none";
     const help=document.getElementById("howToPlayOverlay");if(help)help.classList.remove("show");
+    const readme=document.getElementById("readMeOverlay");if(readme)readme.classList.remove("show");
     introEl.style.display="none";
     laptopWrap.style.display="flex";
     startTerminalAmbience();
