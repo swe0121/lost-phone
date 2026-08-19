@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Lost Phone</title>
-<!-- v23: dual-perspective framing, POV interiority, optional extras/easter eggs, preserved grounded mystery -->
+<!-- v25: intro viewport fix, expanded JC/May relationship banter across acts, preserved dual-perspective/evidence systems -->
 <style>
 :root{
   --bg:#06080c;--panel:#10141b;--panel2:#171c25;--panel3:#202734;
@@ -22,17 +22,21 @@ body{overflow:hidden}
   background:#000;
   z-index:300;
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
   padding:24px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
 }
 #dialogue{
   width:min(900px,92vw);
+  min-height:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-start;
   text-align:center;
+  padding:clamp(28px,7vh,70px) 0 64px;
 }
 #introTime{
   font-family:"Courier New",Courier,monospace;
@@ -51,8 +55,8 @@ body{overflow:hidden}
 }
 #dialogueText{
   font-family:"Courier New",Courier,monospace;
-  font-size:clamp(19px,2.4vw,30px);
-  line-height:1.55;
+  font-size:clamp(18px,2.15vw,28px);
+  line-height:1.48;
   white-space:pre-line;
   color:#f2f2f2;
   text-align:center;
@@ -74,7 +78,9 @@ body{overflow:hidden}
   justify-content:center;
   gap:12px;
   flex-wrap:wrap;
-  margin-top:28px;
+  margin-top:24px;
+  padding-bottom:24px;
+  flex:0 0 auto;
 }
 #dialogueChoices button,.soft{
   font-family:"Courier New",Courier,monospace;
@@ -403,8 +409,8 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
     width:100%;
     max-width:100%;
     min-height:100%;
-    padding:clamp(26px,8vh,72px) 0 24px;
-    justify-content:center;
+    padding:clamp(22px,6vh,54px) 0 48px;
+    justify-content:flex-start;
   }
   #introTime{
     font-size:10px;
@@ -1322,6 +1328,8 @@ function showPOVThought(key,duration=4200){const t=POV_THOUGHTS[key]?.[playerCha
 function introThoughtFor(text){
   if(playerCharacter==="may"&&text.includes("comment on every puddle"))return "you don't say the rest of it — if he stops filling the silence, you're not sure what's supposed to fill it instead.";
   if(playerCharacter==="jc"&&text.includes("last one was unusually deep"))return "you had like ten normal things you were gonna talk about before seeing her. apparently puddle depth made the list instead.";
+  if(playerCharacter==="may"&&text.includes("don't believe u when u say you're scared of women"))return "he calls it being scared. from your side it mostly looks like him pretending he's fine until one sentence comes out completely wrong.";
+  if(playerCharacter==="jc"&&text.includes("don't believe u when u say you're scared of women"))return "the annoying part is that you are. apparently your face just refuses to submit the report.";
   if(playerCharacter==="may"&&text.includes("just find the owner first"))return "you say ‘that's it’ mostly because somebody has to.";
   if(playerCharacter==="jc"&&text.includes("just find the owner first"))return "you already know you're going to open more than the owner's email.";
   return "";
@@ -1380,7 +1388,7 @@ you're acting like my family has a case file on you.` ,choices:[["keep walking",
 
  {speaker:"may",text:`don't say it like that 😭
 
-we've talked way longer than two days.` ,choices:[["yeah but still",9]]},
+we've been talking for basically a year and this is still only the second time we've met irl.` ,choices:[["yeah but still",9]]},
 
  {speaker:"jc",text:`yeah but still.
 
@@ -1418,23 +1426,31 @@ this is literally only the second time, give me a break 😭`,choices:[["continu
 
  {speaker:"may",text:`mhm. sure.
 
-you were quiet as hell the first time too.` ,choices:[["i didn't know what to say",21],["you kept talking anyway",22]]},
+you were quiet as hell the first time too.
+
+also btw i still don't believe u when u say you're scared of women 😭 u really don't act like it.` ,choices:[["i didn't know what to say",21],["you kept talking anyway",22]]},
 
  {speaker:"jc",text:`i didn't know what to say 😭
 
-you were just looking at me waiting for me to talk.` ,choices:[["continue",23]]},
+you were just looking at me waiting for me to talk.
 
- {speaker:"jc",text:`you kept talking anyway so i thought i was good 😭`,choices:[["continue",23]]},
+the panic is internal. very efficient system.` ,choices:[["continue",23]]},
 
- {speaker:"may",text:`because if i waited for you we'd still be standing there in silence.` ,choices:[["keep walking",24]]},
+ {speaker:"jc",text:`you kept talking anyway so i thought i was good 😭
 
- {speaker:"jc",text:`damn okay 😭
+also being scared doesn't mean i have to look terrified 24/7.` ,choices:[["continue",23]]},
+
+ {speaker:"may",text:`because if i waited for you we'd still be standing there in silence.
+
+"internal panic" daw 😭 keep talking, i'm gonna block u again.` ,choices:[["keep walking",24]]},
+
+ {speaker:"jc",text:`AGAIN is crazy 😭 at least give me like a thirty-day notice.
 
 anyway i'm still getting you to the terminal so be nice.` ,choices:[["continue",25]]},
 
- {speaker:"may",text:`to the terminal.
+ {speaker:"may",text:`no notice. instant suspension.
 
-that's it.
+to the terminal. that's it.
 
 after that i can commute home myself.` ,choices:[["yeah yeah",26]]},
 
@@ -1846,6 +1862,78 @@ function endingFoulPlay(step){
 
 let talkTimer=null;
 let talkIndex=0;
+const relationshipTalkIndex={1:0,2:0,3:0,4:0,5:0,6:0};
+const relationshipTalkByAct={
+  1:[
+    ["may","btw i still don't believe that whole 'i'm scared of women' thing. u really don't act like it 😭"],
+    ["jc","that's because the panic is internal. very efficient system."],
+    ["may","efficient?? u just say something dumb then stare at the floor 😭"],
+    ["jc","that's called recovery time."],
+    ["may","keep talking and i'm gonna block u again."],
+    ["jc","AGAIN?? put me on a subscription plan at this point."],
+    ["may","renewal is automatic when you're annoying."],
+    ["jc","terrible terms and conditions."]
+  ],
+  2:[
+    ["may","if u ever make a spreadsheet about me i'm actually blocking u permanently."],
+    ["jc","mine would have one row: may — mood changes every four minutes."],
+    ["may","BLOCKED."],
+    ["jc","see? live demonstration 😭"],
+    ["may","u joke but you're the one who goes 'alright' like customer service when u get nonchalant."],
+    ["jc","thank you for contacting jc support. your complaint has been ignored."],
+    ["may","i hate u 😭"],
+    ["jc","ticket closed."]
+  ],
+  3:[
+    ["may","almost a year of talking and i'm still learning random shit about u on meet number two."],
+    ["jc","that's called content longevity."],
+    ["may","that's called low attendance 😭"],
+    ["jc","high retention though."],
+    ["may","paasa marketing strategy."],
+    ["jc","we'll see how things work out nga. organic growth."],
+    ["may","do NOT turn 'go with the flow' into business terminology 😭"]
+  ],
+  4:[
+    ["may","btw if u disappear mid convo tonight after all that ranting i did, i'm actually done 😭"],
+    ["jc","i'm literally beside u. where am i gonna disappear to."],
+    ["may","you'd find a way. midnight hits and suddenly your soul logs out."],
+    ["jc","sleep has excellent timing."],
+    ["may","one second we're talking, next morning it's 'morning' like u didn't abandon the whole conversation."],
+    ["jc","morning continuity. we've discussed this."],
+    ["may","i rejected that explanation the first time."]
+  ],
+  5:[
+    ["may","if i say i'm not scared, don't start analyzing me okay."],
+    ["jc","wasn't gonna."],
+    ["may","liar. u notice everything then act nonchalant about noticing it."],
+    ["jc","that's an extremely specific allegation."],
+    ["may","because i've had basically a year of evidence 😭"],
+    ["jc","and only two in-person samples. scientifically weak."],
+    ["may","shut up nerd."]
+  ],
+  6:[
+    ["may","if u ghost after tonight i'm blocking u for real."],
+    ["jc","after surviving a flood and this laptop? that's my reward?"],
+    ["may","character development test."],
+    ["jc","do i at least get probation."],
+    ["may","no."],
+    ["jc","takes two to tango nga diba."],
+    ["may","STOP USING THAT WHEN U DON'T HAVE AN ANSWER 😭"],
+    ["jc","but technically—"],
+    ["may","i'm gonna block u before the jeep even arrives."]
+  ]
+};
+function maybeRelationshipTalk(){
+  const act=Math.max(1,Math.min(6,story.act||1));
+  const cadence=act<=2?7:act<=4?8:10;
+  if(exploreCount<3||exploreCount%cadence!==0)return false;
+  const pool=relationshipTalkByAct[act]||[];
+  const idx=relationshipTalkIndex[act]||0;
+  if(idx>=pool.length)return false;
+  const item=pool[idx];relationshipTalkIndex[act]=idx+1;
+  setTimeout(()=>fieldTalk(item[0],item[1],3900),350);
+  return true;
+}
 const randomTalk=[
   ["may","you know we're supposed to be finding the owner, right? not doing a full background check 😭"],
   ["jc","i'm literally looking for a name. this guy just has 900 files for no reason."],
@@ -1890,6 +1978,45 @@ const randomTalk=[
   ["jc","i was not nervous."],
   ["may","you said 'hey' twice."],
   ["jc","okay i was resetting 😭"],
+
+  ["may","we've been talking for basically a year and we've met TWICE 😭"],
+  ["jc","limited edition appearances."],
+  ["may","low attendance."],
+  ["jc","high impact though."],
+  ["may","debatable."],
+
+  ["may","u act so nonchalant sometimes it's actually annoying."],
+  ["jc","i'm literally standing in flood water waiting with you 😭"],
+  ["may","that's not a defense."],
+  ["jc","this is extremely chalant behavior actually."],
+  ["may","that's not even a word."],
+  ["jc","it is now."],
+
+  ["may","this is such an aquarius answer."],
+  ["jc","says the one who changes mood every second."],
+  ["may","my mood has RANGE."],
+  ["jc","your range has no cooldown 😭"],
+  ["may","shut up."],
+
+  ["may","paasa ka kasi."],
+  ["jc","we'll see how things work out nga 😭 go with the flow diba. takes two to tango."],
+  ["may","you just combined every non-answer known to man."],
+  ["jc","efficient communication."],
+  ["may","NONCHALANT."],
+  ["jc","allegedly."],
+
+  ["may","u know what actually pisses me off? every midnight u disappear MID CONVO."],
+  ["jc","that's called falling asleep 😭"],
+  ["may","without saying anything half the time??"],
+  ["jc","sleep be jumping me."],
+  ["may","one second you're typing then next morning it's just 'morning' like nothing happened."],
+  ["jc","seamless transition."],
+  ["may","NO 😭"],
+
+  ["jc","you call me nonchalant but you've sent 'fine whatever' and then five messages right after."],
+  ["may","because YOU disappear and make me mad 😭"],
+  ["jc","says the mood-changing allegations are false."],
+  ["may","different case. dismissed."],
 
   ["may","i still can't believe this is what we're doing on our second meet."],
   ["jc","yeah normally people get food or something."],
@@ -2247,11 +2374,16 @@ function fieldTalk(speaker,text,duration=3300){
   fieldTalkEl.classList.toggle("self",speaker===playerCharacter);
   fieldTalkEl.classList.toggle("other",speaker!==playerCharacter);
   fieldTalkEl.classList.add("show");
+  if(speaker==="may"&&text==="paasa ka kasi."){
+    if(playerCharacter==="may")showThought("you say it like a joke because asking it seriously would turn this into a different conversation.",4600);
+    if(playerCharacter==="jc")showThought("you know exactly why she says it. the joke is easier to answer than the serious version.",4600);
+  }
   talkTimer=setTimeout(()=>fieldTalkEl.classList.remove("show"),duration);
 }
 const fieldTalkEl=document.getElementById("fieldTalk");
 function maybeRandomTalk(){
   if(exploreCount<2)return;
+  if(maybeRelationshipTalk())return;
   const cadence=story.act>=6?7:story.act>=5?6:story.act>=4?5:3;
   if(exploreCount%cadence!==0)return;
   if(story.act>=6){
@@ -2324,12 +2456,16 @@ function progressStory(){
     setTimeout(()=>fieldTalk("may","random, this place smells exactly like the terminal my ate used to pick me up from after school. she'd buy me taho when we got stuck waiting.",5200),4900);
     setTimeout(()=>fieldTalk("jc","wait, you have an ate? how have i never heard this story 😭",4300),10200);
     setTimeout(()=>fieldTalk("may","you never asked. basic may lore. quiz next time.",4300),14600);
+    setTimeout(()=>fieldTalk("jc","there's a quiz now??",3000),19100);
+    setTimeout(()=>fieldTalk("may","we've talked basically a year. u should know at least SOME lore 😭",4200),22200);
   }else if(storyStage===3 && story.act>=3){
     storyStage=4;advanceStory(12);showStoryPrompt("may","that security guard keeps looking over here. should we log where we found the bag?",[["tell the guard",()=>{storyFlags.toldGuard=true;addJournal(storyTimeLabel()+" • terminal security logged the bag. the side bench is outside the useful terminal camera angle.");fieldTalk("security","that side bench isn't in our useful angle. road camera mostly faces traffic. keep it with you while we log it.",5200);}],["not yet",()=>fieldTalk("may","fine. but if this gets more serious we're telling him.")]]);
   }else if(storyStage===4 && story.act>=4){
     storyStage=5;advanceStory(13);const mayAskLabel=playerCharacter==="may"?"ask him yourself":"let may ask";const jcAskLabel=playerCharacter==="jc"?"ask him yourself":"let jc ask";showStoryPrompt("jc","coffee stall guy's been here since before us. ask if he saw anyone by the bench?",[[mayAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor vaguely remembers someone near the side bench around midnight, but rain blocked his view.");fieldTalk("may","he said maybe someone was there. dark top. that's it. rain ruined everything else.",5000);maybeTahoCallback();}],[jcAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor remembers almost nothing useful through the rain.");fieldTalk("may","wow you talked to a stranger without narrating a puddle first 😭",4200);maybeTahoCallback();}]]);
   }else if(storyStage===5 && story.act>=5){
     storyStage=6;advanceStory(14);setBattery(49);addJournal(storyTimeLabel()+" • terminal lights blinked and the generator kicked in. laptop battery: 49%.");toast("terminal power","brief outage • generator active");fieldTalk("jc","terminal power. not the laptop. nothing supernatural happened. battery's at 49 though.",4300);
+    setTimeout(()=>fieldTalk("may","and don't u dare use low battery as an excuse to disappear mid convo later 😭",4200),4600);
+    setTimeout(()=>fieldTalk("jc","i'm never escaping this allegation am i.",3300),9000);
   }else if(storyStage===6 && foulScore()>=2){
     storyStage=7;advanceStory(15);if(hotspotOn){syncVinceLive();addJournal(storyTimeLabel()+" • vince sent new messages asking where the laptop was found.");}else fieldTalk("may","we should probably connect your hotspot soon. people are actually looking for him.",4500);
   }else if(storyStage===7 && story.act>=6){
@@ -2339,6 +2475,8 @@ function progressStory(){
     setTimeout(()=>fieldTalk("jc","look again. same color doesn't make him the same guy. helmet. food bag. he's waiting for a pickup.",5200),4400);
     setTimeout(()=>fieldTalk("may","...right. okay. i froze for a second. that's annoying.",4700),9700);
     setTimeout(()=>fieldTalk("jc","yeah. no guessing. timeline only.",4000),14500);
+    setTimeout(()=>fieldTalk("may","...thanks. don't get smug about being useful once.",3900),18800);
+    setTimeout(()=>fieldTalk("jc","too late. this is going on my résumé.",3600),22900);
   }else if(storyStage===8 && timelineKnownCount()>=8){
     storyStage=9;advanceStory(16);storyFlags.toldGuard=true;storyFlags.heardPhoneClue=true;markEvidence("world_phoneclue");addJournal(storyTimeLabel()+" • security remembers a soaked man asking around 12:18 if anyone had turned in a PHONE. dark cap/jacket. no name.");fieldTalk("security","around 12:18 a soaked guy asked if anyone turned in a phone. dark cap, dark jacket. could be unrelated. i didn't get a name.",6200);
   }else if(storyStage===9 && finalScore()>=6){
@@ -4719,6 +4857,35 @@ function openExtraFile(k){
   }
 }
 
+const phoneOlderChat=[
+  ["may","u disappeared again 😭"],
+  ["jc","i fell asleep"],
+  ["may","MID CONVO"],
+  ["jc","very peaceful exit"],
+  ["may","you do that every midnight then wake up acting normal 😭"],
+  ["jc","morning continuity"],
+  ["may","paasa ka"],
+  ["jc","we'll see how things work out nga 😭"],
+  ["may","THERE. nonchalant answer again"],
+  ["jc","go with the flow diba. takes two to tango"],
+  ["may","that is three non-answers in one message"],
+  ["jc","efficiency"],
+  ["may","aquarius talaga"],
+  ["jc","says the one who changes mood every second"],
+  ["may","that's different"],
+  ["jc","of course it is 😭"],
+  ["may","btw i don't believe u when u say you're scared of women"],
+  ["jc","why 😭"],
+  ["may","because u don't act scared. u act normal then randomly remember you're shy"],
+  ["jc","internal panic. professional exterior"],
+  ["may","professional is CRAZY 😭"],
+  ["may","keep talking i'm gonna block u again"],
+  ["jc","again?? at least give me notice"],
+  ["may","no. instant suspension"],
+  ["may","also imagine talking for basically a year then meeting twice"],
+  ["jc","rare spawn"],
+  ["may","you're so annoying"]
+];
 const phoneChat=[
   ["may","terminal nalang?"],
   ["jc","yeah i'll walk u there"],
@@ -4734,6 +4901,7 @@ function renderYourPhone(){
   const body=document.getElementById("yourPhoneBody");if(!body)return;
   const who=playerCharacter||"jc";
   const other=who==="jc"?"may":"jc";
+  const oldRows=phoneOlderChat.map(([sp,t])=>`<div class="phone-bubble ${sp===who?"mine":""}">${t}</div>`).join("");
   const rows=phoneChat.map(([sp,t])=>`<div class="phone-bubble ${sp===who?"mine":""}">${t}</div>`).join("");
   const notes=[];
   if(who==="jc"){
@@ -4744,7 +4912,7 @@ function renderYourPhone(){
     if(storyStage>=3)notes.push(["mom","baha pa ba? update pag may masasakyan ka."]);
   }
   const phoneBattery=Math.max(18,(who==="jc"?84:76)-storyStage*4);
-  body.innerHTML=`<div class="phone-shell"><div class="phone-top"><b>${who}'s phone</b><span>${storyTimeLabel()} • ${phoneBattery}%</span></div><div class="detail"><b>${other}</b><p class="muted">before tonight</p></div><div class="phone-chat">${rows}</div><div class="detail"><b>notifications</b>${notes.map(n=>`<div class="phone-notif"><b>${n[0]}</b>${n[1]}</div>`).join("")}<p class="extra-warning">your phone is character texture only. it never counts as case evidence.</p></div></div>`;
+  body.innerHTML=`<div class="phone-shell"><div class="phone-top"><b>${who}'s phone</b><span>${storyTimeLabel()} • ${phoneBattery}%</span></div><div class="detail"><b>${other}</b><p class="muted">older chat • a few saved messages</p></div><div class="phone-chat">${oldRows}</div><div class="detail"><b>${other}</b><p class="muted">before tonight</p></div><div class="phone-chat">${rows}</div><div class="detail"><b>notifications</b>${notes.map(n=>`<div class="phone-notif"><b>${n[0]}</b>${n[1]}</div>`).join("")}<p class="extra-warning">your phone is character texture only. it never counts as case evidence.</p></div></div>`;
 }
 
 function openMetaMeme(){
@@ -4862,7 +5030,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:6,
+    version:7,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -4875,7 +5043,7 @@ function createSaveData(){
     talkIndex,
     hintIndex,
     storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence],
-    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks}
+    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex}
   };
 }
 
@@ -4935,6 +5103,7 @@ function applySaveData(data){
   Object.assign(extraClicks,data.extraClicks||{});
   Object.assign(storyFlags,data.storyFlags||{});
   Object.assign(story,data.story||{});
+  Object.assign(relationshipTalkIndex,data.relationshipTalkIndex||{});
   evidence.clear();(data.evidence||[]).forEach(x=>evidence.add(x));
   const ensureMsg=(k,text)=>{if(chats[k]&&!chats[k].msgs.some(m=>m[1]===text))chats[k].msgs.push(["them",text]);};
   if(storyFlags.liveSynced){
