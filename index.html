@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Lost Phone</title>
-<!-- v20: act/state story engine, gated evidence, terminal progression, timeline, branching grounded endings -->
+<!-- v23: dual-perspective framing, POV interiority, optional extras/easter eggs, preserved grounded mystery -->
 <style>
 :root{
   --bg:#06080c;--panel:#10141b;--panel2:#171c25;--panel3:#202734;
@@ -90,6 +90,16 @@ body{overflow:hidden}
   color:#fff;
   border-color:#888;
 }
+#characterSelect{width:min(900px,92vw);font-family:"Courier New",Courier,monospace;text-align:center}
+#characterSelect h1{font-size:clamp(24px,4vw,42px);margin:0 0 8px;font-weight:700}
+#characterSelect .select-sub{font-size:12px;color:#8d8d8d;letter-spacing:.5px;margin-bottom:24px}
+.character-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.character-card{border:1px solid #3a3a3a;background:#050505;color:#ededed;padding:18px;text-align:left;cursor:pointer;min-height:150px}
+.character-card:hover,.character-card:focus{background:#0d0d0d;border-color:#777;outline:none}
+.character-card b{display:block;color:#9d9d9d;font-size:12px;margin-bottom:12px;text-transform:lowercase}
+.character-card span{display:block;font-size:15px;line-height:1.55;white-space:pre-line}
+.select-continue{margin-top:16px}
+#dialogueThought{font:italic 12px/1.5 "Courier New",monospace;color:#818896;max-width:700px;min-height:20px;margin-top:12px}
 
 #laptopWrap{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:10px;background:#05070a}
 #laptop{
@@ -289,6 +299,22 @@ body{overflow:hidden}
 #fieldTalk.show{opacity:1}
 #fieldSpeaker{font-family:"Courier New",Courier,monospace;font-size:12px;color:#8fb2ff;margin-bottom:5px}
 #fieldText{font-family:"Courier New",Courier,monospace;font-size:15px;line-height:1.45;color:white}
+#fieldTalk.self #fieldSpeaker{color:#8ee0b1}
+#fieldTalk.other #fieldSpeaker{color:#8fb2ff}
+#fieldThought{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);width:min(720px,86%);z-index:175;text-align:center;font:italic 12px/1.55 "Courier New",monospace;color:#9da6b3;pointer-events:none;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 10px #000}
+#fieldThought.show{opacity:1}
+.phone-shell{max-width:620px;margin:0 auto}
+.phone-top{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:10px;font:11px "Courier New",monospace;color:#9ba6b5}
+.phone-chat{display:flex;flex-direction:column;gap:7px;padding:4px 0 14px}
+.phone-bubble{max-width:78%;padding:8px 11px;border-radius:14px;background:#242b35;font-size:12px;line-height:1.45}
+.phone-bubble.mine{align-self:flex-end;background:#315fa8}
+.phone-notif{border:1px solid #2d3542;background:#121821;border-radius:10px;padding:10px;margin-top:7px;font-size:11px}
+.phone-notif b{display:block;margin-bottom:3px}
+.extra-note{font:12px/1.6 "Courier New",monospace;color:#d8dde5}
+.mini-desktop{position:relative;height:180px;border:7px solid #252c36;background:linear-gradient(140deg,#132237,#090d14 68%,#06080c);padding:14px;overflow:hidden}
+.mini-icons{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;font-size:20px;max-width:260px}
+.mini-badge{position:absolute;right:10px;top:10px;border:1px solid #3b4658;background:#0d1117;padding:7px;font:9px "Courier New",monospace;color:#cbd3dd}
+.extra-warning{color:#8b95a4;font-size:10px;margin-top:8px}
 #storyPrompt{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);width:min(620px,88%);z-index:190;background:rgba(10,13,18,.985);border:1px solid #3b4658;border-radius:14px;padding:13px 14px;box-shadow:0 22px 70px rgba(0,0,0,.65);display:none}
 #storyPrompt.show{display:block}
 #storyPromptSpeaker{font-family:"Courier New",Courier,monospace;font-size:11px;color:#8fb2ff;margin-bottom:6px}
@@ -721,6 +747,9 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
   }
   #fieldSpeaker{font-size:10px}
   #fieldText{font-size:12.5px;line-height:1.4}
+  #fieldThought{width:92%;bottom:calc(var(--mobile-taskbar) + 64px + env(safe-area-inset-bottom));font-size:10.5px}
+  .character-cards{grid-template-columns:1fr}
+  .character-card{min-height:112px;padding:14px}
   #storyPrompt{
     left:6px;right:6px;bottom:calc(var(--mobile-taskbar) + 70px + env(safe-area-inset-bottom));
     transform:none;width:auto;max-height:42dvh;overflow-y:auto;padding:11px;
@@ -811,10 +840,23 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
 <body>
 
 <div id="intro">
-  <div id="dialogue">
+  <div id="characterSelect">
+    <div id="selectTime" class="select-sub">tuesday, august 18, 2026</div>
+    <h1>lost phone</h1>
+    <div class="select-sub">choose whose side of tonight you remember</div>
+    <div class="character-cards">
+      <button class="character-card" onclick="selectCharacter('jc')"><b>jc</b><span>aight, terminal's like five minutes from here na.
+this rain is getting stupid though.</span></button>
+      <button class="character-card" onclick="selectCharacter('may')"><b>may</b><span>hanggang terminal lang.
+this rain is getting stupid though.</span></button>
+    </div>
+    <div id="characterContinue" class="select-continue"></div>
+  </div>
+  <div id="dialogue" style="display:none">
     <div id="introTime"></div>
     <div id="speaker">jc</div>
     <div id="dialogueText"></div>
+    <div id="dialogueThought"></div>
     <div id="dialogueChoices"></div>
   </div>
 </div>
@@ -933,6 +975,7 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
           <button class="start-item" onclick="openWindow('steam')">🎮<br>steam</button>
           <button class="start-item" onclick="openWindow('memes')">😂<br>memes</button>
           <button class="start-item" onclick="openWindow('snips')">✂️<br>screenshots</button>
+          <button class="start-item" onclick="openWindow('yourphone')">📱<br>your phone</button>
         </div>
         <div style="padding:0 12px 10px">
           <button class="start-item" style="width:100%" onclick="openSavePanel()">💾 save / load progress</button>
@@ -946,7 +989,7 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
         </div>
       </div>
 
-      <div id="journal"><h4>jc's notes</h4><div id="journalLines"></div></div>
+      <div id="journal"><h4>our notes</h4><div id="journalLines"></div></div>
       <div id="toast"><b id="toastTitle"></b><span id="toastText"></span></div>
 
       <div class="window" id="win-files">
@@ -1178,6 +1221,11 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
         <div class="window-body content"><div id="clockBody"></div></div>
       </div>
 
+      <div class="window" id="win-yourphone">
+        <div class="window-bar"><div class="window-title">📱 your phone</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('yourphone')">_</button><button class="win-btn close" onclick="closeWindow('yourphone')">×</button></div></div>
+        <div class="window-body content"><div id="yourPhoneBody"></div></div>
+      </div>
+
       <div class="window" id="win-terminal">
         <div class="window-bar"><div class="window-title">🚏 terminal status</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('terminal')">_</button><button class="win-btn close" onclick="closeWindow('terminal')">×</button></div></div>
         <div class="window-body content"><div id="terminalBody"></div></div>
@@ -1191,6 +1239,7 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
     </div>
 
     <div id="fieldTalk"><div id="fieldSpeaker"></div><div id="fieldText"></div></div>
+    <div id="fieldThought"></div>
     <div id="storyPrompt"><div id="storyPromptSpeaker"></div><div id="storyPromptText"></div><div id="storyPromptChoices"></div></div>
     <div id="endingOverlay"><div id="endingCard"><div id="endingKicker"></div><h2 id="endingTitle"></h2><div id="endingBody"></div><div id="endingActions"></div></div></div>
 
@@ -1204,6 +1253,7 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
         <button class="task-btn" onclick="saveGame(true)" title="save progress">💾</button>
         <button class="task-btn" onclick="openSavePanel()" title="save / load">☷💾</button>
         <button class="task-btn" onclick="openWindow('news')">📰</button>
+        <button class="task-btn" onclick="openWindow('yourphone')" title="your phone">📱</button>
         <span class="muted" style="font-size:11px">niko laptop</span>
       </div>
       <div class="task-right">
@@ -1228,16 +1278,70 @@ syncMobileViewport();
 
 let z=30, currentChat=null, exploreCount=0, creepStage=0, toastTimer=null, showHiddenFiles=false;
 let storyMinutes=0, storyStage=0, hotspotOn=false, batteryPercent=61, storyPromptOpen=false;
+let playerCharacter=null;
+const completedPerspective={jc:false,may:false};
+const extrasSeen=new Set();
+const extraClicks={questionMarks:0};
+const META_KEY="lost_phone_meta_v23";
+const EXTRA_FILE_KEYS=new Set(["meta_mystery_game","wrong_guess","devcredits","r_numbers"]);
 const story={act:1,ending:null,endingReady:false};
 const storyFlags={
   liveSynced:false,vinceLive:false,toldGuard:false,vendorAsked:false,heardPhoneClue:false,stayLonger:false,
   foundIdentity:false,heardMamaVoicemail:false,foundLia:false,cheatingEstablished:false,
   beaBikeUnlocked:false,sawBeaBike:false,sawMiso:false,humanizedNiko:false,mentalEstablished:false,
   foulPlayPossible:false,timelineUnlocked:false,finalWindowComplete:false,contactedFamily:false,
-  securityEscalated:false,quietTurn:false
+  securityEscalated:false,quietTurn:false,mayAteMemory:false,tahoBought:false
 };
 const evidence=new Set();
 const seen=new Set(), journal=[];
+
+function displaySpeaker(name){
+  if((name==="jc"||name==="may")&&playerCharacter)return name===playerCharacter?"you":name;
+  return name;
+}
+function otherLead(){return playerCharacter==="may"?"jc":"may"}
+function loadMeta(){
+  try{const m=JSON.parse(localStorage.getItem(META_KEY)||"{}");Object.assign(completedPerspective,m.completedPerspective||{});}catch(e){}
+}
+function saveMeta(){
+  try{localStorage.setItem(META_KEY,JSON.stringify({completedPerspective:{...completedPerspective}}));}catch(e){}
+}
+function markExtra(id){if(id)extrasSeen.add(id);if(typeof saveGame==="function")saveGame(false)}
+function showThought(text,duration=4200){
+  const el=document.getElementById("fieldThought");if(!el||!text)return;el.textContent=text;el.classList.add("show");clearTimeout(showThought._t);showThought._t=setTimeout(()=>el.classList.remove("show"),duration);
+}
+const POV_THOUGHTS={
+  mama_voicemail:{jc:"for some reason the rice part makes the laptop feel more stolen than everything you've opened so far.",may:"your mom leaves almost the same kind of voicemail."},
+  bea_bike:{jc:"you were looking for evidence. you feel stupid for expecting any.",may:"you don't want to click the next file yet."},
+  blue_freeze:{jc:"same color. wrong build. helmet. food bag. don't let one detail turn into a person.",may:"for half a second the shirt is enough. bar. side road. waiting shed. your brain finishes the rest before you see his face."},
+  late_silence:{jc:"normally you'd say something here.",may:"you notice because normally he doesn't let silence survive this long."},
+  taho:{jc:"she says yeah like this isn't the first normal thing either of you has wanted in a while.",may:"ate would've bought two."},
+  food_coda:{jc:"you don't ask whether ‘next time’ was serious.",may:"you already know where."}
+};
+function showPOVThought(key,duration=4200){const t=POV_THOUGHTS[key]?.[playerCharacter];if(t)showThought(t,duration)}
+function introThoughtFor(text){
+  if(playerCharacter==="may"&&text.includes("comment on every puddle"))return "you don't say the rest of it — if he stops filling the silence, you're not sure what's supposed to fill it instead.";
+  if(playerCharacter==="jc"&&text.includes("last one was unusually deep"))return "you had like ten normal things you were gonna talk about before seeing her. apparently puddle depth made the list instead.";
+  if(playerCharacter==="may"&&text.includes("just find the owner first"))return "you say ‘that's it’ mostly because somebody has to.";
+  if(playerCharacter==="jc"&&text.includes("just find the owner first"))return "you already know you're going to open more than the owner's email.";
+  return "";
+}
+function showCharacterSelect(){
+  loadMeta();
+  document.getElementById("characterSelect").style.display="block";
+  document.getElementById("dialogue").style.display="none";
+  const c=document.getElementById("characterContinue");c.innerHTML="";
+  if(typeof SAVE_KEY!=="undefined"&&localStorage.getItem(SAVE_KEY)){
+    const b=document.createElement("button");b.className="soft";b.textContent="continue saved night";b.onclick=()=>continueSavedGame();c.appendChild(b);
+  }
+}
+function selectCharacter(ch){
+  playerCharacter=ch;
+  document.getElementById("characterSelect").style.display="none";
+  document.getElementById("dialogue").style.display="flex";
+  if(ch==="jc")showDialogue(1);else showDialogue(0);
+}
+function restartForPerspective(){localStorage.removeItem(SAVE_KEY);location.reload()}
 
 const intro=[
  {speaker:"jc",text:`aight, terminal's like five minutes from here na.
@@ -1407,8 +1511,9 @@ updateIntroClock();
 
 function showDialogue(i){
   const d=intro[i];
-  speaker.textContent=d.speaker;
+  speaker.textContent=displaySpeaker(d.speaker);
   dialogueText.textContent=d.text;
+  const th=document.getElementById("dialogueThought");if(th)th.textContent=introThoughtFor(d.text);
   dialogueChoices.innerHTML="";
   d.choices.forEach(([label,target])=>{
     const b=document.createElement("button");
@@ -1416,18 +1521,12 @@ function showDialogue(i){
     b.onclick=()=>target===99?startDesktop():showDialogue(target);
     dialogueChoices.appendChild(b);
   });
-
-  if(i===0 && typeof SAVE_KEY!=="undefined" && localStorage.getItem(SAVE_KEY)){
-    const c=document.createElement("button");
-    c.textContent="continue saved game";
-    c.onclick=()=>continueSavedGame();
-    dialogueChoices.appendChild(c);
-  }
 }
 function startDesktop(){
+  if(!playerCharacter)playerCharacter="jc";
   introEl.style.display="none";
   laptopWrap.style.display="flex";
-  renderAll();updateConnectionUI();updateTerminalStatus();
+  renderAll();renderYourPhone();updateConnectionUI();updateTerminalStatus();
   addJournal("12:23 am • heavy rain and flooding stalled the terminal. found niko's warm bag half under a bench near the terminal-side road. laptop was already unlocked.");
   addJournal("jc and may are stranded in the covered terminal area until the flooding goes down or rides start moving again.");
   setTimeout(()=>fieldTalk("may","yeah... we're not going anywhere rn. might as well figure out whose laptop this is."),700);
@@ -1498,7 +1597,7 @@ function showStoryPrompt(speakerName,text,choices){
   const sp=document.getElementById("storyPromptSpeaker");
   const tx=document.getElementById("storyPromptText");
   const ch=document.getElementById("storyPromptChoices");
-  sp.textContent=speakerName;
+  sp.textContent=displaySpeaker(speakerName);
   tx.textContent=text;
   ch.innerHTML="";
   choices.forEach(([label,fn])=>{
@@ -1515,8 +1614,9 @@ function toggleStart(){
 function openWindow(name){
   startMenu.style.display="none";
   const w=document.getElementById("win-"+name);
+  if(!w)return;
   w.classList.add("active");w.style.zIndex=++z;
-  markSeen("app_"+name);
+  if(name==="yourphone")markExtra("your_phone_open");else markSeen("app_"+name);
   if(name==="browser") browserHome();
   if(name==="files") renderFolder("recent");
   if(name==="messenger"){renderChats(document.getElementById('msgSearch')?.value||''); if(!currentChat){const first=Object.keys(chats).find(k=>chats[k].kind===chatMode&&isChatUnlocked(k));if(first)setTimeout(()=>openChat(first),0);}}
@@ -1526,9 +1626,10 @@ function openWindow(name){
   if(name==="weathercache") renderWeatherCache();
   if(name==="clockapp") renderClockApp();
   if(name==="calculator") renderCalculator();
+  if(name==="yourphone") renderYourPhone();
   if(name==="terminal") renderTerminalStatus();
   if(name==="timeline") {
-    if(!storyFlags.timelineUnlocked){timelineBody.innerHTML=`<div class="detail"><b>nothing built yet</b><p>jc hasn't started a formal timeline. the final-night timestamps need more context first.</p></div>`;}
+    if(!storyFlags.timelineUnlocked){timelineBody.innerHTML=`<div class="detail"><b>nothing built yet</b><p>no formal timeline has been started yet. the final-night timestamps need more context first.</p></div>`;}
     else renderTimeline();
   }
 }
@@ -1644,7 +1745,7 @@ function setAct(n){
   if(n===3){storyFlags.beaBikeUnlocked=true;addJournal(storyTimeLabel()+" • bea's old chat points to a bike video in niko's videos folder.");fieldTalk("may","wait. bea mentioned some old bike video. can we look at one thing that isn't relationship warfare for a second?",4700);}
   if(n===4){addJournal(storyTimeLabel()+" • the investigation shifts from niko's relationships to notes about sleep, perception, therapy and the odd folder.");updateHint("what niko experienced and what objectively happened are not always the same thing.");}
   if(n===5){addJournal(storyTimeLabel()+" • outside witnesses begin confirming parts of niko's last night. this is no longer explainable by his private notes alone.");updateHint("look for independent witnesses: rj, vince, cam, photos, route data.");}
-  if(n===6){storyFlags.timelineUnlocked=true;const ti=document.getElementById("timelineIcon");if(ti)ti.style.display="";addJournal(storyTimeLabel()+" • jc starts our_timeline.txt and leaves every unfound interval as ???.");fieldTalk("jc","okay. no more guessing. i'm making a timeline with only shit we can actually anchor.",4400);updateHint("fill the timeline with evidence. some gaps are supposed to stay gaps.");}
+  if(n===6){storyFlags.timelineUnlocked=true;const ti=document.getElementById("timelineIcon");if(ti)ti.style.display="";addJournal(storyTimeLabel()+" • our_timeline.txt is started with every unfound interval left as ???.");fieldTalk("jc","okay. no more guessing. i'm making a timeline with only shit we can actually anchor.",4400);updateHint("fill the timeline with evidence. some gaps are supposed to stay gaps.");}
   renderFileSidebar();renderChats();renderContacts();renderPhotos();renderVideos();renderRecorder();renderMail();renderCalendar();renderDiscord();renderSticky();renderRecycle();renderSettings();renderMusic();renderSnips();renderClockApp();refreshDesktopShortcuts();updateTerminalStatus();renderTimeline();
 }
 function evaluateActProgress(){
@@ -1697,6 +1798,7 @@ function isFileUnlocked(folder,key){
   if(finalCache.includes(key)&&story.act<5)return false;
   if(folder==="odd"&&story.act<4)return false;
   if(folder==="backup"&&story.act<2)return false;
+  if(key==="devcredits"&&story.act<6)return false;
   return true;
 }
 function offerEndingChoice(){
@@ -1716,10 +1818,13 @@ function endingScreen(kicker,title,html,buttons){
 }
 function startEnding(kind){story.ending=kind;saveGame(false);if(kind==="unresolved")endingUnresolved(0);if(kind==="closure")endingClosure(0);if(kind==="foulplay")endingFoulPlay(0)}
 function endingCoda(){
-  endingScreen("that night, before they left","",`<p>the rain is lighter. a jeep idles near the curb.</p><p class="quiet">may: next time, actual food somewhere normal.</p><p class="quiet">jc: daylight?</p><p class="quiet">may: obviously.</p><p class="quiet"><b>may: and i'm picking the place.</b></p>`,[["credits",()=>endingCredits()]]);
+  const thought=POV_THOUGHTS.food_coda?.[playerCharacter]||"";
+  endingScreen("that night, before they left","",`<p>the rain is lighter. a jeep idles near the curb.</p><p class="quiet">may: next time, actual food somewhere normal.</p><p class="quiet">jc: daylight?</p><p class="quiet">may: obviously.</p><p class="quiet"><b>may: and i'm picking the place.</b></p>${thought?`<p class="quiet"><i>${thought}</i></p>`:""}` ,[["credits",()=>endingCredits()]]);
 }
 function endingCredits(){
-  endingScreen("lost phone","thanks for playing",`<p class="quiet">some blanks stay blank.</p>`,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+  const otherDone=Boolean(completedPerspective[otherLead()]);
+  completedPerspective[playerCharacter||"jc"]=true;saveMeta();saveGame(false);
+  endingScreen("lost phone","thanks for playing",`<p class="quiet">some blanks stay blank.</p>${otherDone?`<p class="quiet">some just look different from the other side.</p>`:""}` ,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")],["new game",()=>restartForPerspective()]]);
 }
 function endingUnresolved(step){
   if(step===0){endingScreen("local draft • 12:?? am","draft_message.txt",`<div class="draft">ma pauwi na ko sorry medyo</div><p class="quiet">no recipient response. no punctuation. the file ends there.</p>`,[["close the file",()=>endingUnresolved(1)]]);return}
@@ -2137,8 +2242,10 @@ const randomTalk=[
 
 function fieldTalk(speaker,text,duration=3300){
   clearTimeout(talkTimer);
-  fieldSpeaker.textContent=speaker;
+  fieldSpeaker.textContent=displaySpeaker(speaker);
   fieldText.textContent=text;
+  fieldTalkEl.classList.toggle("self",speaker===playerCharacter);
+  fieldTalkEl.classList.toggle("other",speaker!==playerCharacter);
   fieldTalkEl.classList.add("show");
   talkTimer=setTimeout(()=>fieldTalkEl.classList.remove("show"),duration);
 }
@@ -2212,7 +2319,7 @@ function progressStory(){
   }else if(storyStage===1 && storyFlags.heardMamaVoicemail){
     storyStage=2;advanceStory(8);showStoryPrompt("may","cached messages only tell us so much. if we actually need to contact somebody later, use your hotspot?",[["connect jc's hotspot",()=>{connectHotspot();fieldTalk("may","okay. normal sync only. nothing spooky. just messages that were waiting.");}],["keep it offline for now",()=>fieldTalk("jc","cached stuff first. we can connect later.")]]);
   }else if(storyStage===2 && story.act>=2){
-    storyStage=3;advanceStory(9);addJournal(storyTimeLabel()+" • may's mom called to ask about the flood and whether rides were moving. she did not ask who may was with.");
+    storyStage=3;advanceStory(9);storyFlags.mayAteMemory=true;addJournal(storyTimeLabel()+" • may's mom called to ask about the flood and whether rides were moving. she did not ask who may was with.");
     fieldTalk("may","my mom literally just asked 'baha pa ba' and told me to stay dry. see? she does not care who i'm meeting 😭",4700);
     setTimeout(()=>fieldTalk("may","random, this place smells exactly like the terminal my ate used to pick me up from after school. she'd buy me taho when we got stuck waiting.",5200),4900);
     setTimeout(()=>fieldTalk("jc","wait, you have an ate? how have i never heard this story 😭",4300),10200);
@@ -2220,7 +2327,7 @@ function progressStory(){
   }else if(storyStage===3 && story.act>=3){
     storyStage=4;advanceStory(12);showStoryPrompt("may","that security guard keeps looking over here. should we log where we found the bag?",[["tell the guard",()=>{storyFlags.toldGuard=true;addJournal(storyTimeLabel()+" • terminal security logged the bag. the side bench is outside the useful terminal camera angle.");fieldTalk("security","that side bench isn't in our useful angle. road camera mostly faces traffic. keep it with you while we log it.",5200);}],["not yet",()=>fieldTalk("may","fine. but if this gets more serious we're telling him.")]]);
   }else if(storyStage===4 && story.act>=4){
-    storyStage=5;advanceStory(13);showStoryPrompt("jc","coffee stall guy's been here since before us. ask if he saw anyone by the bench?",[["may asks",()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor vaguely remembers someone near the side bench around midnight, but rain blocked his view.");fieldTalk("may","he said maybe someone was there. dark top. that's it. rain ruined everything else.",5000);}],["jc asks",()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor remembers almost nothing useful through the rain.");fieldTalk("may","wow you talked to a stranger without narrating a puddle first 😭",4200);}]]);
+    storyStage=5;advanceStory(13);const mayAskLabel=playerCharacter==="may"?"ask him yourself":"let may ask";const jcAskLabel=playerCharacter==="jc"?"ask him yourself":"let jc ask";showStoryPrompt("jc","coffee stall guy's been here since before us. ask if he saw anyone by the bench?",[[mayAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor vaguely remembers someone near the side bench around midnight, but rain blocked his view.");fieldTalk("may","he said maybe someone was there. dark top. that's it. rain ruined everything else.",5000);maybeTahoCallback();}],[jcAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor remembers almost nothing useful through the rain.");fieldTalk("may","wow you talked to a stranger without narrating a puddle first 😭",4200);maybeTahoCallback();}]]);
   }else if(storyStage===5 && story.act>=5){
     storyStage=6;advanceStory(14);setBattery(49);addJournal(storyTimeLabel()+" • terminal lights blinked and the generator kicked in. laptop battery: 49%.");toast("terminal power","brief outage • generator active");fieldTalk("jc","terminal power. not the laptop. nothing supernatural happened. battery's at 49 though.",4300);
   }else if(storyStage===6 && foulScore()>=2){
@@ -2228,17 +2335,25 @@ function progressStory(){
   }else if(storyStage===7 && story.act>=6){
     storyStage=8;advanceStory(14);addJournal(storyTimeLabel()+" • terminal is noticeably emptier. may freezes when she sees a stranger in blue, then jc makes her look at what is actually in front of them: delivery helmet, food bag, different person.");
     fieldTalk("may","wait. blue shirt. across the terminal.",4300);
+    setTimeout(()=>showPOVThought("blue_freeze",4800),650);
     setTimeout(()=>fieldTalk("jc","look again. same color doesn't make him the same guy. helmet. food bag. he's waiting for a pickup.",5200),4400);
     setTimeout(()=>fieldTalk("may","...right. okay. i froze for a second. that's annoying.",4700),9700);
     setTimeout(()=>fieldTalk("jc","yeah. no guessing. timeline only.",4000),14500);
   }else if(storyStage===8 && timelineKnownCount()>=8){
     storyStage=9;advanceStory(16);storyFlags.toldGuard=true;storyFlags.heardPhoneClue=true;markEvidence("world_phoneclue");addJournal(storyTimeLabel()+" • security remembers a soaked man asking around 12:18 if anyone had turned in a PHONE. dark cap/jacket. no name.");fieldTalk("security","around 12:18 a soaked guy asked if anyone turned in a phone. dark cap, dark jacket. could be unrelated. i didn't get a name.",6200);
   }else if(storyStage===9 && finalScore()>=6){
-    storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • may's route begins limited service. the coffee stall is closed and most benches are empty.");showStoryPrompt("may",`my route's moving again. we have to leave soon.
+    storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • may's route begins limited service. the coffee stall is closed and most benches are empty.");
+    fieldTalk("may","you're quiet.",2500);
+    setTimeout(()=>fieldTalk("jc","yeah.",2200),2600);
+    setTimeout(()=>showPOVThought("late_silence",3600),3100);
+    setTimeout(()=>fieldTalk("may","...",1600),5000);
+    setTimeout(()=>fieldTalk("jc","...",1600),6700);
+    setTimeout(()=>fieldTalk("may","it's okay.",2500),8400);
+    setTimeout(()=>showStoryPrompt("may",`my route's moving again. we have to leave soon.
 
 also next time we hang out, i want actual food somewhere normal. daylight. zero abandoned laptops. and i'm picking the place. that's non-negotiable.
 
-one last thing: do we hand this over now, or keep enough of the timeline to explain why this feels wrong?`,[["open our timeline",()=>openWindow("timeline")],["decide what to do",()=>offerEndingChoice()],["five more minutes",()=>fieldTalk("jc","five. then we go. and yeah... normal food next time. deal.",4000)]]);
+one last thing: do we hand this over now, or keep enough of the timeline to explain why this feels wrong?`,[["open our timeline",()=>openWindow("timeline")],["decide what to do",()=>offerEndingChoice()],["five more minutes",()=>fieldTalk("jc","five. then we go. and yeah... normal food next time. deal.",4000)]]),11000);
   }
   updateTerminalStatus();renderTimeline();
 }
@@ -2354,6 +2469,9 @@ random:[
  ["📄","watch_sizes.txt","aug 11","r_watch"],
  ["📄","packing_list.txt","aug 10","r_pack"],
  ["📄","random_numbers.txt","aug 9","r_numbers"],
+ ["🌐","mystery_game_notes.html","aug 9","meta_mystery_game"],
+ ["📄","???.txt","unknown","wrong_guess"],
+ ["📄","readme_old.tmp","corrupted?","devcredits"],
  ["🖼️","hair_fail.jpg","aug 8","r_hairfail"],
  ["🖼️","ram_prices.png","aug 7","r_ram"],
  ["🖼️","class_meme.png","aug 6","r_classmeme"],
@@ -2448,6 +2566,7 @@ function renderFolder(name,el){
 }
 
 function openFile(k){
+  if(EXTRA_FILE_KEYS.has(k)){openExtraFile(k);return}
   markSeen("file_"+k);
   const map={
     sysana:`<div class="detail"><h4>sysana_notes.docx</h4><p>system analysis notes. actors, use cases, requirements, interview questions.</p></div>`,
@@ -2740,7 +2859,7 @@ function openFile(k){
     r_keyboard:`<div class="detail"><h4>keyboard_keys.txt</h4><p>w key sticky</p><p>spacebar loud</p><p>clean under keycaps</p></div>`,
     r_watch:`<div class="detail"><h4>watch_sizes.txt</h4><p>40mm looks normal</p><p>42 maybe too big</p><p>black strap > brown</p></div>`,
     r_pack:`<div class="detail"><h4>packing_list.txt</h4><p>shirt</p><p>charger</p><p>toothbrush</p><p>powerbank</p><p>earphones</p><p>deodorant</p></div>`,
-    r_numbers:`<div class="detail"><h4>random_numbers.txt</h4><p>42</p><p>89</p><p>120</p><p>500</p><p>"what was this for"</p></div>`,
+    r_numbers:`<div class="detail"><h4>random_numbers.txt</h4><p>23</p><p>30</p><p>34</p><p>0</p><p class="muted">these are jersey numbers. stop.</p></div>`,
     r_hairfail:`<div class="detail"><h4>hair_fail.jpg</h4><p>old selfie after a very short haircut.</p><p>filename originally: never_again.jpg</p></div>`,
     r_ram:`<div class="detail"><h4>ram_prices.png</h4><p>screenshots comparing 16gb ram kits.</p></div>`,
     r_classmeme:`<div class="detail"><h4>class_meme.png</h4><p>meme about groupmates disappearing before submission.</p></div>`,
@@ -3438,6 +3557,9 @@ function addReply(label,fn){
 function pushMsg(who,text){
   const d=document.createElement("div");d.className="bubble "+(who==="me"?"me":"");d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
 }
+function pushPresentMsg(text){
+  const d=document.createElement("div");d.className="bubble me";d.innerHTML=`<span>${text}</span><div style="font-size:9px;opacity:.68;margin-top:4px">you • sent from niko's laptop</div>`;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
+}
 function showTypingPause(label="typing…",duration=1600){
   const d=document.createElement("div");d.className="bubble sys";d.textContent=label;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
   setTimeout(()=>d.remove(),duration);
@@ -3445,7 +3567,7 @@ function showTypingPause(label="typing…",duration=1600){
 function replyLia(type){
   replyBar.innerHTML="";
   if(type===3){addJournal("lia seems worried about niko. jc and may chose not to reply yet.");return}
-  pushMsg("me",type===1?"hi, we found niko's laptop":"hi, do you know niko?");
+  pushPresentMsg(type===1?"hi, we found niko's laptop":"hi, do you know niko?");
   setTimeout(()=>pushMsg("them",type===1?"what?? where did you find it?":"yeah. why? sino to?"),500);
   setTimeout(()=>pushMsg("them","he told me he was on his way home before midnight"),950);
   setTimeout(()=>pushMsg("them","is he with you?"),1350);
@@ -3462,7 +3584,7 @@ function replyLia(type){
 function replyMama(){
   storyFlags.contactedFamily=true;
   replyBar.innerHTML="";
-  pushMsg("me","hi po, we found this laptop. does it belong to niko?");
+  pushPresentMsg("hi po, we found this laptop. does it belong to niko?");
   setTimeout(()=>pushMsg("them","yes. sino po kayo?"),500);
   setTimeout(()=>pushMsg("them","where did you find it?"),900);
   setTimeout(()=>pushMsg("them","niko isn't home yet"),1350);
@@ -3471,13 +3593,13 @@ function replyMama(){
 function replyVince(type){
   replyBar.innerHTML="";
   if(type===1){
-    pushMsg("me","we found niko's laptop near the terminal. black bag by the side bench.");
+    pushPresentMsg("we found niko's laptop near the terminal. black bag by the side bench.");
     setTimeout(()=>pushMsg("them","WHAT"),400);
     setTimeout(()=>pushMsg("them","he had the bag when he walked out"),800);
     setTimeout(()=>pushMsg("them","or at least i thought he did. rain was bad"),1200);
     setTimeout(()=>{pushMsg("them","which bench exactly?");addJournal("vince thinks niko still had the black bag when he left the bar, but admits visibility was bad in the rain.");},1600);
   }else{
-    pushMsg("me","where did niko go after the bar?");
+    pushPresentMsg("where did niko go after the bar?");
     setTimeout(()=>pushMsg("them","i don't know. terminal side i think"),450);
     setTimeout(()=>pushMsg("them","cam saw him leave. blue shirt guy asked about him after"),900);
     setTimeout(()=>pushMsg("them","that's literally all i know"),1350);
@@ -4030,7 +4152,7 @@ const recordingsEl=document.getElementById("recordings");
 function openRecording(i){
   const arr=getRecordings(),r=arr[i];if(!r)return;
   markSeen("rec_"+r[0]);toast("recorder",r[2]);
-  if(r[0]==="mama_voicemail"&&!storyFlags.heardMamaVoicemail){storyFlags.heardMamaVoicemail=true;addJournal("recent voicemail from niko's mother is completely ordinary: rice, bea's charger, don't be too late.");fieldTalk("may","that's just... a normal mom voicemail. okay. now we can check who else expected him somewhere.",4300);renderChats();renderContacts();evaluateActProgress();progressStory();}
+  if(r[0]==="mama_voicemail"&&!storyFlags.heardMamaVoicemail){storyFlags.heardMamaVoicemail=true;addJournal("recent voicemail from niko's mother is completely ordinary: rice, bea's charger, don't be too late.");fieldTalk("may","that's just... a normal mom voicemail. okay. now we can check who else expected him somewhere.",4300);setTimeout(()=>showPOVThought("mama_voicemail",4200),450);renderChats();renderContacts();evaluateActProgress();progressStory();}
   if(r[0]==="export_0815")addJournal("another voice recording points to niko lying to lia.");
   if(r[0]==="rec_0817_2356")addJournal("11:56 recording contains an unclear distant voice; it might be saying niko's name, but the audio is too poor to know.");
   if(r[0]==="rec_0818_0007")addJournal("12:07 recording captures heavy rain, nearby footsteps, and two indistinct voices near the end of the missing window.");
@@ -4501,32 +4623,11 @@ function renderSteam(){
 
 function renderMemes(){
   const memes=[
-   "nba brick reaction.png",
-   "cat_staring.jpg",
-   "me_after_3_hours_sleep.png",
-   "group_project_final_final.png",
-   "wifi_died_again.jpg",
-   "2k_sold_me.png",
-   "payday_then_broke.jpg",
-   "alarm_clock_enemy.png",
-   "haircut_expectation_reality.jpg",
-   "gym_after_one_week.png",
-   "mom_calling_when_out.png",
-   "random_dog.jpg",
-   "ref_called_timeout.png",
-   "when_the_barber_says_trust_me.jpg",
-   "one_more_game_3am.png",
-   "salary_gone.png",
-   "mom_heard_the_door.png",
-   "wifi_one_bar.jpg",
-   "protein_is_expensive.png",
-   "nba_fan_delusion.png",
-   "groupmate_seen_2h_ago.png",
-   "laundry_chair.jpg"
+   "nba brick reaction.png","cat_staring.jpg","me_after_3_hours_sleep.png","group_project_final_final.png","wifi_died_again.jpg","2k_sold_me.png","payday_then_broke.jpg","alarm_clock_enemy.png","haircut_expectation_reality.jpg","gym_after_one_week.png","mom_calling_when_out.png","random_dog.jpg","ref_called_timeout.png","when_the_barber_says_trust_me.jpg","one_more_game_3am.png","salary_gone.png","mom_heard_the_door.png","wifi_one_bar.jpg","protein_is_expensive.png","nba_fan_delusion.png","groupmate_seen_2h_ago.png","laundry_chair.jpg"
   ];
   memesBody.innerHTML="<h3 style='margin-top:0'>memes</h3><div class='file-grid'>"+
     memes.map((m,i)=>`<div class="file-card" onclick="markSeen('meme_${i}');toast('memes','${m}')"><div class="file-ico">😂</div><div class="fn">${m}</div><div class="fm">saved image</div></div>`).join("")+
-    "</div>";
+    `<div class="file-card" onclick="openMetaMeme()"><div class="file-ico">🖥️</div><div class="fn">found_weird_desktop_game.png</div><div class="fm">saved image</div></div></div><div id="memeDetail"></div>`;
 }
 
 function renderSnips(){
@@ -4576,13 +4677,80 @@ function renderVideos(){
 }
 function openVideo(i){
   const v=getVideos()[i];if(!v)return;markSeen("video_"+v[3]);
-  if(v[3]==="bea_bike"){storyFlags.sawBeaBike=true;toast("videos","bea finally rides without niko holding the seat. niko yells 'AYYYY LET'S GO'.");addJournal("bea bike video has no clue in it at all. it only shows niko being her older brother.");fieldTalk("may","don't make a joke. just let this one be normal for a second.",3900);evaluateActProgress();return}
+  if(v[3]==="bea_bike"){storyFlags.sawBeaBike=true;toast("videos","bea finally rides without niko holding the seat. niko yells 'AYYYY LET'S GO'.");addJournal("bea bike video has no clue in it at all. it only shows niko being her older brother.");fieldTalk("may","don't make a joke. just let this one be normal for a second.",3900);setTimeout(()=>showPOVThought("bea_bike",4200),450);evaluateActProgress();return}
   const desc={screen:"screen recording shows niko switching between two messenger chats before minimizing the window.",cafe:"cafe table. two drinks. someone's hand enters frame.",street:"night street. nothing obvious.",bar1:"bar table. a male voice says 'you staying?' niko laughs but answer is unclear.",blue:"a man in a blue shirt crosses behind the camera.",floor:"camera points at pavement, then fabric, then cuts."}[v[3]];toast("videos",desc);if(["bar1","blue","floor"].includes(v[3]))addJournal("late-night videos show the same bar area; one contains the blue-shirt man.");
 }
 
 function renderDownloadsApp(){
   const items=(folders.downloads||[]).filter(f=>isFileUnlocked("downloads",f[3]));
   downloadsBody.innerHTML=`<h3 style="margin-top:0">downloads</h3><div class="detail"><b>local downloads</b><p>normal junk mixed with files niko deliberately saved for offline use.</p></div>`+items.map(f=>`<div class="index-row" onclick="openWindow('files');renderFolder('downloads');setTimeout(()=>openFile('${f[3]}'),0)"><b>${f[1]}</b><small>${f[2]}</small></div>`).join("");
+}
+
+function maybeTahoCallback(){
+  if(!storyFlags.mayAteMemory||storyFlags.tahoBought)return;
+  storyFlags.tahoBought=true;
+  setTimeout(()=>fieldTalk("may","wait. he has taho. two left.",3400),5200);
+  setTimeout(()=>fieldTalk("jc","want one?",2600),8700);
+  setTimeout(()=>{fieldTalk("may","...yeah.",2600);showPOVThought("taho",3600)},11400);
+}
+
+function openExtraFile(k){
+  const box=document.getElementById("fileDetail");if(!box)return;
+  if(k==="meta_mystery_game"){
+    markExtra("meta_mystery_game");
+    box.innerHTML=`<div class="detail extra-note"><h4>mystery_game_notes.html</h4><p>how to make a mystery game:</p><p>1. leave the computer unlocked for an extremely convenient reason</p><p>2. add 400 text files</p><p>3. call at least three of them final_final_REAL.txt</p><p>4. use ??? whenever you don't know what to write</p><p>5. if the player gets confused, add rain</p><p class="muted">niko: this game would suck</p><p class="extra-warning">optional joke • not evidence</p></div>`;
+    return;
+  }
+  if(k==="wrong_guess"){
+    extraClicks.questionMarks=(extraClicks.questionMarks||0)+1;markExtra("wrong_guess");
+    const n=extraClicks.questionMarks;
+    const body=n===1?"???":n===2?"still ???":"you have learned nothing.";
+    box.innerHTML=`<div class="detail extra-note"><h4>???.txt</h4><p>${body}</p><button class="soft" onclick="openExtraFile('wrong_guess')">open again</button><p class="extra-warning">optional joke • this never fills a timeline blank</p></div>`;
+    return;
+  }
+  if(k==="devcredits"){
+    markExtra("devcredits");
+    box.innerHTML=`<div class="detail extra-note"><h4>readme_old.tmp</h4><p>you really opened everything huh</p><p>thanks for playing lost phone.</p><p>— dev</p><p class="extra-warning">optional dev note • not evidence</p></div>`;
+    return;
+  }
+  if(k==="r_numbers"){
+    markExtra("jersey_numbers");
+    box.innerHTML=`<div class="detail extra-note"><h4>random_numbers.txt</h4><p>23</p><p>30</p><p>34</p><p>0</p><p class="muted">these are jersey numbers. stop.</p><p class="extra-warning">optional joke • not evidence</p></div>`;
+  }
+}
+
+const phoneChat=[
+  ["may","terminal nalang?"],
+  ["jc","yeah i'll walk u there"],
+  ["may","u don't have to 😭"],
+  ["jc","already outside"],
+  ["may","?????"],
+  ["jc","just go"],
+  ["jc","what do u even wanna eat"],
+  ["may","idk"],
+  ["jc","useful"]
+];
+function renderYourPhone(){
+  const body=document.getElementById("yourPhoneBody");if(!body)return;
+  const who=playerCharacter||"jc";
+  const other=who==="jc"?"may":"jc";
+  const rows=phoneChat.map(([sp,t])=>`<div class="phone-bubble ${sp===who?"mine":""}">${t}</div>`).join("");
+  const notes=[];
+  if(who==="jc"){
+    notes.push(["class gc",storyStage>=7?"may pasok ba bukas or baha excuse na naman":"may pasok ba bukas"]);
+    if(storyStage>=5)notes.push(["mom","ingat pauwi. baha sa kabilang kanto."]);
+  }else{
+    notes.push(["ate",storyStage>=5?"baha ba dyan? may ride ka na?":"ingat. umuulan na naman."]);
+    if(storyStage>=3)notes.push(["mom","baha pa ba? update pag may masasakyan ka."]);
+  }
+  const phoneBattery=Math.max(18,(who==="jc"?84:76)-storyStage*4);
+  body.innerHTML=`<div class="phone-shell"><div class="phone-top"><b>${who}'s phone</b><span>${storyTimeLabel()} • ${phoneBattery}%</span></div><div class="detail"><b>${other}</b><p class="muted">before tonight</p></div><div class="phone-chat">${rows}</div><div class="detail"><b>notifications</b>${notes.map(n=>`<div class="phone-notif"><b>${n[0]}</b>${n[1]}</div>`).join("")}<p class="extra-warning">your phone is character texture only. it never counts as case evidence.</p></div></div>`;
+}
+
+function openMetaMeme(){
+  markExtra("meta_ui_meme");
+  const d=document.getElementById("memeDetail");if(!d)return;
+  d.innerHTML=`<div class="detail"><h4>found_weird_desktop_game.png</h4><div class="mini-desktop"><div class="mini-icons"><span>📁</span><span>💬</span><span>🚏</span><span>🖼️</span><span>🌐</span><span>✉️</span><span>🎙️</span><span>🗑️</span><span>🧮</span><span>😂</span></div><div class="mini-badge">12:59 am<br>heavy rain • ~33 waiting</div></div><p>POV u find someone's unlocked laptop and suddenly think you're a detective</p><p class="muted">comments:</p><p>just turn it in 😭</p><p>op opened the recycle bin before contacts</p><p>average information systems student</p><p class="extra-warning">optional joke • not evidence</p></div>`;
 }
 
 function renderGames(){
@@ -4686,7 +4854,7 @@ function calcPress(k){
 }
 
 function renderAll(){
-  updateClock();renderFileSidebar();renderFolder("recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
+  updateClock();renderFileSidebar();renderFolder("recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderYourPhone();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
 const SAVE_KEY="lost_phone_save_v20";
@@ -4694,7 +4862,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:5,
+    version:6,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -4706,7 +4874,8 @@ function createSaveData(){
     showHiddenFiles,
     talkIndex,
     hintIndex,
-    storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence]
+    storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence],
+    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks}
   };
 }
 
@@ -4760,6 +4929,10 @@ function applySaveData(data){
   storyStage=Number(data.storyStage||0);
   hotspotOn=Boolean(data.hotspotOn);
   batteryPercent=Number(data.batteryPercent||61);
+  playerCharacter=data.playerCharacter||playerCharacter||"jc";
+  loadMeta();Object.assign(completedPerspective,data.completedPerspective||{});
+  extrasSeen.clear();(data.extrasSeen||[]).forEach(x=>extrasSeen.add(x));
+  Object.assign(extraClicks,data.extraClicks||{});
   Object.assign(storyFlags,data.storyFlags||{});
   Object.assign(story,data.story||{});
   evidence.clear();(data.evidence||[]).forEach(x=>evidence.add(x));
@@ -4807,6 +4980,7 @@ function applySaveData(data){
   renderWeatherCache();
   renderClockApp();
   renderCalculator();
+  renderYourPhone();
   renderYoutube();
   renderSports();
   renderSteam();
@@ -4927,7 +5101,7 @@ function continueSavedGame(){
   }
 }
 
-showDialogue(0);
+showCharacterSelect();
 </script>
 </body>
 </html>
