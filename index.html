@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v31</title>
+<title>Lost Phone v33</title>
 <!-- v29: dedicated in-app detail viewer layers for Files/Photos/Recycle/Memes/Weather; fixes bottom-appended previews and folder selection state; preserves v28 universal scrolling and v27 true POV routes -->
 <style>
 :root{
@@ -1007,6 +1007,7 @@ this rain is getting stupid though.</span></button>
         <button class="desktop-icon" onclick="openWindow('settings')"><span class="ico">⚙️</span><span class="lbl">settings</span></button>
         <button class="desktop-icon" onclick="openWindow('videos')"><span class="ico">🎞️</span><span class="lbl">videos</span></button>
         <button class="desktop-icon" onclick="openWindow('calculator')"><span class="ico">🧮</span><span class="lbl">calculator</span></button>
+        <button class="desktop-icon" onclick="openWindow('autocad')"><span class="ico">📐</span><span class="lbl">autocad</span></button>
         <button class="desktop-icon" onclick="openWindow('downloadsapp')"><span class="ico">⬇️</span><span class="lbl">downloads</span></button>
         <button class="desktop-icon" onclick="openWindow('games')"><span class="ico">🎮</span><span class="lbl">games</span></button>
         <button class="desktop-icon" onclick="openWindow('discord')"><span class="ico">🟣</span><span class="lbl">discord</span></button>
@@ -1085,6 +1086,7 @@ this rain is getting stupid though.</span></button>
           <button class="start-item" onclick="openWindow('weathercache')">🌦️<br>weather</button>
           <button class="start-item" onclick="openWindow('clockapp')">🕒<br>clock</button>
           <button class="start-item" onclick="openWindow('calculator')">🧮<br>calculator</button>
+          <button class="start-item" onclick="openWindow('autocad')">📐<br>autocad</button>
           <button class="start-item" onclick="openWindow('discord')">🟣<br>discord</button>
           <button class="start-item" onclick="openWindow('sticky')">🟨<br>sticky</button>
           <button class="start-item" onclick="openWindow('settings')">⚙️<br>settings</button>
@@ -1256,6 +1258,11 @@ this rain is getting stupid though.</span></button>
       <div class="window" id="win-sports">
         <div class="window-bar"><div class="window-title">🏀 sports</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('sports')">_</button><button class="win-btn close" onclick="closeWindow('sports')">×</button></div></div>
         <div class="window-body content"><div id="sportsBody"></div></div>
+      </div>
+
+      <div class="window" id="win-autocad">
+        <div class="window-bar"><div class="window-title">📐 AutoCAD 2025</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('autocad')">_</button><button class="win-btn close" onclick="closeWindow('autocad')">×</button></div></div>
+        <div class="window-body content"><div id="autocadBody"></div></div>
       </div>
 
       <div class="window" id="win-steam">
@@ -2003,6 +2010,7 @@ function openWindow(name){
   if(name==="weathercache") renderWeatherCache();
   if(name==="clockapp") renderClockApp();
   if(name==="calculator") renderCalculator();
+  if(name==="autocad") renderAutoCAD();
   if(name==="yourphone") renderYourPhone();
   if(name==="terminal") renderTerminalStatus();
   if(name==="timeline") {
@@ -2136,7 +2144,7 @@ function evaluateActProgress(){
   updateTerminalStatus();renderTimeline();
 }
 function updateStoryFlags(k){
-  if(["file_resume","app_settings","chat_familygc"].includes(k)&&!storyFlags.foundIdentity){storyFlags.foundIdentity=true;markEvidence("identity");renderRecorder();renderChats();renderContacts();addJournal("owner identified: niko de la cruz, 21, information systems student.");setTimeout(()=>fieldTalk("may","okay. niko de la cruz. at least we have a name now. wait, recorder has a recent voicemail from 'mama'.",4700),260)}
+  if(["file_resume","app_settings","chat_familygc"].includes(k)&&!storyFlags.foundIdentity){storyFlags.foundIdentity=true;markEvidence("identity");renderRecorder();renderChats();renderContacts();addJournal("owner identified: niko de la cruz, 21, civil engineering student.");setTimeout(()=>fieldTalk("may","okay. niko de la cruz. at least we have a name now. wait, recorder has a recent voicemail from 'mama'.",4700),260)}
   if(k==="chat_lia")storyFlags.foundLia=true;
   if(k==="file_miso")storyFlags.sawMiso=true;
   if(k.startsWith("photo_")||k.startsWith("file_")||k.startsWith("chat_"))markEvidence(k);
@@ -2162,7 +2170,7 @@ function isContactUnlocked(id){
   return true;
 }
 function isFileUnlocked(folder,key){
-  const cheating=["private","backup","latenightreceipt","photo4430","archive","parking","placeslist","names","templates","birthdays","screensend","excuses2","giftlist","calllog","girlmatrix","copylog","sentgrid","chatbackup1","chatbackup2","voiceexport"];
+  const cheating=["private","backup","latenightreceipt","photo4430","archive","parking","placeslist","names","templates","birthdays","screensend","excuses2","giftlist","calllog","girlmatrix","copylog","sentgrid","chatbackup1","chatbackup2","voiceexport","thirstdump","storysaves","dmscreens","unfollows","pickuplines","incognitoexport","profilecheck","camerarolldump","dontopenlol"];
   const mental=["therapy_notes","reality_check","rough_week","door_checks","same_people","sleep_notes_aug","appointment_plan","niko_raw"];
   const finalRecent=["barreceipt","taxi","barvoice","unsent_0817","vince","voice3","letter"];
   const finalOdd=["odd_calls","odd_wristband","odd_route","odd_bagcheck","odd_photogaps","odd_4421","odd_glass","odd_benchwide","odd_audioguess"];
@@ -2573,7 +2581,7 @@ const legacyRandomTalk_UNUSED=[
   ["jc","if someone named enilec messages i'm closing this shit."],
   ["may","that's literally celine backwards 😭"],
   ["jc","WAIT IT IS??"],
-  ["may","information systems student btw."],
+  ["may","civil engineering student btw."],
   ["jc","leave my degree out of this."],
 
   ["may","my parents already know i'm stuck because of the flood."],
@@ -2668,7 +2676,7 @@ const legacyRandomTalk_UNUSED=[
   ["may","ang dami niyang school files tbh."],
   ["jc","yeah normal student clutter."],
   ["may","then biglang hidden relationship database 😭"],
-  ["jc","dual major in information systems and being awful."],
+  ["jc","dual major in civil engineering and being awful."],
 
   ["jc","why are u leaning closer again."],
   ["may","small text."],
@@ -2709,7 +2717,7 @@ const legacyRandomTalk_UNUSED=[
   ["jc","finally something healthy."],
   ["may","skibidi is not healthy."],
 
-  ["jc","his school project is about commuter queues."],
+  ["jc","his school project is literally a pedestrian footbridge design."],
   ["may","he had terminal research and still couldn't figure out his own life 😭"],
   ["jc","okay that's foul."],
 
@@ -2734,7 +2742,7 @@ const legacyRandomTalk_UNUSED=[
 
   ["may","why do i feel like the boring files are actually hiding the useful shit."],
   ["jc","because that's usually how it works."],
-  ["may","information systems moment."],
+  ["may","civil engineering moment."],
   ["jc","finally some respect."],
   ["may","don't get used to it."]
 
@@ -2787,7 +2795,7 @@ const legacyRandomTalk_UNUSED=[
   ["jc","if the road wasn't flooded we'd probably just return this and leave."],
   ["may","yeah instead we got trapped here and became unpaid detectives."],
 
-  ["jc","information systems fieldwork."],
+  ["jc","civil engineering fieldwork."],
   ["may","shut up 😭"],
 
   ["may","rain is so loud i can barely hear the announcements."],
@@ -2810,7 +2818,7 @@ const legacyRandomTalk_UNUSED=[
   ["may","unfortunately."],
 
   ["may","kinda funny we barely knew what to talk about earlier and now we've been arguing over timestamps for an hour."],
-  ["jc","shared trauma but make it information systems."],
+  ["jc","shared trauma but make it civil engineering."],
   ["may","don't call snooping shared trauma 😭"],
 
   ["jc","you were the one saying don't go full detective."],
@@ -2966,12 +2974,12 @@ one last thing: do we hand this over now, or keep enough of the timeline to expl
 
 const folders={
 recent:[
- ["📄","sysana_notes.docx","modified 3:12 pm","sysana"],
+ ["📄","structural_analysis_notes.docx","modified 3:12 pm","sysana"],
  ["🖼️","screenshot_0817.png","modified yesterday","screen1"],
  ["📊","expenses_aug.xlsx","modified yesterday","expenses"],
  ["🎧","voice_003.m4a","modified aug 16","voice3"],
  ["📄","late_receipt.pdf","modified aug 16","latenightreceipt"],
- ["📁","school","9 items","schoolfolder"],
+ ["📁","school","11 items","schoolfolder"],
  ["🧾","bar_receipt.jpg","aug 17","barreceipt"],
  ["📄","ride_0817.pdf","aug 17","taxi"],
  ["🎧","rec_0817_2348.m4a","aug 17","barvoice"],
@@ -2991,7 +2999,7 @@ desktop:[
  ["📦","archive_old.zip","aug 14","archive"],
  ["🖼️","parking_08.jpg","aug 9","parking"],
  ["📁","random","14 items","randomfolder"],
- ["📁","school","9 items","schoolfolder"],
+ ["📁","school","11 items","schoolfolder"],
  ["🧾","bar_receipt.jpg","aug 17","barreceipt"],
  ["📄","ride_0817.pdf","aug 17","taxi"],
  ["🎧","rec_0817_2348.m4a","aug 17","barvoice"]
@@ -3035,6 +3043,15 @@ downloads:[
  ["📄","coffee_receipt_0812.pdf","aug 12","coffee2"],
  ["📦","phone_backup.zip","aug 15","backup"],
  ["🎧","voice_export.m4a","aug 15","voiceexport"],
+ ["📦","thirsttrap_dump.zip","aug 14","thirstdump"],
+ ["📦","story_saves_0816.zip","aug 16","storysaves"],
+ ["📦","dm_screens_for_gc.zip","aug 15","dmscreens"],
+ ["📊","who_unfollowed_me.csv","aug 16","unfollows"],
+ ["📄","pickup_lines_from_reels.txt","aug 13","pickuplines"],
+ ["🌐","incognito_bookmarks_export.html","aug 16","incognitoexport"],
+ ["📄","profile_checklist.txt","aug 17","profilecheck"],
+ ["📦","camera_roll_dump_2.zip","aug 12","camerarolldump"],
+ ["📦","do_not_open_lol.zip","aug 11","dontopenlol"],
  ["🖼️","meme_44.jpg","aug 17","meme"],
  ["🎵","night_out.m3u","aug 17","playlist"],
  ["💾","save_backup.dat","aug 12","gamesave"],
@@ -3050,11 +3067,17 @@ pictures:[
  ["🖼️","screen_0812.png","aug 12","screen3"]
 ],
 school:[
- ["📄","sysana_notes.docx","aug 17","sysana"],
- ["📄","db_activity2.pdf","aug 17","dbms"],
- ["📊","group_roles.pptx","aug 15","roles"],
- ["📄","quiz_review.docx","aug 14","review"],
- ["📁","references","8 items","refs"]
+ ["📄","structural_analysis_notes.docx","aug 17","sysana"],
+ ["📄","surveying_activity2.pdf","aug 17","dbms"],
+ ["📊","bridge_group_roles.pptx","aug 15","roles"],
+ ["📄","strength_of_materials_review.docx","aug 14","review"],
+ ["📐","site_plan_rev4.dwg","aug 17","cad_site"],
+ ["📐","floor_plan_plate3.dwg","aug 16","cad_floor"],
+ ["📊","beam_schedule.xlsx","aug 16","beam_schedule"],
+ ["📄","soil_bearing_notes.pdf","aug 13","soil_notes"],
+ ["📊","quantity_takeoff.xlsx","aug 12","qty_takeoff"],
+ ["📄","civil3d_points.csv","aug 10","civil3dpoints"],
+ ["📁","references","12 items","refs"]
 ],
 backup:[
  ["📄","chat_backup_1.txt","aug 15","chatbackup1"],
@@ -3179,11 +3202,11 @@ function openFile(k){
   if(EXTRA_FILE_KEYS.has(k)){openExtraFile(k);return}
   markSeen("file_"+k);
   const map={
-    sysana:`<div class="detail"><h4>sysana_notes.docx</h4><p>system analysis notes. actors, use cases, requirements, interview questions.</p></div>`,
+    sysana:`<div class="detail"><h4>structural_analysis_notes.docx</h4><p>influence lines, shear and moment diagrams, determinate frames, truss method of joints, and a page of half-finished beam calculations.</p><p class="muted">last edit: aug 17, 3:12 pm.</p></div>`,
     screen1:`<div class="detail"><h4>screenshot_0817.png</h4><p><b>lia:</b> "don't stay up again"</p><p><b>niko:</b> "i'm sleeping na"</p><p><b>lia:</b> "sure ka ha"</p><p class="muted">timestamp 11:03 pm.</p></div>`,
     expenses:`<div class="detail"><h4>expenses_aug.xlsx</h4><p>rent 3200</p><p>food 4180</p><p>transpo 1860</p><p>school 1250</p><p>misc 930</p><p>cash 2500</p></div>`,
     voice3:`<div class="detail"><h4>voice_003.m4a</h4><p>00:07</p><p>"wait lang, someone's walking by."</p><p>footsteps. zipper. file ends.</p></div>`,
-    resume:`<div class="detail"><h4>resume_niko.pdf</h4><p><b>niko de la cruz</b></p><p>information systems student</p><p>manila</p><p>niko.dc05@example.com</p></div>`,
+    resume:`<div class="detail"><h4>resume_niko.pdf</h4><p><b>NIKO DE LA CRUZ</b></p><p><b>Civil Engineering Undergraduate</b> • Manila, Philippines</p><p>niko.dc05@example.com</p><hr style="border:0;border-top:1px solid #2b3340;margin:12px 0"><p><b>profile</b></p><p>21 years old • 6 ft 11 in • 72 kg</p><p>student interested in structural design, site planning, surveying, and construction work. comfortable with AutoCAD, Excel, basic Civil 3D, quantity takeoff, and reading plan sheets.</p><p><b>coursework</b></p><p>structural analysis • strength of materials • surveying • hydraulics • construction methods • engineering economy</p><p><b>student work</b></p><p>• pedestrian footbridge concept — framing layout, load assumptions, quantity estimate</p><p>• residential plate set — floor plan, elevations, sections, basic drainage layout</p><p>• surveying exercise — traverse computations and point plotting</p><p><b>software</b></p><p>AutoCAD 2025 • Civil 3D (basic) • Microsoft Excel • SketchUp (basic)</p><p><b>random bio stuff he really put on the résumé</b></p><p>basketball addict • horror games • camera nerd • likes night drives • coffee dependent • says he works better after midnight</p><p class="muted">the height and weight are actually typed into the résumé. there is no obvious reason they needed to be.</p></div>`,
     todo:`<div class="detail"><h4>todo.txt</h4><p>print activity</p><p>buy coffee</p><p>reply to mom</p><p>charger</p><p>bring umbrella</p><p>delete backup</p></div>`,
     private:`<div class="detail"><h4>private_notes.txt</h4><p>"keep everything separate."</p><p>"lia doesn't check laptop."</p><p>"never save real names if not needed."</p><p>"clear downloads after."</p></div>`,
     backup:`<div class="detail"><h4>phone_backup.zip</h4><p>backup created from android phone.</p><p>contains chats, contacts, and media.</p><button class="soft" onclick="closeWindowDetail('files');renderFolder('backup')">open backup</button></div>`,
@@ -3202,16 +3225,31 @@ function openFile(k){
     img9917:`<div class="detail"><h4>IMG_9917.jpg</h4><p>close photo of two hands on a table.</p><p>one hand has the same ring niko wears in his profile photo.</p></div>`,
     img9872:`<div class="detail"><h4>IMG_9872.jpg</h4><p>building hallway mirror. niko is mostly cropped out.</p><p>a girl is taking the photo.</p></div>`,
     voiceexport:`<div class="detail"><h4>voice_export.m4a</h4><p>a girl says, "you said she doesn't know about me."</p><p>niko: "she doesn't."</p></div>`,
+    thirstdump:`<div class="detail"><h4>thirsttrap_dump.zip</h4><p><b>68 images</b> • mostly screenshots of public stories and reels.</p><p>almost all are women. several are people who also appear under aliases elsewhere on the laptop.</p><p>some filenames were manually renamed to initials and dates instead of the original download names.</p><p class="muted">nothing here proves a crime. it mostly proves niko had extremely embarrassing download habits.</p></div>`,
+    storysaves:`<div class="detail"><h4>story_saves_0816.zip</h4><p>27 screenshots from social-media stories.</p><p>coffee selfies, mirror pictures, outfits, gym posts, and a few screenshots taken seconds apart from the same story.</p><p>several profiles belong to women niko was already messaging.</p><p class="muted">the posts look public or follower-visible; the creepy part is how systematically he saved them.</p></div>`,
+    dmscreens:`<div class="detail"><h4>dm_screens_for_gc.zip</h4><p>screenshots of private conversations.</p><p>compliments, arguments, apologies, and a couple of long vulnerable messages from girls.</p><p>some images have cropped captions like "send this one" and "LMAO look".</p><p class="muted">the files match the separate evidence that niko sometimes passed private conversations into the boys gc.</p></div>`,
+    unfollows:`<div class="detail"><h4>who_unfollowed_me.csv</h4><p>handle • date noticed • followed back? • private?</p><p>42 rows.</p><p>a few rows include comments like "new guy in story" and "still watches mine".</p><p class="muted">manual tracking. no app generated this.</p></div>`,
+    pickuplines:`<div class="detail"><h4>pickup_lines_from_reels.txt</h4><p>"you look like trouble"</p><p>"random but your smile is crazy"</p><p>"i don't usually reply to stories but—"</p><p>"okay serious question are u always this pretty"</p><p>"reply to one thing in profile so it looks natural"</p><p class="muted">several lines are crossed out with notes like "used already".</p></div>`,
+    incognitoexport:`<div class="detail"><h4>incognito_bookmarks_export.html</h4><p>saved links/searches:</p><p>• does instagram notify story screenshots</p><p>• how to hide active status messenger</p><p>• recover deleted dm history</p><p>• view story without showing account</p><p>• how long does recently active stay visible</p><p>• remove metadata from screenshot</p><p class="muted">this is character evidence, not final-night evidence.</p></div>`,
+    profilecheck:`<div class="detail"><h4>profile_checklist.txt</h4><p>c • public again • new follow?</p><p>ash • private • active late</p><p>m • changed pfp • don't ask immediately</p><p>lia • check only if she stops replying</p><p>grace • don't view story from main</p><p class="muted">the list reads less like romance and more like somebody manually monitoring people's activity.</p></div>`,
+    camerarolldump:`<div class="detail"><h4>camera_roll_dump_2.zip</h4><p>241 files.</p><p>mostly niko selfies, food, basketball screenshots, receipts, blurry street photos, memes, and duplicates.</p><p>mixed in are 19 saved screenshots of women from social media and six screenshots of message notifications.</p><p class="muted">messy, invasive, and mostly useless.</p></div>`,
+    dontopenlol:`<div class="detail"><h4>do_not_open_lol.zip</h4><p>password: none.</p><p>inside: memes, mirror selfies, badly cropped thirst-trap screenshots, two screenshots of his own profile, and a text file called <b>delete_before_gf_sees.txt</b>.</p><p>that text file contains one line:</p><p><b>"actually delete this dumbass"</b></p><p class="muted">he did not.</p></div>`,
     meme:`<div class="detail"><h4>meme_44.jpg</h4><p>cat meme.</p></div>`,
     photo4431:`<div class="detail"><h4>img_4431.jpg</h4><p>two drinks, two plates, niko's laptop on the table.</p></div>`,
     mirror:`<div class="detail"><h4>mirror_0811.jpg</h4><p>a girl holding niko's hoodie. her face is cropped out.</p></div>`,
     road:`<div class="detail"><h4>road_evening.jpg</h4><p>concrete barrier, lamp posts, wet pavement.</p><p><b>may:</b> "wait... this looks kinda familiar."</p><p><b>jc:</b> "maybe. roads look the same at night."</p></div>`,
     screen2:`<div class="detail"><h4>screen_0816.png</h4><p><b>lia:</b> "call me when you're home"</p><p><b>niko:</b> "already home"</p><p class="muted">screenshot time 9:14 pm.</p></div>`,
     screen3:`<div class="detail"><h4>screen_0812.png</h4><p><b>lia:</b> "you sleeping?"</p><p><b>niko:</b> "yeah i'm tired"</p><p class="muted">timestamp 10:02 pm.</p></div>`,
-    dbms:`<div class="detail"><h4>db_activity2.pdf</h4><p>database worksheet.</p></div>`,
-    roles:`<div class="detail"><h4>group_roles.pptx</h4><p>niko is assigned documentation and testing.</p></div>`,
-    review:`<div class="detail"><h4>quiz_review.docx</h4><p>reviewer notes.</p></div>`,
-    refs:`<div class="detail"><h4>references</h4><p>articles, citation guides, screenshots.</p></div>`,
+    dbms:`<div class="detail"><h4>surveying_activity2.pdf</h4><p>closed traverse exercise: bearings, azimuths, latitude/departure, Bowditch correction, and a final closure check.</p></div>`,
+    roles:`<div class="detail"><h4>bridge_group_roles.pptx</h4><p>pedestrian footbridge group plate.</p><p>niko: AutoCAD drafting + quantity takeoff</p><p>mara: load assumptions</p><p>ken: presentation + references</p></div>`,
+    review:`<div class="detail"><h4>strength_of_materials_review.docx</h4><p>stress/strain, axial deformation, torsion, bending stress, shear stress, and a reminder: "CHECK UNITS BEFORE SUBMITTING."</p></div>`,
+    cad_site:`<div class="detail"><h4>site_plan_rev4.dwg</h4><p>AutoCAD drawing • last saved aug 17, 2:37 pm</p><p>layers: property, setback, road, drainage, text, dimensions, existing trees</p><p class="muted">revision note: "move driveway 0.8m / fix north arrow / stop plotting in color"</p></div>`,
+    cad_floor:`<div class="detail"><h4>floor_plan_plate3.dwg</h4><p>two-storey residential floor-plan plate.</p><p>recent commands: OFFSET, TRIM, EXTEND, HATCH, DIMLINEAR, MATCHPROP.</p><p class="muted">one layer is named "DO_NOT_TOUCH_FINAL" and another is "final2_real".</p></div>`,
+    beam_schedule:`<div class="detail"><h4>beam_schedule.xlsx</h4><p>B1 • 300×450</p><p>B2 • 250×400</p><p>B3 • 300×500</p><p>columns beside it contain tributary widths, rough reactions, and handwritten-looking corrections typed into cells.</p></div>`,
+    soil_notes:`<div class="detail"><h4>soil_bearing_notes.pdf</h4><p>class notes on allowable bearing capacity, settlement, groundwater, and why "just make the footing bigger" is not a universal answer.</p></div>`,
+    qty_takeoff:`<div class="detail"><h4>quantity_takeoff.xlsx</h4><p>concrete • reinforcing steel • formwork • excavation</p><p>several cells say CHECK AGAIN before the totals.</p><p class="muted">student estimate only.</p></div>`,
+    civil3dpoints:`<div class="detail"><h4>civil3d_points.csv</h4><p>point no., northing, easting, elevation, description</p><p>101–146 • classroom surveying dataset</p></div>`,
+    refs:`<div class="detail"><h4>references</h4><p>structural tables, building-code excerpts, surveying formulas, DPWH references, concrete design notes, and citation screenshots.</p></div>`,
     chatbackup1:`<div class="detail"><h4>chat_backup_1.txt</h4><p><b>celine:</b> "don't message when you're with her"</p><p><b>niko:</b> "i know"</p><p><b>celine:</b> "you literally said that last time"</p></div>`,
     chatbackup2:`<div class="detail"><h4>chat_backup_2.txt</h4><p><b>ash:</b> "you told me you were single"</p><p><b>niko:</b> "it's complicated"</p><p><b>ash:</b> "nah don't do that 😭"</p></div>`,
     backupPhotoA:`<div class="detail"><h4>saved_photo_a.jpg</h4><p>niko and a girl reflected in a dark elevator door.</p><p>her face is blurred by motion.</p></div>`,
@@ -3375,7 +3413,7 @@ function openFile(k){
       <p>anail → manual</p>
       <p class="muted">rule timestamps overlap with lia's messages.</p>
     </div>`,
-    aboutold:`<div class="detail"><h4>about_me_old.txt</h4><p>21</p><p>information systems student</p><p>likes basketball, horror movies, cameras, late-night walks</p><p>"trying to save for a used mirrorless camera"</p><p>"bad at replying when overwhelmed"</p><p class="muted">written months before the recent mess.</p></div>`,
+    aboutold:`<div class="detail"><h4>about_me_old.txt</h4><p>21 • civil engineering student</p><p>6'11 • 72 kg</p><p>likes basketball, horror movies, cameras, AutoCAD when it isn't crashing, and late-night drives</p><p>"trying to save for a used mirrorless camera"</p><p>"would rather redraw a whole plate than ask the prof one question"</p><p>"bad at replying when overwhelmed"</p><p class="muted">written months before the recent mess.</p></div>`,
     parttime:`<div class="detail"><h4>part_time_schedule.txt</h4><p>cousin's print shop</p><p>tue 6 to 9</p><p>thu 6 to 9</p><p>sat optional</p><p>120 per hour</p><p>"need extra for camera fund"</p></div>`,
     driving:`<div class="detail"><h4>driving_test.txt</h4><p>failed first practical test</p><p>reason: stalled twice + forgot signal</p><p>"never telling ken"</p></div>`,
     miso:`<div class="detail"><h4>miso.txt</h4><p>cat food</p><p>litter</p><p>vet september?</p><p>"miso keeps sleeping on keyboard"</p></div>`,
@@ -3491,18 +3529,18 @@ function openFile(k){
     meme_cat88:`<div class="detail"><h4>random_cat_88.jpg</h4><p>cat staring at a wall.</p><p>no context.</p></div>`,
     meme_school:`<div class="detail"><h4>this_is_fine_school.png</h4><p>school deadline meme.</p></div>`,
 
-    proj_sa:`<div class="detail"><h4>system_analysis</h4><p>use case diagrams</p><p>requirements</p><p>interview notes</p><p>draft presentation</p><p>old versions nobody deleted</p></div>`,
-    proj_db:`<div class="detail"><h4>database</h4><p>erd.png</p><p>normalization.docx</p><p>sample_data.sql</p><p>query_practice.sql</p></div>`,
-    proj_web:`<div class="detail"><h4>web_project</h4><p>index.html</p><p>style.css</p><p>script.js</p><p>assets folder</p><p>broken backup files</p></div>`,
-    proj_group:`<div class="detail"><h4>group_project</h4><p>final.docx</p><p>final2.docx</p><p>final_final.docx</p><p>final_final_REAL.docx</p><p>presentation_final2.pptx</p><p>meeting recordings</p></div>`,
-    proj_proposal:`<div class="detail"><h4>proposal_draft.docx</h4><p>project title: commuter queue monitoring system</p><p>problem statement, objectives, scope, limitations.</p></div>`,
-    proj_script:`<div class="detail"><h4>presentation_script.txt</h4><p>"good afternoon everyone"</p><p>"our proposed system aims to..."</p><p>"don't read directly from slides"</p><p>"KEN STOP SAYING UMMM"</p></div>`,
+    proj_sa:`<div class="detail"><h4>structural_analysis</h4><p>beam diagrams</p><p>truss solutions</p><p>influence-line sketches</p><p>draft computations</p><p>old versions nobody deleted</p></div>`,
+    proj_db:`<div class="detail"><h4>surveying</h4><p>traverse_sheet.xlsx</p><p>field_book_scan.pdf</p><p>point_plot.dwg</p><p>closure_check.txt</p></div>`,
+    proj_web:`<div class="detail"><h4>cad_plates</h4><p>site_plan_rev4.dwg</p><p>floor_plan_plate3.dwg</p><p>road_section.dwg</p><p>plot_styles folder</p><p>broken autosave files</p></div>`,
+    proj_group:`<div class="detail"><h4>footbridge_group_project</h4><p>design_basis.docx</p><p>load_calc_v4.xlsx</p><p>bridge_final.dwg</p><p>bridge_final_REAL.dwg</p><p>presentation_final2.pptx</p><p>meeting recordings</p></div>`,
+    proj_proposal:`<div class="detail"><h4>proposal_draft.docx</h4><p>project title: pedestrian footbridge concept for a flood-prone roadside crossing</p><p>site conditions, design objectives, assumptions, scope, limitations.</p></div>`,
+    proj_script:`<div class="detail"><h4>presentation_script.txt</h4><p>"good afternoon everyone"</p><p>"our proposed footbridge uses..."</p><p>"explain the load path before the member sizes"</p><p>"don't read directly from slides"</p><p>"KEN STOP SAYING UMMM"</p></div>`,
     proj_peer:`<div class="detail"><h4>peer_eval_notes.txt</h4><p>ken: actually works</p><p>mara: carries formatting</p><p>jules: disappears then sends everything at 2am</p><p>me: procrastinated</p></div>`,
-    proj_req:`<div class="detail"><h4>requirements_v4.docx</h4><p>functional requirements</p><p>non-functional requirements</p><p>user roles</p><p>notification requirements</p></div>`,
-    proj_survey:`<div class="detail"><h4>survey_results.xlsx</h4><p>62 responses</p><p>commute time</p><p>waiting time</p><p>preferred notifications</p></div>`,
+    proj_req:`<div class="detail"><h4>design_criteria_v4.docx</h4><p>dead load</p><p>live load</p><p>clear width</p><p>material assumptions</p><p>serviceability checks</p></div>`,
+    proj_survey:`<div class="detail"><h4>survey_field_results.xlsx</h4><p>46 points</p><p>backsight / foresight</p><p>elevations</p><p>closure error</p><p>adjusted coordinates</p></div>`,
     proj_refs:`<div class="detail"><h4>references.txt</h4><p>documentation links</p><p>research papers</p><p>citation notes</p></div>`,
-    proj_wire:`<div class="detail"><h4>wireframe.png</h4><p>rough mobile dashboard wireframe.</p></div>`,
-    proj_meeting:`<div class="detail"><h4>meeting_notes.txt</h4><p>monday 7pm</p><p>finish flowchart</p><p>fix duplicate records</p><p>niko bring charger</p><p class="muted">old note at bottom: "meet by terminal side, same shortcut"</p></div>`,
+    proj_wire:`<div class="detail"><h4>site_layout.png</h4><p>rough bridge/site layout exported from AutoCAD.</p></div>`,
+    proj_meeting:`<div class="detail"><h4>meeting_notes.txt</h4><p>monday 7pm</p><p>finish load combinations</p><p>fix beam schedule</p><p>niko bring printed plan set + charger</p><p class="muted">old note at bottom: "meet by terminal side, same shortcut"</p></div>`,
 
     familybirthdays:`<div class="detail"><h4>family_birthdays.txt</h4>
       <p>ma • apr 2</p>
@@ -3548,6 +3586,15 @@ function openFile(k){
   if(k==="private")addJournal("private note says lia doesn't check the laptop.");
   if(k==="latenightreceipt")addJournal("late food receipt shows two meals on a night niko told lia he was home alone.");
   if(k==="voiceexport")addJournal("voice export strongly suggests another girl knew about lia.");
+  if(k==="thirstdump"){addJournal("downloads contains a manually organized zip of dozens of saved thirst-trap/story screenshots. gross, but not relevant to the final-night timeline.");setTimeout(()=>fieldTalk("may","why does he have a ZIP FILE of thirst traps 😭 like downloading them wasn't enough??"),260);}
+  if(k==="storysaves")addJournal("niko systematically saved social-media stories from several women he was already talking to.");
+  if(k==="dmscreens"){addJournal("a download archive contains screenshots of private conversations apparently prepared for sharing in a group chat.");setTimeout(()=>fieldTalk("may","nah saving people's private messages just to send them around is actually nasty."),260);}
+  if(k==="unfollows")addJournal("niko manually tracked who unfollowed him and sometimes noted new people appearing in their stories.");
+  if(k==="pickuplines")addJournal("downloaded pickup-line notes are marked with reminders about which lines were already used.");
+  if(k==="incognitoexport"){addJournal("a saved browser export contains searches about hiding activity, viewing stories quietly, and stripping screenshot metadata. none are final-night evidence.");setTimeout(()=>fieldTalk("jc","okay this download folder is making him look worse in completely different ways."),260);}
+  if(k==="profilecheck")addJournal("profile_checklist.txt manually tracks several women's privacy/activity changes and when not to reveal that niko noticed them.");
+  if(k==="camerarolldump")addJournal("camera-roll backup is mostly normal clutter with a smaller pile of saved social-media screenshots mixed in.");
+  if(k==="dontopenlol")setTimeout(()=>fieldTalk("may","the folder literally says do not open and he didn't even password it. incredible."),260);
   if(k==="chatbackup1"||k==="chatbackup2")addJournal("phone backup has chats that do not match what niko told lia.");
   if(k==="barreceipt")addJournal("niko had a bar receipt from late last night.");
   if(k==="taxi")addJournal("a ride receipt from last night was cancelled before a dropoff was recorded.");
@@ -4235,6 +4282,27 @@ charger
 school id
 earphones
 stop leaving stuff everywhere`],
+ ["plate deadlines","aug 17",`structural analysis problem set — wed
+residential plate 3 — thurs
+surveying activity — friday
+print A3 before class
+
+AUTOCAD AUTOSAVE BEFORE PLOTTING`],
+ ["autocad layers","aug 16",`WALL
+COLUMN
+BEAM
+DOOR
+WINDOW
+DIM
+TEXT
+HATCH
+DRAINAGE
+
+stop drawing everything on layer 0 idiot`],
+ ["surveying","aug 14",`check backsight
+check foresight
+close traverse before leaving site
+if error is huge DO NOT just edit one point until it looks right 😭`],
  ["draft","aug 14",`need to fix this first before i tell anyone
 
 wala pa namang sure
@@ -4340,17 +4408,87 @@ if there IS proof, deal with proof. not the story in my head.`],
 no message
 no name
 
-stop deciding who it is before u know`]
-];
+stop deciding who it is before u know`],
+ ["heard it again","aug 16",`1:06 am
+thought someone said my name from the kitchen
+headphones were off
+checked once. nobody there.
+
+slept 3 hours last night. write that first before deciding anything.`],
+ ["gray car","aug 17",`8:12 same gray car?
+8:44 another one
+9:02 parked across road
+
+first plate looked different from second
+there are a million gray cars
+STOP zooming after this`],
+ ["don't look outside","aug 16",`curtain closed
+front door locked
+hallway quiet
+
+checking again will not create new information.
+wait 20 min before looking.`],
+ ["3am rule","aug 17",`if awake after 3:
+NO symbol searches
+NO checking numbers
+NO zooming street photos
+NO reading old messages trying to find hidden meanings
+
+sleep first. decide tomorrow.`],
+ ["hallway","aug 15",`2:14 footsteps stopped near door
+2:16 footsteps again
+2:18 elevator
+
+probably neighbor
+nothing touched door
+leave it alone`],
+ ["camera zoom","aug 16",`do not zoom dark photos past 200%
+faces turn into shapes
+reflections turn into people
+compression makes everything look intentional
+
+this keeps happening. stop.`],
+ ["familiar faces","aug 17",`blue cap at store?
+red backpack near school?
+guy from jeep?
+
+familiar does NOT mean same person
+if i can't describe a face it doesn't count`],
+ ["if i'm wrong","aug 17",`being scared doesn't make the conclusion true
+being wrong before doesn't make the next thing automatically fake either
+
+write what happened
+then write what i THINK happened
+keep those separate`],
+ ["across the street","aug 17",`someone stood across from the print shop maybe 40 sec
+looked at phone the whole time
+left when jeep came
+
+could literally have been waiting for a ride
+no photo. no proof. stop.`]
+]
 function renderNotes(){
-  const arr=notes.map((n,i)=>[n,i]).filter(([n])=>{const t=n[0];if(story.act<2&&["rules","excuses","sizes","things to delete"].includes(t))return false;if(story.act<5&&t==="places")return false;return true});
+  const creepNotes=["heard it again","gray car","don't look outside","3am rule","hallway","camera zoom","familiar faces","if i'm wrong","across the street"];
+  const arr=notes.map((n,i)=>[n,i]).filter(([n])=>{
+    const t=n[0];
+    if(story.act<2&&["rules","excuses","sizes","things to delete"].includes(t))return false;
+    if(story.act<4&&creepNotes.includes(t))return false;
+    if(story.act<5&&t==="places")return false;
+    return true;
+  });
   noteIndex.innerHTML=arr.map(([n,i])=>`<div class="index-row" onclick="openNote(${i})"><b>${n[0]}</b><small>${n[1]}</small></div>`).join("");
 }
 function openNote(i){
   markSeen("note_"+i);
-  noteView.innerHTML=`<h3>${notes[i][0]}</h3><div style="white-space:pre-line">${notes[i][2]}</div>`;noteView.scrollTop=0;
-  if(i===4)addJournal("weird rules about deleting chats and not taking the same person to the same place.");
-  if(i===5)addJournal("niko literally kept a list of excuses.");
+  const title=notes[i][0];
+  noteView.innerHTML=`<h3>${title}</h3><div style="white-space:pre-line">${notes[i][2]}</div>`;noteView.scrollTop=0;
+  if(title==="rules")addJournal("weird rules about deleting chats and not taking the same person to the same place.");
+  if(title==="excuses")addJournal("niko literally kept a list of excuses.");
+  if(title==="heard it again")addJournal("a private note records niko hearing his name when nobody was there, then immediately writing down sleep loss as a possible explanation.");
+  if(title==="gray car")addJournal("niko logged several gray cars, then noticed the plates/details did not match and told himself to stop zooming.");
+  if(title==="3am rule")addJournal("niko made himself a rule not to search symbols, numbers, or old messages after 3 am because it made pattern-finding worse.");
+  if(title==="camera zoom")addJournal("niko explicitly warns himself that zooming dark compressed photos makes reflections and shapes look meaningful.");
+  if(title==="if i'm wrong"){addJournal("one note separates observation from interpretation: being scared doesn't prove a conclusion, but being wrong before doesn't make every later concern fake.");setTimeout(()=>fieldTalk("may","okay... he knew his brain could run ahead of the facts. that's actually making this harder, not easier."),260);}
 }
 
 const photosBase=[
@@ -4442,13 +4580,14 @@ const history=[
  ["how much protein in 3 eggs","aug 17, 3:59 pm"],
  ["how to hide chats on messenger desktop","aug 17, 3:48 pm"],
  ["weather manila today","aug 17, 3:31 pm"],
- ["how to make use case diagram","aug 17, 2:51 pm"],
- ["functional vs non functional requirements","aug 17, 2:48 pm"],
- ["normalization 1nf 2nf 3nf example","aug 17, 2:41 pm"],
- ["best free wireframe tool","aug 17, 2:34 pm"],
- ["why is groupmate not replying","aug 17, 2:27 pm"],
- ["how to cite website apa 7","aug 17, 2:24 pm"],
- ["canva presentation minimalist","aug 17, 2:17 pm"],
+ ["autocad plot scale 1:100 paper space","aug 17, 2:51 pm"],
+ ["how to hatch concrete autocad without freezing","aug 17, 2:48 pm"],
+ ["structural analysis beam reaction example","aug 17, 2:43 pm"],
+ ["bowditch rule traverse adjustment example","aug 17, 2:39 pm"],
+ ["nscp load combinations quick reference","aug 17, 2:34 pm"],
+ ["why is groupmate not replying plate deadline","aug 17, 2:27 pm"],
+ ["how to compute quantity takeoff concrete student","aug 17, 2:24 pm"],
+ ["autocad recover autosave sv$ file","aug 17, 2:17 pm"],
  ["student portal","aug 17, 2:54 pm"],
  ["why is my laptop fan loud","aug 17, 2:22 pm"],
  ["gpu temperature 90c safe","aug 17, 2:18 pm"],
@@ -4560,6 +4699,7 @@ function openHistory(i){
   if(q.includes("protein")) text="cached nutrition snippets and forum answers.";
   if(q.includes("cologne")) text="cached fragrance lists and budget recommendations.";
   if(q.includes("laptop")||q.includes("gpu")||q.includes("mouse")||q.includes("controller")) text="cached tech-help results and forum posts.";
+  if(q.includes("autocad")||q.includes("structural analysis")||q.includes("bowditch")||q.includes("nscp")||q.includes("quantity takeoff")) text="cached civil-engineering tutorials, forum answers, formula references, and student examples.";
   if(q.includes("bar")||q.includes("vince")||q.includes("bus")||q.includes("convenience")) text="cached late-night results related to the same area niko visited.";
   
   if(q.includes("location metadata")||q.includes("hide chats")||q.includes("archived")||q.includes("recent places")) text="cached privacy or cleanup help page.";
@@ -4578,7 +4718,7 @@ function openHistory(i){
 const mails=[
  ["school portal","submission received",`your activity has been submitted successfully.
 
-course: system analysis
+course: structural analysis
 time: 2:58 pm`],
  ["food delivery","your receipt",`thanks for your order.
 
@@ -4692,7 +4832,7 @@ function openContact(i){
   if(c[0]==="mika")extra=`<p>friend.</p><p>frequent calls in july and august.</p>`;
   if(c[0]==="paolo")extra=`<p>school friend.</p><p>niko recently asked if he could stay over, then backed out.</p>`;
   if(c[0]==="toni")extra=`<p>cousin / print shop.</p><p>worked with niko earlier on aug 17.</p>`;
-  if(c[0]==="profsantos")extra=`<p>system analysis instructor.</p>`;
+  if(c[0]==="profsantos")extra=`<p>structural analysis instructor.</p>`;
   if(c[0]==="printshop")extra=`<p>cousin's print shop.</p><p>note: "help weekends if needed"</p>`;
   if(c[0]==="bartender")extra=`<p>number has no profile image.</p><p>saved from bar receipt / staff contact.</p>`;
   if(["enilec","hsa","airam","alleb","enaj","anail"].includes(c[0]))extra=`<p>name looks intentionally reversed.</p><p>no surname shown.</p><p>last edited this month.</p>`;
@@ -4821,11 +4961,14 @@ function renderSettings(){
     <div class="detail">
       <p><b>device name</b> niko laptop</p>
       <p><b>user</b> niko d.</p>
+      <p><b>account profile</b> Niko de la Cruz • 21 • Civil Engineering</p>
       <p><b>model</b> aspire 5</p>
       <p><b>network</b> disconnected</p>
       <p><b>saved networks</b> home_5g, campus wifi, cafe two, public_wifi_2</p>
       <p><b>last sign in</b> aug 17, 6:42 pm</p>
       <p><b>require sign-in after sleep</b> never</p>
+      <p><b>engineering software</b> AutoCAD 2025 • Civil 3D 2025 • SketchUp • Excel</p>
+      <p><b>AutoCAD license</b> education • signed in as niko_dc05</p>
       ${story.act>=5?`<p><b>internet</b> disconnected since 11:38 pm</p>`:""}
     </div>
     ${story.act>=5?`<div class="detail"><h4>recent activity</h4><p>11:38 pm • network lost</p><p>12:09 am • local files opened</p><p>12:14 am • sleep</p></div>`:`<div class="detail muted">system history is mostly ordinary device information.</div>`}`;
@@ -4842,6 +4985,10 @@ const youtubeItems=[
  ["how to clean white sneakers","watched aug 17, 4:02 pm","5:48"],
  ["budget colognes that actually smell good","watched aug 17, 3:51 pm","10:14"],
  ["how to fix laptop overheating","watched aug 17, 2:10 pm","7:32"],
+ ["autocad site plan from scratch","watched aug 17, 1:58 pm","18:42"],
+ ["structural analysis: shear and moment diagrams","watched aug 17, 1:31 pm","22:16"],
+ ["surveying traverse adjustment bowditch rule","watched aug 16","15:08"],
+ ["civil 3d point import tutorial","watched aug 15","9:54"],
  ["cat falls off chair compilation","watched aug 17, 12:55 pm","3:18"],
  ["valorant rage moments","watched yesterday","14:06"],
  ["why your room smells weird","watched aug 15","8:57"],
@@ -5218,17 +5365,110 @@ function openSports(i){
   toast("sports",bodies[i]);
 }
 
+const autocadDrawings=[
+  {name:"site_plan_rev4.dwg",time:"aug 17 • 2:37 pm",size:"3.8 MB",note:"site plan with setbacks, road edge, drainage line, north arrow, existing trees, and revision clouds."},
+  {name:"floor_plan_plate3.dwg",time:"aug 16 • 11:42 pm",size:"6.1 MB",note:"two-storey residential plate. 31 layers. layer 0 is somehow still being abused."},
+  {name:"bridge_final_REAL.dwg",time:"aug 15 • 9:18 pm",size:"8.4 MB",note:"pedestrian footbridge framing/elevation drawing for a group requirement. title block still says REV 6."},
+  {name:"road_cross_section.dwg",time:"aug 13 • 4:06 pm",size:"2.7 MB",note:"road section practice with pavement, shoulder, side ditch, slopes, and dimensions."},
+  {name:"drainage_profile.dwg",time:"aug 12 • 8:51 pm",size:"4.4 MB",note:"storm-drain profile exercise. labels overlap in two places and niko wrote FIX BEFORE PRINT."},
+  {name:"survey_point_plot.dwg",time:"aug 10 • 7:23 pm",size:"1.9 MB",note:"survey points imported from CSV and connected into a rough lot boundary."}
+];
+function renderAutoCAD(){
+  closeWindowDetail("autocad");
+  autocadBody.innerHTML=`<h3 style="margin-top:0">AutoCAD 2025</h3>
+    <div class="detail"><b>education license</b><p>signed in • niko_dc05</p><p class="muted">recent drawings recovered from local history. autosave folder contains 9 .sv$ files.</p></div>
+    <div class="detail"><b>workspace</b><p>Drafting & Annotation • dark theme • autosave every 10 minutes</p><p>favorite commands: OFFSET, TRIM, EXTEND, HATCH, MATCHPROP, DIMLINEAR, PLINE</p></div>
+    <h4>recent drawings</h4>`+
+    autocadDrawings.map((d,i)=>`<div class="index-row" onclick="openCAD(${i})"><b>${d.name}</b><small>${d.time} • ${d.size}</small></div>`).join("")+
+    `<div class="detail"><b>recent plotters</b><p>DWG To PDF.pc3</p><p>campus A3 printer</p><p class="muted">last plot failed once because paper size was wrong.</p></div>`;
+}
+function openCAD(i){
+  const d=autocadDrawings[i];if(!d)return;
+  markSeen("autocad_"+i);
+  showWindowDetail("autocad",`<div class="detail"><h4>${d.name}</h4><p><b>${d.time}</b> • ${d.size}</p><p>${d.note}</p><p><b>drawing status</b></p><p>UNITS: millimeters</p><p>annotation scale: 1:100</p><p>visual style: 2D wireframe</p><p class="muted">ordinary coursework. nothing here is part of niko's final-night evidence.</p></div>`,d.name);
+}
+
+const steamFriends=[
+  ["mika.exe","online • Rainbow Six Siege","female"],
+  ["elle.jpg","online • EA Sports FC 26","female"],
+  ["sammyyy","away • GTA V","female"],
+  ["kyla.wav","online • Counter-Strike 2","female"],
+  ["bea_boop","offline 2h","female"],
+  ["ashley.jpg","online • Stardew Valley","female"],
+  ["nixie","away • Dead by Daylight","female"],
+  ["mari.mp3","offline 1d","female"],
+  ["jules ♡","online • Lethal Company","female"],
+  ["cami","offline 3h","female"],
+  ["riaa","away","female"],
+  ["lex","online • Phasmophobia","female"],
+  ["trishhh","offline 5d","female"],
+  ["mei","online • Terraria","female"],
+  ["sophie.png","offline 9h","female"],
+  ["angel","away • The Forest","female"],
+  ["faith.exe","offline 4h","female"],
+  ["cass ♡","online • GTA V","female"],
+  ["nika","offline 2d","female"],
+  ["aly.jpg","away • EA Sports FC 26","female"],
+  ["dani.wav","online • Rainbow Six Siege","female"],
+  ["kaye","offline 7h","female"],
+  ["yumi","online • Counter-Strike 2","female"],
+  ["jen.jpg","offline 3d","female"],
+  ["ken","online • Rainbow Six Siege","male"],
+  ["vince","offline 1h","male"],
+  ["cam","offline 6h","male"],
+  ["joaq","online • NBA 2K","male"],
+  ["rj","offline 2d","male"],
+  ["marco","offline 1d","male"]
+]
+function openSteamFriends(){
+  markSeen("steam_friends");
+  const femaleCount=steamFriends.filter(x=>x[2]==="female").length;
+  showWindowDetail("steam",`<div class="detail"><h4>cached friends</h4><p>${steamFriends.length} visible in offline cache • ${femaleCount} female-presenting profiles/usernames in this slice</p><p class="muted">mostly gaming usernames and display names. being on this list does not establish any relationship or case connection.</p></div>`+
+    steamFriends.map(f=>`<div class="index-row"><b>${f[0]}</b><small>${f[1]}</small></div>`).join(""),"friends");
+  setTimeout(()=>fieldTalk("may","why is his steam friends list basically all girls too 😭 this man collected contacts in every app.",4000),250);
+}
+
+const steamLibrary=[
+  {name:"nba 2k",hours:168.6,last:"aug 17 • 8:06 pm",ach:"41 / 50",note:"three MyCareer saves. one build is literally named 'brick merchant'."},
+  {name:"rainbow six siege",hours:286.4,last:"aug 16 • 2:41 am",ach:"32 / 48",note:"most-played shooter. saved sensitivity notes match controller_settings.txt."},
+  {name:"grand theft auto v",hours:220.8,last:"aug 10",ach:"49 / 77",note:"mostly online hours. several old screenshots are just cars and bad outfits."},
+  {name:"fifa 26 (ea sports fc 26)",hours:132.5,last:"aug 17 • 6:22 pm",ach:"18 / 39",note:"desktop shortcut is still named 'FIFA 26' because niko refuses to call it FC."},
+  {name:"elden ring",hours:128.2,last:"jul 31",ach:"31 / 42",note:"one character named 'MISO'."},
+  {name:"forza horizon 4",hours:103.6,last:"aug 9",ach:"96 / 178",note:"garage screenshots, drift tunes, and an unreasonable number of black cars."},
+  {name:"dead by daylight",hours:91.4,last:"aug 5",ach:"44 / 248",note:"recent activity is mostly survivor matches with ken."},
+  {name:"euro truck simulator 2",hours:77.6,last:"aug 6",ach:"28 / 93",note:"late-night play sessions. playlist named 'drive and don't think'."},
+  {name:"resident evil 4",hours:71.8,last:"aug 14",ach:"34 / 46",note:"two completed saves and one professional difficulty run."},
+  {name:"left 4 dead 2",hours:62.2,last:"aug 3",ach:"47 / 101",note:"double the old cached playtime. mostly co-op with cousins."},
+  {name:"hades",hours:52.4,last:"jul 28",ach:"36 / 49",note:"keeps dying after saying 'one run lang'."},
+  {name:"phasmophobia",hours:48.2,last:"aug 8",ach:"21 / 54",note:"friend notes say niko is the first one to leave the house when something starts hunting."},
+  {name:"stardew valley",hours:39.2,last:"aug 7",ach:"26 / 40",note:"farm name: Miso Farm. cat selected, obviously."},
+  {name:"lethal company",hours:36.0,last:"jul 19",ach:"—",note:"voice-chat clips saved elsewhere are mostly screaming and laughing."},
+  {name:"terraria",hours:34.8,last:"jul 22",ach:"61 / 115",note:"old world backed up three times."},
+  {name:"counter-strike 2",hours:25.6,last:"jul 29",ach:"—",note:"low hours compared with siege. aim map in favorites."},
+  {name:"portal 2",hours:21.8,last:"jun 18",ach:"37 / 51",note:"finished co-op once with bea years ago."},
+  {name:"outlast",hours:18.4,last:"aug 2 • 1:17 am",ach:"—",note:"played at night despite repeatedly saying horror games don't scare him."},
+  {name:"doki doki literature club",hours:14.6,last:"jul 12",ach:"—",note:"installed after a meme recommendation. one screenshot captioned 'WHAT THE FUCK'."},
+  {name:"the forest",hours:42.6,last:"jul 24",ach:"19 / 45",note:"co-op save with ken and vince."},
+  {name:"dying light",hours:45.8,last:"jun 30",ach:"29 / 68",note:"old save. lots of parkour screenshots."},
+  {name:"payday 2",hours:58.4,last:"jul 5",ach:"73 / 1328",note:"mostly co-op. loadout names are terrible."},
+  {name:"valorant",hours:null,last:"aug 16 • 1:42 am",ach:"non-steam",note:"added as a non-Steam shortcut. Riot playtime not available in this offline cache."}
+];
 function renderSteam(){
-  const lib=[
-   ["nba 2k","84.3 hours"],
-   ["valorant shortcut","not a steam game"],
-   ["left 4 dead 2","31.1 hours"],
-   ["stardew valley","19.6 hours"],
-   ["terraria","17.4 hours"],
-   ["counter strike 2","12.8 hours"]
-  ];
-  steamBody.innerHTML=`<h3 style="margin-top:0">library</h3><div class="detail"><b>offline mode</b><p>cloud status unavailable.</p></div>`+
-  lib.map((x,i)=>`<div class="index-row" onclick="markSeen('steam_${i}');toast('steam','${x[0]} • ${x[1]}')"><b>${x[0]}</b><small>${x[1]}</small></div>`).join("");
+  closeWindowDetail("steam");
+  const total=steamLibrary.reduce((sum,g)=>sum+(Number(g.hours)||0),0);
+  const recent=steamLibrary.slice().filter(g=>g.last.includes("aug")).slice(0,5);
+  steamBody.innerHTML=`<h3 style="margin-top:0">niko_dc05</h3><div class="detail"><b>profile</b><p>"CE student • 6'11 • somehow still bottom frag"</p><p class="muted">custom status last cached: "plate muna bago rank"</p></div>
+    <div class="detail"><b>offline library</b><p>${steamLibrary.length} installed / linked titles • ${total.toFixed(1)} recorded hours</p><p class="muted">friends cache: 74 • 14 were online at last sync • cloud unavailable</p><button class="soft" onclick="openSteamFriends()">view cached friends</button></div>
+    <div class="detail"><b>recent activity</b>${recent.map(g=>`<p>${g.name} <span class="muted">• ${g.last}</span></p>`).join("")}</div>
+    <h4>library</h4>`+
+    steamLibrary.map((g,i)=>`<div class="index-row" onclick="openSteamGame(${i})"><b>${g.name}</b><small>${g.hours==null?"non-steam shortcut":g.hours.toFixed(1)+" hours"} • last played ${g.last}</small></div>`).join("")+
+    `<div class="detail"><b>wishlist / saved</b><p>silent hill 2 remake • sale alert</p><p>ready or not • waiting for sale</p><p>project zomboid • "ken keeps asking"</p><p>sekiro • "after elden ring"</p></div>`;
+}
+function openSteamGame(i){
+  const g=steamLibrary[i];if(!g)return;
+  markSeen("steam_"+i);
+  const hours=g.hours==null?"playtime unavailable":g.hours.toFixed(1)+" hours";
+  showWindowDetail("steam",`<div class="detail"><h4>${g.name}</h4><p><b>${hours}</b></p><p>last played: ${g.last}</p><p>achievements: ${g.ach}</p><p>${g.note}</p></div>`,g.name);
 }
 
 function renderMemes(){
@@ -5384,18 +5624,25 @@ function renderYourPhone(){
 
 function openMetaMeme(){
   markExtra("meta_ui_meme");
-  showWindowDetail("memes",`<div class="detail"><h4>found_weird_desktop_game.png</h4><div class="mini-desktop"><div class="mini-icons"><span>📁</span><span>💬</span><span>🚏</span><span>🖼️</span><span>🌐</span><span>✉️</span><span>🎙️</span><span>🗑️</span><span>🧮</span><span>😂</span></div><div class="mini-badge">12:59 am<br>heavy rain • ~33 waiting</div></div><p>POV u find someone's unlocked laptop and suddenly think you're a detective</p><p class="muted">comments:</p><p>just turn it in 😭</p><p>op opened the recycle bin before contacts</p><p>average information systems student</p><p class="extra-warning">optional joke • not evidence</p></div>`);
+  showWindowDetail("memes",`<div class="detail"><h4>found_weird_desktop_game.png</h4><div class="mini-desktop"><div class="mini-icons"><span>📁</span><span>💬</span><span>🚏</span><span>🖼️</span><span>🌐</span><span>✉️</span><span>🎙️</span><span>🗑️</span><span>🧮</span><span>😂</span></div><div class="mini-badge">12:59 am<br>heavy rain • ~33 waiting</div></div><p>POV u find someone's unlocked laptop and suddenly think you're a detective</p><p class="muted">comments:</p><p>just turn it in 😭</p><p>op opened the recycle bin before contacts</p><p>average civil engineering student</p><p class="extra-warning">optional joke • not evidence</p></div>`);
 }
 
 function renderGames(){
   const games=[
     ["valorant","last played aug 16, 1:42 am"],
-    ["minecraft","last played aug 11"],
+    ["rainbow six siege","last played aug 16, 2:41 am"],
+    ["nba 2k","last played aug 17, 8:06 pm"],
+    ["fifa 26","last played aug 17, 6:22 pm"],
+    ["resident evil 4","last played aug 14"],
+    ["forza horizon 4","last played aug 9"],
     ["stardew valley","last played aug 7"],
+    ["phasmophobia","last played aug 8"],
     ["left 4 dead 2","last played aug 3"],
-    ["counter strike 2","last played jul 29"]
+    ["doki doki literature club","last played jul 12"],
+    ["counter-strike 2","last played jul 29"],
+    ["minecraft","last played aug 11"]
   ];
-  gamesBody.innerHTML="<h3 style='margin-top:0'>installed games</h3>"+games.map((g,i)=>`<div class="index-row" onclick="markSeen('game_${i}');toast('games','${g[0]} cannot launch while offline.')"><b>${g[0]}</b><small>${g[1]}</small></div>`).join("");
+  gamesBody.innerHTML="<h3 style='margin-top:0'>installed games</h3><div class='detail'><b>launchers offline</b><p>local shortcuts only. Steam has the fuller playtime cache.</p></div>"+games.map((g,i)=>`<div class="index-row" onclick="markSeen('game_${i}');toast('games','${g[0]} cannot launch while offline.')"><b>${g[0]}</b><small>${g[1]}</small></div>`).join("");
 }
 
 const discordChats=[
@@ -5463,7 +5710,10 @@ function renderCalculator(){
   const hist=[
     ["3200 + 4180 + 1860 + 1250 + 930","11420","aug budget total"],
     ["1240 / 4","310","split bill"],
-    ["2500 - 1200 - 600","700","cash left"]
+    ["2500 - 1200 - 600","700","cash left"],
+    ["3.6 * 5.4","19.44","slab area m²"],
+    ["12.4 * 0.30 * 0.45","1.674","beam concrete check"],
+    ["180 - 63.5 - 48.2","68.3","survey angle check"]
   ];
   if(story.act>=2)hist.push(["17 - 12","5","late-night entry"],["16 - 13","3","late-night entry"],["15 - 11","4","late-night entry"]);
   const h=document.getElementById("calcHistory");
@@ -5488,7 +5738,7 @@ function calcPress(k){
 }
 
 function renderAll(){
-  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderYourPhone();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
+  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
 const SAVE_KEY="lost_phone_save_v20";
@@ -5496,7 +5746,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:13,
+    version:15,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
