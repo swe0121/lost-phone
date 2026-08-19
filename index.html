@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone</title>
+<title>Lost Phone v26</title>
 <!-- v25: intro viewport fix, expanded JC/May relationship banter across acts, preserved dual-perspective/evidence systems -->
 <style>
 :root{
@@ -20,7 +20,7 @@ body{overflow:hidden}
   position:fixed;
   inset:0;
   background:#000;
-  z-index:300;
+  z-index:200000;
   display:flex;
   align-items:flex-start;
   justify-content:center;
@@ -301,13 +301,14 @@ body{overflow:hidden}
   border:1px solid #2e3541;border-radius:14px;padding:12px;z-index:130;display:none
 }
 #journal h4{margin:0 0 8px;font-size:12px}.logline{font-size:11px;color:#aeb6c2;padding:5px 0;border-bottom:1px solid #232a34}
-#fieldTalk{position:absolute;left:50%;bottom:72px;transform:translateX(-50%);width:min(780px,88%);z-index:170;text-align:center;pointer-events:none;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 10px #000,0 2px 10px #000}
+#fieldTalk{position:absolute;left:50%;bottom:72px;transform:translateX(-50%);width:min(780px,88%);z-index:100000;text-align:center;pointer-events:none;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 10px #000,0 2px 10px #000;isolation:isolate}
+#fieldTalk::before{content:"";position:absolute;inset:-10px -18px -11px;z-index:-1;border-radius:16px;background:linear-gradient(90deg,transparent,rgba(5,8,13,.84) 15%,rgba(5,8,13,.88) 85%,transparent);filter:drop-shadow(0 8px 20px rgba(0,0,0,.35))}
 #fieldTalk.show{opacity:1}
 #fieldSpeaker{font-family:"Courier New",Courier,monospace;font-size:12px;color:#8fb2ff;margin-bottom:5px}
 #fieldText{font-family:"Courier New",Courier,monospace;font-size:15px;line-height:1.45;color:white}
 #fieldTalk.self #fieldSpeaker{color:#8ee0b1}
 #fieldTalk.other #fieldSpeaker{color:#8fb2ff}
-#fieldThought{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);width:min(720px,86%);z-index:175;text-align:center;font:italic 12px/1.55 "Courier New",monospace;color:#9da6b3;pointer-events:none;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 10px #000}
+#fieldThought{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);width:min(720px,86%);z-index:100001;text-align:center;font:italic 12px/1.55 "Courier New",monospace;color:#b1bac8;pointer-events:none;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 12px #000,0 1px 4px #000}
 #fieldThought.show{opacity:1}
 .phone-shell{max-width:620px;margin:0 auto}
 .phone-top{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:10px;font:11px "Courier New",monospace;color:#9ba6b5}
@@ -321,7 +322,7 @@ body{overflow:hidden}
 .mini-icons{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;font-size:20px;max-width:260px}
 .mini-badge{position:absolute;right:10px;top:10px;border:1px solid #3b4658;background:#0d1117;padding:7px;font:9px "Courier New",monospace;color:#cbd3dd}
 .extra-warning{color:#8b95a4;font-size:10px;margin-top:8px}
-#storyPrompt{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);width:min(620px,88%);z-index:190;background:rgba(10,13,18,.985);border:1px solid #3b4658;border-radius:14px;padding:13px 14px;box-shadow:0 22px 70px rgba(0,0,0,.65);display:none}
+#storyPrompt{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);width:min(620px,88%);z-index:100010;background:rgba(10,13,18,.985);border:1px solid #3b4658;border-radius:14px;padding:13px 14px;box-shadow:0 22px 70px rgba(0,0,0,.65);display:none}
 #storyPrompt.show{display:block}
 #storyPromptSpeaker{font-family:"Courier New",Courier,monospace;font-size:11px;color:#8fb2ff;margin-bottom:6px}
 #storyPromptText{font-family:"Courier New",Courier,monospace;font-size:13px;line-height:1.5;color:#f0f2f5;white-space:pre-line}
@@ -345,7 +346,7 @@ body{overflow:hidden}
 .status-grid{display:grid;grid-template-columns:130px 1fr;gap:7px 12px;font-size:12px}
 .status-grid b{font-weight:600;color:#9ba7b7}
 .status-grid span{color:#eef2f6}
-#endingOverlay{position:absolute;inset:0;z-index:260;background:#05070a;display:none;align-items:center;justify-content:center;padding:24px;overflow:auto}
+#endingOverlay{position:absolute;inset:0;z-index:100100;background:#05070a;display:none;align-items:center;justify-content:center;padding:24px;overflow:auto}
 #endingOverlay.show{display:flex}
 #endingCard{width:min(820px,94vw);max-height:88vh;overflow:auto;border:1px solid #303846;background:#0d1117;padding:24px;box-shadow:0 28px 100px rgba(0,0,0,.72)}
 #endingKicker{font:11px "Courier New",monospace;color:#8190a1;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
@@ -1283,6 +1284,15 @@ window.visualViewport?.addEventListener("resize",syncMobileViewport,{passive:tru
 syncMobileViewport();
 
 let z=30, currentChat=null, exploreCount=0, creepStage=0, toastTimer=null, showHiddenFiles=false;
+const WINDOW_Z_BASE=30, WINDOW_Z_MAX=9000;
+function bringWindowToFront(w){
+  if(!w)return;
+  if(z>=WINDOW_Z_MAX){
+    z=WINDOW_Z_BASE;
+    document.querySelectorAll(".window.active").forEach(win=>{win.style.zIndex=String(++z)});
+  }
+  w.style.zIndex=String(++z);
+}
 let storyMinutes=0, storyStage=0, hotspotOn=false, batteryPercent=61, storyPromptOpen=false;
 let playerCharacter=null;
 const completedPerspective={jc:false,may:false};
@@ -1631,7 +1641,7 @@ function openWindow(name){
   startMenu.style.display="none";
   const w=document.getElementById("win-"+name);
   if(!w)return;
-  w.classList.add("active");w.style.zIndex=++z;
+  w.classList.add("active");bringWindowToFront(w);
   if(name==="yourphone")markExtra("your_phone_open");else markSeen("app_"+name);
   if(name==="browser") browserHome();
   if(name==="files") renderFolder("recent");
@@ -1650,7 +1660,7 @@ function openWindow(name){
   }
 }
 function closeWindow(name){document.getElementById("win-"+name).classList.remove("active")}
-document.querySelectorAll(".window").forEach(w=>w.addEventListener("mousedown",()=>w.style.zIndex=++z));
+document.querySelectorAll(".window").forEach(w=>w.addEventListener("mousedown",()=>bringWindowToFront(w)));
 
 function refreshDesktopShortcuts(){
   document.querySelectorAll(".file-shortcut").forEach(btn=>{
@@ -5030,7 +5040,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:7,
+    version:8,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
