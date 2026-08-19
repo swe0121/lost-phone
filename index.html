@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v36</title>
+<title>Lost Phone v37</title>
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
@@ -6144,6 +6144,8 @@ function cheatFullProgress(doSave=true){story.act=6;storyStage=10;storyMinutes=M
 function cheatEverythingLive(){cheatFullProgress(false);hotspotOn=true;if(typeof syncLiveMessages==="function")syncLiveMessages();if(typeof syncVinceLive==="function")syncVinceLive();cheatRefresh("everything unlocked + hotspot live")}
 function cheatDirectEnding(kind){storyPromptOpen=false;const sp=document.getElementById("storyPrompt");if(sp)sp.classList.remove("show");if(kind==="foulplay"&&!canFoulPlayEnding())cheatFullProgress(false);cheatLog(`launching ending • ${kind}`);startEnding(kind)}
 function cheatLog(msg){const el=document.getElementById("cheatLog");if(!el)return;const stamp=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});el.textContent=`[${stamp}] ${msg}\n`+el.textContent.replace(/^waiting for code\.\.\.\n?/,"")}
+/* v37 hotfix: cheat list renderer used esc(...) but no escape helper existed. */
+function esc(value){return String(value??"").replace(/[&<>"\']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","\'":"&#39;"}[ch]))}
 function renderCheats(){const list=document.getElementById("cheatList");if(!list)return;list.innerHTML=CHEAT_CODES.map(c=>`<div class="cheat-card"><b>${esc(c.name)}</b><div class="cheat-code">${esc(c.code)}</div><div class="cheat-desc">${esc(c.desc)}</div><button class="soft" style="margin-top:7px" onclick="copyCheatCode('${c.code}')">put in box</button></div>`).join("")}
 function copyCheatCode(code){const input=document.getElementById("cheatInput");if(input){input.value=code;input.focus();input.select()}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).catch(()=>{});cheatLog(`loaded code • ${code}`)}
 function submitCheatCode(){const input=document.getElementById("cheatInput");if(!input)return;const raw=input.value;const key=normalizeCheatCode(raw);const found=CHEAT_CODES.find(c=>normalizeCheatCode(c.code)===key);if(!found){cheatLog(`invalid code • ${raw||"(blank)"}`);input.select();return}cheatLog(`code recognized • ${found.code}`);input.value="";try{found.run()}catch(err){console.error(err);cheatLog(`code failed • ${String(err.message||err)}`)}}
