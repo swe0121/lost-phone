@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v39</title>
+<title>Lost Phone v40</title>
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
@@ -373,6 +373,11 @@ body{overflow:hidden}
 #endingBody .chatScene{border:1px solid #2d3542;background:#10141b;padding:14px;margin:16px 0}
 #endingBody .chatScene .bubbleLine{padding:7px 10px;margin:6px 0;background:#242b35;width:max-content;max-width:82%}
 #endingBody .chatScene .bubbleLine.me{margin-left:auto;background:#315fa8}
+.cctv-hold{border:1px solid #303846;background:#090c10;border-radius:10px;padding:14px;margin:16px 0;font:12px/1.6 "Courier New",monospace;color:#b7c0ca;min-height:150px;display:flex;flex-direction:column;justify-content:space-between}
+.cctv-frame{height:78px;border:1px solid #202733;background:linear-gradient(180deg,#11161c,#080a0d);position:relative;overflow:hidden;margin:10px 0}
+.cctv-frame::before,.cctv-frame::after{content:"";position:absolute;bottom:14px;width:16px;height:38px;background:#1d232b;border-radius:8px 8px 2px 2px}
+.cctv-frame::before{left:42%}.cctv-frame::after{left:53%;height:40px}
+.cctv-hold .stamp{font-size:10px;color:#6f7a88;letter-spacing:.5px}.restored-state{border-left:3px solid #59687a;padding-left:10px;color:#aeb8c5}
 #endingActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
 #endingActions button{border:1px solid #3b4658;background:#151b24;color:#fff;padding:10px 13px;cursor:pointer;font:12px "Courier New",monospace}
 #endingActions button:hover{background:#242d3a}
@@ -1521,7 +1526,7 @@ const storyFlags={
   beaBikeUnlocked:false,sawBeaBike:false,sawMiso:false,humanizedNiko:false,mentalEstablished:false,
   foulPlayPossible:false,timelineUnlocked:false,finalWindowComplete:false,contactedFamily:false,
   securityEscalated:false,quietTurn:false,mayAteMemory:false,tahoBought:false,
-  metSecurity:false,hotspotUnlocked:false
+  metSecurity:false,hotspotUnlocked:false,noteRevisionRevealed:false
 };
 const evidence=new Set();
 const seen=new Set(), journal=[];
@@ -1720,7 +1725,7 @@ who leaves a whole bag here in this rain?`,choices:[["pick it up",35],["kick it 
 
  {speaker:"jc",text:`yo what the fuck, there's a laptop in here.`,choices:[["check the bag more",38],["take the laptop out",39]]},
 
- {speaker:"may",text:`charger, mouse, some papers... okay this is someone's actual bag.`,choices:[["take the laptop out",39]]},
+ {speaker:"may",text:`charger, mouse, some papers... short cable... okay this is someone's actual bag.`,choices:[["take the laptop out",39]]},
 
  {speaker:"jc",text:`it's still warm.
 
@@ -1899,7 +1904,7 @@ okay, i'm opening it.`,choices:[["watch him check the bag",50]]},
 
  {speaker:"jc",text:`yo what the fuck, there's a laptop in here.`,choices:[["check the rest of the bag",51],["tell him to take the laptop out",52]]},
 
- {speaker:"may",text:`charger, mouse, some papers... okay this is someone's actual bag.`,choices:[["continue",53]]},
+ {speaker:"may",text:`charger, mouse, some papers... short cable... okay this is someone's actual bag.`,choices:[["continue",53]]},
 
  {speaker:"may",text:`take it out. maybe there's a name on it somewhere.`,choices:[["continue",53]]},
 
@@ -1934,6 +1939,59 @@ function updateIntroClock(){
 }
 updateIntroClock();
 
+const FIRST_BOOT_RESIDUE_KEY="lost_phone_first_boot_v40";
+let terminalAudioCtx=null;
+let terminalRainGain=null;
+let terminalAmbienceStarted=false;
+
+function startTerminalAmbience(){
+  if(terminalAmbienceStarted)return;
+  terminalAmbienceStarted=true;
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    const ctx=new AC();terminalAudioCtx=ctx;
+    const seconds=2;
+    const buffer=ctx.createBuffer(1,ctx.sampleRate*seconds,ctx.sampleRate);
+    const data=buffer.getChannelData(0);
+    let last=0;
+    for(let i=0;i<data.length;i++){const white=Math.random()*2-1;last=(last*0.985)+(white*0.015);data[i]=last*2.2;}
+    const src=ctx.createBufferSource();src.buffer=buffer;src.loop=true;
+    const low=ctx.createBiquadFilter();low.type="lowpass";low.frequency.value=1800;
+    const gain=ctx.createGain();gain.gain.value=.012;terminalRainGain=gain;
+    src.connect(low).connect(gain).connect(ctx.destination);src.start();
+    const murmur=()=>{
+      if(!terminalAudioCtx||terminalAudioCtx.state==="closed")return;
+      const now=terminalAudioCtx.currentTime;
+      const osc=terminalAudioCtx.createOscillator();
+      const g=terminalAudioCtx.createGain();
+      const f=terminalAudioCtx.createBiquadFilter();
+      osc.type="sine";osc.frequency.value=95+Math.random()*55;
+      f.type="lowpass";f.frequency.value=260;
+      g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(.0035,now+.35);g.gain.linearRampToValueAtTime(0,now+1.4);
+      osc.connect(f).connect(g).connect(terminalAudioCtx.destination);osc.start(now);osc.stop(now+1.5);
+      setTimeout(murmur,35000+Math.random()*50000);
+    };
+    setTimeout(murmur,28000+Math.random()*30000);
+    document.addEventListener("visibilitychange",()=>{
+      if(!terminalAudioCtx)return;
+      if(document.hidden)terminalAudioCtx.suspend().catch(()=>{});
+      else terminalAudioCtx.resume().catch(()=>{});
+    });
+  }catch(e){console.debug("ambient audio unavailable",e)}
+}
+
+function showFirstBootResidue(){
+  try{if(localStorage.getItem(FIRST_BOOT_RESIDUE_KEY))return;}catch(e){}
+  try{localStorage.setItem(FIRST_BOOT_RESIDUE_KEY,"1");}catch(e){}
+  openWindow("clockapp");
+  const body=document.getElementById("clockBody");
+  if(body){
+    body.innerHTML=`<div class="detail restored-state"><b>restored from sleep</b><p class="muted">last focused item before the lid closed</p><p><b>9:15 pm • aug 17</b></p><p>leave</p><p class="muted">dismissed 9:17 pm</p></div>`+body.innerHTML;
+    body.scrollTop=0;
+  }
+}
+
 function showDialogue(i){
   const d=activeIntro[i];
   speaker.textContent=displaySpeaker(d.speaker);
@@ -1951,10 +2009,12 @@ function startDesktop(){
   if(!playerCharacter)playerCharacter="jc";
   introEl.style.display="none";
   laptopWrap.style.display="flex";
+  startTerminalAmbience();
   renderAll();renderYourPhone();updateConnectionUI();updateTerminalStatus();
+  showFirstBootResidue();
   addJournal("12:23 am • heavy rain and flooding stalled the terminal. found niko's warm bag half under a bench near the terminal-side road. laptop was already unlocked.");
   addJournal("jc and may are stranded in the covered terminal area until the flooding goes down or rides start moving again.");
-  setTimeout(()=>fieldTalk("may","yeah... we're not going anywhere rn. might as well figure out whose laptop this is."),700);
+  setTimeout(()=>fieldTalk("may","yeah... we're not going anywhere rn. might as well figure out whose laptop this is."),1100);
 }
 const introEl=document.getElementById("intro");
 
@@ -2247,6 +2307,7 @@ function isFileUnlocked(folder,key){
   if(finalRecent.includes(key)&&story.act<5)return false;
   if(finalOdd.includes(key)&&story.act<5)return false;
   if(finalCache.includes(key)&&story.act<5)return false;
+  if(key==="noteautosave"&&!storyFlags.noteRevisionRevealed)return false;
   if(folder==="odd"&&story.act<4)return false;
   if(folder==="backup"&&story.act<2)return false;
   if(key==="devcredits"&&story.act<6)return false;
@@ -2370,7 +2431,12 @@ function endingClosure(step){
 }
 function endingFoulPlay(step){
   if(step===0){endingScreen("2:34 am","preserve evidence",`<p>jc stops opening files.</p><p>may writes down the last five timestamps they can verify while security calls the police desk.</p><p>the laptop stays powered on, photographed exactly as they found it, then goes into a sealed bag.</p><p>for the first time all night, nobody treats it like a puzzle.</p><p class="quiet">the guard asks both of them to repeat where the bag was found separately.</p>`,[["leave the terminal",()=>endingCoda(()=>endingFoulPlay(1))]]);return}
-  if(step===1){endingScreen("two days later","evidence review",`<p>a camera from a closed pharmacy across the road has a better angle than the terminal system.</p><p>the footage shows niko leaving the waiting-shed area with the same blue-shirt man described by rj.</p><p>niko looks back toward the terminal twice.</p><p>the man points toward the service road.</p><p>there is no audio.</p><p>nothing in the clip shows an attack.</p><p>but the man is identifiable.</p><p>when questioned, he initially says he never met niko.</p><p class="quiet">the footage makes that statement impossible.</p>`,[["continue",()=>endingFoulPlay(2)]]);return}
+  if(step===1){
+    endingScreen("two days later","evidence review",`<p>a camera from a closed pharmacy across the road has a better angle than the terminal system.</p><div class="cctv-hold"><span class="stamp">CAM 03 • 12:13:58–12:14:06 • NO AUDIO</span><div class="cctv-frame"></div><p>niko and another figure walk through the edge of frame together. nothing happens. they just keep walking.</p></div><p>niko looks back toward the terminal twice.</p><p>the man points toward the service road.</p><p>there is no audio.</p><p>nothing in the clip shows an attack.</p><p>but the man is identifiable.</p><p>when questioned, he initially says he never met niko.</p><p class="quiet">the footage makes that statement impossible.</p>`,[]);
+    const a=document.getElementById("endingActions");
+    setTimeout(()=>{if(story.ending==="foulplay"&&a&&!a.children.length){const b=document.createElement("button");b.textContent="continue";b.onclick=()=>endingFoulPlay(2);a.appendChild(b)}},6500);
+    return
+  }
   if(step===2){endingScreen("three days later","phone",`<p>workers clearing storm debris find niko's phone lodged behind a drainage grate off the service road.</p><p>the screen is shattered.</p><p>the device is powered off.</p><p>the SIM tray is empty.</p><p>water damage destroys most local data before it can be recovered.</p><p>the serial number matches niko's account records.</p><p class="quiet">the phone was not at the terminal when jc and may found the bag.</p><p class="quiet">now investigators know where one missing object ended up.</p>`,[["continue",()=>endingFoulPlay(3)]]);return}
   if(step===3){endingScreen("case status","suspected foul play",`<p>the disappearance is no longer treated as a simple voluntary walk-off.</p><p>the blue-shirt man's movements, the recovered phone, witness accounts and the final laptop window are preserved as part of the same case.</p><p>investigators do not tell jc or may everything.</p><p>they do tell the family one thing:</p><p><b>niko did not simply leave the terminal alone and disappear by accident.</b></p><p class="quiet">that is more certainty than anyone had before.</p><p class="quiet">it is much less comforting than certainty sounded in their heads.</p>`,[["continue",()=>endingFoulPlay(4)]]);return}
   if(step===4){endingScreen("later","mama",`<p>after the forensic copy is completed, niko's mother receives the laptop.</p><p>the desktop opens exactly where jc and may left it.</p><p>she clicks <b>miso_sleeping.jpg</b>.</p><p>orange cat. niko's backpack. file comment: <span class="quiet">useless animal ❤️</span></p><p>her cursor passes over Messenger, Notes, Downloads and the folders strangers had to search to find him.</p><p>she opens none of them.</p><p>then she closes the lid.</p>`,[["continue",()=>endingFoulPlay(5)]]);return}
@@ -3103,7 +3169,7 @@ function progressStory(){
     setTimeout(()=>fieldTalk("may","...thanks. don't get smug about being useful once.",3900),18800);
     setTimeout(()=>fieldTalk("jc","too late. this is going on my résumé.",3600),22900);
   }else if(storyStage===8 && timelineKnownCount()>=8){
-    storyStage=9;advanceStory(16);storyFlags.toldGuard=true;storyFlags.heardPhoneClue=true;markEvidence("world_phoneclue");addJournal(storyTimeLabel()+" • security remembers a soaked man asking around 12:18 if anyone had turned in a PHONE. dark cap/jacket. no name.");fieldTalk("security","around 12:18 a soaked guy asked if anyone turned in a phone. dark cap, dark jacket. could be unrelated. i didn't get a name.",6200);
+    storyStage=9;advanceStory(16);storyFlags.toldGuard=true;storyFlags.heardPhoneClue=true;markEvidence("world_phoneclue");addJournal(storyTimeLabel()+" • security remembers a soaked man asking around 12:18 if anyone had turned in a PHONE. dark cap/jacket. no name. guard remembers him being oddly calm for how drenched he was.");fieldTalk("security","around 12:18 a soaked guy asked if anyone turned in a phone. dark cap, dark jacket. weird thing is he was really calm for how soaked he was. could still be unrelated. i didn't get a name.",7200);
   }else if(storyStage===9 && finalScore()>=6){
     storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • may's route begins limited service. the coffee stall is closed and most benches are empty.");
     fieldTalk("may","you're quiet.",2500);
@@ -3319,7 +3385,8 @@ odd:[
  ["📄","battery_history.csv","hidden","batteryhist"],
  ["📄","file_access_1209.log","hidden","fileaccess1209"],
  ["📄","old_bluetooth_scan.log","hidden","oldbtscan"],
- ["📄","media_index.log","hidden","mediaindex"]
+ ["📄","media_index.log","hidden","mediaindex"],
+ ["📄","note_autosave_history.log","hidden","noteautosave"]
 ]
 };
 
@@ -3599,7 +3666,7 @@ function openFile(k){
     odd_bagcheck:`<div class="detail"><h4>night_bag_check.txt</h4><p>laptop</p><p>charger</p><p>mouse</p><p>phone</p><p>wallet</p><p>keys</p><p>powerbank</p><p>umbrella</p><p>blue notebook?</p><p class="muted">last edited aug 17, 9:41 pm. the bag jc and may found contains the laptop, charger, mouse and loose papers. this list does not prove everything was packed.</p></div>`,
     odd_photogaps:`<div class="detail"><h4>photo_index_gaps.txt</h4><p>IMG_4481 • indexed 12:03</p><p>IMG_4482 • missing</p><p>IMG_4483 • missing</p><p>IMG_4484 • indexed 12:07</p><p class="muted">the index only proves two expected filenames are absent. they may have been deleted, never fully written, or created on another device.</p></div>`,
     odd_4421:`<div class="detail"><h4>number_4421_notes.txt</h4><p>last four: 4421</p><p>called 10:56 / 11:27 / 11:33</p><p>"no saved contact"</p><p>"could be bar? delivery? someone from before?"</p><p>"stop guessing"</p><p class="muted">niko never identified the number in this file.</p></div>`,
-    odd_glass:`<div class="detail"><h4>terminal_glass.jpg</h4><p>12:05 am • rain-covered glass near the terminal-side shelter.</p><p>one dark figure is visible outside, but the reflection doubles the shape and makes distance impossible to judge.</p><p class="muted">could be one person, a reflection, or two overlapping people.</p></div>`,
+    odd_glass:`<div class="detail"><h4>terminal_glass.jpg</h4><p>12:05 am • rain-covered glass near the terminal-side shelter.</p><p>one dark figure is visible outside, but the reflection doubles the shape and makes distance impossible to judge.</p><p>slight directional motion blur runs across the whole frame; the camera was moving when the image was taken.</p><p class="muted">could be one person, a reflection, or two overlapping people.</p><button class="soft" onclick="refuseGlassZoom()">zoom in</button></div>`,
     odd_benchwide:`<div class="detail"><h4>bench_wide.jpg</h4><p>12:09 am • blurry wide image of the side road and bench area.</p><p>the bench looks empty. there is a dark shape near one leg that could be a bag, shadow, or pooled water.</p><p class="muted">taken before the 12:11 inside-bag image.</p></div>`,
     privateshare:`<div class="detail"><h4>private_share.log</h4><p>lia_longmessage.png → boys gc</p><p>maria_voice_2.m4a → boys gc</p><p>ash_selfie.jpg → local downloads</p><p>celine_argument.png → boys gc</p><p class="muted">the log suggests private messages and media were copied out of chats.</p></div>`,
     presencewatch:`<div class="detail"><h4>presence_watch.db</h4><p>airam online 22:13</p><p>airam online 22:44</p><p>ecarg online 23:01</p><p>enilec online 23:10</p><p>lia online 23:11</p><p class="muted">entries look manually refreshed rather than automatically logged.</p></div>`,
@@ -3612,6 +3679,7 @@ function openFile(k){
     fileaccess1209:`<div class="detail"><h4>file_access_1209.log</h4><p>12:09:03 • route_markup.png opened</p><p>12:09:21 • contacts_export.csv opened</p><p>12:09:44 • unsent_0817.txt modified</p><p>12:10:02 • file explorer focus changed</p><p class="muted">the local record cannot identify who was at the keyboard.</p></div>`,
     oldbtscan:`<div class="detail"><h4>old_bluetooth_scan.log</h4><p>aug 2 • 7:18 pm • xphone_6b detected near print shop • no connection</p><p>aug 17 • 11:49 pm • xphone_6b detected</p><p class="muted">same broadcast name appeared once weeks earlier. that could mean the same device, a reused generic name, or coincidence.</p></div>`,
     mediaindex:`<div class="detail"><h4>media_index.log</h4><p>11:57 • street image indexed • source unknown</p><p>12:05 • terminal_glass.jpg indexed • local media</p><p>12:07 • waiting shed image indexed • source unknown</p><p>12:09 • bench_wide.jpg indexed • local media</p><p>12:11 • bagfloor image indexed • camera app</p><p class="muted">the laptop does not preserve enough metadata to prove which device created every image.</p></div>`,
+    noteautosave:`<div class="detail"><h4>note_autosave_history.log</h4><p>note: don't look outside</p><p>aug 16 • cached copy: "wait 20 min before looking."</p><p>aug 16 • newer local autosave: "wait 15 min before looking."</p><p>aug 18 12:09 • notes cache rebuilt from newer local autosave during file activity.</p><p class="muted">no network sync was required. the wording changed because the notes app exposed a newer local draft, not because the file changed by itself.</p></div>`,
     templates:`<div class="detail"><h4>messages.txt</h4><p>"good morning pretty, hope u slept well"</p><p>"text me when u get home"</p><p>"you know i don't talk to anyone else like this"</p><p>"sorry i fell asleep"</p><p>"my battery died"</p><p class="muted">some lines have c, ash, m, and lia typed beside them.</p></div>`,
     birthdays:`<div class="detail"><h4>dates.txt</h4><p>lia • feb 4</p><p>c • jun 18</p><p>ash • oct 2</p><p>m • ???</p><p>"remember favorite drinks"</p></div>`,
     screensend:`<div class="detail"><h4>sent_3x.png</h4><p>three messenger windows side by side.</p><p>niko sent the exact same mirror selfie to three different chats within six minutes.</p><p>the visible replies are: "cute", "finally 😭", and "thought u were asleep?"</p></div>`,
@@ -3800,6 +3868,7 @@ function openFile(k){
   if(k==="fileaccess1209"){addJournal("12:09 local activity opened the route image and contacts export, then modified the unsent note. the log cannot identify the user.");}
   if(k==="oldbtscan"){addJournal("xphone_6b's name appeared once weeks earlier near the print shop, making it stranger but not proving it was the same physical phone.");}
   if(k==="mediaindex"){addJournal("media metadata mixes camera-app and unknown-source images during the offline window, suggesting more than one capture/import path but not necessarily more than one person.");}
+  if(k==="noteautosave"){addJournal("the changed line in 'don't look outside' is explained by a newer local autosave being exposed when the notes cache rebuilt. mundane version history, not a supernatural change.");}
 
   if(k==="aliases"){addJournal("hidden alias file maps the reversed names to real girls.");setTimeout(()=>fieldTalk("may","wait... so he literally renamed them backwards??"),250);}
   if(k==="sessionlog"){addJournal("session log ends at 12:14 am, nine minutes before we found the warm bag.");setTimeout(()=>fieldTalk("jc","12:14. we found this at 12:23... that's only nine minutes."),250);}
@@ -4697,6 +4766,7 @@ left when jeep came
 could literally have been waiting for a ride
 no photo. no proof. stop.`]
 ]
+const noteViewCounts={};
 function renderNotes(){
   const creepNotes=["heard it again","gray car","don't look outside","3am rule","hallway","camera zoom","familiar faces","if i'm wrong","across the street"];
   const arr=notes.map((n,i)=>[n,i]).filter(([n])=>{
@@ -4711,7 +4781,20 @@ function renderNotes(){
 function openNote(i){
   markSeen("note_"+i);
   const title=notes[i][0];
-  noteView.innerHTML=`<h3>${title}</h3><div style="white-space:pre-line">${notes[i][2]}</div>`;noteView.scrollTop=0;
+  noteViewCounts[title]=(noteViewCounts[title]||0)+1;
+  let noteBody=notes[i][2];
+  let versionLine="";
+  if(title==="don't look outside"&&story.act>=5&&noteViewCounts[title]>=2){
+    noteBody=noteBody.replace("wait 20 min before looking.","wait 15 min before looking.");
+    versionLine=`<p class="muted">local note cache refreshed from a newer autosave.</p>`;
+    if(!storyFlags.noteRevisionRevealed){
+      storyFlags.noteRevisionRevealed=true;
+      toast("notes","newer local autosave restored • version record available in hidden cache");
+      renderFileSidebar();
+      if(showHiddenFiles&&currentFileFolder===".cache")renderFolder(".cache");
+    }
+  }
+  noteView.innerHTML=`<h3>${title}</h3><div style="white-space:pre-line">${noteBody}</div>${versionLine}`;noteView.scrollTop=0;
   if(title==="rules")addJournal("weird rules about deleting chats and not taking the same person to the same place.");
   if(title==="excuses")addJournal("niko literally kept a list of excuses.");
   if(title==="heard it again")addJournal("a private note records niko hearing his name when nobody was there, then immediately writing down sleep loss as a possible explanation.");
@@ -4756,6 +4839,9 @@ function renderPhotos(){
   let arr=photosBase.filter(p=>{if(cheating.includes(p[0])&&story.act<2)return false;if(mental.includes(p[0])&&story.act<4)return false;if(foul.includes(p[0])&&story.act<5)return false;return true});
   photoGrid.innerHTML=arr.map(p=>`<div class="photo ${p[1]}" onclick="openPhoto('${p[0]}')"><div class="cap">${p[2]}</div></div>`).join("");
 }
+function refuseGlassZoom(){
+  toast("photos","source is already at native crop. motion blur + rain mean digital zoom would only interpolate pixels.");
+}
 function openPhoto(id){
   markSeen("photo_"+id);
   const map={
@@ -4779,11 +4865,11 @@ function openPhoto(id){
     goat_poster:`<div class="detail"><h4>aug 14 • 11:48 pm</h4><p>torn horned-goat poster taped near a convenience store.</p><p>small print appears to advertise a metal event.</p><p class="muted">niko photographed only the symbol first, then the full poster thirty seconds later.</p></div>`,
     chalk_circle:`<div class="detail"><h4>aug 16 • 2:18 am</h4><p>faded chalk star/circle behind a parking structure.</p><p>several shoe prints cross it and a plastic cup is lying in the center.</p><p class="muted">nothing indicates who made it.</p></div>`,
     bar_symbol:`<div class="detail"><h4>aug 17 • 10:49 pm</h4><p>close-up of a marker symbol on the bar bathroom wall.</p><p>the uncropped image shows it surrounded by ordinary graffiti.</p><p class="muted">niko's own comparison file says this does not actually match the underpass symbol.</p></div>`,
-    terminal_glass:`<div class="detail"><h4>12:05 am</h4><p>rain-covered glass near the terminal-side shelter.</p><p>a dark figure outside is doubled by reflection. there is no useful face or clothing detail.</p><p class="muted">the image cannot establish whether one or two people are visible.</p></div>`,
+    terminal_glass:`<div class="detail"><h4>12:05 am</h4><p>rain-covered glass near the terminal-side shelter.</p><p>a dark figure outside is doubled by reflection. there is no useful face or clothing detail.</p><p>the entire frame has slight directional motion blur, consistent with the camera moving while the shutter fired.</p><p class="muted">the image cannot establish whether one or two people are visible.</p><button class="soft" onclick="refuseGlassZoom()">zoom in</button></div>`,
     bench_wide:`<div class="detail"><h4>12:09 am</h4><p>wide blurry view toward the bench and flooded curb.</p><p>the bench itself appears empty. a dark shape near the leg could be a bag, shadow, or pooled water.</p><p class="muted">two minutes later the laptop appears in an inside-bag image.</p></div>`,
     street:`<div class="detail"><h4>11:57 pm</h4><p>dark street photo. image is tilted like the phone was being put away.</p></div>`,
     waitingshed:`<div class="detail"><h4>12:07 am</h4><p>rain-smeared photo facing a covered waiting shed near the terminal-side road.</p><p>a person with an umbrella is visible at the far edge of the frame.</p><p>face, clothes, and direction of travel can't be made out.</p><p class="muted">the same bench area where jc and may later find the bag appears farther down the road.</p></div>`,
-    bagfloor:`<div class="detail"><h4>12:11 am</h4><p>inside of a black bag. blurry zipper and laptop corner.</p><p class="muted">photo orientation is sideways.</p></div>`,
+    bagfloor:`<div class="detail"><h4>12:11 am</h4><p>inside of a black bag. blurry zipper and laptop corner.</p><p>a clear card sleeve sewn into the inner flap looks empty. a short braided cable lies loose beside the mesh pocket with nothing attached.</p><p class="muted">photo orientation is sideways. the image cannot show whether either detail was unusual before this moment.</p></div>`,
   };
   showWindowDetail("photos",map[id]||`<div class="detail muted">nothing useful.</div>`);
   if(id==="hallway"||id==="hoodie"||id==="hands")addJournal("more photos don't line up with what niko told lia.");
@@ -6117,7 +6203,7 @@ function openDiscord(i){
   const msgs=[
     `<p><b>ken:</b> sent the file already</p><p><b>niko:</b> got it</p>`,
     `<p><b>group vc:</b> join later?</p><p><b>niko:</b> maybe after</p>`,
-    `<p><b>vince:</b> u still coming tonight?</p><p><b>niko:</b> yeah around 10</p><p><b>vince:</b> aight gray hoodie ako</p>`,
+    `<p><b>vince:</b> u still coming tonight?</p><p><b>niko:</b> yeah around 10</p><p><b>vince:</b> aight gray hoodie ako</p><p><b>vince:</b> when u get there tell me exactly where you're standing. side bench or shed?</p><p><b>niko:</b> probably waiting shed</p><p><b>vince:</b> aight easier to spot u in this rain</p>`,
     `<p><b>cam:</b> where are you</p><p><b>niko:</b> inside</p><p><b>cam:</b> can't see u</p><p><b>niko:</b> wait</p>`,
     `<p class="muted">cached server messages unavailable beyond the last sync.</p>`
   ][i];
@@ -6148,17 +6234,21 @@ function openWeatherSnapshot(i){
 
 function renderClockApp(){
   const alarms=[
-    ["6:30 am • weekdays","class","active"],
-    ["8:00 am • saturday","laundry","active"]
+    ["6:30 am • weekdays","class","active","class"],
+    ["8:00 am • saturday","laundry","active","laundry"]
   ];
-  if(story.act>=4)alarms.push(["3:20 pm • mon aug 17","leave for dr. reyes","dismissed"],["4:00 pm • mon aug 17","appointment","missed"]);
-  if(story.act>=5)alarms.push(["9:15 pm • aug 17","leave","dismissed 9:17 pm"]);
-  clockBody.innerHTML=`<h3 style="margin-top:0">clock</h3><div class="detail"><b>saved alarms</b><p class="muted">local alarm history</p></div>`+alarms.map((a,i)=>`<div class="index-row" onclick="openClockEntry(${i},&quot;${a[1]}&quot;)"><b>${a[0]}</b><small>${a[1]} • ${a[2]}</small></div>`).join("")+`<div class="detail"><p><b>recent timers</b></p><p>20 min • laundry</p><p>15 min • food delivery</p><p>10 min • "leave soon"</p></div>`;
+  if(story.act>=4)alarms.push(["3:20 pm • mon aug 17","leave for dr. reyes","dismissed","therapy_leave"],["4:00 pm • mon aug 17","appointment","missed","appointment"]);
+  if(story.act>=5){
+    alarms.push(["7:35 pm • aug 2","leave","dismissed 7:37 pm","leave_old"]);
+    alarms.push(["9:15 pm • aug 17","leave","dismissed 9:17 pm","leave_aug17"]);
+  }
+  clockBody.innerHTML=`<h3 style="margin-top:0">clock</h3><div class="detail"><b>saved alarms</b><p class="muted">local alarm history</p></div>`+alarms.map((a,i)=>`<div class="index-row" onclick="openClockEntry(${i},&quot;${a[3]}&quot;)"><b>${a[0]}</b><small>${a[1]} • ${a[2]}</small></div>`).join("")+`<div class="detail"><p><b>recent timers</b></p><p>20 min • laundry</p><p>15 min • food delivery</p><p>10 min • "leave soon"</p></div>`;
 }
-function openClockEntry(i,label){
-  markSeen("clock_entry_"+i+"_"+label);
-  if(label==="appointment")addJournal("clock history shows niko had an alarm for the dr. reyes appointment he missed. it was not deleted afterward.");
-  if(label==="leave")addJournal("niko set a 9:15 pm 'leave' alarm on aug 17 and dismissed it at 9:17. it suggests his night out was planned at least in part.");
+function openClockEntry(i,id){
+  markSeen("clock_entry_"+i+"_"+id);
+  if(id==="appointment")addJournal("clock history shows niko had an alarm for the dr. reyes appointment he missed. it was not deleted afterward.");
+  if(id==="leave_aug17")addJournal("niko set a 9:15 pm 'leave' alarm on aug 17 and dismissed it at 9:17. it suggests his night out was planned at least in part.");
+  /* leave_old is deliberately not journaled. it is just an older two-minute dismissal sitting in ordinary alarm history. */
 }
 
 function renderCalculator(){
@@ -6222,8 +6312,8 @@ function cheatAct4(){cheatAct3();cheatAddSeen(["file_bea_bike","file_miso"]);Obj
 function cheatAct5(){cheatAct4();cheatAddSeen(["chat_drreyes","chat_mika","file_therapy_notes","file_reality_check"]);storyFlags.mentalEstablished=true;story.act=Math.max(story.act,5);storyStage=Math.max(storyStage,5);storyMinutes=Math.max(storyMinutes,65);cheatRefresh("act 5 unlocked")}
 function cheatAct6(){cheatAct5();cheatAddSeen(["photo_glass","chat_rj","chat_vince","file_odd_calls","file_odd_route","photo_waitingshed"]);Object.assign(storyFlags,{foulPlayPossible:true,timelineUnlocked:true});story.act=6;storyStage=Math.max(storyStage,8);storyMinutes=Math.max(storyMinutes,90);cheatRefresh("act 6 + timeline unlocked")}
 function cheatHotspot(){Object.assign(storyFlags,{metSecurity:true,toldGuard:true,hotspotUnlocked:true});storyStage=Math.max(storyStage,4);storyMinutes=Math.max(storyMinutes,45);cheatRefresh("security complete • hotspot unlocked")}
-function cheatAllAccess(){story.act=6;showHiddenFiles=true;Object.assign(storyFlags,{foundIdentity:true,heardMamaVoicemail:true,foundLia:true,cheatingEstablished:true,beaBikeUnlocked:true,sawBeaBike:true,sawMiso:true,humanizedNiko:true,mentalEstablished:true,foulPlayPossible:true,timelineUnlocked:true});cheatAddSeen(["file_resume","chat_lia","chat_celine","chat_ash","chat_maria","chat_boys","file_bea_bike","file_miso","chat_drreyes","chat_mika"]);cheatRefresh("all gated files + chats unlocked")}
-function cheatFullProgress(doSave=true){story.act=6;storyStage=10;storyMinutes=Math.max(storyMinutes,125);story.ending=null;story.endingReady=true;showHiddenFiles=true;Object.assign(storyFlags,{foundIdentity:true,heardMamaVoicemail:true,foundLia:true,cheatingEstablished:true,beaBikeUnlocked:true,sawBeaBike:true,sawMiso:true,humanizedNiko:true,mentalEstablished:true,foulPlayPossible:true,timelineUnlocked:true,finalWindowComplete:true,heardPhoneClue:true,toldGuard:true,metSecurity:true,hotspotUnlocked:true,vendorAsked:true,mayAteMemory:true,tahoBought:true,stayLonger:true});cheatAddSeen(["file_resume","chat_lia","chat_celine","chat_ash","chat_maria","chat_boys","file_girlmatrix","file_copylog","file_templates","file_bea_bike","file_miso","chat_drreyes","chat_mika","file_therapy_notes","file_reality_check","file_sleep_notes_aug","file_odd_symbols","file_odd_333","photo_glass","chat_rj","chat_vince","file_odd_calls","file_odd_route","photo_waitingshed","file_cache_session","file_cache_sync","file_btlog","file_usblog","file_camevents","photo_terminal_glass","photo_bagfloor","file_fileaccess1209"]);cheatRefresh("full progression + all ending requirements",doSave)}
+function cheatAllAccess(){story.act=6;showHiddenFiles=true;Object.assign(storyFlags,{foundIdentity:true,heardMamaVoicemail:true,foundLia:true,cheatingEstablished:true,beaBikeUnlocked:true,sawBeaBike:true,sawMiso:true,humanizedNiko:true,mentalEstablished:true,foulPlayPossible:true,timelineUnlocked:true,noteRevisionRevealed:true});cheatAddSeen(["file_resume","chat_lia","chat_celine","chat_ash","chat_maria","chat_boys","file_bea_bike","file_miso","chat_drreyes","chat_mika"]);cheatRefresh("all gated files + chats unlocked")}
+function cheatFullProgress(doSave=true){story.act=6;storyStage=10;storyMinutes=Math.max(storyMinutes,125);story.ending=null;story.endingReady=true;showHiddenFiles=true;Object.assign(storyFlags,{foundIdentity:true,heardMamaVoicemail:true,foundLia:true,cheatingEstablished:true,beaBikeUnlocked:true,sawBeaBike:true,sawMiso:true,humanizedNiko:true,mentalEstablished:true,foulPlayPossible:true,timelineUnlocked:true,finalWindowComplete:true,heardPhoneClue:true,toldGuard:true,metSecurity:true,hotspotUnlocked:true,vendorAsked:true,mayAteMemory:true,tahoBought:true,stayLonger:true,noteRevisionRevealed:true});cheatAddSeen(["file_resume","chat_lia","chat_celine","chat_ash","chat_maria","chat_boys","file_girlmatrix","file_copylog","file_templates","file_bea_bike","file_miso","chat_drreyes","chat_mika","file_therapy_notes","file_reality_check","file_sleep_notes_aug","file_odd_symbols","file_odd_333","photo_glass","chat_rj","chat_vince","file_odd_calls","file_odd_route","photo_waitingshed","file_cache_session","file_cache_sync","file_btlog","file_usblog","file_camevents","photo_terminal_glass","photo_bagfloor","file_fileaccess1209"]);cheatRefresh("full progression + all ending requirements",doSave)}
 function cheatEverythingLive(){cheatFullProgress(false);hotspotOn=true;if(typeof syncLiveMessages==="function")syncLiveMessages();if(typeof syncVinceLive==="function")syncVinceLive();cheatRefresh("everything unlocked + hotspot live")}
 function cheatDirectEnding(kind){storyPromptOpen=false;const sp=document.getElementById("storyPrompt");if(sp)sp.classList.remove("show");if(kind==="foulplay"&&!canFoulPlayEnding())cheatFullProgress(false);cheatLog(`launching ending • ${kind}`);startEnding(kind)}
 function cheatLog(msg){const el=document.getElementById("cheatLog");if(!el)return;const stamp=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});el.textContent=`[${stamp}] ${msg}\n`+el.textContent.replace(/^waiting for code\.\.\.\n?/,"")}
@@ -6241,7 +6331,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:19,
+    version:20,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -6255,7 +6345,7 @@ function createSaveData(){
     talkIndex,
     hintIndex,
     storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence],
-    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex}
+    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex},noteViewCounts:{...noteViewCounts}
   };
 }
 
@@ -6334,6 +6424,8 @@ function applySaveData(data){
   Object.assign(relationshipTalkIndex,data.relationshipTalkIndex||{});
   if(Number(data.version||0)>=13)Object.assign(ambientSceneIndex,data.ambientSceneIndex||{});
   else Object.keys(ambientSceneIndex).forEach(k=>ambientSceneIndex[k]=0);
+  Object.keys(noteViewCounts).forEach(k=>delete noteViewCounts[k]);
+  Object.assign(noteViewCounts,data.noteViewCounts||{});
   evidence.clear();(data.evidence||[]).forEach(x=>evidence.add(x));
   const ensureMsg=(k,text)=>{if(chats[k]&&!chats[k].msgs.some(m=>m[1]===text))chats[k].msgs.push(["them",text]);};
   if(storyFlags.liveSynced){
@@ -6491,6 +6583,7 @@ function continueSavedGame(){
     const data=JSON.parse(raw);
     introEl.style.display="none";
     laptopWrap.style.display="flex";
+    startTerminalAmbience();
     applySaveData(data);
     toast("save","continued saved game");
     return true;
