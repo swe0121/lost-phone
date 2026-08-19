@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v35</title>
+<title>Lost Phone v36</title>
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
@@ -304,6 +304,19 @@ body{overflow:hidden}
 }
 #journal h4{margin:0 0 8px;font-size:12px}.logline{font-size:11px;color:#aeb6c2;padding:5px 0;border-bottom:1px solid #232a34}
 #fieldTalk{position:absolute;left:50%;bottom:72px;transform:translateX(-50%);width:min(780px,88%);z-index:100000;text-align:center;pointer-events:none;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 10px #000,0 2px 10px #000;isolation:isolate}
+
+/* v36 REAL CHEAT CODE CONSOLE */
+.cheat-shell{display:grid;grid-template-columns:minmax(250px,.9fr) minmax(320px,1.4fr);gap:12px;height:100%;min-height:0}
+.cheat-left,.cheat-right{min-width:0;min-height:0;overflow:auto}
+.cheat-entry{display:flex;gap:8px;align-items:center;position:sticky;top:0;background:#0c1017;padding:10px;border:1px solid #29313d;border-radius:10px;z-index:2}
+.cheat-entry input{flex:1;min-width:0;background:#080b10;border:1px solid #394456;color:#e8edf5;padding:10px 11px;border-radius:7px;font:inherit}
+.cheat-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all;color:#e9edf6}
+.cheat-card{border:1px solid #29313d;background:#11161e;border-radius:9px;padding:10px;margin-bottom:8px}
+.cheat-card b{display:block;margin-bottom:5px}.cheat-desc{color:#9ba8ba;font-size:12px;line-height:1.45}
+.cheat-log{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#070a0f;border:1px solid #29313d;border-radius:9px;padding:11px;min-height:100px}
+.cheat-warning{border-left:3px solid #69788f;padding-left:10px;color:#9ba8ba;font-size:12px}
+@media(max-width:700px){.cheat-shell{grid-template-columns:1fr}.cheat-left,.cheat-right{overflow:visible}.cheat-entry{position:relative}}
+
 #fieldTalk::before{content:"";position:absolute;inset:-10px -18px -11px;z-index:-1;border-radius:16px;background:linear-gradient(90deg,transparent,rgba(5,8,13,.84) 15%,rgba(5,8,13,.88) 85%,transparent);filter:drop-shadow(0 8px 20px rgba(0,0,0,.35))}
 #fieldTalk.show{opacity:1}
 #fieldSpeaker{font-family:"Courier New",Courier,monospace;font-size:12px;color:#8fb2ff;margin-bottom:5px}
@@ -1044,6 +1057,7 @@ this rain is getting stupid though.</span></button>
         <button class="desktop-icon" onclick="openWindow('sports')"><span class="ico">🏀</span><span class="lbl">sports</span></button>
         <button class="desktop-icon" onclick="openWindow('steam')"><span class="ico">🎮</span><span class="lbl">steam</span></button>
         <button class="desktop-icon" onclick="openWindow('instagram')"><span class="ico">📸</span><span class="lbl">instagram</span></button>
+        <button class="desktop-icon" onclick="openWindow('cheats')"><span class="ico">🧪</span><span class="lbl">cheat codes</span></button>
         <button class="desktop-icon" onclick="openWindow('memes')"><span class="ico">😂</span><span class="lbl">memes</span></button>
         <button class="desktop-icon" onclick="openWindow('snips')"><span class="ico">✂️</span><span class="lbl">screenshots</span></button>
 
@@ -1123,6 +1137,7 @@ this rain is getting stupid though.</span></button>
           <button class="start-item" onclick="openWindow('sports')">🏀<br>sports</button>
           <button class="start-item" onclick="openWindow('steam')">🎮<br>steam</button>
           <button class="start-item" onclick="openWindow('instagram')">📸<br>instagram</button>
+          <button class="start-item" onclick="openWindow('cheats')">🧪<br>cheats</button>
           <button class="start-item" onclick="openWindow('memes')">😂<br>memes</button>
           <button class="start-item" onclick="openWindow('snips')">✂️<br>screenshots</button>
           <button class="start-item" onclick="openWindow('yourphone')">📱<br>your phone</button>
@@ -1302,6 +1317,21 @@ this rain is getting stupid though.</span></button>
       <div class="window" id="win-instagram">
         <div class="window-bar"><div class="window-title">📸 instagram</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('instagram')">_</button><button class="win-btn close" onclick="closeWindow('instagram')">×</button></div></div>
         <div class="window-body content"><div id="instagramBody"></div></div>
+      </div>
+
+      <div class="window" id="win-cheats">
+        <div class="window-bar"><div class="window-title">🧪 cheat codes</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('cheats')">_</button><button class="win-btn close" onclick="closeWindow('cheats')">×</button></div></div>
+        <div class="window-body content">
+          <div class="cheat-shell">
+            <div class="cheat-left">
+              <div class="cheat-entry"><input id="cheatInput" autocomplete="off" spellcheck="false" placeholder="type a long stupid word..." onkeydown="if(event.key==='Enter')submitCheatCode()"><button class="soft" onclick="submitCheatCode()">enter</button></div>
+              <div style="height:10px"></div>
+              <div id="cheatLog" class="cheat-log">waiting for code...</div>
+              <p class="cheat-warning">these are real progression cheats. they can skip scenes and make later dialogue happen without earlier context. saves keep whatever a code changed.</p>
+            </div>
+            <div class="cheat-right"><div class="detail" style="margin-top:0"><b>available codes</b><p class="muted">case-insensitive. spaces and punctuation are ignored.</p></div><div id="cheatList"></div></div>
+          </div>
+        </div>
       </div>
 
       <div class="window" id="win-memes">
@@ -6081,8 +6111,45 @@ function calcPress(k){
   else el.value+=k;
 }
 
+
+// =========================================================
+// v36 REAL CHEAT CODES
+// =========================================================
+const CHEAT_CODES=[
+  {code:"watermelonoverpasscalculator",name:"act 2 • contradictions",desc:"identifies Niko, marks Mama/Lia found, and opens the cheating-context layer.",run:()=>cheatAct2()},
+  {code:"microwaveplatypuscathedral",name:"act 3 • relationship mess",desc:"adds enough cheating context and unlocks Bea's bike-video stage.",run:()=>cheatAct3()},
+  {code:"moonlightcalculatorconcretebanana",name:"act 4 • humanize Niko",desc:"marks Bea + Miso context and opens therapy/perception material.",run:()=>cheatAct4()},
+  {code:"refrigeratorparachuteheadphonescement",name:"act 5 • outside witnesses",desc:"adds enough mental-health context and opens RJ/Vince/Cam/final-night material.",run:()=>cheatAct5()},
+  {code:"crocodileblueprintmidnighttelephone",name:"act 6 • timeline",desc:"adds suspicious independent evidence and unlocks the final timeline.",run:()=>cheatAct6()},
+  {code:"satellitepancakeconstructionhelmet",name:"security + hotspot",desc:"marks the security encounter complete and unlocks JC's hotspot without switching it on.",run:()=>cheatHotspot()},
+  {code:"thunderstormspaghettielevator",name:"all files + chats",desc:"opens every story-gated file/chat tier and shows hidden folders without starting an ending.",run:()=>cheatAllAccess()},
+  {code:"hyperventilatingwatermelonarchitecture",name:"full progression",desc:"fills all major prerequisites and final-window evidence so every ending can be reached.",run:()=>cheatFullProgress()},
+  {code:"hippopotamuscalculatorumbrella",name:"ending choice menu",desc:"full-unlocks the finale and immediately opens the normal final decision menu.",run:()=>{cheatFullProgress(false);setTimeout(()=>offerEndingChoice(),100)}},
+  {code:"marshmallowbasketballmicroscope",name:"UNRESOLVED",desc:"jumps directly into the Unresolved ending sequence.",run:()=>cheatDirectEnding("unresolved")},
+  {code:"pineappleconstructionnightmare",name:"FALSE CLOSURE",desc:"jumps directly into the False Closure ending sequence.",run:()=>cheatDirectEnding("closure")},
+  {code:"crocodilescaffoldingblueberrytelephone",name:"FOUL PLAY",desc:"full-unlocks the evidence requirements and jumps directly into Foul Play.",run:()=>{cheatFullProgress(false);cheatDirectEnding("foulplay")}},
+  {code:"ostrichkeyboardcivilengineerwaterfall",name:"everything + live sync",desc:"full progression, hidden files, security/hotspot, and live Messenger sync in one code.",run:()=>cheatEverythingLive()}
+];
+function normalizeCheatCode(v){return String(v||"").toLowerCase().replace(/[^a-z0-9]/g,"")}
+function cheatAddSeen(keys){(keys||[]).forEach(k=>{seen.add(k);if(k.startsWith("photo_")||k.startsWith("file_")||k.startsWith("chat_"))evidence.add(k)})}
+function cheatRefresh(label,doSave=true){storyPromptOpen=false;const sp=document.getElementById("storyPrompt");if(sp)sp.classList.remove("show");renderAll();renderTimeline();updateTerminalStatus();refreshDesktopShortcuts();if(typeof updateConnectionUI==="function")updateConnectionUI();if(doSave&&typeof saveGame==="function")saveGame(false);cheatLog(`accepted • ${label}`)}
+function cheatAct2(){story.act=Math.max(story.act,2);Object.assign(storyFlags,{foundIdentity:true,heardMamaVoicemail:true,foundLia:true});cheatAddSeen(["file_resume","chat_lia"]);storyStage=Math.max(storyStage,2);storyMinutes=Math.max(storyMinutes,15);cheatRefresh("act 2 unlocked")}
+function cheatAct3(){cheatAct2();cheatAddSeen(["chat_celine","chat_ash","chat_maria","chat_boys"]);Object.assign(storyFlags,{cheatingEstablished:true,beaBikeUnlocked:true});story.act=Math.max(story.act,3);storyStage=Math.max(storyStage,3);storyMinutes=Math.max(storyMinutes,28);cheatRefresh("act 3 unlocked")}
+function cheatAct4(){cheatAct3();cheatAddSeen(["file_bea_bike","file_miso"]);Object.assign(storyFlags,{sawBeaBike:true,sawMiso:true,humanizedNiko:true});story.act=Math.max(story.act,4);storyStage=Math.max(storyStage,4);storyMinutes=Math.max(storyMinutes,45);cheatRefresh("act 4 unlocked")}
+function cheatAct5(){cheatAct4();cheatAddSeen(["chat_drreyes","chat_mika","file_therapy_notes","file_reality_check"]);storyFlags.mentalEstablished=true;story.act=Math.max(story.act,5);storyStage=Math.max(storyStage,5);storyMinutes=Math.max(storyMinutes,65);cheatRefresh("act 5 unlocked")}
+function cheatAct6(){cheatAct5();cheatAddSeen(["photo_glass","chat_rj","chat_vince","file_odd_calls","file_odd_route","photo_waitingshed"]);Object.assign(storyFlags,{foulPlayPossible:true,timelineUnlocked:true});story.act=6;storyStage=Math.max(storyStage,8);storyMinutes=Math.max(storyMinutes,90);cheatRefresh("act 6 + timeline unlocked")}
+function cheatHotspot(){Object.assign(storyFlags,{metSecurity:true,toldGuard:true,hotspotUnlocked:true});storyStage=Math.max(storyStage,4);storyMinutes=Math.max(storyMinutes,45);cheatRefresh("security complete • hotspot unlocked")}
+function cheatAllAccess(){story.act=6;showHiddenFiles=true;Object.assign(storyFlags,{foundIdentity:true,heardMamaVoicemail:true,foundLia:true,cheatingEstablished:true,beaBikeUnlocked:true,sawBeaBike:true,sawMiso:true,humanizedNiko:true,mentalEstablished:true,foulPlayPossible:true,timelineUnlocked:true});cheatAddSeen(["file_resume","chat_lia","chat_celine","chat_ash","chat_maria","chat_boys","file_bea_bike","file_miso","chat_drreyes","chat_mika"]);cheatRefresh("all gated files + chats unlocked")}
+function cheatFullProgress(doSave=true){story.act=6;storyStage=10;storyMinutes=Math.max(storyMinutes,125);story.ending=null;story.endingReady=true;showHiddenFiles=true;Object.assign(storyFlags,{foundIdentity:true,heardMamaVoicemail:true,foundLia:true,cheatingEstablished:true,beaBikeUnlocked:true,sawBeaBike:true,sawMiso:true,humanizedNiko:true,mentalEstablished:true,foulPlayPossible:true,timelineUnlocked:true,finalWindowComplete:true,heardPhoneClue:true,toldGuard:true,metSecurity:true,hotspotUnlocked:true,vendorAsked:true,mayAteMemory:true,tahoBought:true,stayLonger:true});cheatAddSeen(["file_resume","chat_lia","chat_celine","chat_ash","chat_maria","chat_boys","file_girlmatrix","file_copylog","file_templates","file_bea_bike","file_miso","chat_drreyes","chat_mika","file_therapy_notes","file_reality_check","file_sleep_notes_aug","file_odd_symbols","file_odd_333","photo_glass","chat_rj","chat_vince","file_odd_calls","file_odd_route","photo_waitingshed","file_cache_session","file_cache_sync","file_btlog","file_usblog","file_camevents","photo_terminal_glass","photo_bagfloor","file_fileaccess1209"]);cheatRefresh("full progression + all ending requirements",doSave)}
+function cheatEverythingLive(){cheatFullProgress(false);hotspotOn=true;if(typeof syncLiveMessages==="function")syncLiveMessages();if(typeof syncVinceLive==="function")syncVinceLive();cheatRefresh("everything unlocked + hotspot live")}
+function cheatDirectEnding(kind){storyPromptOpen=false;const sp=document.getElementById("storyPrompt");if(sp)sp.classList.remove("show");if(kind==="foulplay"&&!canFoulPlayEnding())cheatFullProgress(false);cheatLog(`launching ending • ${kind}`);startEnding(kind)}
+function cheatLog(msg){const el=document.getElementById("cheatLog");if(!el)return;const stamp=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});el.textContent=`[${stamp}] ${msg}\n`+el.textContent.replace(/^waiting for code\.\.\.\n?/,"")}
+function renderCheats(){const list=document.getElementById("cheatList");if(!list)return;list.innerHTML=CHEAT_CODES.map(c=>`<div class="cheat-card"><b>${esc(c.name)}</b><div class="cheat-code">${esc(c.code)}</div><div class="cheat-desc">${esc(c.desc)}</div><button class="soft" style="margin-top:7px" onclick="copyCheatCode('${c.code}')">put in box</button></div>`).join("")}
+function copyCheatCode(code){const input=document.getElementById("cheatInput");if(input){input.value=code;input.focus();input.select()}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).catch(()=>{});cheatLog(`loaded code • ${code}`)}
+function submitCheatCode(){const input=document.getElementById("cheatInput");if(!input)return;const raw=input.value;const key=normalizeCheatCode(raw);const found=CHEAT_CODES.find(c=>normalizeCheatCode(c.code)===key);if(!found){cheatLog(`invalid code • ${raw||"(blank)"}`);input.select();return}cheatLog(`code recognized • ${found.code}`);input.value="";try{found.run()}catch(err){console.error(err);cheatLog(`code failed • ${String(err.message||err)}`)}}
+
 function renderAll(){
-  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
+  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderCheats();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
 const SAVE_KEY="lost_phone_save_v20";
@@ -6090,7 +6157,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:17,
+    version:18,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
