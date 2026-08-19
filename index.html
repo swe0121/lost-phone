@@ -108,15 +108,23 @@ body{overflow:hidden}
   overflow:hidden
 }
 #desktopIcons{
-  position:absolute;left:16px;top:14px;right:18px;bottom:14px;
+  position:absolute;left:16px;top:14px;right:350px;bottom:14px;
   display:grid;
-  grid-template-columns:repeat(10,84px);
+  grid-template-columns:repeat(auto-fill,84px);
   grid-auto-rows:80px;
-  grid-auto-flow:column;
+  grid-auto-flow:row;
   gap:7px 15px;
   align-content:start;
   justify-content:start;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:8px;
+  scrollbar-width:thin;
+  scrollbar-color:#374151 transparent;
 }
+#desktopIcons::-webkit-scrollbar{width:7px}
+#desktopIcons::-webkit-scrollbar-thumb{background:#374151;border-radius:10px}
+#desktopIcons::-webkit-scrollbar-track{background:transparent}
 .desktop-icon{
   width:84px;height:76px;border:0;background:transparent;color:white;border-radius:9px;cursor:pointer;padding:5px 3px;
   text-shadow:0 2px 7px #000
@@ -910,6 +918,21 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
           <button class="start-item" onclick="openWindow('calendar')">📅<br>calendar</button>
           <button class="start-item" onclick="openWindow('contacts')">👤<br>contacts</button>
           <button class="start-item" onclick="openWindow('recycle')">🗑️<br>bin</button>
+          <button class="start-item" onclick="openWindow('videos')">🎞️<br>videos</button>
+          <button class="start-item" onclick="openWindow('recorder')">🎙️<br>recorder</button>
+          <button class="start-item" onclick="openWindow('downloadsapp')">⬇️<br>downloads</button>
+          <button class="start-item" onclick="openWindow('weathercache')">🌦️<br>weather</button>
+          <button class="start-item" onclick="openWindow('clockapp')">🕒<br>clock</button>
+          <button class="start-item" onclick="openWindow('calculator')">🧮<br>calculator</button>
+          <button class="start-item" onclick="openWindow('discord')">🟣<br>discord</button>
+          <button class="start-item" onclick="openWindow('sticky')">🟨<br>sticky</button>
+          <button class="start-item" onclick="openWindow('settings')">⚙️<br>settings</button>
+          <button class="start-item" onclick="openWindow('games')">🎮<br>games</button>
+          <button class="start-item" onclick="openWindow('youtube')">▶️<br>youtube</button>
+          <button class="start-item" onclick="openWindow('sports')">🏀<br>sports</button>
+          <button class="start-item" onclick="openWindow('steam')">🎮<br>steam</button>
+          <button class="start-item" onclick="openWindow('memes')">😂<br>memes</button>
+          <button class="start-item" onclick="openWindow('snips')">✂️<br>screenshots</button>
         </div>
         <div style="padding:0 12px 10px">
           <button class="start-item" style="width:100%" onclick="openSavePanel()">💾 save / load progress</button>
@@ -1122,6 +1145,7 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
           <div class="detail" style="max-width:360px;margin:auto">
             <input id="calcInput" style="width:100%;background:#0d1117;border:1px solid #303846;color:white;padding:12px;border-radius:8px" value="0">
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px" id="calcKeys"></div>
+            <div id="calcHistory" style="margin-top:14px"></div>
           </div>
         </div>
       </div>
@@ -1497,6 +1521,11 @@ function openWindow(name){
   if(name==="files") renderFolder("recent");
   if(name==="messenger"){renderChats(document.getElementById('msgSearch')?.value||''); if(!currentChat){const first=Object.keys(chats).find(k=>chats[k].kind===chatMode&&isChatUnlocked(k));if(first)setTimeout(()=>openChat(first),0);}}
   if(name==="news") renderNews(currentNewsFilter||'all');
+  if(name==="videos") renderVideos();
+  if(name==="downloadsapp") renderDownloadsApp();
+  if(name==="weathercache") renderWeatherCache();
+  if(name==="clockapp") renderClockApp();
+  if(name==="calculator") renderCalculator();
   if(name==="terminal") renderTerminalStatus();
   if(name==="timeline") {
     if(!storyFlags.timelineUnlocked){timelineBody.innerHTML=`<div class="detail"><b>nothing built yet</b><p>jc hasn't started a formal timeline. the final-night timestamps need more context first.</p></div>`;}
@@ -1686,22 +1715,28 @@ function endingScreen(kicker,title,html,buttons){
   document.getElementById("endingOverlay").classList.add("show");
 }
 function startEnding(kind){story.ending=kind;saveGame(false);if(kind==="unresolved")endingUnresolved(0);if(kind==="closure")endingClosure(0);if(kind==="foulplay")endingFoulPlay(0)}
+function endingCoda(){
+  endingScreen("that night, before they left","",`<p>the rain is lighter. a jeep idles near the curb.</p><p class="quiet">may: next time, actual food somewhere normal.</p><p class="quiet">jc: daylight?</p><p class="quiet">may: obviously.</p><p class="quiet"><b>may: and i'm picking the place.</b></p>`,[["credits",()=>endingCredits()]]);
+}
+function endingCredits(){
+  endingScreen("lost phone","thanks for playing",`<p class="quiet">some blanks stay blank.</p>`,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+}
 function endingUnresolved(step){
   if(step===0){endingScreen("local draft • 12:?? am","draft_message.txt",`<div class="draft">ma pauwi na ko sorry medyo</div><p class="quiet">no recipient response. no punctuation. the file ends there.</p>`,[["close the file",()=>endingUnresolved(1)]]);return}
   if(step===1){endingScreen("2:31 am","handoff",`<p>jc and may give the bag and laptop to terminal security.</p><p>the guard writes niko de la cruz on a paper log and puts the bag behind the desk.</p><p>outside, the first jeep on may's route pulls in.</p><p>people walk past the bench where the bag was found.</p>`,[["continue",()=>endingUnresolved(2)]]);return}
-  endingScreen("later that night","UNRESOLVED",`<p>no clean answer reaches jc or may afterward.</p><p class="quiet">may: message me pag nakauwi ka.</p><p class="quiet">jc: ikaw din.</p><p>traffic keeps moving.</p>`,[["restart from save",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+  endingScreen("later that night","UNRESOLVED",`<p>no clean answer reaches jc or may afterward.</p><p class="quiet">may: message me pag nakauwi ka.</p><p class="quiet">jc: ikaw din.</p><p>traffic keeps moving.</p>`,[["continue",()=>endingCoda()]]);
 }
 function endingClosure(step){
   if(step===0){endingScreen("later","NIKO DE LA CRUZ LOCATED SAFE",`<p>the message reaches jc through niko's family.</p><p>niko is alive. physically safe. he does not explain where he went.</p><p>for a few seconds, that is enough.</p>`,[["months later",()=>endingClosure(1)]]);return}
   if(step===1){endingScreen("november 2026","lia",`<div class="chatScene"><div class="bubbleLine">he's okay naman.</div><div class="bubbleLine">just different.</div><div class="bubbleLine">he doesn't really go out alone anymore.</div><div class="bubbleLine">and he still won't tell anyone what happened that night.</div></div><p class="quiet">no explanation follows.</p>`,[["continue",()=>endingClosure(2)]]);return}
   if(step===2){endingScreen("november 2026","maria",`<div class="chatScene"><div class="bubbleLine">GUYS</div><div class="bubbleLine">I GOT THE INTERNSHIP 😭😭😭</div><div class="bubbleLine">SHUT UPPPP</div><div class="bubbleLine">I'M ACTUALLY SHAKING</div><div class="bubbleLine">libre mo kami</div><div class="bubbleLine">NO 😭</div></div><p>niko is not mentioned once.</p>`,[["continue",()=>endingClosure(3)]]);return}
-  endingScreen("ending","FALSE CLOSURE",`<p>you helped somebody get home.</p><p><b>you did not repair them.</b></p><p class="quiet">weeks later, an unknown number calls jc. he watches it ring until it stops.</p><p class="quiet">may: u answer unknown numbers now?</p><p class="quiet">jc: sometimes.</p>`,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+  endingScreen("ending","FALSE CLOSURE",`<p>you helped somebody get home.</p><p><b>you did not repair them.</b></p><p class="quiet">weeks later, an unknown number calls jc. he watches it ring until it stops.</p><p class="quiet">may: u answer unknown numbers now?</p><p class="quiet">jc: sometimes.</p>`,[["continue",()=>endingCoda()]]);
 }
 function endingFoulPlay(step){
   if(step===0){endingScreen("evidence review","FOUL PLAY",`<p>a camera from a business across the road catches a clearer angle than the terminal system.</p><p>niko leaves the waiting-shed area with the same blue-shirt man seen outside the bar.</p><p>investigators identify the man.</p><p>nothing in the footage shows an attack.</p><p>it is enough to establish that niko did not simply vanish alone.</p>`,[["continue",()=>endingFoulPlay(1)]]);return}
   if(step===1){endingScreen("later","mama",`<p>niko's mother receives the laptop.</p><p>the desktop opens exactly where jc and may left it.</p><p>she clicks <b>miso_sleeping.jpg</b>.</p><p>orange cat. niko's backpack. file comment: <span class="quiet">useless animal ❤️</span></p><p>she looks at the folders for a while.</p><p>then she closes the lid.</p>`,[["continue",()=>endingFoulPlay(2)]]);return}
   if(step===2){endingScreen("bag side pocket","",`<p>there is a house key on a faded basketball keychain.</p><p>she recognizes it immediately.</p><p class="quiet">nothing else is opened.</p>`,[["end",()=>endingFoulPlay(3)]]);return}
-  endingScreen("ending","FOUL PLAY",`<p>the occult images were unrelated graffiti, a metal poster, and random markings.</p><p>most of the repeated cars and symbols went nowhere.</p><p>the blue-shirt man did.</p><p class="quiet">it was just his laptop. his files. his life.</p>`,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")]]);
+  endingScreen("ending","FOUL PLAY",`<p>the occult images were unrelated graffiti, a metal poster, and random markings.</p><p>most of the repeated cars and symbols went nowhere.</p><p>the blue-shirt man did.</p><p class="quiet">it was just his laptop. his files. his life.</p>`,[["continue",()=>endingCoda()]]);
 }
 
 let talkTimer=null;
@@ -2177,7 +2212,11 @@ function progressStory(){
   }else if(storyStage===1 && storyFlags.heardMamaVoicemail){
     storyStage=2;advanceStory(8);showStoryPrompt("may","cached messages only tell us so much. if we actually need to contact somebody later, use your hotspot?",[["connect jc's hotspot",()=>{connectHotspot();fieldTalk("may","okay. normal sync only. nothing spooky. just messages that were waiting.");}],["keep it offline for now",()=>fieldTalk("jc","cached stuff first. we can connect later.")]]);
   }else if(storyStage===2 && story.act>=2){
-    storyStage=3;advanceStory(9);addJournal(storyTimeLabel()+" • may's mom called to ask about the flood and whether rides were moving. she did not ask who may was with.");fieldTalk("may","my mom literally just asked 'baha pa ba' and told me to stay dry. see? she does not care who i'm meeting 😭",4700);
+    storyStage=3;advanceStory(9);addJournal(storyTimeLabel()+" • may's mom called to ask about the flood and whether rides were moving. she did not ask who may was with.");
+    fieldTalk("may","my mom literally just asked 'baha pa ba' and told me to stay dry. see? she does not care who i'm meeting 😭",4700);
+    setTimeout(()=>fieldTalk("may","random, this place smells exactly like the terminal my ate used to pick me up from after school. she'd buy me taho when we got stuck waiting.",5200),4900);
+    setTimeout(()=>fieldTalk("jc","wait, you have an ate? how have i never heard this story 😭",4300),10200);
+    setTimeout(()=>fieldTalk("may","you never asked. basic may lore. quiz next time.",4300),14600);
   }else if(storyStage===3 && story.act>=3){
     storyStage=4;advanceStory(12);showStoryPrompt("may","that security guard keeps looking over here. should we log where we found the bag?",[["tell the guard",()=>{storyFlags.toldGuard=true;addJournal(storyTimeLabel()+" • terminal security logged the bag. the side bench is outside the useful terminal camera angle.");fieldTalk("security","that side bench isn't in our useful angle. road camera mostly faces traffic. keep it with you while we log it.",5200);}],["not yet",()=>fieldTalk("may","fine. but if this gets more serious we're telling him.")]]);
   }else if(storyStage===4 && story.act>=4){
@@ -2187,13 +2226,17 @@ function progressStory(){
   }else if(storyStage===6 && foulScore()>=2){
     storyStage=7;advanceStory(15);if(hotspotOn){syncVinceLive();addJournal(storyTimeLabel()+" • vince sent new messages asking where the laptop was found.");}else fieldTalk("may","we should probably connect your hotspot soon. people are actually looking for him.",4500);
   }else if(storyStage===7 && story.act>=6){
-    storyStage=8;advanceStory(14);addJournal(storyTimeLabel()+" • terminal is noticeably emptier. may briefly mistakes a stranger in blue for the bar man, then sees the shirt is different.");fieldTalk("may","blue shirt... wait. no. wrong guy. shit. now i'm doing the same pattern thing.",5200);
+    storyStage=8;advanceStory(14);addJournal(storyTimeLabel()+" • terminal is noticeably emptier. may freezes when she sees a stranger in blue, then jc makes her look at what is actually in front of them: delivery helmet, food bag, different person.");
+    fieldTalk("may","wait. blue shirt. across the terminal.",4300);
+    setTimeout(()=>fieldTalk("jc","look again. same color doesn't make him the same guy. helmet. food bag. he's waiting for a pickup.",5200),4400);
+    setTimeout(()=>fieldTalk("may","...right. okay. i froze for a second. that's annoying.",4700),9700);
+    setTimeout(()=>fieldTalk("jc","yeah. no guessing. timeline only.",4000),14500);
   }else if(storyStage===8 && timelineKnownCount()>=8){
     storyStage=9;advanceStory(16);storyFlags.toldGuard=true;storyFlags.heardPhoneClue=true;markEvidence("world_phoneclue");addJournal(storyTimeLabel()+" • security remembers a soaked man asking around 12:18 if anyone had turned in a PHONE. dark cap/jacket. no name.");fieldTalk("security","around 12:18 a soaked guy asked if anyone turned in a phone. dark cap, dark jacket. could be unrelated. i didn't get a name.",6200);
   }else if(storyStage===9 && finalScore()>=6){
     storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • may's route begins limited service. the coffee stall is closed and most benches are empty.");showStoryPrompt("may",`my route's moving again. we have to leave soon.
 
-also next time we hang out, i want actual food somewhere normal. daylight. zero abandoned laptops. that's non-negotiable.
+also next time we hang out, i want actual food somewhere normal. daylight. zero abandoned laptops. and i'm picking the place. that's non-negotiable.
 
 one last thing: do we hand this over now, or keep enough of the timeline to explain why this feels wrong?`,[["open our timeline",()=>openWindow("timeline")],["decide what to do",()=>offerEndingChoice()],["five more minutes",()=>fieldTalk("jc","five. then we go. and yeah... normal food next time. deal.",4000)]]);
   }
@@ -2262,6 +2305,8 @@ documents:[
  ["🖼️","sent_grid.png","aug 17","sentgrid"],
 ],
 downloads:[
+ ["📄","rainfall_advisory_2248.html","aug 17 10:48 pm","rainalert"],
+ ["🗺️","route_markup.png","aug 17 11:36 pm","odd_route"],
  ["🖼️","IMG_9921.jpg","aug 15","img9921"],
  ["🖼️","IMG_9917.jpg","aug 15","img9917"],
  ["🖼️","IMG_9872.jpg","aug 12","img9872"],
@@ -2415,6 +2460,7 @@ function openFile(k){
     backup:`<div class="detail"><h4>phone_backup.zip</h4><p>backup created from android phone.</p><p>contains chats, contacts, and media.</p><button class="soft" onclick="renderFolder('backup')">open backup</button></div>`,
     latenightreceipt:`<div class="detail"><h4>late_receipt.pdf</h4><p>2 iced coffees</p><p>2 sandwiches</p><p>fries</p><p>paid cash</p><p>8:34 pm • aug 16</p><p class="muted">lia's chat that night says niko told her he was eating alone at home.</p></div>`,
     coffee2:`<div class="detail"><h4>coffee_receipt_0812.pdf</h4><p>2 drinks</p><p>1 pastry</p><p>paid cash</p><p>9:16 pm • aug 12</p></div>`,
+    rainalert:`<div class="detail"><h4>rainfall_advisory_2248.html</h4><p><b>saved 10:48 pm • aug 17</b></p><p>cached weather advisory: heavy rain expected to continue through late evening. localized flooding possible on low-lying roads.</p><p class="muted">niko saved this before the final terminal searches. it shows he knew the weather was getting worse, not what he planned to do about it.</p></div>`,
     photo4430:`<div class="detail"><h4>img_4430.jpg</h4><p>blurry cafe selfie. niko's hoodie and half his face are visible.</p><p>a girl's hand is holding his wrist.</p></div>`,
     letter:`<div class="detail"><h4>draft.docx</h4><p>"ma, sorry if i didn't get home right away. i'm fixing something lang."</p><p>the rest is blank.</p></div>`,
     archive:`<div class="detail"><h4>archive_old.zip</h4><p>password protected.</p><p>hint: same as "m".</p></div>`,
@@ -2803,6 +2849,7 @@ function openFile(k){
   if(k==="camevents"){addJournal("camera log shows the camera was opened twice during the 36-minute offline window.");setTimeout(()=>fieldTalk("jc","camera at 12:03... okay. but who was even using this then?"),260);}
   if(k==="btlog"||k==="usblog"){addJournal("unknown device activity appears around the final midnight session.");}
   if(k==="oldgoals"){addJournal("an old goals file says niko once wrote that he wanted to stop lying and be better to people.");}
+  if(k==="rainalert"){addJournal("niko saved a heavy-rain advisory at 10:48 pm, well before his final terminal searches. he knew the weather was worsening before he headed toward the terminal-side route.");}
   if(k==="bea_bike"){storyFlags.sawBeaBike=true;addJournal("bea_bike_2022.mp4 is completely useless to the case. it is also the first time the laptop feels less like a puzzle and more like someone's life.");setTimeout(()=>fieldTalk("may","...okay. that's just her kuya teaching her how to ride a bike.",4000),260);evaluateActProgress();}
   if(k==="dog_bark"){addJournal("niko kept a six-second recording of the family's old dog barking for years.");}
   if(k==="appointment_plan"){addJournal("dr. reyes had already planned to ask niko about involving family/support at the next appointment. there is no dramatic unsent confession, just a follow-up that never happened.");}
@@ -2843,6 +2890,7 @@ const chats={
  lia:{kind:"inbox",name:"lia ❤️",preview:"you home na?",msgs:[
   ["them","you home na?"],["them","niko"],["them","don't disappear again pls"],["me","on my way home"],
   ["them","okay ingat"],["them","message me pag nasa house ka na"],["them","also don't forget tomorrow"],["me","i won't"],
+  ["them","btw i finally finished that stupid presentation"],["me","the group one?"],["them","YES 😭 they changed my slides three times"],["me","good luck tomorrow"],["them","i need a new group not luck"],
   ["them","you said that last time 😭"],["me","i know i know"],["them","what time are you leaving tomorrow"],["me","around 2 maybe"],
   ["them","maybe??"],["me","2 😭"],["them","better"],["them","also did you eat"],["me","yeah"],["them","actual food?"],
   ["me","yes mom"],["them","shut up 😭"],["them","also u barely slept last night"],["me","i'm fine"],
@@ -3390,6 +3438,10 @@ function addReply(label,fn){
 function pushMsg(who,text){
   const d=document.createElement("div");d.className="bubble "+(who==="me"?"me":"");d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
 }
+function showTypingPause(label="typing…",duration=1600){
+  const d=document.createElement("div");d.className="bubble sys";d.textContent=label;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
+  setTimeout(()=>d.remove(),duration);
+}
 function replyLia(type){
   replyBar.innerHTML="";
   if(type===3){addJournal("lia seems worried about niko. jc and may chose not to reply yet.");return}
@@ -3397,8 +3449,15 @@ function replyLia(type){
   setTimeout(()=>pushMsg("them",type===1?"what?? where did you find it?":"yeah. why? sino to?"),500);
   setTimeout(()=>pushMsg("them","he told me he was on his way home before midnight"),950);
   setTimeout(()=>pushMsg("them","is he with you?"),1350);
-  setTimeout(()=>pushMsg("them","you have no idea how many times he disappears then comes back acting normal"),1650);
-  setTimeout(()=>{pushMsg("them","how was i supposed to know when something was actually wrong");pushMsg("them","pls tell me if u see him");addJournal("lia says niko told her he was on his way home before midnight. her anger is not only about cheating; his normal pattern of lying and disappearing made a real crisis harder to recognize.");fieldTalk("may","okay. now somebody who actually knows him is saying he should've been home.",3600);},2200);
+  setTimeout(()=>pushMsg("them","sorry if i'm typing weird. i have a presentation in the morning and my group is still fixing slides 😭"),1900);
+  setTimeout(()=>pushMsg("them","i've been trying to finish that and keep checking if he replied"),2400);
+  setTimeout(()=>pushMsg("them","you have no idea how many times he disappears then comes back acting normal"),2950);
+  setTimeout(()=>pushMsg("them","how was i supposed to know when something was actually wrong"),3450);
+  setTimeout(()=>pushMsg("them","i was mad at him before tonight. i still am."),4050);
+  setTimeout(()=>showTypingPause("lia is typing…",1900),4550);
+  setTimeout(()=>pushMsg("them","doesn't mean i stopped caring about him"),6550);
+  setTimeout(()=>pushMsg("them","that's the part i hate"),7000);
+  setTimeout(()=>{pushMsg("them","pls tell me if u see him");addJournal("lia says niko told her he was on his way home before midnight. she is still angry with him, but says that did not make her stop caring; his normal pattern of lying and disappearing made a real crisis harder to recognize.");fieldTalk("may","okay. now somebody who actually knows him is saying he should've been home.",3600);},7500);
 }
 function replyMama(){
   storyFlags.contactedFamily=true;
@@ -4522,8 +4581,8 @@ function openVideo(i){
 }
 
 function renderDownloadsApp(){
-  const items=folders.downloads||[];
-  downloadsBody.innerHTML="<h3 style='margin-top:0'>downloads</h3>"+items.map(f=>`<div class="index-row" onclick="openDesktopFile('${f[3]}')"><b>${f[1]}</b><small>${f[2]}</small></div>`).join("");
+  const items=(folders.downloads||[]).filter(f=>isFileUnlocked("downloads",f[3]));
+  downloadsBody.innerHTML=`<h3 style="margin-top:0">downloads</h3><div class="detail"><b>local downloads</b><p>normal junk mixed with files niko deliberately saved for offline use.</p></div>`+items.map(f=>`<div class="index-row" onclick="openWindow('files');renderFolder('downloads');setTimeout(()=>openFile('${f[3]}'),0)"><b>${f[1]}</b><small>${f[2]}</small></div>`).join("");
 }
 
 function renderGames(){
@@ -4561,19 +4620,56 @@ function openDiscord(i){
 }
 
 function renderWeatherCache(){
-  weatherBody.innerHTML=`<h3 style="margin-top:0">weather</h3>
-    <div class="detail"><b>offline</b><p>last updated aug 17, 11:34 pm.</p><p>manila</p><p>27°c</p><p>heavy rain</p><p>localized flooding possible on low-lying roads</p><p class="muted">cached before the laptop lost internet at 11:38 pm.</p></div>`;
+  const rows=[
+    ["3:31 pm","scattered thunderstorms later tonight","normal afternoon forecast"],
+    ["8:42 pm","heavy rain becoming more likely","commute delays possible"],
+    ["10:48 pm","heavy rain continuing","localized flooding possible on low-lying roads"],
+    ["11:34 pm","heavy rain • 27°c","last cache before internet loss"]
+  ];
+  weatherBody.innerHTML=`<h3 style="margin-top:0">weather</h3><div class="detail"><b>offline • manila</b><p>cached forecast history from aug 17.</p></div>`+rows.map((r,i)=>`<div class="index-row" onclick="openWeatherSnapshot(${i})"><b>${r[0]} • ${r[1]}</b><small>${r[2]}</small></div>`).join("")+`<div id="weatherDetail"></div>`;
+}
+function openWeatherSnapshot(i){
+  markSeen("weather_snapshot_"+i);
+  const detail=[
+    "routine afternoon forecast. nothing unusual yet.",
+    "niko checked again after the rain intensified.",
+    "this matches rainfall_advisory_2248.html in Downloads. niko knew low roads might flood before his final route searches.",
+    "last successful weather refresh was 11:34 pm. internet disappears four minutes later."
+  ][i]||"cached weather entry.";
+  const box=document.getElementById("weatherDetail");if(box)box.innerHTML=`<div class="detail">${detail}</div>`;
+  if(i===2)addJournal("weather cache and the saved advisory both show niko knew the rain could flood low roads before he chose a terminal-side route.");
 }
 
 function renderClockApp(){
-  clockBody.innerHTML=`<h3 style="margin-top:0">clock</h3>
-    <div class="detail"><p><b>alarms</b></p><p>6:30 am weekdays</p><p>8:00 am saturday</p>${story.act>=5?`<p>9:15 pm aug 17 • label: leave</p>`:""}</div>
-    <div class="detail"><p><b>timers history</b></p><p>15 min</p><p>30 min</p><p>10 min</p></div>`;
+  const alarms=[
+    ["6:30 am • weekdays","class","active"],
+    ["8:00 am • saturday","laundry","active"]
+  ];
+  if(story.act>=4)alarms.push(["3:20 pm • mon aug 17","leave for dr. reyes","dismissed"],["4:00 pm • mon aug 17","appointment","missed"]);
+  if(story.act>=5)alarms.push(["9:15 pm • aug 17","leave","dismissed 9:17 pm"]);
+  clockBody.innerHTML=`<h3 style="margin-top:0">clock</h3><div class="detail"><b>saved alarms</b><p class="muted">local alarm history</p></div>`+alarms.map((a,i)=>`<div class="index-row" onclick="openClockEntry(${i},&quot;${a[1]}&quot;)"><b>${a[0]}</b><small>${a[1]} • ${a[2]}</small></div>`).join("")+`<div class="detail"><p><b>recent timers</b></p><p>20 min • laundry</p><p>15 min • food delivery</p><p>10 min • "leave soon"</p></div>`;
+}
+function openClockEntry(i,label){
+  markSeen("clock_entry_"+i+"_"+label);
+  if(label==="appointment")addJournal("clock history shows niko had an alarm for the dr. reyes appointment he missed. it was not deleted afterward.");
+  if(label==="leave")addJournal("niko set a 9:15 pm 'leave' alarm on aug 17 and dismissed it at 9:17. it suggests his night out was planned at least in part.");
 }
 
 function renderCalculator(){
   const keys=["7","8","9","/","4","5","6","*","1","2","3","-","0",".","=","+","c"];
   calcKeys.innerHTML=keys.map(k=>`<button class="soft" onclick="calcPress('${k}')">${k}</button>`).join("");
+  const hist=[
+    ["3200 + 4180 + 1860 + 1250 + 930","11420","aug budget total"],
+    ["1240 / 4","310","split bill"],
+    ["2500 - 1200 - 600","700","cash left"]
+  ];
+  if(story.act>=2)hist.push(["17 - 12","5","late-night entry"],["16 - 13","3","late-night entry"],["15 - 11","4","late-night entry"]);
+  const h=document.getElementById("calcHistory");
+  if(h)h.innerHTML=`<div class="detail"><b>history</b><p class="muted">saved locally</p></div>`+hist.map((x,i)=>`<div class="index-row" onclick="openCalcHistory(${i})"><b>${x[0]} = ${x[1]}</b><small>${x[2]}</small></div>`).join("");
+}
+function openCalcHistory(i){
+  markSeen("calc_history_"+i);
+  if(story.act>=2&&i>=3)addJournal("three late-night calculator entries are just day-number subtraction with no labels. niko tracks dates elsewhere, so they could be message gaps, schedule math, or completely unrelated.");
 }
 function calcPress(k){
   const el=calcInput;
@@ -4598,7 +4694,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:4,
+    version:5,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
