@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v34</title>
+<title>Lost Phone v35</title>
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
 :root{
@@ -954,6 +954,33 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
   .news-side{display:flex !important}
 }
 
+
+
+/* =========================================================
+   v35 SOCIAL APPS — STEAM CHAT + INSTAGRAM CACHE
+   ========================================================= */
+.social-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 12px}
+.social-tabs button{border:1px solid #303846;background:#151b24;color:#dce3ec;border-radius:9px;padding:8px 10px;cursor:pointer;font-size:11px}
+.social-tabs button:hover,.social-tabs button.active{background:#273142;color:#fff}
+.social-profile-head{display:flex;align-items:center;gap:14px;padding:4px 0 12px}
+.social-avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#232a35;border:1px solid #3a4453;font-size:24px;flex:0 0 auto}
+.social-stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:7px;font-size:12px}
+.social-stats b{display:block;font-size:15px;color:#fff}
+.ig-post-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}
+.ig-post{aspect-ratio:1/1;border:1px solid #303846;background:linear-gradient(145deg,#273244,#111720);border-radius:8px;display:flex;align-items:flex-end;padding:9px;cursor:pointer;overflow:hidden;position:relative}
+.ig-post:hover{outline:1px solid #58667a}
+.ig-post span{font-size:10px;text-shadow:0 2px 8px #000;line-height:1.25}
+.ig-post:nth-child(3n+2){background:linear-gradient(145deg,#3b2f34,#14171d)}
+.ig-post:nth-child(3n){background:linear-gradient(145deg,#26382f,#11171a)}
+.social-chat{display:flex;flex-direction:column;gap:7px;padding:4px 0 14px}
+.social-bubble{max-width:78%;padding:8px 11px;border-radius:14px;background:#242b35;font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.social-bubble.mine{align-self:flex-end;background:#315fa8}
+.social-bubble.system{align-self:center;background:transparent;color:#7f8998;font-size:10px;text-align:center}
+.social-row-meta{font-size:10px;color:#7f8998;margin-top:4px}
+.social-badge{display:inline-block;border:1px solid #354052;border-radius:999px;padding:2px 6px;margin-left:6px;font-size:9px;color:#aab4c2}
+.social-badge.replied{color:#79d6a2}.social-badge.seen{color:#d3ae70}.social-badge.unread{color:#9fb7ff}
+@media(max-width:760px){.ig-post-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.social-avatar{width:48px;height:48px}.social-stats{gap:11px}.social-bubble{max-width:88%}}
+
 </style>
 </head>
 <body>
@@ -1016,6 +1043,7 @@ this rain is getting stupid though.</span></button>
         <button class="desktop-icon" onclick="openWindow('youtube')"><span class="ico">▶️</span><span class="lbl">youtube</span></button>
         <button class="desktop-icon" onclick="openWindow('sports')"><span class="ico">🏀</span><span class="lbl">sports</span></button>
         <button class="desktop-icon" onclick="openWindow('steam')"><span class="ico">🎮</span><span class="lbl">steam</span></button>
+        <button class="desktop-icon" onclick="openWindow('instagram')"><span class="ico">📸</span><span class="lbl">instagram</span></button>
         <button class="desktop-icon" onclick="openWindow('memes')"><span class="ico">😂</span><span class="lbl">memes</span></button>
         <button class="desktop-icon" onclick="openWindow('snips')"><span class="ico">✂️</span><span class="lbl">screenshots</span></button>
 
@@ -1094,6 +1122,7 @@ this rain is getting stupid though.</span></button>
           <button class="start-item" onclick="openWindow('youtube')">▶️<br>youtube</button>
           <button class="start-item" onclick="openWindow('sports')">🏀<br>sports</button>
           <button class="start-item" onclick="openWindow('steam')">🎮<br>steam</button>
+          <button class="start-item" onclick="openWindow('instagram')">📸<br>instagram</button>
           <button class="start-item" onclick="openWindow('memes')">😂<br>memes</button>
           <button class="start-item" onclick="openWindow('snips')">✂️<br>screenshots</button>
           <button class="start-item" onclick="openWindow('yourphone')">📱<br>your phone</button>
@@ -1268,6 +1297,11 @@ this rain is getting stupid though.</span></button>
       <div class="window" id="win-steam">
         <div class="window-bar"><div class="window-title">🎮 steam</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('steam')">_</button><button class="win-btn close" onclick="closeWindow('steam')">×</button></div></div>
         <div class="window-body content"><div id="steamBody"></div></div>
+      </div>
+
+      <div class="window" id="win-instagram">
+        <div class="window-bar"><div class="window-title">📸 instagram</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('instagram')">_</button><button class="win-btn close" onclick="closeWindow('instagram')">×</button></div></div>
+        <div class="window-body content"><div id="instagramBody"></div></div>
       </div>
 
       <div class="window" id="win-memes">
@@ -2011,6 +2045,8 @@ function openWindow(name){
   if(name==="clockapp") renderClockApp();
   if(name==="calculator") renderCalculator();
   if(name==="autocad") renderAutoCAD();
+  if(name==="instagram") renderInstagram();
+  if(name==="steam") renderSteam();
   if(name==="yourphone") renderYourPhone();
   if(name==="terminal") renderTerminalStatus();
   if(name==="timeline") {
@@ -3206,7 +3242,7 @@ function openFile(k){
     screen1:`<div class="detail"><h4>screenshot_0817.png</h4><p><b>lia:</b> "don't stay up again"</p><p><b>niko:</b> "i'm sleeping na"</p><p><b>lia:</b> "sure ka ha"</p><p class="muted">timestamp 11:03 pm.</p></div>`,
     expenses:`<div class="detail"><h4>expenses_aug.xlsx</h4><p>rent 3200</p><p>food 4180</p><p>transpo 1860</p><p>school 1250</p><p>misc 930</p><p>cash 2500</p></div>`,
     voice3:`<div class="detail"><h4>voice_003.m4a</h4><p>00:07</p><p>"wait lang, someone's walking by."</p><p>footsteps. zipper. file ends.</p></div>`,
-    resume:`<div class="detail"><h4>resume_niko.pdf</h4><p><b>NIKO DE LA CRUZ</b></p><p><b>Civil Engineering Undergraduate</b> • Manila, Philippines</p><p>niko.dc05@example.com</p><hr style="border:0;border-top:1px solid #2b3340;margin:12px 0"><p><b>profile</b></p><p>21 years old • 6 ft 11 in • 72 kg</p><p>student interested in structural design, site planning, surveying, and construction work. comfortable with AutoCAD, Excel, basic Civil 3D, quantity takeoff, and reading plan sheets.</p><p><b>coursework</b></p><p>structural analysis • strength of materials • surveying • hydraulics • construction methods • engineering economy</p><p><b>student work</b></p><p>• pedestrian footbridge concept — framing layout, load assumptions, quantity estimate</p><p>• residential plate set — floor plan, elevations, sections, basic drainage layout</p><p>• surveying exercise — traverse computations and point plotting</p><p><b>software</b></p><p>AutoCAD 2025 • Civil 3D (basic) • Microsoft Excel • SketchUp (basic)</p><p><b>random bio stuff he really put on the résumé</b></p><p>basketball addict • horror games • camera nerd • likes night drives • coffee dependent • says he works better after midnight</p><p class="muted">the height and weight are actually typed into the résumé. there is no obvious reason they needed to be.</p></div>`,
+    resume:`<div class="detail"><h4>resume_niko.pdf</h4><p><b>NIKO DE LA CRUZ</b></p><p><b>Civil Engineering Undergraduate</b> • Manila, Philippines</p><p>niko.dc05@example.com</p><hr style="border:0;border-top:1px solid #2b3340;margin:12px 0"><p><b>profile</b></p><p>21 years old • 6 ft 2 in • 78 kg</p><p>student interested in structural design, site planning, surveying, and construction work. comfortable with AutoCAD, Excel, basic Civil 3D, quantity takeoff, and reading plan sheets.</p><p><b>coursework</b></p><p>structural analysis • strength of materials • surveying • hydraulics • construction methods • engineering economy</p><p><b>student work</b></p><p>• pedestrian footbridge concept — framing layout, load assumptions, quantity estimate</p><p>• residential plate set — floor plan, elevations, sections, basic drainage layout</p><p>• surveying exercise — traverse computations and point plotting</p><p><b>software</b></p><p>AutoCAD 2025 • Civil 3D (basic) • Microsoft Excel • SketchUp (basic)</p><p><b>random bio stuff he really put on the résumé</b></p><p>basketball addict • horror games • camera nerd • likes night drives • coffee dependent • says he works better after midnight</p><p class="muted">the height and weight are actually typed into the résumé. there is no obvious reason they needed to be.</p></div>`,
     todo:`<div class="detail"><h4>todo.txt</h4><p>print activity</p><p>buy coffee</p><p>reply to mom</p><p>charger</p><p>bring umbrella</p><p>delete backup</p></div>`,
     private:`<div class="detail"><h4>private_notes.txt</h4><p>"keep everything separate."</p><p>"lia doesn't check laptop."</p><p>"never save real names if not needed."</p><p>"clear downloads after."</p></div>`,
     backup:`<div class="detail"><h4>phone_backup.zip</h4><p>backup created from android phone.</p><p>contains chats, contacts, and media.</p><button class="soft" onclick="closeWindowDetail('files');renderFolder('backup')">open backup</button></div>`,
@@ -3413,7 +3449,7 @@ function openFile(k){
       <p>anail → manual</p>
       <p class="muted">rule timestamps overlap with lia's messages.</p>
     </div>`,
-    aboutold:`<div class="detail"><h4>about_me_old.txt</h4><p>21 • civil engineering student</p><p>6'11 • 72 kg</p><p>likes basketball, horror movies, cameras, AutoCAD when it isn't crashing, and late-night drives</p><p>"trying to save for a used mirrorless camera"</p><p>"would rather redraw a whole plate than ask the prof one question"</p><p>"bad at replying when overwhelmed"</p><p class="muted">written months before the recent mess.</p></div>`,
+    aboutold:`<div class="detail"><h4>about_me_old.txt</h4><p>21 • civil engineering student</p><p>6'2 • 78 kg</p><p>likes basketball, horror movies, cameras, AutoCAD when it isn't crashing, and late-night drives</p><p>"trying to save for a used mirrorless camera"</p><p>"would rather redraw a whole plate than ask the prof one question"</p><p>"bad at replying when overwhelmed"</p><p class="muted">written months before the recent mess.</p></div>`,
     parttime:`<div class="detail"><h4>part_time_schedule.txt</h4><p>cousin's print shop</p><p>tue 6 to 9</p><p>thu 6 to 9</p><p>sat optional</p><p>120 per hour</p><p>"need extra for camera fund"</p></div>`,
     driving:`<div class="detail"><h4>driving_test.txt</h4><p>failed first practical test</p><p>reason: stalled twice + forgot signal</p><p>"never telling ken"</p></div>`,
     miso:`<div class="detail"><h4>miso.txt</h4><p>cat food</p><p>litter</p><p>vet september?</p><p>"miso keeps sleeping on keyboard"</p></div>`,
@@ -5538,43 +5574,108 @@ function openCAD(i){
 }
 
 const steamFriends=[
-  ["mika.exe","online • Rainbow Six Siege","female"],
-  ["elle.jpg","online • EA Sports FC 26","female"],
-  ["sammyyy","away • GTA V","female"],
-  ["kyla.wav","online • Counter-Strike 2","female"],
-  ["bea_boop","offline 2h","female"],
-  ["ashley.jpg","online • Stardew Valley","female"],
-  ["nixie","away • Dead by Daylight","female"],
-  ["mari.mp3","offline 1d","female"],
-  ["jules ♡","online • Lethal Company","female"],
-  ["cami","offline 3h","female"],
-  ["riaa","away","female"],
-  ["lex","online • Phasmophobia","female"],
-  ["trishhh","offline 5d","female"],
-  ["mei","online • Terraria","female"],
-  ["sophie.png","offline 9h","female"],
-  ["angel","away • The Forest","female"],
-  ["faith.exe","offline 4h","female"],
-  ["cass ♡","online • GTA V","female"],
-  ["nika","offline 2d","female"],
-  ["aly.jpg","away • EA Sports FC 26","female"],
-  ["dani.wav","online • Rainbow Six Siege","female"],
-  ["kaye","offline 7h","female"],
-  ["yumi","online • Counter-Strike 2","female"],
-  ["jen.jpg","offline 3d","female"],
-  ["ken","online • Rainbow Six Siege","male"],
-  ["vince","offline 1h","male"],
-  ["cam","offline 6h","male"],
-  ["joaq","online • NBA 2K","male"],
-  ["rj","offline 2d","male"],
-  ["marco","offline 1d","male"]
-]
+  ["mika.exe","online • Rainbow Six Siege","female","mutual through siege"],
+  ["elle.jpg","online • EA Sports FC 26","female","added after an FC lobby"],
+  ["sammyyy","away • GTA V","female","mutual gaming friend"],
+  ["kyla.wav","online • Counter-Strike 2","female","CS2 / Siege"],
+  ["bea_boop","offline 2h","female","family account / Bea"],
+  ["ashley.jpg","online • Stardew Valley","female","added recently"],
+  ["nixie","away • Dead by Daylight","female","DBD mutual"],
+  ["mari.mp3","offline 1d","female","mutual friend"],
+  ["jules ♡","online • Lethal Company","female","Lethal Company lobby"],
+  ["cami","offline 3h","female","mutual through Cam"],
+  ["riaa","away","female","profile mostly private"],
+  ["lex","online • Phasmophobia","female","Phasmophobia mutual"],
+  ["trishhh","offline 5d","female","added from a Discord server"],
+  ["mei","online • Terraria","female","Terraria mutual"],
+  ["sophie.png","offline 9h","female","mutual friend"],
+  ["angel","away • The Forest","female","co-op lobby"],
+  ["faith.exe","offline 4h","female","mutual through a server"],
+  ["cass ♡","online • GTA V","female","GTA online"],
+  ["nika","offline 2d","female","mutual friend"],
+  ["aly.jpg","away • EA Sports FC 26","female","FC lobby"],
+  ["dani.wav","online • Rainbow Six Siege","female","Siege stack"],
+  ["kaye","offline 7h","female","mutual friend"],
+  ["yumi","online • Counter-Strike 2","female","CS2 mutual"],
+  ["jen.jpg","offline 3d","female","added recently"],
+  ["liaa.exe","offline 6h","female","similar name; no confirmed link to Lia"],
+  ["bea.jpg","offline 1d","female","not Niko's sister; unrelated profile"],
+  ["mads","online • Stardew Valley","female","mutual friend"],
+  ["kei ♡","away","female","mutual friend"],
+  ["aiah.exe","online • GTA V","female","GTA lobby"],
+  ["nami.jpg","offline 4d","female","mutual friend"],
+  ["ken","online • Rainbow Six Siege","male","close gaming friend"],
+  ["vince","offline 1h","male","friend"],
+  ["cam","offline 6h","male","friend"],
+  ["joaq","online • NBA 2K","male","2K friend"],
+  ["rj","offline 2d","male","friend"],
+  ["marco","offline 1d","male","friend"]
+];
+
+const steamChats={
+  "mika.exe":{preview:"u sold that round 😭",status:"replied",msgs:[
+    ["me","rank?"],["them","give me 10"],["me","u said that 30 mins ago"],["them","CE PLATE 😭"],["me","same excuse as me that's illegal"],["them","u sold that round yesterday don't talk"],["me","one bad round"],["them","six bad rounds"]
+  ]},
+  "elle.jpg":{preview:"u playing fifa later?",status:"seen",msgs:[
+    ["me","u playing fifa later?"],["me","fc whatever"],["system","seen 2 days ago"]
+  ]},
+  "sammyyy":{preview:"maybe after dinner",status:"replied",msgs:[
+    ["me","gta later?"],["them","maybe after dinner"],["me","that's basically no"],["them","says YOU 😭"],["me","fair"]
+  ]},
+  "kyla.wav":{preview:"ty lol",status:"replied",msgs:[
+    ["me","that clutch was actually crazy"],["them","ty lol"],["me","carry me siege next"],["them","absolutely not"]
+  ]},
+  "ashley.jpg":{preview:"stardew?",status:"no reply",msgs:[
+    ["me","stardew?"],["me","i need somebody to judge my farm"],["system","sent 4 days ago • no reply"]
+  ]},
+  "jules ♡":{preview:"ur the one who screamed first",status:"replied",msgs:[
+    ["me","lethal later"],["them","only if u stop leaving me behind 😭"],["me","i was getting scrap"],["them","ur the one who screamed first"],["me","strategic warning"]
+  ]},
+  "riaa":{preview:"u still play siege?",status:"seen",msgs:[
+    ["me","u still play siege?"],["system","seen yesterday"]
+  ]},
+  "cass ♡":{preview:"HAHA maybe",status:"replied then quiet",msgs:[
+    ["me","gta car meet later?"],["them","HAHA maybe"],["me","that's not a yes"],["system","seen 6 hours ago"]
+  ]},
+  "aly.jpg":{preview:"fc rematch?",status:"no reply",msgs:[
+    ["me","fc rematch?"],["me","u got lucky last time"],["system","sent 3 days ago • no reply"]
+  ]},
+  "dani.wav":{preview:"invite me when ken leaves 😭",status:"replied",msgs:[
+    ["them","invite me when ken leaves 😭"],["me","why 😭"],["them","he backseats EVERYTHING"],["me","valid"],["them","rank later?"],["me","after plate"]
+  ]},
+  "jen.jpg":{preview:"hey u still play dbd?",status:"no reply",msgs:[
+    ["me","hey u still play dbd?"],["me","nvm saw u were offline"],["system","sent 5 days ago • no reply"]
+  ]},
+  "faith.exe":{preview:"you still owe me one game",status:"replied",msgs:[
+    ["them","you still owe me one game"],["me","i was literally doing school"],["them","u were on 2k"],["me","research"],["them","blocked 😭"]
+  ]}
+};
+
+function steamStatusBadge(status){
+  const cls=status.includes("replied")?"replied":status.includes("seen")?"seen":"";
+  return `<span class="social-badge ${cls}">${status}</span>`;
+}
 function openSteamFriends(){
-  markSeen("steam_friends");
+  markExtra("steam_friends");
   const femaleCount=steamFriends.filter(x=>x[2]==="female").length;
   showWindowDetail("steam",`<div class="detail"><h4>cached friends</h4><p>${steamFriends.length} visible in offline cache • ${femaleCount} female-presenting profiles/usernames in this slice</p><p class="muted">mostly gaming usernames and display names. being on this list does not establish any relationship or case connection.</p></div>`+
-    steamFriends.map(f=>`<div class="index-row"><b>${f[0]}</b><small>${f[1]}</small></div>`).join(""),"friends");
+    steamFriends.map((f,i)=>`<div class="index-row" onclick="openSteamFriend(${i})"><b>${f[0]}</b><small>${f[1]}</small><div class="social-row-meta">${f[3]} ${steamChats[f[0]]?steamStatusBadge(steamChats[f[0]].status):""}</div></div>`).join(""),"friends");
   setTimeout(()=>fieldTalk("may","why is his steam friends list basically all girls too 😭 this man collected contacts in every app.",4000),250);
+}
+function openSteamFriend(i){
+  const f=steamFriends[i];if(!f)return;markExtra("steam_friend_"+i);
+  const chat=steamChats[f[0]];
+  showWindowDetail("steam",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">🎮</div><div><h4 style="margin:0 0 4px">${f[0]}</h4><div>${f[1]}</div><div class="social-row-meta">${f[3]}</div></div></div><p class="muted">cached Steam profile. gender presentation here is inferred only from the profile/user display, not verified identity.</p>${chat?`<button class="soft" onclick="openSteamChatByName('${f[0].replace(/'/g,"\\'")}')">open cached chat</button>`:`<p>no cached direct-message history in this local slice.</p>`}</div>`,f[0]);
+}
+function openSteamMessages(){
+  markExtra("steam_messages");
+  const rows=Object.entries(steamChats).map(([name,c])=>`<div class="index-row" onclick="openSteamChatByName('${name.replace(/'/g,"\\'")}')"><b>${name}</b>${steamStatusBadge(c.status)}<small>${c.preview}</small></div>`).join("");
+  showWindowDetail("steam",`<div class="detail"><h4>Steam chat</h4><p class="muted">offline cached direct messages. some people replied. some very clearly did not.</p></div>${rows}`,"messages");
+}
+function openSteamChatByName(name){
+  const c=steamChats[name];if(!c)return;markExtra("steam_chat_"+name);
+  const rows=c.msgs.map(m=>m[0]==="system"?`<div class="social-bubble system">${m[1]}</div>`:`<div class="social-bubble ${m[0]==="me"?"mine":""}">${m[1]}</div>`).join("");
+  showWindowDetail("steam",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">💬</div><div><h4 style="margin:0">${name}</h4><div class="social-row-meta">${c.status}</div></div></div></div><div class="social-chat">${rows}</div><p class="extra-warning">ordinary Steam messages • not case evidence</p>`,name);
 }
 
 const steamLibrary=[
@@ -5606,8 +5707,9 @@ function renderSteam(){
   closeWindowDetail("steam");
   const total=steamLibrary.reduce((sum,g)=>sum+(Number(g.hours)||0),0);
   const recent=steamLibrary.slice().filter(g=>g.last.includes("aug")).slice(0,5);
-  steamBody.innerHTML=`<h3 style="margin-top:0">niko_dc05</h3><div class="detail"><b>profile</b><p>"CE student • 6'11 • somehow still bottom frag"</p><p class="muted">custom status last cached: "plate muna bago rank"</p></div>
-    <div class="detail"><b>offline library</b><p>${steamLibrary.length} installed / linked titles • ${total.toFixed(1)} recorded hours</p><p class="muted">friends cache: 74 • 14 were online at last sync • cloud unavailable</p><button class="soft" onclick="openSteamFriends()">view cached friends</button></div>
+  steamBody.innerHTML=`<h3 style="margin-top:0">niko_dc05</h3><div class="detail"><b>profile</b><p>"CE student • 6'2 • 78 kg • somehow still bottom frag"</p><p class="muted">custom status last cached: "plate muna bago rank"</p></div>
+    <div class="social-tabs"><button onclick="openSteamFriends()">friends</button><button onclick="openSteamMessages()">messages</button></div>
+    <div class="detail"><b>offline library</b><p>${steamLibrary.length} installed / linked titles • ${total.toFixed(1)} recorded hours</p><p class="muted">friends cache: 74 • 14 were online at last sync • cloud unavailable</p><p>visible cache is weirdly female-heavy. several have direct-message history; several are just gaming mutuals.</p></div>
     <div class="detail"><b>recent activity</b>${recent.map(g=>`<p>${g.name} <span class="muted">• ${g.last}</span></p>`).join("")}</div>
     <h4>library</h4>`+
     steamLibrary.map((g,i)=>`<div class="index-row" onclick="openSteamGame(${i})"><b>${g.name}</b><small>${g.hours==null?"non-steam shortcut":g.hours.toFixed(1)+" hours"} • last played ${g.last}</small></div>`).join("")+
@@ -5618,6 +5720,99 @@ function openSteamGame(i){
   markSeen("steam_"+i);
   const hours=g.hours==null?"playtime unavailable":g.hours.toFixed(1)+" hours";
   showWindowDetail("steam",`<div class="detail"><h4>${g.name}</h4><p><b>${hours}</b></p><p>last played: ${g.last}</p><p>achievements: ${g.ach}</p><p>${g.note}</p></div>`,g.name);
+}
+
+
+const instagramPosts=[
+  {cap:"site visit fit + hard hat that makes my head look huge",meta:"aug 14 • 41 likes • 3 comments",comments:["ken: engineer kuno","mika.exe: the vest is carrying","niko: hate all of u"]},
+  {cap:"miso occupying 80% of my chair",meta:"aug 11 • 63 likes • 8 comments",comments:["bea: MY CAT","niko: false","sammyyy: orange behavior"]},
+  {cap:"late night plate. autocad please stop crashing",meta:"aug 8 • 29 likes • 2 comments",comments:["joaq: skill issue","niko: blocked"]},
+  {cap:"court was empty so obviously i had to miss alone",meta:"aug 2 • 37 likes • 4 comments",comments:["vince: jumper still ugly","niko: efficient form"]},
+  {cap:"cheap coffee expensive emotional support",meta:"jul 28 • 52 likes • 5 comments",comments:["elle.jpg: dramatic","niko: accurate"]},
+  {cap:"trying to make this road cross section stop looking cursed",meta:"jul 24 • 24 likes • 1 comment",comments:["mara: north arrow still wrong"]},
+  {cap:"hair finally cooperating",meta:"jul 17 • 71 likes • 11 comments",comments:["kyla.wav: finally","ken: delete","niko: jealousy"]},
+  {cap:"forza car > actual transportation budget",meta:"jul 10 • 34 likes • 3 comments",comments:["cass ♡: priorities","niko: exactly"]},
+  {cap:"sunset looked better irl",meta:"jun 30 • 48 likes • 6 comments",comments:["ria.s: camera betrayed u","niko: always"]},
+  {cap:"structural analysis won today unfortunately",meta:"jun 21 • 22 likes • 2 comments",comments:["mads: survived?","niko: barely"]},
+  {cap:"6'2 and still getting told to reach the top shelf",meta:"jun 14 • 58 likes • 7 comments",comments:["bea: because u are there","niko: exploitation"]},
+  {cap:"random night drive playlist did its job",meta:"jun 4 • 45 likes • 4 comments",comments:["faith.exe: drive and don't think? 😭","niko: elite playlist name"]}
+];
+const instagramDMs={
+  "ela.jpg":{name:"ela",preview:"HAHA the coffee was mid",status:"replied",msgs:[
+    ["me","u always find the best cafes"],["them","HAHA the coffee was mid"],["me","pictures fooled me"],["them","that's literally the point 😭"]
+  ]},
+  "sammyyy":{name:"sam",preview:"seen 19h ago",status:"seen",msgs:[
+    ["me","pretty"],["them","tyy 😭"],["me","u free fri?"],["system","seen 19 hours ago"]
+  ]},
+  "kyla.wav":{name:"kyla",preview:"send me the cursed bracket",status:"replied",msgs:[
+    ["them","send me the cursed bracket"],["me","no you'll use it against me"],["them","correct"],["me","at least ur honest"]
+  ]},
+  "ria.s":{name:"ria",preview:"seen yesterday",status:"seen",msgs:[
+    ["me","this fit >>>"],["system","seen yesterday"]
+  ]},
+  "trishh":{name:"trish",preview:"why do u keep disappearing 😭",status:"replied",msgs:[
+    ["them","why do u keep liking my story then disappearing 😭"],["me","busy"],["them","you say busy then you're online gaming"],["me","different kind of busy"],["them","terrible answer"]
+  ]},
+  "faith.exe":{name:"faith",preview:"okay mr civil engineer",status:"replied",msgs:[
+    ["me","site visit cooked me"],["them","okay mr civil engineer"],["me","respect the vest"],["them","never"]
+  ]},
+  "jen.jpg":{name:"jen",preview:"sent 3d ago",status:"no reply",msgs:[
+    ["me","random but ur playlist was good"],["me","what was the second song"],["system","sent 3 days ago • no reply"]
+  ]},
+  "mari.mp3":{name:"mari",preview:"accident daw 😭",status:"replied",msgs:[
+    ["them","why are u liking my old posts 😭"],["me","accident"],["them","THREE accidents?"],["me","phone slipped multiple times"],["them","liar 😭"]
+  ]},
+  "nixie":{name:"nix",preview:"seen 5d ago",status:"seen",msgs:[
+    ["me","ur story scared the shit out of me"],["me","what game was that"],["system","seen 5 days ago"]
+  ]},
+  "aiah.exe":{name:"aiah",preview:"maybe next week",status:"replied",msgs:[
+    ["me","u still play gta"],["them","sometimes"],["me","join us later"],["them","maybe next week"],["me","bet"]
+  ]},
+  "cass.jpg":{name:"cass",preview:"sent 1d ago",status:"no reply",msgs:[
+    ["me","that sunset pic is crazy"],["system","sent 1 day ago • no reply"]
+  ]},
+  "kei.s":{name:"kei",preview:"lol thanks",status:"replied then quiet",msgs:[
+    ["me","hair looks nice"],["them","lol thanks"],["me","new cut?"],["system","seen 8 hours ago"]
+  ]}
+};
+const instagramFollowing=[
+  ["ela.jpg","private • follows you","dm"],["sammyyy","public • follows you","dm"],["kyla.wav","private • follows you","dm"],["ria.s","public • follows you","dm"],["trishh","private • follows you","dm"],["faith.exe","public • follows you","dm"],["jen.jpg","private • doesn't follow back","dm"],["mari.mp3","public • follows you","dm"],["nixie","private • follows you","dm"],["aiah.exe","public • follows you","dm"],["cass.jpg","public • doesn't follow back","dm"],["kei.s","private • follows you","dm"],
+  ["nba","public • sports"],["houseofhighlights","public • sports"],["autodesk","public • software"],["civilengineeringdaily","public • engineering"],["formula1","public • sports"],["realmadrid","public • football"],["dodgers","public • baseball"],["sneakerfiles","public • shoes"],
+  ["architectureposts","public • design"],["structuralengineering","public • engineering"],["filmgrain.jpg","public • photography"],["nightdrives","public • cars"]
+];
+const instagramFollowers=[
+  ["ken.irl","friend"],["vince.jpg","friend"],["camcam","friend"],["bea.dc","sister"],["mika.exe","mutual"],["sammyyy","mutual"],["kyla.wav","mutual"],["faith.exe","mutual"],["mari.mp3","mutual"],["joaqhoops","basketball"],["mara.ce","classmate"],["rj.17","friend"],["elle.jpg","mutual"],["aiah.exe","mutual"],["trishh","mutual"],["random_ce_student","classmate"],["sitecoffee","local cafe"],["civilmemesdaily","meme account"]
+];
+
+function renderInstagram(tab="profile"){
+  closeWindowDetail("instagram");
+  const body=document.getElementById("instagramBody");if(!body)return;
+  const tabs=`<div class="social-tabs"><button class="${tab==="profile"?"active":""}" onclick="renderInstagram('profile')">profile</button><button class="${tab==="messages"?"active":""}" onclick="renderInstagram('messages')">messages</button><button class="${tab==="following"?"active":""}" onclick="renderInstagram('following')">following</button><button class="${tab==="followers"?"active":""}" onclick="renderInstagram('followers')">followers</button></div>`;
+  if(tab==="profile"){
+    body.innerHTML=`${tabs}<div class="detail"><div class="social-profile-head"><div class="social-avatar">📷</div><div><h3 style="margin:0">@niko.dc05</h3><div class="social-stats"><span><b>12</b>posts</span><span><b>329</b>followers</span><span><b>321</b>following</span></div></div></div><p><b>Niko de la Cruz</b> • 21 • Civil Engineering</p><p>6'2 • 78 kg • basketball / games / cameras / plates</p><p class="muted">cached profile • last successful sync aug 17, 11:37 pm</p></div><div class="ig-post-grid">${instagramPosts.map((p,i)=>`<div class="ig-post" onclick="openInstagramPost(${i})"><span>${p.cap}</span></div>`).join("")}</div>`;
+    return;
+  }
+  if(tab==="messages"){
+    body.innerHTML=`${tabs}<div class="detail"><b>direct messages</b><p class="muted">cached threads only. some replies are present; some messages are just sitting there.</p></div>`+Object.entries(instagramDMs).map(([k,c])=>`<div class="index-row" onclick="openInstagramDM('${k}')"><b>@${k}</b><span class="social-badge ${c.status.includes("replied")?"replied":c.status==="seen"?"seen":""}">${c.status}</span><small>${c.preview}</small></div>`).join("");
+    return;
+  }
+  const data=tab==="following"?instagramFollowing:instagramFollowers;
+  const total=tab==="following"?321:329;
+  body.innerHTML=`${tabs}<div class="detail"><b>${total} ${tab}</b><p class="muted">showing a small locally cached slice, not the full online list.</p></div>`+data.map((x,i)=>`<div class="index-row" onclick="openInstagramPerson('${tab}',${i})"><b>@${x[0]}</b><small>${x[1]}</small></div>`).join("");
+}
+function openInstagramPost(i){
+  const p=instagramPosts[i];if(!p)return;markExtra("ig_post_"+i);
+  showWindowDetail("instagram",`<div class="detail"><h4>@niko.dc05</h4><div class="ig-post" style="max-width:360px;margin:0 auto 14px"><span>${p.cap}</span></div><p>${p.cap}</p><p class="muted">${p.meta}</p><p><b>cached comments</b></p>${p.comments.map(c=>`<p>${c}</p>`).join("")}<button class="soft" onclick="toast('instagram','offline cache • cannot like or comment right now')">♡ like</button></div>`,`post ${i+1}`);
+}
+function openInstagramDM(key){
+  const c=instagramDMs[key];if(!c)return;markExtra("ig_dm_"+key);
+  const rows=c.msgs.map(m=>m[0]==="system"?`<div class="social-bubble system">${m[1]}</div>`:`<div class="social-bubble ${m[0]==="me"?"mine":""}">${m[1]}</div>`).join("");
+  showWindowDetail("instagram",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">◎</div><div><h4 style="margin:0">@${key}</h4><div>${c.name}</div><div class="social-row-meta">${c.status}</div></div></div></div><div class="social-chat">${rows}</div><div class="detail"><p class="muted">offline cache. sending a new message is unavailable until the account reconnects, and these social threads do not count as final-night case evidence.</p></div>`,"@"+key);
+}
+function openInstagramPerson(tab,i){
+  const x=(tab==="following"?instagramFollowing:instagramFollowers)[i];if(!x)return;markExtra("ig_person_"+tab+"_"+i);
+  const key=x[0],chat=instagramDMs[key];
+  showWindowDetail("instagram",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">◎</div><div><h4 style="margin:0">@${key}</h4><div class="social-row-meta">${x[1]}</div></div></div><p>${chat?"cached DM history exists on this laptop.":"no cached DM thread in this local slice."}</p>${chat?`<button class="soft" onclick="openInstagramDM('${key}')">open messages</button>`:""}</div>`,`@${key}`);
 }
 
 function renderMemes(){
@@ -5887,7 +6082,7 @@ function calcPress(k){
 }
 
 function renderAll(){
-  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
+  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
 const SAVE_KEY="lost_phone_save_v20";
@@ -5895,7 +6090,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:16,
+    version:17,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
