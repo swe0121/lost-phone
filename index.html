@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v44</title>
+<title>Lost Phone v45</title>
 <!-- v44: clean spoiler-free README + detailed gameplay-focused How to Play. -->
 <!-- v34: expanded multi-sport agenda archive; NBA/football/MLB takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
@@ -1027,6 +1027,17 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
 .howto-callout{border:1px solid #303846;background:#0b0f15;border-radius:10px;padding:14px 16px;margin:16px 0;font-size:17px;line-height:1.65;color:#cdd5df}
 .howto-callout b{color:#fff}.howto-muted{color:#8f99a8}.howto-list{margin:10px 0 18px;padding-left:22px}.howto-list li{margin:8px 0}
 .howto-tagline{font-size:20px;line-height:1.55;color:#fff;margin:12px 0 20px}
+.howto-control-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0 8px}
+.howto-control{border:1px solid #303846;background:#090d12;border-radius:10px;padding:13px 14px;min-width:0}
+.howto-control .key{display:inline-block;min-width:34px;margin:0 8px 6px 0;padding:4px 7px;border:1px solid #4a5668;border-radius:6px;background:#111720;color:#fff;font:bold 13px "Courier New",monospace;text-align:center}
+.howto-control b{font-size:16px}.howto-control p{margin:5px 0 0;font-size:15px;line-height:1.55;color:#aeb7c3}
+.howto-steps{counter-reset:guide-step;display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.howto-step{border-left:3px solid #3a4657;background:#090d12;padding:11px 13px;border-radius:0 9px 9px 0}
+.howto-step b{color:#fff}.howto-step p{margin:5px 0 0}
+.howto-ui{display:inline-block;padding:2px 7px;border:1px solid #394659;border-radius:6px;background:#0c1118;color:#fff;font:bold 14px "Courier New",monospace;white-space:nowrap}
+.howto-example{border:1px dashed #3a4657;border-radius:9px;padding:12px 14px;margin:14px 0;background:#070b10;color:#bec7d2}
+.howto-example p{margin:5px 0}.howto-warning{border-left:3px solid #80666b;background:#120e11;padding:12px 14px;margin:14px 0;color:#d5c6c8}
+@media(max-width:760px){.howto-control-grid{grid-template-columns:1fr}.howto-control .key{font-size:12px}.howto-control b{font-size:15px}.howto-control p{font-size:14px}}
 .howto-back{margin-top:30px;font-size:15px;padding:10px 16px}
 @media(max-width:760px){.howto-card{width:min(94vw,900px);padding-top:20px}.howto-copy{font-size:16px;line-height:1.72}.howto-section h3{font-size:21px}.howto-section h4{font-size:17px}.howto-callout{font-size:15px}.howto-card .howto-sub{font-size:13px}}
 #readMeOverlay{position:fixed;inset:0;z-index:300100;background:#020202;display:none;align-items:flex-start;justify-content:center;padding:24px;overflow:auto;overscroll-behavior:contain}
@@ -1162,126 +1173,220 @@ this rain is getting stupid though.</span></button>
 <div id="howToPlayOverlay">
   <div class="howto-card">
     <h2>how to play</h2>
-    <div class="howto-sub">full gameplay guide • controls, progression, saves, and case tools</div>
+    <div class="howto-sub">complete control guide • what every investigation control does and where to find it • no clue walkthrough</div>
     <div class="howto-copy">
-      <div class="howto-tagline">your job is to explore the laptop, identify useful information, build the timeline, and decide what to do with what you found.</div>
+      <div class="howto-tagline">play by opening the laptop, inspecting whatever you want, and using the case tools to organize what you personally think the evidence means.</div>
+      <p>This page explains the <b>controls and mechanics</b>. It does not tell you which files are clues, where hidden content is, or what theory to believe.</p>
 
       <div class="howto-section">
-        <h3>1. start or continue</h3>
-        <p>from the main menu, press <b>start</b> for a new playthrough. if a local save exists, <b>continue</b> appears automatically and loads that save.</p>
-        <p>after pressing start, choose <b>JC</b> or <b>May</b>. this decides whose side of the opening conversation and later personal dialogue you control. both characters investigate the same laptop.</p>
-        <p>during dialogue, click one of the available responses to continue. some choices change conversation tone or small character moments. investigation still continues afterward.</p>
+        <h3>controls at a glance</h3>
+        <div class="howto-control-grid">
+          <div class="howto-control"><span class="key">click / tap</span><b>interact</b><p>open apps, files, chats, photos, tabs, dialogue choices, buttons, and case controls.</p></div>
+          <div class="howto-control"><span class="key">scroll</span><b>move inside an app</b><p>use the mouse wheel/trackpad, or swipe inside the panel on touch screens. many apps have their own scroll area.</p></div>
+          <div class="howto-control"><span class="key">⊞</span><b>start menu</b><p>opens the laptop Start menu for another way to launch apps and access save/load.</p></div>
+          <div class="howto-control"><span class="key">☷</span><b>our notes</b><p>opens or closes JC and May's automatically recorded investigation notes.</p></div>
+          <div class="howto-control"><span class="key">💾</span><b>quick save</b><p>saves the current playthrough immediately without opening the Save app.</p></div>
+          <div class="howto-control"><span class="key">☷💾</span><b>save / load panel</b><p>opens the full Save app for save, load, export, import, or delete-save controls.</p></div>
+          <div class="howto-control"><span class="key">📱</span><b>your phone</b><p>opens JC/May's phone material when available. it is separate from Niko's laptop apps.</p></div>
+          <div class="howto-control"><span class="key">wifi 🔒</span><b>connection control</b><p>shows the fictional laptop connection state. it stays locked until the story makes the hotspot available.</p></div>
+          <div class="howto-control"><span class="key">?</span><b>help</b><p>reopens this How to Play page from the laptop desktop.</p></div>
+          <div class="howto-control"><span class="key">_ / ×</span><b>close a laptop window</b><p>either top-right button hides the current app. reopen it from the desktop, taskbar, or Start menu.</p></div>
+          <div class="howto-control"><span class="key">← back</span><b>leave a detail view</b><p>when a file/photo/detail opens over an app, use Back to return to that app's list without closing the whole app.</p></div>
+          <div class="howto-control"><span class="key">🔊 / 🔋</span><b>status buttons</b><p>show the current volume or remaining laptop battery. battery can change as the in-game night progresses.</p></div>
+        </div>
       </div>
 
       <div class="howto-section">
-        <h3>2. use the laptop desktop</h3>
-        <p>once the opening finishes, you reach the laptop desktop. each icon opens an app or section of the computer.</p>
+        <h3>1. start, continue, and choose a pov</h3>
+        <p>On the main menu:</p>
+        <div class="howto-steps">
+          <div class="howto-step"><b><span class="howto-ui">start</span></b><p>begins a new playthrough and sends you to character selection.</p></div>
+          <div class="howto-step"><b><span class="howto-ui">continue</span></b><p>only appears when a local save exists. it loads that saved playthrough.</p></div>
+          <div class="howto-step"><b>JC / May cards</b><p>click the character whose point of view you want to control. both investigate the same laptop, but personal dialogue and some choices are different.</p></div>
+          <div class="howto-step"><b>dialogue choices</b><p>when response buttons appear, click one to continue. ordinary dialogue choices can change tone and character moments; they are not a hidden evidence-rating system.</p></div>
+        </div>
+      </div>
+
+      <div class="howto-section">
+        <h3>2. desktop + window controls</h3>
+        <p>After the opening conversation, the laptop desktop becomes your main play area.</p>
         <ul class="howto-list">
-          <li><b>click an icon</b> to open its window.</li>
-          <li><b>click a row, file, chat, photo, or tab</b> inside an app to inspect it.</li>
-          <li><b>scroll inside the app</b> when its content is longer than the window.</li>
-          <li><b>press _ or ×</b> in the top-right of a window to close it.</li>
-          <li>reopen any closed app by clicking its desktop or Start-menu shortcut again.</li>
+          <li><b>desktop icon:</b> click/tap once to open that app or file shortcut.</li>
+          <li><b>taskbar shortcut:</b> the bottom bar has quick buttons for common apps and game controls.</li>
+          <li><b><span class="howto-ui">⊞</span> Start:</b> opens a larger app list if you do not want to hunt through desktop icons.</li>
+          <li><b>click an already-open window:</b> brings it in front of other laptop windows.</li>
+          <li><b><span class="howto-ui">_</span> or <span class="howto-ui">×</span>:</b> closes/hides that app window. neither deletes anything.</li>
+          <li><b><span class="howto-ui">← back</span>:</b> closes only the file/photo/detail viewer and returns to the list underneath.</li>
         </ul>
-        <p>you can move between apps whenever you want. the game does not require you to finish one entire app before opening another.</p>
+        <p>You can jump between apps whenever you want. There is no requirement to finish one app before opening another.</p>
       </div>
 
       <div class="howto-section">
-        <h3>3. explore and make discoveries</h3>
-        <p>opening certain items records a discovery. discoveries are what gradually move the investigation forward and unlock additional conversations, files, chats, or tools.</p>
-        <p>not every clickable item advances the story. some content exists only to make the laptop feel like a real person's computer. if you stop finding anything useful in one place, check another app.</p>
-        <div class="howto-callout"><b>you do not need to click everything.</b> progression comes from finding enough relevant information, not from reaching 100% completion.</div>
-        <p>you can also reopen things you already read. this is useful when later information gives an older item more context.</p>
+        <h3>3. opening files, chats, photos, and tabs</h3>
+        <p>Most apps use rows, cards, tabs, sidebars, or folders.</p>
+        <div class="howto-steps">
+          <div class="howto-step"><b>files</b><p>choose a folder/location from the sidebar, then click a file. a detail viewer opens over the list. press <span class="howto-ui">← back</span> to return.</p></div>
+          <div class="howto-step"><b>messenger / social apps</b><p>click a conversation or profile on the left/list side. use tabs such as Inbox, Archived, Profile, Messages, Following, etc. when an app provides them.</p></div>
+          <div class="howto-step"><b>photos / screenshots / videos</b><p>click an item to inspect the information available for it. if the game provides a button inside the viewer, that button is an actual interaction and can be used normally.</p></div>
+          <div class="howto-step"><b>long content</b><p>scroll <b>inside the currently active panel</b>. if the page itself does not move, move your pointer/finger over the app content and scroll there.</p></div>
+        </div>
       </div>
 
       <div class="howto-section">
-        <h3>4. dialogue while exploring</h3>
-        <p>JC and May occasionally talk while you investigate. normal conversations can happen during quieter exploration, while important discoveries can trigger their own dialogue.</p>
-        <p>when a dialogue choice appears, choose a response before continuing. story dialogue is shown above the laptop windows so you do not need to close your current app first.</p>
+        <h3>4. discoveries + progression</h3>
+        <p>Some first-time opens are recorded as discoveries. Enough relevant discoveries can advance the story, unlock more conversations, reveal additional folders/chats, or make new tools available.</p>
+        <div class="howto-callout"><b>control:</b> there is no separate "collect clue" button. <b>opening the relevant item is the interaction.</b> If it counts, the game records it automatically.</div>
+        <p>Opening the same item repeatedly usually does not create additional progression. You are also not required to reach 100% completion; plenty of clickable things are ordinary laptop clutter.</p>
       </div>
 
       <div class="howto-section">
-        <h3>5. understand offline and live information</h3>
-        <p>the laptop begins with limited connectivity. many apps can still show information because it was already stored locally or cached before the laptop was found.</p>
-        <p>later, the story can make live connectivity available. when that happens, some apps may receive newer information.</p>
-        <div class="howto-callout">when comparing evidence, keep <b>cached information</b> and <b>information received after reconnection</b> separate. they come from different points in time.</div>
-        <p>you do not have to manually force internet access at the beginning. keep investigating and the relevant control becomes available through normal story progression.</p>
-      </div>
-
-      <div class="howto-section">
-        <h3>6. use our timeline</h3>
-        <p><b>Our Timeline</b> appears after enough investigation progress. open it from the desktop whenever you want to review the night in chronological order.</p>
-        <p>timeline entries fill in as their supporting information is discovered. an unknown entry does not mean the game is broken; it means you have not established that part yet.</p>
-        <p>the timeline is especially useful when several apps describe events from different sources. use it to compare when things happened instead of relying only on the order you personally found them.</p>
-      </div>
-
-      <div class="howto-section">
-        <h3>7. confidence tags</h3>
-        <p>the case tools let you assign your own confidence level to discovered evidence:</p>
+        <h3>5. our notes — the ☷ button</h3>
+        <p>The taskbar button <span class="howto-ui">☷</span> opens <b>Our Notes</b>.</p>
+        <p>These are automatic short notes created when JC and May notice something worth remembering. You do <b>not</b> type into this panel yourself.</p>
         <ul class="howto-list">
-          <li><b>confirmed</b> — you consider the fact directly established.</li>
-          <li><b>likely</b> — strongly supported, but not completely certain.</li>
-          <li><b>possible</b> — plausible, with other explanations still available.</li>
-          <li><b>speculation</b> — mainly your current theory.</li>
-          <li><b>unmarked</b> — no personal label yet.</li>
+          <li>click <span class="howto-ui">☷</span> once to open it.</li>
+          <li>scroll through previously recorded notes.</li>
+          <li>click <span class="howto-ui">☷</span> again to hide it.</li>
         </ul>
-        <p>select a level from the dropdown beside an evidence item. these labels are for organizing your thinking only. <b>they do not change the actual evidence, unlock content, or secretly select an ending.</b></p>
+        <p>Our Notes is different from the later Case Tools: notes are automatic story observations, while confidence labels and revisit flags are your own organization choices.</p>
       </div>
 
       <div class="howto-section">
-        <h3>8. bookmark things to revisit</h3>
-        <p>case evidence can be marked with the <b>☆ revisit</b> button. clicking it changes the item to <b>★ revisit</b> and adds it to your Revisit Later list.</p>
-        <p>use this when you find something you want to compare with information from another app later. click the bookmark again to remove it.</p>
-        <p>bookmarks are saved with your game.</p>
+        <h3>6. our timeline</h3>
+        <p><b>Our Timeline</b> unlocks after enough investigation progress. When it becomes available, open the <span class="howto-ui">🧷 our timeline</span> desktop icon.</p>
+        <p>The upper part arranges discovered events by their in-game time. Unknown parts stay unknown until supporting information has actually been found.</p>
+        <div class="howto-example">
+          <p><b>timeline control flow:</b></p>
+          <p>open <span class="howto-ui">🧷 our timeline</span> → review chronological entries → scroll downward to <b>Case Tools</b> → label or flag discovered evidence.</p>
+        </div>
+        <p>The timeline is a review tool. You normally discover information in the original apps first; the timeline then helps you compare it chronologically.</p>
       </div>
 
       <div class="howto-section">
-        <h3>9. contradiction notes</h3>
-        <p>the case tools can automatically display a contradiction or mismatch after you discover both pieces needed for the comparison.</p>
-        <p>these notices are not accusations and they are not automatically proof that someone lied. they simply show that two discovered pieces of information deserve to be compared.</p>
-        <p>you do not need to create contradiction entries manually.</p>
+        <h3>7. confidence controls — confirmed / likely / possible / speculation</h3>
+        <p>Inside <b>Our Timeline → Case Tools → Discovered Evidence</b>, each evidence row has a dropdown.</p>
+        <div class="howto-steps">
+          <div class="howto-step"><b>step 1</b><p>find the evidence row you want to organize.</p></div>
+          <div class="howto-step"><b>step 2</b><p>click the confidence dropdown beside it.</p></div>
+          <div class="howto-step"><b>step 3</b><p>choose <b>confirmed</b>, <b>likely</b>, <b>possible</b>, <b>speculation</b>, or return it to <b>unmarked</b>.</p></div>
+        </div>
+        <ul class="howto-list">
+          <li><b>confirmed</b> — you personally consider the fact directly established by what you found.</li>
+          <li><b>likely</b> — strongly supported, but you still see room for another explanation.</li>
+          <li><b>possible</b> — it fits the evidence, but alternatives are still reasonable.</li>
+          <li><b>speculation</b> — mainly a theory you want to remember.</li>
+          <li><b>unmarked</b> — removes your confidence label.</li>
+        </ul>
+        <div class="howto-warning"><b>important:</b> this dropdown does not tell the game what is objectively true. your label does not change evidence, unlock a route, add score, or force an ending. it is a personal case-board annotation.</div>
       </div>
 
       <div class="howto-section">
-        <h3>10. photos, files, and technical logs</h3>
-        <p>photos and logs work like evidence viewers, not puzzle minigames. click the item and read the information the game can actually establish from it.</p>
-        <p>if an image is unclear, the game will not invent extra visual detail. if a technical log records an event, treat the recorded event separately from assumptions about who caused it or why.</p>
-        <p>files can also have folders, hidden items, backups, or different versions. availability changes naturally as the story progresses.</p>
+        <h3>8. manual flag control — ☆ revisit / ★ revisit</h3>
+        <p>This is the player's actual <b>flag/bookmark mechanic</b>.</p>
+        <p>Go to <b>Our Timeline → Case Tools → Discovered Evidence</b>. Every evidence row has a button:</p>
+        <div class="howto-example">
+          <p><span class="howto-ui">☆ revisit</span> = not currently flagged.</p>
+          <p><span class="howto-ui">★ revisit</span> = currently flagged to come back to.</p>
+        </div>
+        <div class="howto-steps">
+          <div class="howto-step"><b>flag it</b><p>click <span class="howto-ui">☆ revisit</span>. it changes to <span class="howto-ui">★ revisit</span>.</p></div>
+          <div class="howto-step"><b>find it again</b><p>the same evidence is added to the <b>Revisit Later</b> section near the top of Case Tools, so you do not have to search through the full evidence list again.</p></div>
+          <div class="howto-step"><b>remove the flag</b><p>click <span class="howto-ui">★ revisit</span> again. it returns to <span class="howto-ui">☆ revisit</span> and disappears from Revisit Later.</p></div>
+        </div>
+        <p>The flag is saved with your playthrough. It does not increase story progression and it does not mean the game considers the evidence important — <b>you</b> are the one deciding to revisit it.</p>
       </div>
 
       <div class="howto-section">
-        <h3>11. save your game</h3>
-        <p>the game periodically autosaves after exploration progress.</p>
-        <p>for a manual save, open the <b>Save</b> app and choose save. the same app shows whether a local save exists.</p>
-        <p>you can export your save as a file for backup and import it again later. browser local storage is still the normal save location.</p>
-        <p>deleting the local save removes your stored playthrough progress, so only use that option when you actually want to reset it.</p>
+        <h3>9. automatic contradiction flags</h3>
+        <p>This is separate from the manual <span class="howto-ui">☆ revisit</span> flag.</p>
+        <p>When the game has seen both sides of certain comparisons, a box can appear under <b>Case Tools → Contradiction Flags</b> with the label:</p>
+        <div class="howto-example"><p><b>automatic flag • [comparison]</b></p></div>
+        <p>You do not click a button to create these. They appear automatically after the required pieces have been discovered.</p>
+        <div class="howto-warning"><b>automatic flag does not mean automatic lie.</b> it only means two discovered pieces deserve comparison. the player still decides how to interpret the mismatch.</div>
       </div>
 
       <div class="howto-section">
-        <h3>12. reaching an ending</h3>
-        <p>keep exploring until the story reaches its final decision. the choices available there depend on the information and evidence chain you established during the playthrough.</p>
-        <p>if a particular choice is not available, continue investigating instead of assuming the game has bugged out.</p>
-        <p>after an ending, you can start again and choose another POV or approach if you want to see how a different playthrough feels.</p>
+        <h3>10. using confidence + revisit + contradictions together</h3>
+        <p>The three case tools are meant to work together:</p>
+        <div class="howto-example">
+          <p><b>confidence dropdown</b> = "how strongly do I believe this?"</p>
+          <p><b>☆ / ★ revisit</b> = "I want this kept near the top so I can compare it later."</p>
+          <p><b>automatic contradiction flag</b> = "the game noticed two discovered facts/accounts that should be compared."</p>
+        </div>
+        <p>You can flag something and also give it a confidence label. They are independent controls.</p>
       </div>
 
       <div class="howto-section">
-        <h3>13. cheat code entry</h3>
-        <p>there is a small code field on the main menu and a Cheat Codes app on the laptop.</p>
-        <p>type a code you already know and press <b>enter</b>. valid development codes can alter progression or jump to testing states.</p>
-        <p><b>no code list is shown in-game.</b> you do not need cheats for a normal playthrough.</p>
+        <h3>11. offline / hotspot control</h3>
+        <p>The taskbar Wi-Fi button also acts as the story's connection control.</p>
+        <ul class="howto-list">
+          <li><span class="howto-ui">wifi 🔒</span> — hotspot access is not available yet. clicking it will not bypass story progression.</li>
+          <li><span class="howto-ui">wifi ✕</span> — hotspot has become available but is currently disconnected.</li>
+          <li><span class="howto-ui">wifi • jc-phone</span> — laptop is connected to JC's hotspot.</li>
+        </ul>
+        <p>Once the control is legitimately unlocked, click the Wi-Fi button to connect/disconnect. Going online can allow newer fictional information to sync into some apps.</p>
+        <div class="howto-callout"><b>mechanic:</b> cached/offline material and information received after live reconnection can belong to different points in time. the game tracks that distinction automatically.</div>
       </div>
 
       <div class="howto-section">
-        <h3>14. mobile + smaller screens</h3>
-        <p>the game supports touch controls. tap icons and buttons normally, and swipe inside app panels to scroll them.</p>
-        <p>some laptop windows contain their own scroll area, so if the whole page does not move, place your finger inside the open app and scroll there.</p>
-        <p>landscape orientation can give the laptop interface more room, but it is not required.</p>
+        <h3>12. save controls</h3>
+        <p>You have two taskbar save controls:</p>
+        <ul class="howto-list">
+          <li><span class="howto-ui">💾</span> — <b>quick save</b>. saves immediately.</li>
+          <li><span class="howto-ui">☷💾</span> — opens the full <b>Save / Load</b> window.</li>
+        </ul>
+        <p>Inside Save / Load:</p>
+        <ul class="howto-list">
+          <li><b>save now</b> — overwrite/update your local browser save with the current state.</li>
+          <li><b>load save</b> — return to the stored local save.</li>
+          <li><b>export save file</b> — download a JSON backup of the current save.</li>
+          <li><b>import save file</b> — choose a previously exported JSON save and load it.</li>
+          <li><b>delete save</b> — removes the local playthrough save.</li>
+        </ul>
+        <p>The game also autosaves after a few new discoveries. Confidence tags and revisit flags are included in the saved state.</p>
       </div>
 
       <div class="howto-section">
-        <h3>quick version</h3>
-        <div class="howto-callout"><b>start → choose JC or May → explore the laptop → open useful items → let new story content unlock → use Our Timeline and case tools → save → keep investigating until you have to decide what to do.</b></div>
-        <p>that's the actual gameplay loop. everything else is yours to discover while playing.</p>
+        <h3>13. dialogue + story prompts during laptop use</h3>
+        <p>JC and May can talk while an app is open. Important dialogue appears above the laptop interface, so you do not need to close the current window.</p>
+        <p>If a large story prompt appears with choices, click one of the displayed buttons before normal exploration continues.</p>
+        <p>Some normal conversations happen during quieter moments; evidence-triggered dialogue takes priority when needed.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>14. reaching the final decision</h3>
+        <p>There is no "solve case" button. Keep exploring and establishing enough of the night until the story eventually asks what JC and May should do with the laptop.</p>
+        <p>Click one of the available decision buttons when that prompt appears. Some options only appear if their evidence requirements were actually reached.</p>
+        <p>If an option you expected is missing, continue investigating rather than changing your confidence tags — the tags themselves do not unlock endings.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>15. cheat-code controls</h3>
+        <p>There are two places to enter a code:</p>
+        <ul class="howto-list">
+          <li>the small <b>code</b> field on the main menu.</li>
+          <li>the <b>🧪 Cheat Codes</b> laptop app.</li>
+        </ul>
+        <p>Click the field, type a code you already know, then press <b>Enter</b> or the on-screen <b>enter</b> button.</p>
+        <p>The game intentionally does not show a code list, suggestions, or autofill. Cheats are optional development/testing shortcuts and are not needed for normal play.</p>
+      </div>
+
+      <div class="howto-section">
+        <h3>16. mobile + touch controls</h3>
+        <ul class="howto-list">
+          <li><b>tap</b> instead of clicking.</li>
+          <li><b>swipe inside the app</b> to scroll long lists or documents.</li>
+          <li>the Files sidebar becomes a horizontally scrollable location bar on small screens.</li>
+          <li>the taskbar can scroll horizontally so its controls remain reachable.</li>
+          <li>detail views use the same <span class="howto-ui">← back</span> button.</li>
+          <li>landscape gives the fake-laptop interface more space, but it is optional.</li>
+        </ul>
+      </div>
+
+      <div class="howto-section">
+        <h3>full gameplay loop</h3>
+        <div class="howto-callout"><b>start → choose JC or May → use desktop/apps → click items to discover information → check ☷ Our Notes → unlock 🧷 Our Timeline → use confidence dropdowns + ☆ revisit flags + automatic contradiction flags → use hotspot when the story unlocks it → save → keep investigating → choose what to do when the final decision appears.</b></div>
+        <p>That is the full control loop. The game itself is figuring out what all the information means.</p>
       </div>
     </div>
     <button class="soft howto-back" onclick="closeHowToPlay()">back</button>
