@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v26</title>
-<!-- v25: intro viewport fix, expanded JC/May relationship banter across acts, preserved dual-perspective/evidence systems -->
+<title>Lost Phone v28</title>
+<!-- v27: true perspective-specific intro routes; May POV now controls May choices instead of JC replies; preserves v26 protected dialogue layers -->
 <style>
 :root{
   --bg:#06080c;--panel:#10141b;--panel2:#171c25;--panel3:#202734;
@@ -366,6 +366,65 @@ body{overflow:hidden}
 @media(max-width:980px){
   #desktopIcons{grid-template-columns:repeat(5,88px);grid-auto-rows:84px}
 }
+
+
+/* =========================================================
+   v28 UNIVERSAL SCROLL / LONG CONTENT FIX
+   Every app must keep its final line reachable on desktop,
+   touch screens, short viewports, and nested split layouts.
+   ========================================================= */
+.window-body{min-width:0;overscroll-behavior:contain}
+/* Fallback for simple app bodies. Structured apps keep their own pane scrolling. */
+.window-body:not(.split):not(.msg-layout):not(.two-col):not(.browser){
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.content,.viewer,.messages,.history,.chat-list,.sidebar,.index,.news-main{
+  min-width:0;
+  min-height:0;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:#465166 #11161e;
+}
+.content,.viewer,.messages,.history,.chat-list,.sidebar,.index,.news-main,.window-body{
+  scroll-behavior:smooth;
+}
+.content::-webkit-scrollbar,.viewer::-webkit-scrollbar,.messages::-webkit-scrollbar,.history::-webkit-scrollbar,
+.chat-list::-webkit-scrollbar,.sidebar::-webkit-scrollbar,.index::-webkit-scrollbar,.news-main::-webkit-scrollbar,.window-body::-webkit-scrollbar{
+  width:9px;
+  height:9px;
+}
+.content::-webkit-scrollbar-thumb,.viewer::-webkit-scrollbar-thumb,.messages::-webkit-scrollbar-thumb,.history::-webkit-scrollbar-thumb,
+.chat-list::-webkit-scrollbar-thumb,.sidebar::-webkit-scrollbar-thumb,.index::-webkit-scrollbar-thumb,.news-main::-webkit-scrollbar-thumb,.window-body::-webkit-scrollbar-thumb{
+  background:#465166;
+  border:2px solid #11161e;
+  border-radius:10px;
+}
+.content::-webkit-scrollbar-track,.viewer::-webkit-scrollbar-track,.messages::-webkit-scrollbar-track,.history::-webkit-scrollbar-track,
+.chat-list::-webkit-scrollbar-track,.sidebar::-webkit-scrollbar-track,.index::-webkit-scrollbar-track,.news-main::-webkit-scrollbar-track,.window-body::-webkit-scrollbar-track{
+  background:#11161e;
+}
+.detail,.bubble,.news-article .story,#fileDetail,#photoDetail,#settingsBody,#yourPhoneBody,#timelineBody,#terminalBody{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+pre,code{
+  max-width:100%;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+#toast{
+  max-height:min(46vh,360px);
+  overflow-y:auto;
+  overflow-x:hidden;
+  overflow-wrap:anywhere;
+  overscroll-behavior:contain;
+}
+/* Keep list/detail layouts inside the available app height instead of letting children force clipping. */
+.split,.msg-layout,.two-col,.browser,.news-shell{min-width:0;min-height:0}
+.chat-panel,.chat-left{min-width:0;min-height:0}
 
 /* =========================================================
    MOBILE / TOUCH SUPPORT
@@ -810,6 +869,22 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
     overflow-x:auto;
     -webkit-overflow-scrolling:touch;
   }
+  /* v28: any pane containing long text is directly finger-scrollable. */
+  .window-body,.content,.viewer,.messages,.history,.chat-list,.index,.sidebar,.news-main{
+    touch-action:pan-y;
+  }
+  .content,.viewer,.history,.news-main{
+    padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  }
+  .messages{
+    scroll-padding-bottom:18px;
+  }
+  #toast{
+    max-height:38dvh;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+  }
+
 }
 
 @media(max-width:390px){
@@ -1355,13 +1430,14 @@ function showCharacterSelect(){
 }
 function selectCharacter(ch){
   playerCharacter=ch;
+  activeIntro=ch==="may"?introMay:introJC;
   document.getElementById("characterSelect").style.display="none";
   document.getElementById("dialogue").style.display="flex";
-  if(ch==="jc")showDialogue(1);else showDialogue(0);
+  showDialogue(0);
 }
 function restartForPerspective(){localStorage.removeItem(SAVE_KEY);location.reload()}
 
-const intro=[
+const introJC=[
  {speaker:"jc",text:`aight, terminal's like five minutes from here na.
 
 this rain is getting stupid though.`,choices:[["keep walking",1]]},
@@ -1382,29 +1458,29 @@ and i'm not commenting on every puddle. that last one was unusually deep.`,choic
 
  {speaker:"may",text:`exactly.
 
-if they call they're gonna ask about the flood, not interrogate me about you.` ,choices:[["fair",5],["second time meeting btw",6]]},
+if they call they're gonna ask about the flood, not interrogate me about you.`,choices:[["fair",5],["second time meeting btw",6]]},
 
  {speaker:"jc",text:`fair.
 
-less pressure for me then.` ,choices:[["keep walking",7]]},
+less pressure for me then.`,choices:[["keep walking",7]]},
 
  {speaker:"jc",text:`and this is literally only the second time we've met irl 😭
 
-so technically they don't even have anything to know yet.` ,choices:[["continue",8]]},
+so technically they don't even have anything to know yet.`,choices:[["continue",8]]},
 
  {speaker:"may",text:`EXACTLY 😭
 
-you're acting like my family has a case file on you.` ,choices:[["keep walking",9]]},
+you're acting like my family has a case file on you.`,choices:[["keep walking",9]]},
 
  {speaker:"may",text:`don't say it like that 😭
 
-we've been talking for basically a year and this is still only the second time we've met irl.` ,choices:[["yeah but still",9]]},
+we've been talking for basically a year and this is still only the second time we've met irl.`,choices:[["yeah but still",9]]},
 
  {speaker:"jc",text:`yeah but still.
 
 also why are you walking like three steps ahead of me 😭`,choices:[["continue",10]]},
 
- {speaker:"may",text:`because you walk slow.` ,choices:[["i'm taller than you??",11],["look at may",12]]},
+ {speaker:"may",text:`because you walk slow.`,choices:[["i'm taller than you??",11],["look at may",12]]},
 
  {speaker:"jc",text:`i'm literally taller than you. how am i the slow one 😭`,choices:[["continue",12]]},
 
@@ -1414,13 +1490,13 @@ also why are you walking like three steps ahead of me 😭`,choices:[["continue"
 
  {speaker:"may",text:`HUH??? 😭
 
-fuck you. i'm not even that short.` ,choices:[["you're tiny",15],["my bad 😭",16]]},
+fuck you. i'm not even that short.`,choices:[["you're tiny",15],["my bad 😭",16]]},
 
  {speaker:"jc",text:`you're tiny 😭`,choices:[["continue",17]]},
 
  {speaker:"jc",text:`my bad 😭
 
-that sounded less disrespectful in my head.` ,choices:[["continue",17]]},
+that sounded less disrespectful in my head.`,choices:[["continue",17]]},
 
  {speaker:"may",text:`see this is why you're awkward in person.
 
@@ -1428,7 +1504,7 @@ you text normally then irl you just say whatever enters your head 😭`,choices:
 
  {speaker:"jc",text:`i'm not awkward.
 
-i'm just... thinking.` ,choices:[["continue",20]]},
+i'm just... thinking.`,choices:[["continue",20]]},
 
  {speaker:"jc",text:`okay maybe a little.
 
@@ -1438,43 +1514,43 @@ this is literally only the second time, give me a break 😭`,choices:[["continu
 
 you were quiet as hell the first time too.
 
-also btw i still don't believe u when u say you're scared of women 😭 u really don't act like it.` ,choices:[["i didn't know what to say",21],["you kept talking anyway",22]]},
+also btw i still don't believe u when u say you're scared of women 😭 u really don't act like it.`,choices:[["i didn't know what to say",21],["you kept talking anyway",22]]},
 
  {speaker:"jc",text:`i didn't know what to say 😭
 
 you were just looking at me waiting for me to talk.
 
-the panic is internal. very efficient system.` ,choices:[["continue",23]]},
+the panic is internal. very efficient system.`,choices:[["continue",23]]},
 
  {speaker:"jc",text:`you kept talking anyway so i thought i was good 😭
 
-also being scared doesn't mean i have to look terrified 24/7.` ,choices:[["continue",23]]},
+also being scared doesn't mean i have to look terrified 24/7.`,choices:[["continue",23]]},
 
  {speaker:"may",text:`because if i waited for you we'd still be standing there in silence.
 
-"internal panic" daw 😭 keep talking, i'm gonna block u again.` ,choices:[["keep walking",24]]},
+"internal panic" daw 😭 keep talking, i'm gonna block u again.`,choices:[["keep walking",24]]},
 
  {speaker:"jc",text:`AGAIN is crazy 😭 at least give me like a thirty-day notice.
 
-anyway i'm still getting you to the terminal so be nice.` ,choices:[["continue",25]]},
+anyway i'm still getting you to the terminal so be nice.`,choices:[["continue",25]]},
 
  {speaker:"may",text:`no notice. instant suspension.
 
 to the terminal. that's it.
 
-after that i can commute home myself.` ,choices:[["yeah yeah",26]]},
+after that i can commute home myself.`,choices:[["yeah yeah",26]]},
 
  {speaker:"jc",text:`yeah yeah 😭
 
-professional terminal escort service.` ,choices:[["keep walking",27]]},
+professional terminal escort service.`,choices:[["keep walking",27]]},
 
- {speaker:"may",text:`you say that like you're not gonna stand there until i actually get on something.` ,choices:[["maybe",28],["no comment",29]]},
+ {speaker:"may",text:`you say that like you're not gonna stand there until i actually get on something.`,choices:[["maybe",28],["no comment",29]]},
 
  {speaker:"jc",text:`maybe.
 
 i'm not letting you say i abandoned you at a terminal 😭`,choices:[["continue",30]]},
 
- {speaker:"jc",text:`no comment.` ,choices:[["continue",30]]},
+ {speaker:"jc",text:`no comment.`,choices:[["continue",30]]},
 
  {speaker:"may",text:`mhm. knew it.
 
@@ -1490,7 +1566,7 @@ wait, fuck...`,choices:[["what happened?",32]]},
 
  {speaker:"may",text:`what?`,choices:[["look down",33]]},
 
- {speaker:"jc",text:`i stepped on something.` ,choices:[["move your foot",34]]},
+ {speaker:"jc",text:`i stepped on something.`,choices:[["move your foot",34]]},
 
  {speaker:"may",text:`is that a bag?
 
@@ -1498,34 +1574,217 @@ wait, it was beside the bench. like half under it.
 
 who leaves a whole bag here in this rain?`,choices:[["pick it up",35],["kick it a little first",36]]},
 
- {speaker:"jc",text:`yeah. wait, there's actually something inside.` ,choices:[["open the bag",37]]},
+ {speaker:"jc",text:`yeah. wait, there's actually something inside.`,choices:[["open the bag",37]]},
 
- {speaker:"may",text:`why are you kicking random shit 😭 just open it.` ,choices:[["open the bag",37]]},
+ {speaker:"may",text:`why are you kicking random shit 😭 just open it.`,choices:[["open the bag",37]]},
 
- {speaker:"jc",text:`yo what the fuck, there's a laptop in here.` ,choices:[["check the bag more",38],["take the laptop out",39]]},
+ {speaker:"jc",text:`yo what the fuck, there's a laptop in here.`,choices:[["check the bag more",38],["take the laptop out",39]]},
 
- {speaker:"may",text:`charger, mouse, some papers... okay this is someone's actual bag.` ,choices:[["take the laptop out",39]]},
+ {speaker:"may",text:`charger, mouse, some papers... okay this is someone's actual bag.`,choices:[["take the laptop out",39]]},
 
  {speaker:"jc",text:`it's still warm.
 
-that's kinda weird.` ,choices:[["open it",40],["look around first",41]]},
+that's kinda weird.`,choices:[["open it",40],["look around first",41]]},
 
  {speaker:"may",text:`open it. baka may name or email or something.
 
-but don't go full detective agad ha.` ,choices:[["open the laptop",42]]},
+but don't go full detective agad ha.`,choices:[["open the laptop",42]]},
 
  {speaker:"jc",text:`hello? anyone lose a bag?
 
 ...
 
-wala talaga.` ,choices:[["open the laptop",42]]},
+wala talaga.`,choices:[["open the laptop",42]]},
 
- {speaker:"jc",text:`wait... it's already unlocked.` ,choices:[["look at the desktop",43]]},
+ {speaker:"jc",text:`wait... it's already unlocked.`,choices:[["look at the desktop",43]]},
 
  {speaker:"may",text:`okay that's weird.
 
-just find the owner first. that's it.` ,choices:[["use the laptop",99]]}
+just find the owner first. that's it.`,choices:[["use the laptop",99]]}
 ];
+
+/* May route: choices are May's choices. The same objective events happen, but the player never picks JC's dialogue for him. */
+const introMay=[
+ {speaker:"may",text:`yeah yeah. hanggang terminal lang.
+
+this rain is getting stupid though.
+
+my parents don't even know who u are 😭 they just know i'm out.`,choices:[["keep walking",1]]},
+
+ {speaker:"jc",text:`aight 😭 i'm literally just some random name they don't know.
+
+also terminal's like five minutes from here na.`,choices:[["tell him they don't care who you're meeting",2],["tease him about narrating puddles",3]]},
+
+ {speaker:"may",text:`they don't really care who i'm meeting. they care if i get home.
+
+if they call they're gonna ask about the flood, not interrogate me about you.`,choices:[["continue",4]]},
+
+ {speaker:"may",text:`also u know u don't have to comment on every puddle just so there isn't silence right 😭`,choices:[["continue",5]]},
+
+ {speaker:"jc",text:`damn okay 😭 less pressure for me then.
+
+still funny that i'm basically an unnamed side character to them.`,choices:[["remind him this is only meet #2",6],["tell him to relax",7]]},
+
+ {speaker:"jc",text:`i'm not commenting on EVERY puddle.
+
+that last one was unusually deep.`,choices:[["call bullshit",8],["let him have the puddle",9]]},
+
+ {speaker:"may",text:`and this is literally only the second time we've met irl 😭
+
+we've been talking for basically a year and you've appeared twice.`,choices:[["continue",10]]},
+
+ {speaker:"may",text:`relax 😭 you're acting like my family has a case file on you.`,choices:[["continue",10]]},
+
+ {speaker:"may",text:`you absolutely narrate random shit when you don't know what to say.
+
+puddles included.`,choices:[["continue",11]]},
+
+ {speaker:"may",text:`fine. unusually deep puddle. i'll give you that one.`,choices:[["continue",11]]},
+
+ {speaker:"jc",text:`okay but why are you walking like three steps ahead of me 😭`,choices:[["because u walk slow",12],["tell him to keep up",13]]},
+
+ {speaker:"jc",text:`i'm literally taller than you. how am i the slow one 😭`,choices:[["insult his walking speed",14],["ignore that and keep walking",15]]},
+
+ {speaker:"may",text:`because u walk slow. height clearly isn't helping.`,choices:[["continue",16]]},
+
+ {speaker:"may",text:`keep up then 😭 i'm not slowing down just because your legs forgot their job.`,choices:[["continue",16]]},
+
+ {speaker:"may",text:`idk. skill issue.`,choices:[["continue",16]]},
+
+ {speaker:"may",text:`...`,choices:[["keep walking",16]]},
+
+ {speaker:"jc",text:`wait stand still.
+
+yeah i can still only see your scalp from up here lmaooo`,choices:[["threaten to block him",17],["tell him to shut up",18]]},
+
+ {speaker:"may",text:`keep talking and i'm gonna block u again.`,choices:[["continue",19]]},
+
+ {speaker:"may",text:`SHUT UP 😭 i'm not even that short.`,choices:[["continue",19]]},
+
+ {speaker:"jc",text:`AGAIN is crazy 😭
+
+at least give me like a thirty-day notice.`,choices:[["instant suspension",20],["tell him there's no notice",21]]},
+
+ {speaker:"may",text:`no. instant suspension.`,choices:[["continue",22]]},
+
+ {speaker:"may",text:`there is no notice. you just wake up blocked one day.`,choices:[["continue",22]]},
+
+ {speaker:"jc",text:`terrible terms and conditions.
+
+also you're proving my point because i thought you said i was the awkward one.`,choices:[["call him awkward",23],["bring up the first meetup",24]]},
+
+ {speaker:"may",text:`you ARE awkward in person 😭
+
+you text normally then irl you just say whatever enters your head.`,choices:[["continue",25]]},
+
+ {speaker:"may",text:`you were quiet as hell the first time too.
+
+like you'd look at me for half a second then look somewhere else 😭`,choices:[["continue",25]]},
+
+ {speaker:"jc",text:`okay maybe a little 😭
+
+this is literally only the second time, give me a break.`,choices:[["tell him you don't believe he's scared of women",26],["say he doesn't act scared",27]]},
+
+ {speaker:"may",text:`also btw i still don't believe u when u say you're scared of women 😭 u really don't act like it.`,choices:[["continue",28]]},
+
+ {speaker:"may",text:`that's why i don't buy the whole "scared of women" thing.
+
+you don't act scared. u act normal then randomly remember you're shy 😭`,choices:[["continue",28]]},
+
+ {speaker:"jc",text:`the panic is internal. very efficient system.
+
+i can be terrified and still look normal 😭`,choices:[["make fun of internal panic",29],["tell him you had to carry the silence anyway",30]]},
+
+ {speaker:"may",text:`"internal panic" daw 😭 professional exterior my ass.`,choices:[["continue",31]]},
+
+ {speaker:"may",text:`because if i waited for you we'd still be standing there in silence.
+
+somebody had to keep the conversation alive 😭`,choices:[["continue",31]]},
+
+ {speaker:"jc",text:`okay okay 😭
+
+anyway i'm still getting you to the terminal so be nice.`,choices:[["say you can commute home yourself",32],["call out that he'll wait anyway",33]]},
+
+ {speaker:"may",text:`to the terminal. that's it.
+
+after that i can commute home myself.`,choices:[["continue",34]]},
+
+ {speaker:"may",text:`you say that like you're not gonna stand there until i actually get on something.`,choices:[["continue",35]]},
+
+ {speaker:"jc",text:`yeah yeah 😭 professional terminal escort service.`,choices:[["keep walking",36]]},
+
+ {speaker:"jc",text:`...maybe.
+
+i'm not letting you say i abandoned you at a terminal 😭`,choices:[["tell him paasa anyway",37],["just say 'mhm'",38]]},
+
+ {speaker:"may",text:`mhm.
+
+...wait. look at the road.`,choices:[["continue",39]]},
+
+ {speaker:"may",text:`paasa ka anyway 😭 but fine. terminal escort points for today.`,choices:[["continue",39]]},
+
+ {speaker:"may",text:`mhm. knew it.`,choices:[["continue",39]]},
+
+ {speaker:"may",text:`that water was NOT that high earlier 😭
+
+people at the terminal aren't even moving.`,choices:[["keep walking",40]]},
+
+ {speaker:"jc",text:`yeah we might be stuck here for a while.
+
+wait, fuck...`,choices:[["ask what happened",41],["look where he's looking",42]]},
+
+ {speaker:"may",text:`what happened?`,choices:[["continue",43]]},
+
+ {speaker:"may",text:`...what are you looking at?`,choices:[["continue",43]]},
+
+ {speaker:"jc",text:`i stepped on something.`,choices:[["look down",44],["tell him to move his foot",45]]},
+
+ {speaker:"may",text:`is that a bag?
+
+wait, it was beside the bench. like half under it.`,choices:[["check if anyone nearby owns it",46],["tell jc to pick it up",47]]},
+
+ {speaker:"may",text:`move your foot 😭 is that a bag?`,choices:[["check if anyone nearby owns it",46],["tell jc to pick it up",47]]},
+
+ {speaker:"may",text:`who leaves a whole bag here in this rain?
+
+hello? anyone lose a bag?`,choices:[["continue",48]]},
+
+ {speaker:"may",text:`pick it up. baka may ID or something inside.`,choices:[["continue",49]]},
+
+ {speaker:"jc",text:`wala talaga.
+
+okay, i'm opening it.`,choices:[["watch him check the bag",50]]},
+
+ {speaker:"jc",text:`yeah. wait, there's actually something inside.`,choices:[["tell him to open it",50]]},
+
+ {speaker:"jc",text:`yo what the fuck, there's a laptop in here.`,choices:[["check the rest of the bag",51],["tell him to take the laptop out",52]]},
+
+ {speaker:"may",text:`charger, mouse, some papers... okay this is someone's actual bag.`,choices:[["continue",53]]},
+
+ {speaker:"may",text:`take it out. maybe there's a name on it somewhere.`,choices:[["continue",53]]},
+
+ {speaker:"jc",text:`it's still warm.
+
+that's kinda weird.`,choices:[["tell him to find the owner first",54],["look around again",55]]},
+
+ {speaker:"may",text:`open it. baka may name or email or something.
+
+but don't go full detective agad ha.`,choices:[["continue",56]]},
+
+ {speaker:"may",text:`wait. look around first.
+
+...nothing. okay, open it.`,choices:[["continue",56]]},
+
+ {speaker:"jc",text:`wait... it's already unlocked.`,choices:[["tell him to check only for a name",57],["say that's weird",58]]},
+
+ {speaker:"may",text:`just find the owner first. name, email, contact. that's it.`,choices:[["use the laptop",99]]},
+
+ {speaker:"may",text:`okay that's weird.
+
+still—just find the owner first. that's it.`,choices:[["use the laptop",99]]}
+];
+
+let activeIntro=introJC;
 
 const STORY_DATE_LABEL="tuesday, august 18, 2026";
 const STORY_FOUND_TIME="12:23 am";
@@ -1536,7 +1795,7 @@ function updateIntroClock(){
 updateIntroClock();
 
 function showDialogue(i){
-  const d=intro[i];
+  const d=activeIntro[i];
   speaker.textContent=displaySpeaker(d.speaker);
   dialogueText.textContent=d.text;
   const th=document.getElementById("dialogueThought");if(th)th.textContent=introThoughtFor(d.text);
@@ -5040,7 +5299,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:8,
+    version:10,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
