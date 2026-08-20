@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone</title>
+<title>Lost Phone v63</title>
 <!-- v44: clean spoiler-free README + detailed gameplay-focused How to Play. -->
 <!-- v34: expanded multi-sport agenda archive; National Baller Association/football/Major League Basebrawl takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
@@ -1093,6 +1093,67 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
 .case-optional{font-size:10px;color:#9ba8ba;font-weight:400;margin-left:6px}
 .case-simple-note{padding:9px 10px;border:1px solid #2b3543;border-radius:8px;background:#0d1219;color:#aeb9c7;margin:8px 0 12px}
 
+
+/* v63 • fuller Spotifake */
+#win-music{width:min(1120px,94%);height:min(760px,90%);background:#090b0d}
+.spotifake-shell{display:grid;grid-template-columns:220px minmax(0,1fr);grid-template-rows:minmax(0,1fr) 86px;background:#090b0d;color:#f3f5f7;min-height:0}
+.sf-sidebar{grid-column:1;grid-row:1;background:#090b0d;border-right:1px solid #202428;padding:16px 10px 18px;overflow-y:auto;min-height:0}
+.sf-brand{font-size:18px;padding:3px 10px 17px;letter-spacing:-.4px}
+.sf-nav{display:block;width:100%;border:0;background:transparent;color:#aeb3b9;text-align:left;padding:9px 10px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:700}
+.sf-nav:hover,.sf-nav.active{color:#fff;background:#171a1e}
+.sf-side-rule{height:1px;background:#24282d;margin:12px 8px}
+.sf-side-title{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#777f88;padding:3px 10px 7px}
+.sf-playlist-link{width:100%;border:0;background:transparent;color:#a9afb6;text-align:left;padding:6px 10px;border-radius:6px;font-size:11px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sf-playlist-link:hover,.sf-playlist-link.active{color:white;background:#171a1e}
+.sf-main{grid-column:2;grid-row:1;min-width:0;min-height:0;display:flex;flex-direction:column;background:#101214}
+.sf-topbar{min-height:54px;padding:9px 15px;display:flex;align-items:center;justify-content:space-between;background:rgba(16,18,20,.96);border-bottom:1px solid #202429}
+.sf-top-actions{display:flex;align-items:center;gap:9px}.sf-user{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#2a2f35;font-weight:800;font-size:11px}
+.sf-round{border:0;background:#08090b;color:#dfe4e8;width:30px;height:30px;border-radius:50%;font-size:20px;line-height:1;cursor:pointer;margin-right:5px}
+.sf-scroll{flex:1;overflow:auto;padding:18px 20px 34px;min-height:0}
+.sf-hero{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:end;margin:4px 0 23px}
+.sf-cover{width:150px;aspect-ratio:1;border-radius:6px;box-shadow:0 16px 40px rgba(0,0,0,.45);display:grid;place-items:center;font-size:34px;font-weight:900;letter-spacing:-2px;color:rgba(255,255,255,.92);overflow:hidden;text-align:center;padding:10px}
+.sf-cover.sm{width:44px;height:44px;aspect-ratio:1;font-size:12px;letter-spacing:-.5px;border-radius:4px;padding:4px;box-shadow:none}
+.sf-cover.card{width:100%;height:auto;aspect-ratio:1;font-size:20px}
+.sf-eyebrow{text-transform:uppercase;font-size:10px;font-weight:800;letter-spacing:.1em;color:#bbc1c7}
+.sf-hero h1{font-size:38px;line-height:.95;margin:7px 0 10px;letter-spacing:-1.5px}.sf-hero p{margin:3px 0;color:#b7bdc4;font-size:12px}
+.sf-play-btn{width:46px;height:46px;border-radius:50%;border:0;background:#51d07d;color:#07100a;font-size:19px;cursor:pointer;font-weight:900}.sf-play-btn:hover{transform:scale(1.04)}
+.sf-action-row{display:flex;gap:9px;align-items:center;margin:0 0 15px}
+.sf-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;margin:10px 0 24px}
+.sf-card{background:#181b1f;border:1px solid #24282d;border-radius:9px;padding:11px;cursor:pointer;min-width:0}.sf-card:hover{background:#22262b}
+.sf-card b{display:block;font-size:12px;margin-top:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sf-card small{display:block;color:#949ba3;font-size:10px;margin-top:4px;line-height:1.35}
+.sf-section-title{font-size:18px;margin:13px 0 10px}
+.sf-track-head,.sf-track{display:grid;grid-template-columns:34px minmax(220px,2fr) minmax(130px,1.25fr) 54px 50px;align-items:center;column-gap:10px;padding:6px 8px;border-radius:5px}
+.sf-track-head{color:#8f969e;font-size:10px;border-bottom:1px solid #2b3035;border-radius:0;position:sticky;top:-18px;background:#101214;z-index:2}
+.sf-track{font-size:11px;cursor:pointer;min-height:54px}.sf-track:hover{background:#1c2024}.sf-track.playing{background:#20262a}
+.sf-track-num{color:#9ca2aa;text-align:center}.sf-track-title{display:flex;align-items:center;gap:10px;min-width:0}
+.sf-track-title-text{min-width:0}.sf-track-title-text b,.sf-track-title-text small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sf-track-title-text b{font-size:12px}.sf-track-title-text small{font-size:10px;color:#969da5;margin-top:3px}
+.sf-track-album{color:#9fa6ae;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sf-track-time{color:#a8afb6;text-align:right}
+.sf-track-more{border:0;background:transparent;color:#9299a1;cursor:pointer;border-radius:50%;height:30px}.sf-track-more:hover{background:#30353b;color:white}
+.sf-row-tools{display:flex;gap:2px}.sf-mini{border:0;background:transparent;color:#8f969e;cursor:pointer;font-size:12px;padding:3px}.sf-mini:hover,.sf-mini.on{color:#55d682}
+.sf-search{width:min(520px,100%);background:#24282d;border:1px solid #363b42;border-radius:24px;color:#fff;padding:11px 16px;font-size:12px;outline:none}.sf-search:focus{border-color:#777f89}
+.sf-artist-header{display:flex;align-items:end;gap:17px;margin-bottom:20px}.sf-artist-header .sf-cover{border-radius:50%}
+.sf-pill{border:1px solid #3a4047;background:#171a1e;color:#d8dde1;border-radius:20px;padding:7px 11px;cursor:pointer;font-size:10px}.sf-pill:hover{border-color:#727b84}
+.sf-message-grid{display:grid;grid-template-columns:260px 1fr;gap:13px;min-height:390px}.sf-msg-list{border-right:1px solid #292e33;padding-right:10px}
+.sf-msg-row{padding:10px;border-radius:7px;cursor:pointer;font-size:11px}.sf-msg-row:hover{background:#1b1f23}.sf-msg-row small{display:block;color:#90979f;margin-top:4px}
+.sf-player{grid-column:1/3;grid-row:2;background:#111417;border-top:1px solid #282d32;display:grid;grid-template-columns:minmax(190px,1fr) minmax(330px,1.5fr) minmax(160px,1fr);align-items:center;gap:12px;padding:9px 14px;z-index:5}
+.sf-now{display:flex;align-items:center;gap:10px;min-width:0}.sf-now-text{min-width:0}.sf-now-text b,.sf-now-text small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sf-now-text b{font-size:11px}.sf-now-text small{font-size:9px;color:#939aa2;margin-top:3px}
+.sf-controls{display:flex;flex-direction:column;gap:6px;align-items:center}.sf-control-buttons{display:flex;align-items:center;gap:13px}
+.sf-control{border:0;background:transparent;color:#b4bac1;font-size:15px;cursor:pointer;padding:3px 5px}.sf-control:hover,.sf-control.on{color:#fff}
+.sf-control.play{width:31px;height:31px;border-radius:50%;background:#f4f5f6;color:#0b0d0f;font-size:12px}
+.sf-progress-wrap{display:grid;grid-template-columns:34px 1fr 34px;gap:7px;align-items:center;width:min(470px,100%)}.sf-progress-wrap span{font-size:9px;color:#8f969e;text-align:center}
+.sf-range{accent-color:#59d680;width:100%;height:3px;cursor:pointer}.sf-right{display:flex;align-items:center;justify-content:flex-end;gap:7px}.sf-volume{width:85px}
+.sf-queue-badge{font-size:9px;background:#2b3035;border-radius:10px;padding:2px 6px}.sf-queue-row{display:flex;align-items:center;gap:10px;padding:8px;border-bottom:1px solid #24282d}
+.sf-queue-row .grow{flex:1;min-width:0}.sf-queue-row b,.sf-queue-row small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sf-queue-row small{color:#8f969e;font-size:10px;margin-top:2px}
+.sf-empty{padding:28px;text-align:center;color:#848c95}
+@media(max-width:700px){
+  .spotifake-shell{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr) 92px}.sf-sidebar{grid-column:1;grid-row:1;display:flex;gap:4px;overflow-x:auto;overflow-y:hidden;padding:7px;border-right:0;border-bottom:1px solid #24282d}
+  .sf-brand,.sf-side-rule,.sf-side-title,#spotifakePlaylistNav{display:none}.sf-nav{width:auto;white-space:nowrap;padding:7px 9px}.sf-main{grid-column:1;grid-row:2}
+  .sf-player{grid-column:1;grid-row:3;grid-template-columns:1fr auto;padding:7px 9px}.sf-controls{grid-column:1/3;grid-row:2}.sf-right{display:none}
+  .sf-track-head,.sf-track{grid-template-columns:28px minmax(160px,1fr) 50px 38px}.sf-track-head .album-col,.sf-track .sf-track-album{display:none}
+  .sf-hero{grid-template-columns:96px 1fr}.sf-cover{width:96px}.sf-hero h1{font-size:26px}.sf-message-grid{grid-template-columns:1fr}.sf-msg-list{border-right:0;border-bottom:1px solid #292e33;padding-bottom:8px}
+}
+
 </style>
 </head>
 <body>
@@ -1307,7 +1368,7 @@ this rain is getting stupid though.</span></button>
         <button class="desktop-icon" onclick="openWindow('mail')"><span class="ico">✉️</span><span class="lbl">mail</span></button>
         <button class="desktop-icon" onclick="openWindow('contacts')"><span class="ico">👤</span><span class="lbl">contacts</span></button>
         <button class="desktop-icon" onclick="openWindow('calendar')"><span class="ico">📅</span><span class="lbl">calendar</span></button>
-        <button class="desktop-icon" onclick="openWindow('music')"><span class="ico">🎵</span><span class="lbl">music</span></button>
+        <button class="desktop-icon" onclick="openWindow('music')"><span class="ico">🎵</span><span class="lbl">spotifake</span></button>
         <button class="desktop-icon" onclick="openWindow('recorder')"><span class="ico">🎙️</span><span class="lbl">recorder</span></button>
         <button class="desktop-icon" onclick="openWindow('camera')"><span class="ico">📷</span><span class="lbl">camera</span></button>
         <button class="desktop-icon" onclick="openWindow('recycle')"><span class="ico">🗑️</span><span class="lbl">recycle bin</span></button>
@@ -1489,8 +1550,35 @@ this rain is getting stupid though.</span></button>
       </div>
 
       <div class="window" id="win-music">
-        <div class="window-bar"><div class="window-title">🎵 music</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('music')">_</button><button class="win-btn close" onclick="closeWindow('music')">×</button></div></div>
-        <div class="window-body content"><div id="musicList"></div><div class="detail" id="player">nothing playing</div></div>
+        <div class="window-bar"><div class="window-title">◉ spotifake</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('music')">_</button><button class="win-btn close" onclick="closeWindow('music')">×</button></div></div>
+        <div class="window-body spotifake-shell">
+          <aside class="sf-sidebar" id="spotifakeSidebar">
+            <div class="sf-brand">◉ <b>spotifake</b></div>
+            <button class="sf-nav" data-sfnav="home" onclick="setSpotifakeTab('home')">⌂ home</button>
+            <button class="sf-nav" data-sfnav="search" onclick="setSpotifakeTab('search')">⌕ search</button>
+            <button class="sf-nav" data-sfnav="library" onclick="setSpotifakeTab('library')">▤ your library</button>
+            <button class="sf-nav" data-sfnav="liked" onclick="setSpotifakeTab('liked')">♥ liked songs</button>
+            <button class="sf-nav" data-sfnav="messages" onclick="setSpotifakeTab('messages')">✉ song messages</button>
+            <button class="sf-nav" data-sfnav="local" onclick="setSpotifakeTab('local')">▣ local audio</button>
+            <div class="sf-side-rule"></div>
+            <div class="sf-side-title">playlists</div>
+            <div id="spotifakePlaylistNav"></div>
+          </aside>
+          <main class="sf-main">
+            <div class="sf-topbar">
+              <div>
+                <button class="sf-round" onclick="spotifakeGoBack()">‹</button>
+                <button class="sf-round" onclick="spotifakeGoForward()">›</button>
+              </div>
+              <div class="sf-top-actions">
+                <button class="soft" onclick="spotifakeShuffleAll()">shuffle all</button>
+                <div class="sf-user">N</div>
+              </div>
+            </div>
+            <div id="musicList" class="sf-scroll"></div>
+          </main>
+          <footer class="sf-player" id="player"></footer>
+        </div>
       </div>
 
       <div class="window" id="win-recorder">
@@ -1798,7 +1886,7 @@ const confidenceTags={};
 const bookmarkedEvidence=new Set();
 const reviewedComparisons=new Set();
 
-// v61 player-facing app interaction state. These do not score evidence.
+// v63 player-facing app interaction state. These do not score evidence.
 const mailStars=new Set();
 const mailUnread=new Set();
 const instagramLikedPosts=new Set();
@@ -1808,8 +1896,35 @@ const instagramReactedDMs=new Set();
 const discordPins=new Set();
 const discordReactions={};
 const gameFavorites=new Set();
+const spotifakeLikes=new Set([0,3,6,18,24,30,36]);
+const spotifakePlaylist=new Set([0,3,6,12,24,30,35,36]);
+const spotifakeMessageReactions=new Set();
+const spotifakeQueue=[];
+let spotifakeTab="home";
+let spotifakeActivePlaylist="";
+let spotifakeActiveArtist="";
+let spotifakeCurrentTrack=-1;
+let spotifakePlaying=false;
+let spotifakeElapsed=0;
+let spotifakeShuffle=false;
+let spotifakeRepeat=false;
+let spotifakeVolume=72;
+const spotifakeHistory=[];
+let spotifakeHistoryPos=-1;
 let maeSpamIndex=0;
 let maeSpamTimer=null;
+
+let spotifakeTimer=setInterval(()=>{
+  if(!spotifakePlaying||spotifakeCurrentTrack<0)return;
+  const t=spotifakeTracks[spotifakeCurrentTrack];if(!t)return;
+  const dur=spotifakeDurationSeconds(t.dur);
+  spotifakeElapsed++;
+  if(spotifakeElapsed>=dur){
+    if(spotifakeRepeat)spotifakeElapsed=0;
+    else{spotifakeNext();return}
+  }
+  if(document.getElementById("win-music")?.classList.contains("active"))renderSpotifakePlayer();
+},1000);
 
 let howToPlayReturn="menu";
 let pendingFreshStart=false;
@@ -4804,86 +4919,47 @@ const chats={
   ["them","SEE"]
  ]},
 
- unclejojo:{kind:"inbox",name:"uncle jojo",preview:"WATCH TILL END 😂",msgs:[
-  ["them","HAHAHAHA WATCH THIS"],
-  ["them","reel attachment • man falls off plastic chair"],
-  ["them","😂😂😂😂😂"],
-  ["me","HAHAHAHA"],
-  ["them","ETO PA"],
-  ["them","reel attachment • basketball fail compilation"],
-  ["them","mas magaling pa sayo yung bata 😂"],
-  ["me","tito grabe"],
-  ["them","JOKE LANG"],
-  ["them","reel attachment • dog wearing sunglasses"],
-  ["them","WATCH TILL END"],
-  ["me","nasa class ako"],
-  ["them","mamaya mo panoorin"],
-  ["them","reel attachment • motivational edit"],
-  ["them","NEVER GIVE UP 💪💪💪"],
-  ["me","why did this turn motivational"],
-  ["them","important yan"],
-  ["them","reel attachment • uncle dancing at wedding"],
-  ["them","HAHAHA KAMUKHA NI TITO BEN"],
-  ["me",""],
-  ["them","oh eto national baller association"],
-  ["them","reel attachment • old basketball highlights"],
-  ["them","solid"],
-  ["me","okay this one valid"],
-  ["them","ALAM KO"],
-  ["them","reel attachment • cat jumps at cucumber"],
-  ["them","eto last na"],
-  ["them","reel attachment • random cooking hack"],
-  ["them","LAST NA TALAGA"],
-  ["me","you said that 4 reels ago"],
-  ["them","HAHAHAHA"],
-  ["them","reel attachment • guy fixing electric fan"],
-  ["them","useful yan"],
-  ["them","👍👍👍"],
-  ["them","goodnight"],
-  ["them","GOOD MORNING"],
-  ["them","reel attachment • jeep driver singing power ballad"],
-  ["them","GALING"],
-  ["them","👍"],
-  ["me","morning tito"],
-  ["them","kumain ka na"],
-  ["me","yeah"],
-  ["them","good 👍"],
-  ["them","reel attachment • man repairing rice cooker with spoon"],
-  ["them","PWEDE TO"],
-  ["me","please do not try that"],
-  ["them","bakit"],
-  ["me","electricity"],
-  ["them","👍"],
-  ["them","reel attachment • old man crossing up teenager in basketball"],
-  ["them","IKAW TO PAG TUMANDA"],
-  ["me","why is that an insult"],
-  ["them","compliment yan"],
-  ["them","👍👍"],
-  ["them","uuwi ka sunday"],
-  ["me","yeah"],
-  ["them","dala cards"],
-  ["me","what cards"],
-  ["them","UNO"],
-  ["me","bea has them"],
-  ["them","sabihin mo dalhin"],
-  ["me","tell her yourself"],
-  ["them","👍"],
-  ["them","reel attachment • cat smacking another cat"],
-  ["them","MISO"],
-  ["me","accurate"],
-  ["them","HAHAHAHA"],
-  ["them","👍"],
-  ["them","reel attachment • motivational gym speech"],
-  ["them","DISCIPLINE"],
-  ["me","dad already lectures me enough"],
-  ["them","listen to your dad"],
-  ["me","team up pa kayo"],
-  ["them","👍"],
-  ["them","reel attachment • flooded street with man paddling basin"],
-  ["them","MANILA TRANSPORT"],
-  ["me","actually accurate"],
-  ["them","ingat ulan"],
-  ["them","👍"]
+ unclejojo:{kind:"inbox",name:"uncle jojo",preview:"reel attachment • another one",msgs:[
+  ["them","reel attachment • man falls backward off plastic chair"],
+  ["them","reel attachment • kid drains impossible basketball shot then runs away"],
+  ["them","reel attachment • dog wearing sunglasses in a tricycle"],
+  ["them","reel attachment • man repairs electric fan with suspicious amount of tape"],
+  ["them","reel attachment • cat slaps another cat off a couch"],
+  ["them","reel attachment • jeep driver singing power ballad in traffic"],
+  ["them","reel attachment • flooded street with man paddling a plastic basin"],
+  ["them","reel attachment • uncle at wedding doing dance he should not know"],
+  ["them","reel attachment • grandpa crosses up teenager on basketball court"],
+  ["them","reel attachment • rice cooker repair hack that absolutely looks unsafe"],
+  ["them","reel attachment • orange cat steals fried chicken"],
+  ["them","reel attachment • gym fail compilation"],
+  ["them","reel attachment • tiny dog barking at construction equipment"],
+  ["them","reel attachment • man grilling hotdogs using an electric iron"],
+  ["them","reel attachment • wedding videographer falls into decorative plants"],
+  ["them","reel attachment • basketball referee gets hit by stray ball"],
+  ["them","reel attachment • dad attempts backflip into swimming pool"],
+  ["them","reel attachment • guy carries six monoblock chairs on motorcycle"],
+  ["them","reel attachment • cat sleeps through vacuum cleaner"],
+  ["them","reel attachment • street vendor flips pancake way too high"],
+  ["them","reel attachment • old man wins arcade basketball jackpot"],
+  ["them","reel attachment • car gets wrapped in cling film prank"],
+  ["them","reel attachment • baby laughs at ceiling fan for two straight minutes"],
+  ["them","reel attachment • man uses umbrella as improvised fishing rod"],
+  ["them","reel attachment • dog refuses to leave jeepney"],
+  ["them","reel attachment • guy tries carrying refrigerator alone"],
+  ["them","reel attachment • family karaoke singer misses every note confidently"],
+  ["them","reel attachment • basketball ankle breaker compilation"],
+  ["them","reel attachment • cat attacks printer while paper comes out"],
+  ["them","reel attachment • man turns grocery cart into tiny boat"],
+  ["them","reel attachment • cooking hack involving twelve eggs and bad decisions"],
+  ["them","reel attachment • construction worker dances on lunch break"],
+  ["them","reel attachment • grandma dominates mobile game tournament"],
+  ["them","reel attachment • guy slips in rain then bows like it was intentional"],
+  ["them","reel attachment • orange cat wearing tiny basketball jersey"],
+  ["them","reel attachment • man washes motorcycle during heavy rain"],
+  ["them","reel attachment • kid interviews random jeep passengers"],
+  ["them","reel attachment • DIY phone stand made from spoon and rubber bands"],
+  ["them","reel attachment • street basketball game interrupted by dog"],
+  ["them","reel attachment • another cat reel with absolutely no context"]
  ]},
 
  titalena:{kind:"inbox",name:"tita lena",preview:"may printer pa ba kayo",msgs:[
@@ -5297,6 +5373,67 @@ const chats={
   ["system","last cached message • aug 17, 11:31 pm"]
  ]},
 
+
+ monitorbuyer:{kind:"inbox",name:"marketplace • lance",preview:"144hz po?",msgs:[
+  ["them","144hz po?"],["me","75hz"],["them","sure po 75 lang"],["me","it's literally in the listing"],
+  ["them","pwede 144 if overclock"],["me","that's not how monitors work"],["them","ah okay"],
+  ["them","2k po kunin ko"],["me","listed 3200"],["them","cash naman po"],["me","still 3200"],
+  ["them","2500"],["me","no"],["them","last 2600"],["me","my last is still 3200"],["them","seen"]
+ ]},
+
+ headsetbuyer:{kind:"inbox",name:"marketplace • jen",preview:"swap sa rice cooker?",msgs:[
+  ["them","available headset?"],["me","yeah"],["them","may issue"],["me","none just upgraded"],
+  ["them","hm last"],["me","900"],["them","swap sa rice cooker?"],["me","what"],["them","brand new almost"],
+  ["me","how is it brand new almost"],["them","used twice"],["me","no thanks"],["them","plus 200"],["me","still no"],
+  ["them","sayang"]
+ ]},
+
+ controllerbuyer:{kind:"inbox",name:"marketplace • dods",preview:"drift ba boss",msgs:[
+  ["them","drift ba boss"],["me","slight on right stick"],["them","slight how slight"],["me","only noticeable in menus sometimes"],
+  ["them","so may drift"],["me","yes that's why it's cheap"],["them","200"],["me","listed 650"],
+  ["them","may drift eh"],["me","then don't buy it"],["them","300 pickup now"],["me","500"],
+  ["them","350"],["me","500"],["them","matigas ka boss"],["me","it's a controller"]
+ ]},
+
+ bookbuyer:{kind:"inbox",name:"marketplace • pam",preview:"madami highlight?",msgs:[
+  ["them","available pa structural analysis book"],["me","yeah"],["them","madami highlight?"],["me","kinda"],
+  ["them","how many pages"],["me","like 60%"],["them","SIXTY"],["me","academic seasoning"],
+  ["them","may answers written"],["me","some"],["them","actually useful"],["me","exactly"],
+  ["them","350?"],["me","400"],["them","deal"]
+ ]},
+
+ standbuyer:{kind:"inbox",name:"marketplace • arvin",preview:"free delivery po?",msgs:[
+  ["them","laptop stand available"],["me","yes"],["them","150 po?"],["me","200"],
+  ["them","150 + free delivery"],["me","brother the delivery costs more than 50"],["them","near lang naman"],
+  ["me","where"],["them","cavite"],["me","that is not near"],["them","HAHAHAHA"],["them","pickup nalang maybe"]
+ ]},
+
+ lensseller:{kind:"inbox",name:"marketplace • camera lens",preview:"read description sir",msgs:[
+  ["me","available?"],["them","yes"],["me","fungus or haze?"],["them","read description sir"],
+  ["me","it says clean optics"],["them","yes"],["me","so no fungus"],["them","minimal"],
+  ["me","minimal fungus is still fungus"],["them","very small only"],["me","send pic"],
+  ["them","photo attachment • lens under flashlight"],["me","yeah that's fungus"],["them","negotiable sir"]
+ ]},
+
+ chairseller:{kind:"inbox",name:"marketplace • chair seller",preview:"pickup only sir",msgs:[
+  ["me","available chair?"],["them","yes sir"],["me","can deliver manila"],["them","pickup only sir"],
+  ["me","where"],["them","bulacan"],["me","damn"],["them","worth the drive sir ergonomic"],
+  ["me","i don't have a car"],["them","book lalamove"],["me","shipping gonna cost the chair"],["them","quality sir"]
+ ]},
+
+ weirdtrade:{kind:"inbox",name:"marketplace • ron",preview:"trade aquarium?",msgs:[
+  ["them","boss trade keyboard"],["me","for what"],["them","aquarium 20 gallon"],["me","why would i need that"],
+  ["them","pwede fish setup"],["me","i have a cat"],["them","perfect entertainment"],["me","for the cat??"],
+  ["them","HAHAHA"],["me","no trade"],["them","plus 300"],["me","still aquarium"]
+ ]},
+
+ oldphonebuyer:{kind:"inbox",name:"marketplace • miguel",preview:"battery health?",msgs:[
+  ["them","battery health"],["me","81"],["them","original screen"],["me","yes"],["them","face id"],
+  ["me","works"],["them","issue"],["me","small scratch top left"],["them","pic"],["me","photo attachment • screen corner"],
+  ["them","grabe microscopic"],["me","that's why i said small"],["them","5k"],["me","listed 7"],["them","meet 5.5"],
+  ["me","6.5"],["them","6"],["me","6.3"],["them","deal if charger"],["me","cable only"],["them","deal"]
+ ]},
+
  marketbuyer:{kind:"inbox",name:"marketplace • kevin",preview:"hm po available pa po?",msgs:[
   ["them","hm po available pa po?"],["me","yes available"],["them","last price po"],["me","850"],
   ["them","700 po kunin ko now"],["me","800 last"],["them","750"],["me","800"],
@@ -5458,6 +5595,22 @@ const chats={
  ]},
  kate:{kind:"requests",name:"kate",preview:"your friend gave me this account",msgs:[
   ["them","your friend gave me this account"],["them","said you play 2Kay"],["them","need one more for a private lobby later"]
+ ]},
+
+ marketmouse:{kind:"requests",name:"marketplace • dianne",preview:"available mouse?",msgs:[
+  ["them","available mouse?"],["them","rgb working?"],["them","can ship"],["them","hello seller"]
+ ]},
+ marketdesk:{kind:"requests",name:"marketplace • paul",preview:"desk still available?",msgs:[
+  ["them","desk still available?"],["them","actual dimensions pls"],["them","kasya 2 monitors?"]
+ ]},
+ marketcam:{kind:"requests",name:"marketplace • ivy",preview:"camera strap hm?",msgs:[
+  ["them","camera strap hm?"],["them","original?"],["them","can meetup tomorrow"]
+ ]},
+ marketcalc2:{kind:"requests",name:"marketplace • theo",preview:"swap calculator?",msgs:[
+  ["them","swap calculator sa mechanical keyboard?"],["them","blue switch"],["them","plus cash ako"]
+ ]},
+ marketspeaker:{kind:"requests",name:"marketplace • max",preview:"speaker available pa boss",msgs:[
+  ["them","speaker available pa boss"],["them","battery ilang hours"],["them","600 kunin now"]
  ]},
  fbmarket2:{kind:"requests",name:"marketplace • aya",preview:"available pa po?",msgs:[
   ["them","available pa po?"],["them","hm last"],["them","can meetup manila"],["them","hello po"]
@@ -6283,7 +6436,20 @@ online store unavailable while offline.`],
 size 10
 price may have changed.`],
  ["streaming","continue watching",`you have 4 unfinished episodes.`],
- ["music","your monthly listening recap",`top genre: hip hop
+ ["spotifake","your monthly listening recap",`top artists:
+1. Frank Lagoon
+2. Claire-Oh
+3. Travis Scotch
+4. Jojiro
+5. Radio Girl
+
+top songs:
+Evenings — Frank Lagoon
+Pockets — Claire-Oh
+HEALTHY MODE — Travis Scotch
+Fast Standing in the Light — Jojiro
+Haters Pop — Radio Girl
+
 top playlist: late commute`],
  ["food delivery","we miss you",`free delivery voucher expires soon.`],
 
@@ -6558,20 +6724,433 @@ function renderCalendar(){
   calendarBody.innerHTML=h+"</div>";
 }
 
-function getMusicTracks(){const t=[["nights like this","2:49",0],["rainy commute playlist","38:11",1],["lecture recording 2","49:03",2]];if(story.act>=5)t.push(["untitled audio","0:12",3]);if(story.act>=2)t.push(["voice note export","0:08",4]);return t}
-function renderMusic(){
-  const tracks=getMusicTracks();
-  musicList.innerHTML=tracks.map(t=>`<div class="index-row" onclick="playTrack(${t[2]})"><b>${t[0]}</b><small>${t[1]}</small></div>`).join("");
+const spotifakeTracks=[
+  // Claire-Oh — obvious dreamy-bedroom-pop knockoff
+  {title:"Pockets",artist:"Claire-Oh",album:"Charm School",dur:"3:08",vibe:"soft guitar, tiny drums, pretending not to care"},
+  {title:"Sonia",artist:"Claire-Oh",album:"Immunity Test",dur:"3:11",vibe:"warm bedroom pop and bad decisions"},
+  {title:"Cute Guy",artist:"Claire-Oh",album:"Diary Demo",dur:"2:57",vibe:"lo-fi crush song"},
+  {title:"Luna",artist:"Claire-Oh",album:"Charm School",dur:"3:04",vibe:"late-night soft pop"},
+  {title:"Hot to Nobody",artist:"Claire-Oh",album:"Charm School",dur:"3:36",vibe:"wanting validation but acting chill"},
+  {title:"Puddle",artist:"Claire-Oh",album:"Soft Focus",dur:"2:42",vibe:"rainy headphones song"},
+
+  // Frank Lagoon — glossy sad R&B knockoff
+  {title:"Evenings",artist:"Frank Lagoon",album:"Bleached",dur:"5:03",vibe:"two moods in one song"},
+  {title:"Blue + Beige",artist:"Frank Lagoon",album:"Bleached",dur:"3:06",vibe:"expensive-sounding sadness"},
+  {title:"Fern",artist:"Frank Lagoon",album:"Bleached",dur:"4:08",vibe:"nostalgia with too much reverb"},
+  {title:"Found",artist:"Frank Lagoon",album:"Orange Channel",dur:"3:49",vibe:"getting lost but pretending it was intentional"},
+  {title:"Thinking Near You",artist:"Frank Lagoon",album:"Orange Channel",dur:"3:21",vibe:"obvious 2am message bait"},
+  {title:"Bad Swim",artist:"Frank Lagoon",album:"Orange Channel",dur:"4:12",vibe:"sad synths and ocean metaphors legally avoided"},
+
+  // PartyNextFloor — moody Toronto-adjacent R&B knockoff
+  {title:"Leave and Text Me",artist:"PartyNextFloor",album:"PNF Two",dur:"4:16",vibe:"toxic late-night R&B"},
+  {title:"Nap From Toronto",artist:"PartyNextFloor",album:"PNF One",dur:"3:41",vibe:"airport lounge heartbreak"},
+  {title:"Very Mean",artist:"PartyNextFloor",album:"Party After",dur:"3:19",vibe:"petty but smooth"},
+  {title:"Remember Me",artist:"PartyNextFloor",album:"PNF Two",dur:"4:02",vibe:"you definitely should not send this to your ex"},
+  {title:"Next Morning",artist:"PartyNextFloor",album:"Party After",dur:"3:33",vibe:"regretting the 1:43 am text"},
+  {title:"No Guests",artist:"PartyNextFloor",album:"PNF Three",dur:"3:58",vibe:"empty condo R&B"},
+
+  // Travis Scotch — gigantic bass / chaotic rap knockoff
+  {title:"DUCKBUMPS",artist:"Travis Scotch",album:"Birds Near McKnight",dur:"4:01",vibe:"bass boosted enough to wake the jeep terminal"},
+  {title:"HEALTHY MODE",artist:"Travis Scotch",album:"ASTROFIELD",dur:"5:09",vibe:"three beat switches and zero explanation"},
+  {title:"LOWEST IN THE HALL",artist:"Travis Scotch",album:"JACKFELLAS",dur:"2:58",vibe:"hallway speakers at irresponsible volume"},
+  {title:"PAL!",artist:"Travis Scotch",album:"CIRCUSMAX",dur:"3:07",vibe:"one word yelled approximately 400 times"},
+  {title:"10028",artist:"Travis Scotch",album:"Roundup",dur:"5:31",vibe:"luxury sadness with subwoofers"},
+  {title:"Can't Say Maybe",artist:"Travis Scotch",album:"ASTROFIELD",dur:"3:22",vibe:"Niko-core commitment issues anthem"},
+
+  // Jojiro — sad internet-man piano/R&B knockoff
+  {title:"Fast Standing in the Light",artist:"Jojiro",album:"BALLADS -1",dur:"3:27",vibe:"sad but dramatically well lit"},
+  {title:"Full View of Us",artist:"Jojiro",album:"SHATTERINGS",dur:"3:51",vibe:"staring at ceiling music"},
+  {title:"Shelter",artist:"Jojiro",album:"Nectarine",dur:"3:00",vibe:"quiet synth ballad"},
+  {title:"No Left",artist:"Jojiro",album:"BALLADS -1",dur:"2:55",vibe:"defeated shrug in song form"},
+  {title:"Walk Slowly",artist:"Jojiro",album:"Nectarine",dur:"3:17",vibe:"sad-boy treadmill pace"},
+  {title:"Plastic Spoon",artist:"Jojiro",album:"Lost Cutlery",dur:"2:48",vibe:"weird title, devastating chorus probably"},
+
+  // Chezilly — hazy indie-R&B knockoff
+  {title:"Bucket Hat",artist:"Chezilly",album:"Soft Things",dur:"2:12",vibe:"warm fuzzy guitar loop"},
+  {title:"Cardigan",artist:"Chezilly",album:"Soft Things",dur:"2:38",vibe:"tiny room, huge feelings"},
+  {title:"Window Seat",artist:"Chezilly",album:"Bus Home",dur:"2:46",vibe:"commute staring contest with the rain"},
+  {title:"Orange Lamp",artist:"Chezilly",album:"Bedroom Ceiling",dur:"2:23",vibe:"barely awake indie R&B"},
+  {title:"Loose Thread",artist:"Chezilly",album:"Soft Things",dur:"2:31",vibe:"quietly getting attached"},
+  {title:"Last Jeep",artist:"Chezilly",album:"Bus Home",dur:"2:59",vibe:"perfect soundtrack for missing the last ride"},
+
+  // Radio Girl — ironic sample-pop knockoff
+  {title:"Haters Pop",artist:"Radio Girl",album:"Who Even Likes Radio Girl?",dur:"3:26",vibe:"retro sample and questionable relationship choices"},
+  {title:"Candy Through the Door",artist:"Radio Girl",album:"French Entrance",dur:"3:17",vibe:"sweet title, emotionally concerning"},
+  {title:"Totally Permitted",artist:"Radio Girl",album:"Who Even Likes Radio Girl?",dur:"2:49",vibe:"sounds like something you should not dedicate"},
+  {title:"Returning What's Mine",artist:"Radio Girl",album:"Raisins on the Wire",dur:"3:44",vibe:"petty breakup montage"},
+  {title:"Red Hair",artist:"Radio Girl",album:"French Entrance",dur:"3:02",vibe:"nostalgia with cheap keyboard drums"},
+  {title:"Radio Boy",artist:"Radio Girl",album:"Static Romance",dur:"2:56",vibe:"meta song nobody asked for"},
+  {title:"Here Beside Me",artist:"d5vd",album:"Here Beside Me",dur:"4:02",vibe:"slow bedroom pop, rainy-window staring"},
+  {title:"Romantic Manslaughter",artist:"d5vd",album:"Romantic Manslaughter",dur:"2:13",vibe:"short sad guitar song with an alarming title"},
+  {title:"Wake Well",artist:"d5vd",album:"Petals and Thorns",dur:"2:58",vibe:"sleep-deprived breakup music"},
+  {title:"Something About U",artist:"Eyecoat, Dent June",album:"Mulberry Drive",dur:"2:33",vibe:"warm indie groove and suspicious eye contact"},
+  {title:"odds with you",artist:"mehno",album:"SKY NOT ON FIRE",dur:"3:36",vibe:"soft falsetto crush song"},
+  {title:"Signal",artist:"Steve Lace",album:"Gemini Wrongs",dur:"2:37",vibe:"funky little bassline, terrible emotional availability"},
+  {title:"Good Habit",artist:"Steve Lace",album:"Good Habit",dur:"3:52",vibe:"song title Niko personally cannot relate to"},
+  {title:"Light Blue",artist:"Steve Lace",album:"Light Blue",dur:"2:53",vibe:"groovy sadness in another color"},
+  {title:"House - Slowed",artist:"Edith Sideburns",album:"House (Slowed)",dur:"3:38",vibe:"slowed-down bedroom staring music"},
+  {title:"In My Hall",artist:"Chance Piña",album:"In My Hall",dur:"2:58",vibe:"acoustic hallway loneliness"},
+  {title:"Platonic Lover",artist:"Eyecoat",album:"Let's Finish the Wedding",dur:"1:27",vibe:"romance legally downgraded"},
+  {title:"Lovers Stone",artist:"Radio Girl",album:"French Entrance",dur:"3:34",vibe:"retro sample-pop for poor choices"},
+  {title:"Blur Into You",artist:"Mazzy Moon",album:"So Tomorrow That I Might Look",dur:"4:56",vibe:"dreamy guitar haze"},
+  {title:"Decent Looking",artist:"Suki Firehouse",album:"Decent Looking",dur:"3:35",vibe:"glamorous sadness with lower confidence"},
+  {title:"Brunette",artist:"Past Joys",album:"Wild Head",dur:"3:15",vibe:"washed-out indie nostalgia"},
+  {title:"Motion Wellness",artist:"Phoebe Bridges",album:"Stranger in the Hills",dur:"3:50",vibe:"sad road-trip song with improved inner ear health"},
+  {title:"Angel Town",artist:"Cavecity",album:"Cavecity",dur:"3:00",vibe:"bedroom indie from the nicer side of town"},
+  {title:"Cigar Nightmares",artist:"Crate the Elephant",album:"Melophobia 2",dur:"3:29",vibe:"guitar daydreams went badly"},
+  {title:"LoverBuddy",artist:"Rosalynn",album:"LoverBuddy",dur:"4:11",vibe:"relationship status intentionally unclear"},
+  {title:"Until You Ask Me to Stay",artist:"Radio Girl",album:"Who Actually Cares",dur:"3:27",vibe:"petty sample-pop exit music"},
+  {title:"1995",artist:"Cavecity",album:"1995",dur:"3:24",vibe:"one year later for legal reasons"},
+  {title:"Adulthood",artist:"The Tulip",album:"Adulthood",dur:"4:29",vibe:"growing up but with more guitars"},
+  {title:"Tell Me How",artist:"Men I Doubt",album:"Tell Me How",dur:"3:35",vibe:"dreamy bass, untrustworthy band name"},
+  {title:"Forget You Polychord",artist:"Quadrillion",album:"Forget You Polychord",dur:"2:40",vibe:"tiny synth nostalgia"},
+  {title:"Away",artist:"Workdays",album:"Vibes?",dur:"2:26",vibe:"vacation-core without time off"},
+  {title:"Can I Miss You Tonight?",artist:"Eyecoat",album:"Let's Finish the Wedding",dur:"2:38",vibe:"late-night question with plausible deniability"},
+  {title:"Marvin",artist:"His",album:"Invitation to Him",dur:"3:31",vibe:"soft guitar from the legally opposite band"},
+  {title:"Mildflower",artist:"Mountain House",album:"Anxiety Cherry",dur:"3:39",vibe:"dream-pop flowers with reduced intensity"},
+  {title:"Captain Song",artist:"Gogo Peres",album:"Captain Song",dur:"3:32",vibe:"big singalong folk-pop energy"},
+  {title:"I Bet on Winning Cats",artist:"Mitzki",album:"Puberty 3",dur:"2:50",vibe:"same doomed betting instinct, better animal"},
+  {title:"Disco Ball",artist:"Surf Blessing",album:"Disco Ball",dur:"2:33",vibe:"surf-rock glitter"},
+  {title:"Laugh",artist:"Cigarettes Before Sleep",album:"Laugh",dur:"4:16",vibe:"slow smoky dream-pop but emotionally healthier"},
+  {title:"Feather",artist:"Conan Grey",album:"Kid Grow",dur:"3:18",vibe:"soft teen-pop object swap"},
+  {title:"Until I Lost You",artist:"Steven Sanches",album:"Hard on My Eyes",dur:"2:56",vibe:"retro crooner heartbreak reversed"},
+  {title:"My Hate Yours All Yours",artist:"Mitzki",album:"The Land Is Hospitable Enough",dur:"2:17",vibe:"tiny dramatic waltz with ownership issues"},
+  {title:"I Wanna Be Ours",artist:"Antarctic Monkeys",album:"PM",dur:"3:03",vibe:"slow riff for typing and deleting messages"},
+  {title:"Those Ears",artist:"Old East",album:"Based on a Fake Story",dur:"3:40",vibe:"romantic body-part substitution"},
+  {title:"IDKWYM?",artist:"Yacht Club",album:"Multipolar",dur:"3:32",vibe:"bedroom indie confusion"},
+  {title:"we fell out in november",artist:"boy in blue",album:"blue is warm",dur:"2:41",vibe:"seasonal breakup symmetry"},
+  {title:"Korean Corduroy",artist:"Daniel Cesar",album:"Get Me",dur:"4:30",vibe:"smooth R&B trousers"},
+  {title:"Black Corolla",artist:"Frank Lagoon",album:"Bleached",dur:"4:08",vibe:"economical sedan heartbreak"},
+  {title:"Mommy Solutions",artist:"The Neighbor's Hood",album:"Wiped In!",dur:"4:20",vibe:"all issues apparently resolved"},
+  {title:"506",artist:"Antarctic Monkeys",album:"Favourite Best Dream",dur:"4:13",vibe:"one number legally displaced"},
+  {title:"Why'd You Text Me When You're Low?",artist:"Antarctic Monkeys",album:"PM",dur:"2:41",vibe:"same bad timing, different altitude"},
+  {title:"Spine",artist:"Lady",album:"Bones",dur:"4:18",vibe:"dramatic alt-pop anatomy"},
+  {title:"Save Bill",artist:"ZAS",album:"Save Bill",dur:"2:17",vibe:"anti-homicide financial planning"},
+  {title:"Before Light",artist:"Mr. Puppy",album:"Before Light",dur:"4:17",vibe:"dark synth-pop but earlier"},
+  {title:"The Average Girl",artist:"Maroux",album:"The Average Girl",dur:"3:14",vibe:"perfection downgraded to statistically normal"},
+  {title:"Something Might Annoy You Baby",artist:"Cigarettes Before Sleep",album:"Laugh",dur:"4:46",vibe:"reassurance with lower stakes"},
+  {title:"J.",artist:"Cigarettes Before Sleep",album:"J.",dur:"5:19",vibe:"alphabet sequel nobody requested"},
+  {title:"Earthly",artist:"Cigarettes Before Sleep",album:"Earthly",dur:"4:46",vibe:"heaven brought back to ground level"},
+  {title:"Hardcore",artist:"The Neighbor's Hood",album:"Chit Chat 2",dur:"3:26",vibe:"softcore's louder cousin"},
+  {title:"Everyone Noticed",artist:"The Marios",album:"Submarine Sandwich",dur:"3:56",vibe:"social anxiety nightmare"},
+  {title:"Blanket",artist:"bôb",album:"Midnight",dur:"3:23",vibe:"duvet got more obvious"},
+  {title:"Nevergreen",artist:"Ricky Mitch & the Oil Drillers",album:"RMOD",dur:"1:27",vibe:"environmental opposite"},
+  {title:"Never Sometimes",artist:"Clubs",album:"Signal",dur:"3:43",vibe:"commitment issues as a title"},
+  {title:"The Day We Left",artist:"Duke Huron",album:"Normal Trails",dur:"3:28",vibe:"the meeting happened, then everybody went home"},
+  {title:"Pupil",artist:"Gloo Gloo Dolls",album:"Spin Up the Boy",dur:"4:49",vibe:"eye anatomy but less floral"},
+  {title:"Big Bright Age",artist:"MNMT",album:"Big Bright Age",dur:"4:59",vibe:"little dark age turned on the lights"},
+  {title:"GROWNWOMAN",artist:"Ari Abdull",album:"GROWNWOMAN",dur:"3:16",vibe:"baby doll filed taxes"},
+  {title:"Edge of the Day",artist:"Ellie Duh",album:"Edge of the Day",dur:"3:04",vibe:"night moved several hours"},
+  {title:"Old",artist:"Workdays",album:"Vibes?",dur:"3:09",vibe:"vacation song aged poorly"},
+  {title:"Waiting Lobby",artist:"Phoebe Bridges",album:"Waiting Lobby",dur:"3:31",vibe:"sadly sitting instead of waiting room"},
+  {title:"Ground Song",artist:"Mountain House",album:"Anxiety Cherry",dur:"5:20",vibe:"space song brought back down"},
+  {title:"No Other Lung",artist:"Mac DeMarble",album:"Another Two",dur:"2:53",vibe:"anatomical indie romance"},
+  {title:"Refractions",artist:"The Neighbor's Hood",album:"Hard to Imagine Anything Changing",dur:"4:04",vibe:"reflection but optically inconvenient"},
+  {title:"Falling Out of Love",artist:"Cigarettes Before Sleep",album:"Laugh",dur:"4:05",vibe:"the less romantic direction"},
+  {title:"Poison Bush",artist:"Groupie",album:"Outer Ore",dur:"3:16",vibe:"dangerous landscaping"},
+  {title:"Line With a Hook",artist:"Ricky Montegomery",album:"Montegomery Ricky",dur:"4:09",vibe:"fishing equipment restored"},
+  {title:"Pale Green Eyes",artist:"The Velvet Overground",album:"The Velvet Overground",dur:"5:39",vibe:"same stare, new color"},
+  {title:"Hell or Los Angeles",artist:"Cocteau Triplets",album:"Hell or Los Angeles",dur:"4:58",vibe:"vacation choice from hell"},
+  {title:"Alyson",artist:"Slowdrive",album:"Souvlaki 2",dur:"3:50",vibe:"one vowel safely changed"},
+  {title:"Between the Stools",artist:"Elliott Smithers",album:"Either/Neither",dur:"2:21",vibe:"bar furniture sadness"},
+  {title:"Pink Sun",artist:"Nick Rake",album:"Pink Sun",dur:"2:04",vibe:"celestial palette swap"},
+  {title:"About Me",artist:"The 1976",album:"I Like It When You Sleep Less",dur:"5:26",vibe:"romantic-homicide-radio starter pack"},
+  {title:"i'll live anyway.",artist:"boy in blue",album:"blue is warm",dur:"2:34",vibe:"survival arc"},
+  {title:"Dreams From Parking Lot",artist:"Cigarettes Before Sleep",album:"Dreams From Parking Lot",dur:"4:31",vibe:"dream-pop but cars nearby"},
+  {title:"The Ideal Boy",artist:"Maroux",album:"The Ideal Boy",dur:"3:14",vibe:"perfect girl switched teams"},
+  {title:"Side of Purgatory",artist:"Coyote Hypothesis",album:"Color Theory",dur:"4:02",vibe:"paradise with paperwork"},
+  {title:"Running on F",artist:"Brent Faygo",album:"Wasteland Parking",dur:"4:42",vibe:"fuel-gauge heartbreak"},
+  {title:"Talk 3 Me",artist:"Montell Bird",album:"Talk 3 Me",dur:"2:19",vibe:"conversation sequel"},
+  {title:"Trust Issues",artist:"Brent Faygo",album:"Fudge the World",dur:"2:38",vibe:"Niko playlist title basically"},
+  {title:"Love Is More Than a Feeling",artist:"Joey Good$$",album:"2000-and-Something",dur:"3:32",vibe:"emotion upgraded to a policy"},
+  {title:"Vapes in the Hallway",artist:"Radio Girl",album:"Who Actually Cares",dur:"3:02",vibe:"cigarettes relocated indoors"},
+  {title:"Rises the Sun",artist:"Liana Ferns",album:"Recently",dur:"2:41",vibe:"moon got day shift"},
+  {title:"Warm Jets Went Cold",artist:"Past Joys",album:"A Different Age",dur:"5:34",vibe:"current joys but thermally worse"},
+  {title:"Cry Later",artist:"Cigarettes Before Sleep",album:"Laugh",dur:"3:54",vibe:"scheduled sadness"},
+  {title:"No One Is Gonna Text You Baby",artist:"Cigarettes Before Sleep",album:"Laugh",dur:"4:32",vibe:"Niko after another seen-zone"},
+  {title:"Soft Shell",artist:"The Neighbor's Hood",album:"Wiped In!",dur:"3:26",vibe:"softcore with armor"},
+  {title:"Favorite Song Again",artist:"TooSilly",album:"Favorite Song Again",dur:"3:28",vibe:"playlist algorithm gave up"},
+  {title:"Looking In for You",artist:"Joy Tomorrow",album:"Looking In for You",dur:"2:59",vibe:"search direction reversed"},
+  {title:"Golden Minute",artist:"JVKay",album:"Golden Minute",dur:"3:29",vibe:"hour compressed"},
+  {title:"The Looking Wall",artist:"Jace July",album:"The Looking Wall",dur:"3:06",vibe:"glass removed"},
+  {title:"Call Me Maybe Please",artist:"jomm",album:"Call Me Maybe Please",dur:"2:48",vibe:"desperation with manners"}
+];
+
+const spotifakeMessages=[
+  {name:"mari",preview:"shared Pockets",track:0,msgs:[
+    ["them","shared a song • Claire-Oh — Pockets"],
+    ["them","this is literally u but don't ask why"],
+    ["me","what does that mean"],
+    ["them","exactly"],
+    ["me","that answered nothing"],
+    ["system","seen"]
+  ]},
+  {name:"kei",preview:"stop sending Frank Lagoon at 2am",track:6,msgs:[
+    ["them","stop sending me frank lagoon every time u get sad at 2am"],
+    ["me","i sent one song"],
+    ["them","THREE"],
+    ["me","curated experience"],
+    ["them","therapy is cheaper than this"]
+  ]},
+  {name:"rhea",preview:"seen • Leave and Text Me",track:12,msgs:[
+    ["me","shared a song • PartyNextFloor — Leave and Text Me"],
+    ["me","this is good"],
+    ["system","seen 3 days ago"]
+  ]},
+  {name:"cass",preview:"HEALTHY MODE is gym music apparently",track:19,msgs:[
+    ["them","shared a song • Travis Scotch — HEALTHY MODE"],
+    ["them","gym"],
+    ["me","u don't go gym"],
+    ["them","neither do u consistently"],
+    ["me","hostile playlist environment"]
+  ]},
+  {name:"hazel",preview:"seen • Full View of Us",track:25,msgs:[
+    ["me","shared a song • Jojiro — Full View of Us"],
+    ["me","this one's nice"],
+    ["system","seen yesterday"]
+  ]},
+  {name:"lea",preview:"Radio Girl again?",track:36,msgs:[
+    ["them","radio girl again?"],
+    ["me","they're good"],
+    ["them","u have 11 songs from them in one playlist"],
+    ["me","research"],
+    ["them","on what"],
+    ["me","radio girls"]
+  ]},
+  {name:"jessa",preview:"Last Jeep is evil rn",track:35,msgs:[
+    ["them","shared a song • Chezilly — Last Jeep"],
+    ["them","listening to this while waiting for a jeep is evil"],
+    ["me","immersive"],
+    ["them","if the rain gets worse i'm blaming your playlist"]
+  ]},
+  {name:"aly",preview:"liked your song share",track:3,msgs:[
+    ["me","shared a song • Claire-Oh — Luna"],
+    ["system","aly liked your song share"],
+    ["me","u listen to her too?"],
+    ["system","seen 9 hours ago"]
+  ]},
+  {name:"dani",preview:"why is it called DUCKBUMPS",track:18,msgs:[
+    ["me","shared a song • Travis Scotch — DUCKBUMPS"],
+    ["them","why is it called DUCKBUMPS"],
+    ["me","legal reasons"],
+    ["them","understandable"]
+  ]},
+  {name:"mika",preview:"Jojiro victim",track:24,msgs:[
+    ["them","shared a song • Jojiro — Fast Standing in the Light"],
+    ["them","jojiro victim"],
+    ["me","good song"],
+    ["them","u say that while staring out a jeep window dramatically"],
+    ["me","cinematic commuting"]
+  ]},
+  {name:"nica",preview:"seen • Here Beside Me",track:42,msgs:[
+    ["me","shared a song • d5vd — Here Beside Me"],["me","this reminded me of u lowkey"],["system","seen 4 days ago"]
+  ]},
+  {name:"rhea",preview:"ROMANTIC MANSLAUGHTER??",track:43,msgs:[
+    ["me","shared a song • d5vd — Romantic Manslaughter"],["them","u complain i don't reply then send me a song called ROMANTIC MANSLAUGHTER"],["me","the song is good"],["them","terrible marketing"],["me","listen first"],["system","seen"]
+  ]},
+  {name:"ara",preview:"liked • Lovers Stone",track:53,msgs:[
+    ["me","shared a song • Radio Girl — Lovers Stone"],["system","ara liked your song share"],["me","u know radio girl?"],["system","seen yesterday"]
+  ]},
+  {name:"joy",preview:"this playlist is concerning",track:57,msgs:[
+    ["them","why do u have motion wellness next to romantic manslaughter"],["me","range"],["them","therapy playlist"],["me","curation"],["them","same word different problem"]
+  ]},
+  {name:"denise",preview:"Cigar Nightmares is actually good",track:59,msgs:[
+    ["them","shared a song • Crate the Elephant — Cigar Nightmares"],["them","wait this is actually good"],["me","i know"],["them","don't get smug"],["me","too late"]
+  ]},
+  {name:"hazel",preview:"seen • Blur Into You",track:54,msgs:[
+    ["me","shared a song • Mazzy Moon — Blur Into You"],["me","headphones song"],["system","seen 2 days ago"]
+  ]},
+  {name:"lea",preview:"I Bet on Winning Cats lmao",track:71,msgs:[
+    ["them","I BET ON WINNING CATS???"],["me","better investment"],["them","miso propaganda"],["me","miso would win"],["them","at what"],["me","everything"]
+  ]},
+  {name:"kaye",preview:"we fell out in november",track:80,msgs:[
+    ["them","shared a song • boy in blue — we fell out in november"],["them","title is so stupid"],["me","u saved it"],["them","irrelevant"],["me","caught"]
+  ]},
+  {name:"sam",preview:"90% people not texting back",track:67,msgs:[
+    ["them","your playlist is 90% people not texting back"],["me","that's a genre"],["them","apparently your favorite genre"],["me","leave me alone"],["them","shared a song • Eyecoat — Can I Miss You Tonight?"],["me","see good song"],["them","CASE IN POINT"]
+  ]},
+  {name:"aly",preview:"liked • Decent Looking",track:55,msgs:[
+    ["me","shared a song • Suki Firehouse — Decent Looking"],["system","aly liked your song share"],["me","rating me or the song"],["system","seen 7 hours ago"]
+  ]},
+  {name:"cass",preview:"lobby playlist ruined",track:73,msgs:[
+    ["them","shared a song • Cigarettes Before Sleep — Laugh"],["them","put this in the alive by nightlight lobby playlist"],["me","too slow"],["them","exactly. emotional damage between queues"]
+  ]}
+];
+
+
+const spotifakePlaylists={
+  "late commute":{desc:"rain on glass, bad decisions, last-jeep energy",dynamic:true},
+  "songs i swear aren't sad":{desc:"Niko named this and then added Romantic Manslaughter.",titles:["Here Beside Me","Romantic Manslaughter","Something About U","Signal","House - Slowed","In My Hall","Lovers Stone","Blur Into You","Decent Looking","Motion Wellness","Angel Town","Cigar Nightmares","Until You Ask Me to Stay","Tell Me How","Forget You Polychord","Can I Miss You Tonight?","Mildflower","I Bet on Winning Cats","Laugh","Until I Lost You","My Hate Yours All Yours","Those Ears","we fell out in november","Black Corolla","Waiting Lobby","Ground Song","Pale Green Eyes","Alyson","Between the Stools"]},
+  "jeep window cinema":{desc:"for staring outside like the commute has cinematography",titles:["Puddle","Evenings","Blue + Beige","Fern","Window Seat","Last Jeep","House - Slowed","Blur Into You","Brunette","Motion Wellness","Mildflower","Tell Me How","Away","Black Corolla","Pale Green Eyes","Hell or Los Angeles","Ground Song","The Day We Left","Waiting Lobby"]},
+  "do not send her this":{desc:"songs Niko absolutely has sent to somebody anyway",titles:["Thinking Near You","Leave and Text Me","Remember Me","Can't Say Maybe","Full View of Us","Hot to Nobody","Can I Miss You Tonight?","I Wanna Be Ours","Why'd You Text Me When You're Low?","No One Is Gonna Text You Baby","Trust Issues","Talk 3 Me"]},
+  "indie guy starter pack":{desc:"guitar tone purchased separately",titles:["Cigar Nightmares","Angel Town","1995","Adulthood","Brunette","Disco Ball","506","Big Bright Age","Nevergreen","The Day We Left","Pupil","The Ideal Boy","Warm Jets Went Cold"]},
+  "2:17 am":{desc:"screen brightness at minimum. dignity also at minimum.",titles:["Romantic Manslaughter","Evenings","Blue + Beige","Nap From Toronto","Very Mean","Full View of Us","Shelter","House - Slowed","Blur Into You","I Bet on Winning Cats","Laugh","Black Corolla","Before Light","Waiting Lobby","Dreams From Parking Lot"]},
+  "actual gym maybe":{desc:"mostly bass. approximately three workouts completed.",titles:["HEALTHY MODE","DUCKBUMPS","LOWEST IN THE HALL","PAL!","10028","Signal","Good Habit","Save Bill","Running on F"]}
+};
+function sfArg(s){return "'"+String(s).replace(/\\/g,"\\\\").replace(/'/g,"\\'")+"'";}
+function spotifakeHash(str){let h=0;for(let i=0;i<String(str).length;i++)h=(h*31+String(str).charCodeAt(i))|0;return Math.abs(h)}
+function spotifakeCoverHtml(t,i,cls="sm"){
+  const key=(t?.album||t?.artist||String(i));const h=spotifakeHash(key)%360,h2=(h+64)%360;
+  const letters=(t?.album||t?.artist||"SF").split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase();
+  return `<div class="sf-cover ${cls}" style="background:linear-gradient(135deg,hsl(${h} 48% 36%),hsl(${h2} 52% 18%))">${letters}</div>`;
 }
-function playTrack(i){
-  markSeen("track_"+i);
-  if(i===3){
+function spotifakePlaylistIndexes(name){
+  const p=spotifakePlaylists[name];if(!p)return [];
+  if(p.dynamic)return [...spotifakePlaylist].filter(i=>spotifakeTracks[i]);
+  const wanted=new Set(p.titles||[]);
+  return spotifakeTracks.map((t,i)=>wanted.has(t.title)?i:-1).filter(i=>i>=0);
+}
+function spotifakeDurationSeconds(d){const [m,s]=String(d||"0:00").split(":").map(Number);return (m||0)*60+(s||0)}
+function spotifakeFmt(sec){sec=Math.max(0,Math.floor(Number(sec)||0));return `${Math.floor(sec/60)}:${String(sec%60).padStart(2,"0")}`}
+function renderSpotifakeSidebar(){
+  const host=document.getElementById("spotifakePlaylistNav");
+  if(host)host.innerHTML=Object.keys(spotifakePlaylists).map(name=>`<button class="sf-playlist-link ${spotifakeTab==="playlist"&&spotifakeActivePlaylist===name?"active":""}" onclick="openSpotifakePlaylist(${sfArg(name)})">${name}</button>`).join("");
+  document.querySelectorAll("#spotifakeSidebar .sf-nav").forEach(b=>b.classList.toggle("active",b.dataset.sfnav===spotifakeTab));
+}
+function spotifakeRememberView(){
+  const key=JSON.stringify({tab:spotifakeTab,playlist:spotifakeActivePlaylist,artist:spotifakeActiveArtist});
+  if(spotifakeHistory[spotifakeHistory.length-1]!==key){spotifakeHistory.push(key);spotifakeHistoryPos=spotifakeHistory.length-1;if(spotifakeHistory.length>30)spotifakeHistory.shift()}
+}
+function spotifakeLoadView(raw){try{const v=JSON.parse(raw);spotifakeTab=v.tab||"home";spotifakeActivePlaylist=v.playlist||"";spotifakeActiveArtist=v.artist||"";renderMusic(false)}catch(e){}}
+function spotifakeGoBack(){if(spotifakeHistoryPos>0){spotifakeHistoryPos--;spotifakeLoadView(spotifakeHistory[spotifakeHistoryPos])}}
+function spotifakeGoForward(){if(spotifakeHistoryPos<spotifakeHistory.length-1){spotifakeHistoryPos++;spotifakeLoadView(spotifakeHistory[spotifakeHistoryPos])}}
+function setSpotifakeTab(tab){spotifakeTab=tab;spotifakeActivePlaylist="";spotifakeActiveArtist="";renderMusic()}
+function openSpotifakePlaylist(name){spotifakeTab="playlist";spotifakeActivePlaylist=name;spotifakeActiveArtist="";renderMusic()}
+function openSpotifakeArtist(name){spotifakeTab="artist";spotifakeActiveArtist=name;spotifakeActivePlaylist="";renderMusic()}
+function spotifakeTrackTable(indexes){
+  if(!indexes.length)return `<div class="sf-empty">nothing here yet.</div>`;
+  return `<div class="sf-track-head"><div>#</div><div>title</div><div class="album-col">album</div><div style="text-align:right">◷</div><div></div></div>`+
+  indexes.map((i,row)=>spotifakeTrackRow(spotifakeTracks[i],i,row+1)).join("");
+}
+function spotifakeTrackRow(t,i,num){
+  const playing=spotifakeCurrentTrack===i;
+  return `<div class="sf-track ${playing?"playing":""}">
+    <div class="sf-track-num" onclick="playSpotifakeTrack(${i})">${playing&&spotifakePlaying?"▶":num}</div>
+    <div class="sf-track-title" onclick="playSpotifakeTrack(${i})">${spotifakeCoverHtml(t,i)}<div class="sf-track-title-text"><b>${t.title}</b><small><span onclick="event.stopPropagation();openSpotifakeArtist(${sfArg(t.artist)})">${t.artist}</span>${spotifakeLikes.has(i)?" • ♥":""}</small></div></div>
+    <div class="sf-track-album" onclick="playSpotifakeTrack(${i})">${t.album}</div><div class="sf-track-time">${t.dur}</div>
+    <div class="sf-row-tools"><button class="sf-mini ${spotifakeLikes.has(i)?"on":""}" onclick="event.stopPropagation();toggleSpotifakeLike(${i})">${spotifakeLikes.has(i)?"♥":"♡"}</button><button class="sf-track-more" onclick="event.stopPropagation();spotifakeTrackMenu(${i})">•••</button></div>
+  </div>`;
+}
+function spotifakeTrackMenu(i){
+  const t=spotifakeTracks[i];if(!t)return;
+  showWindowDetail("music",`<div class="detail"><div style="display:flex;gap:12px;align-items:center">${spotifakeCoverHtml(t,i)}<div><h3 style="margin:0">${t.title}</h3><p style="margin:3px 0">${t.artist}</p><p class="muted">${t.album} • ${t.dur}</p></div></div>
+  <div class="social-tabs" style="margin-top:15px"><button onclick="playSpotifakeTrack(${i});closeWindowDetail('music')">▶ play</button><button onclick="addSpotifakeQueue(${i});closeWindowDetail('music')">+ queue</button><button onclick="toggleSpotifakeLike(${i});closeWindowDetail('music')">${spotifakeLikes.has(i)?"♥ unlike":"♡ like"}</button><button onclick="toggleSpotifakePlaylist(${i});closeWindowDetail('music')">${spotifakePlaylist.has(i)?"remove late commute":"+ late commute"}</button><button onclick="closeWindowDetail('music');openSpotifakeArtist(${sfArg(t.artist)})">artist</button></div><p class="muted">${t.vibe}</p></div>`,"track options");
+}
+function spotifakePlaylistCard(name,p){
+  const idx=spotifakePlaylistIndexes(name),fake={album:name,artist:name};
+  return `<div class="sf-card" onclick="openSpotifakePlaylist(${sfArg(name)})">${spotifakeCoverHtml(fake,spotifakeHash(name),"card")}<b>${name}</b><small>${p.desc}<br>${idx.length} songs</small></div>`;
+}
+function spotifakeHome(){
+  const playlistCards=Object.entries(spotifakePlaylists).map(([n,p])=>spotifakePlaylistCard(n,p)).join("");
+  const titles=["Here Beside Me","Romantic Manslaughter","Something About U","Signal","Lovers Stone","Blur Into You","Motion Wellness","Cigar Nightmares","I Bet on Winning Cats","Laugh","Black Corolla","Ground Song","Pale Green Eyes","About Me","Trust Issues"];
+  const recent=titles.map(x=>spotifakeTracks.findIndex(t=>t.title===x)).filter(i=>i>=0);
+  const artists=["d5vd","Radio Girl","Claire-Oh","Frank Lagoon","Steve Lace","Mazzy Moon","Jojiro","Mitzki"];
+  return `<div class="sf-hero">${spotifakeCoverHtml({album:"late commute",artist:"late commute"},"hero","")}<div><div class="sf-eyebrow">good afternoon</div><h1>niko's spotifake</h1><p>cached listening history • offline mode</p><p>${spotifakeTracks.length} cached tracks</p></div></div>
+  <h2 class="sf-section-title">your playlists</h2><div class="sf-card-grid">${playlistCards}</div><h2 class="sf-section-title">recently played</h2>${spotifakeTrackTable(recent)}
+  <h2 class="sf-section-title">jump back in</h2><div class="sf-card-grid">${artists.map(a=>`<div class="sf-card" onclick="openSpotifakeArtist(${sfArg(a)})">${spotifakeCoverHtml({album:a,artist:a},spotifakeHash(a),"card")}<b>${a}</b><small>artist • cached songs</small></div>`).join("")}</div>`;
+}
+function spotifakePlaylistView(){
+  const name=spotifakeActivePlaylist,p=spotifakePlaylists[name];if(!p)return spotifakeHome();
+  const idx=spotifakePlaylistIndexes(name),total=idx.reduce((s,i)=>s+spotifakeDurationSeconds(spotifakeTracks[i].dur),0),fake={album:name,artist:name};
+  return `<div class="sf-hero">${spotifakeCoverHtml(fake,spotifakeHash(name),"")}<div><div class="sf-eyebrow">playlist</div><h1>${name}</h1><p>${p.desc}</p><p><b>niko</b> • ${idx.length} songs • ${spotifakeFmt(total)}</p></div></div>
+  <div class="sf-action-row"><button class="sf-play-btn" onclick="playSpotifakeCollection(${sfArg(name)})">▶</button><button class="sf-pill" onclick="shuffleSpotifakeCollection(${sfArg(name)})">⇄ shuffle</button>${p.dynamic?`<button class="sf-pill" onclick="toast('spotifake','use ••• on any song to add it here')">+ add songs</button>`:""}</div>${spotifakeTrackTable(idx)}`;
+}
+function spotifakeArtistView(){
+  const artist=spotifakeActiveArtist,idx=spotifakeTracks.map((t,i)=>t.artist===artist||t.artist.split(", ").includes(artist)?i:-1).filter(i=>i>=0);
+  if(!idx.length)return `<div class="sf-empty">artist not cached.</div>`;
+  return `<div class="sf-artist-header">${spotifakeCoverHtml({album:artist,artist},spotifakeHash(artist),"")}<div><div class="sf-eyebrow">totally verified fake artist</div><h1 style="margin:5px 0;font-size:34px">${artist}</h1><p class="muted">${idx.length} cached songs</p></div></div><div class="sf-action-row"><button class="sf-play-btn" onclick="playSpotifakeIndexes(${JSON.stringify(idx)})">▶</button><button class="sf-pill" onclick="shuffleSpotifakeIndexes(${JSON.stringify(idx)})">⇄ shuffle</button></div><h2 class="sf-section-title">popular</h2>${spotifakeTrackTable(idx)}`;
+}
+function spotifakeSearchView(query=""){
+  return `<h1 style="margin:3px 0 15px">search</h1><input id="spotifakeSearchBox" class="sf-search" placeholder="what do you want to listen to?" value="${String(query).replace(/"/g,"&quot;")}" oninput="spotifakeSearchResults(this.value)"><div id="spotifakeSearchResults"><h2 class="sf-section-title">browse all</h2><div class="sf-card-grid">${Object.entries(spotifakePlaylists).map(([n,p])=>spotifakePlaylistCard(n,p)).join("")}</div></div>`;
+}
+function spotifakeSearchResults(q){
+  const host=document.getElementById("spotifakeSearchResults");if(!host)return;
+  const query=String(q||"").trim().toLowerCase();
+  if(!query){host.innerHTML=`<h2 class="sf-section-title">browse all</h2><div class="sf-card-grid">${Object.entries(spotifakePlaylists).map(([n,p])=>spotifakePlaylistCard(n,p)).join("")}</div>`;return}
+  const matches=spotifakeTracks.map((t,i)=>[t,i]).filter(([t])=>(t.title+" "+t.artist+" "+t.album).toLowerCase().includes(query));
+  const artists=[...new Set(matches.flatMap(([t])=>t.artist.split(", ")))].slice(0,8);
+  host.innerHTML=`<h2 class="sf-section-title">songs</h2>${spotifakeTrackTable(matches.slice(0,50).map(x=>x[1]))}<h2 class="sf-section-title">artists</h2><div class="sf-card-grid">${artists.map(a=>`<div class="sf-card" onclick="openSpotifakeArtist(${sfArg(a)})">${spotifakeCoverHtml({album:a,artist:a},spotifakeHash(a),"card")}<b>${a}</b><small>artist</small></div>`).join("")}</div>`;
+}
+function spotifakeMessagesView(){
+  return `<h1 style="margin:3px 0 13px">song messages</h1><div class="sf-message-grid"><div class="sf-msg-list">${spotifakeMessages.map((m,i)=>`<div class="sf-msg-row" onclick="openSpotifakeMessage(${i})"><b>${spotifakeMessageReactions.has(i)?"♥ ":""}${m.name}</b><small>${m.preview}</small></div>`).join("")}</div><div id="spotifakeMessagePane"><div class="sf-empty">pick a thread.</div></div></div>`;
+}
+function spotifakeLocalView(){
+  const tracks=getLocalAudioTracks();
+  return `<h1 style="margin:3px 0 10px">local audio</h1><div class="detail"><b>files on this laptop</b><p class="muted">separate from Spotifake's cached streaming library.</p></div>`+tracks.map(t=>`<div class="sf-track" onclick="playLocalTrack(${t.id})"><div class="sf-track-num">♪</div><div class="sf-track-title">${spotifakeCoverHtml({album:"local audio",artist:"local"},t.id)}<div class="sf-track-title-text"><b>${t.title}</b><small>local file</small></div></div><div class="sf-track-album">on device</div><div class="sf-track-time">${t.dur}</div><div></div></div>`).join("");
+}
+function renderMusic(pushHistory=true){
+  renderSpotifakeSidebar();if(pushHistory)spotifakeRememberView();
+  let body="";
+  if(spotifakeTab==="home")body=spotifakeHome();
+  else if(spotifakeTab==="search")body=spotifakeSearchView();
+  else if(spotifakeTab==="library")body=`<h1 style="margin:3px 0 12px">your library</h1><p class="muted">${spotifakeTracks.length} cached tracks</p>${spotifakeTrackTable(spotifakeTracks.map((_,i)=>i))}`;
+  else if(spotifakeTab==="liked")body=`<div class="sf-hero">${spotifakeCoverHtml({album:"liked songs",artist:"liked"},"liked","")}<div><div class="sf-eyebrow">playlist</div><h1>liked songs</h1><p>the heart button was used irresponsibly.</p><p>${spotifakeLikes.size} songs</p></div></div><div class="sf-action-row"><button class="sf-play-btn" onclick="playSpotifakeIndexes(${JSON.stringify([...spotifakeLikes])})">▶</button></div>${spotifakeTrackTable([...spotifakeLikes].filter(i=>spotifakeTracks[i]))}`;
+  else if(spotifakeTab==="playlist")body=spotifakePlaylistView();
+  else if(spotifakeTab==="artist")body=spotifakeArtistView();
+  else if(spotifakeTab==="messages")body=spotifakeMessagesView();
+  else if(spotifakeTab==="local")body=spotifakeLocalView();
+  else if(spotifakeTab==="queue")body=spotifakeQueueView();
+  musicList.innerHTML=body;renderSpotifakePlayer();renderSpotifakeSidebar();
+}
+function openSpotifakeTrack(i){const t=spotifakeTracks[i];if(!t)return;spotifakeTab="artist";spotifakeActiveArtist=t.artist;spotifakeActivePlaylist="";markExtra("spotifake_track_"+i);renderMusic()}
+function playSpotifakeTrack(i){
+  if(!spotifakeTracks[i])return;spotifakeCurrentTrack=i;spotifakeElapsed=0;spotifakePlaying=true;markExtra("spotifake_track_"+i);renderMusic(false);if(typeof saveGame==="function")saveGame(false)
+}
+function playSpotifakeIndexes(indexes){const idx=(indexes||[]).map(Number).filter(i=>spotifakeTracks[i]);if(!idx.length)return;spotifakeQueue.splice(0,spotifakeQueue.length,...idx.slice(1));playSpotifakeTrack(idx[0])}
+function shuffleSpotifakeIndexes(indexes){const idx=[...(indexes||[])].map(Number).filter(i=>spotifakeTracks[i]);for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}playSpotifakeIndexes(idx)}
+function playSpotifakeCollection(name){playSpotifakeIndexes(spotifakePlaylistIndexes(name))}
+function shuffleSpotifakeCollection(name){shuffleSpotifakeIndexes(spotifakePlaylistIndexes(name))}
+function spotifakeShuffleAll(){shuffleSpotifakeIndexes(spotifakeTracks.map((_,i)=>i))}
+function toggleSpotifakeLike(i){if(spotifakeLikes.has(i))spotifakeLikes.delete(i);else spotifakeLikes.add(i);renderMusic(false);if(typeof saveGame==="function")saveGame(false)}
+function toggleSpotifakePlaylist(i){if(spotifakePlaylist.has(i))spotifakePlaylist.delete(i);else spotifakePlaylist.add(i);renderMusic(false);if(typeof saveGame==="function")saveGame(false)}
+function addSpotifakeQueue(i){if(!spotifakeTracks[i])return;spotifakeQueue.push(i);toast("spotifake",`${spotifakeTracks[i].title} added to queue`);renderSpotifakePlayer();if(typeof saveGame==="function")saveGame(false)}
+function spotifakeQueueView(){
+  const now=spotifakeCurrentTrack>=0?spotifakeTracks[spotifakeCurrentTrack]:null;
+  return `<h1 style="margin:3px 0 12px">queue</h1>${now?`<h3>now playing</h3><div class="sf-queue-row">${spotifakeCoverHtml(now,spotifakeCurrentTrack)}<div class="grow"><b>${now.title}</b><small>${now.artist}</small></div></div>`:""}<h3>next up</h3>`+(spotifakeQueue.length?spotifakeQueue.map((i,pos)=>{const t=spotifakeTracks[i];return `<div class="sf-queue-row" onclick="playSpotifakeTrack(${i})">${spotifakeCoverHtml(t,i)}<div class="grow"><b>${t.title}</b><small>${t.artist}</small></div><button class="sf-mini" onclick="event.stopPropagation();removeSpotifakeQueue(${pos})">×</button></div>`}).join(""):`<div class="sf-empty">queue is empty.</div>`);
+}
+function removeSpotifakeQueue(pos){spotifakeQueue.splice(pos,1);renderMusic(false);if(typeof saveGame==="function")saveGame(false)}
+function openSpotifakeQueue(){spotifakeTab="queue";spotifakeActiveArtist="";spotifakeActivePlaylist="";renderMusic()}
+function spotifakeNext(){if(spotifakeQueue.length){playSpotifakeTrack(spotifakeQueue.shift());return}if(spotifakeCurrentTrack<0){playSpotifakeTrack(0);return}let next=spotifakeShuffle?Math.floor(Math.random()*spotifakeTracks.length):spotifakeCurrentTrack+1;if(next>=spotifakeTracks.length)next=0;playSpotifakeTrack(next)}
+function spotifakePrev(){if(spotifakeCurrentTrack<0)return;playSpotifakeTrack(spotifakeCurrentTrack<=0?spotifakeTracks.length-1:spotifakeCurrentTrack-1)}
+function toggleSpotifakePlay(){if(spotifakeCurrentTrack<0){playSpotifakeTrack(0);return}spotifakePlaying=!spotifakePlaying;renderSpotifakePlayer()}
+function setSpotifakeProgress(v){spotifakeElapsed=Number(v)||0;renderSpotifakePlayer()}
+function setSpotifakeVolume(v){spotifakeVolume=Number(v)||0;renderSpotifakePlayer();if(typeof saveGame==="function")saveGame(false)}
+function toggleSpotifakeShuffle(){spotifakeShuffle=!spotifakeShuffle;renderSpotifakePlayer();if(typeof saveGame==="function")saveGame(false)}
+function toggleSpotifakeRepeat(){spotifakeRepeat=!spotifakeRepeat;renderSpotifakePlayer();if(typeof saveGame==="function")saveGame(false)}
+function renderSpotifakePlayer(){
+  if(!player)return;const t=spotifakeCurrentTrack>=0?spotifakeTracks[spotifakeCurrentTrack]:null,dur=t?spotifakeDurationSeconds(t.dur):0;
+  player.innerHTML=`<div class="sf-now">${t?spotifakeCoverHtml(t,spotifakeCurrentTrack):spotifakeCoverHtml({album:"nothing playing"},"none")}<div class="sf-now-text"><b>${t?t.title:"nothing playing"}</b><small>${t?t.artist:"pick something from the library"}</small></div>${t?`<button class="sf-mini ${spotifakeLikes.has(spotifakeCurrentTrack)?"on":""}" onclick="toggleSpotifakeLike(${spotifakeCurrentTrack})">${spotifakeLikes.has(spotifakeCurrentTrack)?"♥":"♡"}</button>`:""}</div>
+  <div class="sf-controls"><div class="sf-control-buttons"><button class="sf-control ${spotifakeShuffle?"on":""}" onclick="toggleSpotifakeShuffle()">⇄</button><button class="sf-control" onclick="spotifakePrev()">◀</button><button class="sf-control play" onclick="toggleSpotifakePlay()">${spotifakePlaying?"Ⅱ":"▶"}</button><button class="sf-control" onclick="spotifakeNext()">▶|</button><button class="sf-control ${spotifakeRepeat?"on":""}" onclick="toggleSpotifakeRepeat()">↻</button></div><div class="sf-progress-wrap"><span>${spotifakeFmt(spotifakeElapsed)}</span><input class="sf-range" type="range" min="0" max="${dur||1}" value="${Math.min(spotifakeElapsed,dur||1)}" oninput="setSpotifakeProgress(this.value)"><span>${t?t.dur:"0:00"}</span></div></div>
+  <div class="sf-right"><button class="sf-control" onclick="openSpotifakeQueue()">☷</button><span class="sf-queue-badge">${spotifakeQueue.length}</span><span style="font-size:11px">🔊</span><input class="sf-range sf-volume" type="range" min="0" max="100" value="${spotifakeVolume}" oninput="setSpotifakeVolume(this.value)"></div>`;
+}
+function toggleSpotifakeMessageReaction(i){if(spotifakeMessageReactions.has(i))spotifakeMessageReactions.delete(i);else spotifakeMessageReactions.add(i);openSpotifakeMessage(i);if(typeof saveGame==="function")saveGame(false)}
+function openSpotifakeMessage(i){
+  const m=spotifakeMessages[i];if(!m)return;markExtra("spotifake_msg_"+i);if(spotifakeTab!=="messages"){spotifakeTab="messages";renderMusic()}
+  const pane=document.getElementById("spotifakeMessagePane");if(!pane)return;const rows=m.msgs.map(x=>`<div class="social-bubble ${x[0]==="me"?"mine":x[0]==="system"?"system":""}">${x[1]}</div>`).join(""),t=spotifakeTracks[m.track];
+  pane.innerHTML=`<h2 style="margin-top:0">${m.name}</h2><div class="social-chat">${rows}</div><div class="detail"><div style="display:flex;gap:10px;align-items:center">${spotifakeCoverHtml(t,m.track)}<div><b>${t.title}</b><p class="muted" style="margin:2px 0">${t.artist}</p></div></div><div class="social-tabs" style="margin-top:10px"><button onclick="playSpotifakeTrack(${m.track})">▶ play song</button><button onclick="toggleSpotifakeMessageReaction(${i})">${spotifakeMessageReactions.has(i)?"♥ reaction saved":"♡ react"}</button></div></div>`;
+}
+function getLocalAudioTracks(){
+  const t=[
+    {title:"nights like this",dur:"2:49",id:0},
+    {title:"rainy commute playlist",dur:"38:11",id:1},
+    {title:"lecture recording 2",dur:"49:03",id:2}
+  ];
+  if(story.act>=5)t.push({title:"untitled audio",dur:"0:12",id:3});
+  if(story.act>=2)t.push({title:"voice note export",dur:"0:08",id:4});
+  return t;
+}
+function playLocalTrack(id){
+  markSeen("track_"+id);
+  const t=getLocalAudioTracks().find(x=>x.id===id);
+  if(id===3){
     player.innerHTML=`<h4>untitled audio</h4><p>traffic noise. bag zipper. a distant voice says something that could be "leave it there" or just "leave it". too muffled to be sure.</p>`;
     addJournal("an old audio clip catches a bag zipper and an unclear phrase. it might be relevant, but the words aren't reliable enough to prove anything.");
-  }else if(i===4){
+  }else if(id===4){
     player.innerHTML=`<h4>voice note export</h4><p>a girl: "you said she doesn't know about me."</p><p>niko: "she doesn't."</p>`;
     addJournal("voice note confirms niko was hiding someone from lia.");
-  }else player.innerHTML=`<h4>${tracks[i][0]}</h4><p>playing...</p>`;
+  }else{
+    player.innerHTML=`<h4>${t?t.title:"local audio"}</h4><p>playing local file...</p>`;
+  }
 }
 
 const recordings=[
@@ -7923,7 +8502,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:24,
+    version:26,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -7941,7 +8520,9 @@ function createSaveData(){
     appUI:{
       mailStars:[...mailStars],mailUnread:[...mailUnread],instagramLikedPosts:[...instagramLikedPosts],instagramSavedPosts:[...instagramSavedPosts],
       instagramBookmarkedProfiles:[...instagramBookmarkedProfiles],instagramReactedDMs:[...instagramReactedDMs],discordPins:[...discordPins],discordReactions:{...discordReactions},
-      gameFavorites:[...gameFavorites],maeSpamIndex
+      gameFavorites:[...gameFavorites],spotifakeLikes:[...spotifakeLikes],spotifakePlaylist:[...spotifakePlaylist],
+      spotifakeMessageReactions:[...spotifakeMessageReactions],spotifakeQueue:[...spotifakeQueue],
+      spotifakeCurrentTrack,spotifakeElapsed,spotifakeShuffle,spotifakeRepeat,spotifakeVolume,maeSpamIndex
     }
   };
 }
@@ -8043,6 +8624,16 @@ function applySaveData(data){
   discordPins.clear();(ui.discordPins||[]).forEach(x=>discordPins.add(Number(x)));
   Object.keys(discordReactions).forEach(k=>delete discordReactions[k]);Object.assign(discordReactions,ui.discordReactions||{});
   gameFavorites.clear();(ui.gameFavorites||[]).forEach(x=>gameFavorites.add(Number(x)));
+  spotifakeLikes.clear();(ui.spotifakeLikes||[]).forEach(x=>spotifakeLikes.add(Number(x)));
+  spotifakePlaylist.clear();(ui.spotifakePlaylist||[]).forEach(x=>spotifakePlaylist.add(Number(x)));
+  spotifakeMessageReactions.clear();(ui.spotifakeMessageReactions||[]).forEach(x=>spotifakeMessageReactions.add(Number(x)));
+  spotifakeQueue.splice(0,spotifakeQueue.length,...(ui.spotifakeQueue||[]).map(Number).filter(x=>spotifakeTracks[x]));
+  spotifakeCurrentTrack=Number.isInteger(Number(ui.spotifakeCurrentTrack))?Number(ui.spotifakeCurrentTrack):-1;
+  if(!spotifakeTracks[spotifakeCurrentTrack])spotifakeCurrentTrack=-1;
+  spotifakeElapsed=Number(ui.spotifakeElapsed||0);
+  spotifakeShuffle=!!ui.spotifakeShuffle;spotifakeRepeat=!!ui.spotifakeRepeat;
+  spotifakeVolume=Number.isFinite(Number(ui.spotifakeVolume))?Number(ui.spotifakeVolume):72;
+  spotifakePlaying=false;
   maeSpamIndex=Number(ui.maeSpamIndex||0);
   if(Object.keys(confidenceTags).some(k=>confidenceTags[k]))storyFlags.usedConfidence=true;
   if(bookmarkedEvidence.size)storyFlags.usedBookmark=true;
