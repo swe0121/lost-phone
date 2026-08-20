@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v74</title>
+<title>Lost Phone v77</title>
 <!-- v44: clean spoiler-free README + detailed gameplay-focused How to Play. -->
 <!-- v34: expanded multi-sport agenda archive; National Baller Association/football/Major League Basebrawl takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
@@ -1235,7 +1235,7 @@ this rain is getting stupid though.</span></button>
 <div id="readMeOverlay">
   <div class="readme-card">
     <h2>read me</h2>
-    <div class="readme-kicker">lost phone v76 • spoiler-free overview</div>
+    <div class="readme-kicker">lost phone v77 • spoiler-free overview</div>
     <div class="readme-copy">
       <div class="readme-opening">a found laptop. two people stuck at a flooded jeep terminal. an owner who is nowhere around.</div>
       <p class="quiet">manila, philippines • august 18, 2026</p>
@@ -2881,7 +2881,7 @@ function contradictionFlags(){
   const out=[];
   const has=k=>seen.has(k)||evidence.has(k);
   if(has("chat_lia")&&cheatingScore()>=1)out.push({id:"lia_vs_overlap",title:"lia's relationship context vs overlapping conversations",text:"lia's thread reads like a serious relationship, while separate discoveries show niko was maintaining other conversations at the same time. compare the accounts; this establishes overlap, not every motive or promise."});
-  if(has("chat_lia")&&(has("file_latenightreceipt")||has("photo_food")))out.push({id:"lia_home_food",title:"lia's account vs physical receipt/photo",text:"lia's cached context says niko told her he was eating jce at home. the saved food evidence shows two meals elsewhere. that supports a lie about where/how he ate, not who he was with."});
+  if(has("chat_lia")&&(has("file_latenightreceipt")||has("photo_food")))out.push({id:"lia_home_food",title:"lia's account vs physical receipt/photo",text:"lia's cached context says niko told her he was eating alone at home. the saved food evidence shows two meals elsewhere. that supports a lie about where/how he ate, not who he was with."});
   if(has("chat_lia")&&has("file_cache_session"))out.push({id:"lia_home_timeline",title:"“on my way home” vs later laptop activity",text:"lia has niko saying he was on his way home before midnight, while local laptop activity continues through 12:14. this is a timing mismatch, not proof the message itself was false; being ‘on the way’ is not an arrival time."});
   if(has("photo_underpass_symbol")&&has("photo_bar_symbol")&&has("file_odd_compare"))out.push({id:"symbol_mismatch",title:"similar symbols vs niko's own comparison",text:"the cropped symbol photos can feel connected, but niko's later comparison notes that the shapes do not actually match. the creepy first impression is weaker than the wider evidence."});
   if(has("file_btlog")&&has("file_oldbtscan"))out.push({id:"xphone_repeat",title:"same bluetooth name, uncertain device",text:"xphone_6b appears near the print shop weeks earlier and again during the late-night window. the repeated broadcast name is real; whether it was the same physical phone is not established."});
@@ -3131,7 +3131,7 @@ function postEndingKnock(kind){
 function endingCredits(){
   const otherDone=Boolean(completedPerspective[otherLead()]);
   completedPerspective[playerCharacter||"jc"]=true;saveMeta();saveGame(false);
-  endingScreen("lost phone v76","thanks for playing",`<p class="quiet">three earned endings. one strongest route. no supernatural answer.</p><p class="quiet">some of the most important files are important because they are not clues.</p>${otherDone?`<p class="quiet">the other POV keeps some thoughts from you until you play it.</p>`:""}` ,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")],["new game",()=>restartForPerspective()]]);
+  endingScreen("lost phone v77","thanks for playing",`<p class="quiet">three earned endings. one strongest route. no supernatural answer.</p><p class="quiet">some of the most important files are important because they are not clues.</p>${otherDone?`<p class="quiet">the other POV keeps some thoughts from you until you play it.</p>`:""}` ,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")],["new game",()=>restartForPerspective()]]);
 }
 function endingUnresolved(step){
   if(step===0){endingScreen("local draft • 11:56 pm","draft_message.txt",`<div class="draft">ma pauwi na ko sorry medyo</div><p class="quiet">no recipient survives in the file. no punctuation. no second sentence.</p><p>it is the closest thing on the laptop to a goodbye, which is exactly why jc refuses to call it one.</p>`,[["close the file",()=>endingUnresolved(1)]]);return}
@@ -3144,7 +3144,7 @@ function endingClosure(step){
   if(step===0){endingScreen("2:36 am","family contact",`<p>they use the contact information on the laptop to reach niko's mother.</p><p>she answers on the third call.</p><p>jc explains where they found the bag. may fills in the parts he forgets.</p><p>security keeps the laptop until morning, but the family has the log number and the exact location.</p><p class="quiet">before hanging up, niko's mother asks one question twice: "his phone isn't there?"</p>`,[["leave the terminal",()=>endingCoda(()=>endingClosure(1))]]);return}
   if(step===1){endingScreen("august 20, 2026","NIKO DE LA CRUZ LOCATED SAFE",`<p>two days later, a message reaches jc through niko's family.</p><p>niko walked into his cousin's print shop shortly before opening.</p><p>he was exhausted, dehydrated and missing his phone.</p><p>there was no injury serious enough to keep him in a hospital.</p><p>when asked where he had been, he said only:</p><p class="quiet"><b>"i don't want to talk about it."</b></p><p>for a few seconds, <i>alive</i> feels like a complete answer.</p><p>then everyone starts asking the next question.</p>`,[["september",()=>endingClosure(2)]]);return}
   if(step===2){endingScreen("september 2026","after",`<p>niko attends one appointment with dr. reyes with his mother waiting outside.</p><p>he stops taking the terminal-side route entirely.</p><p>he checks the door twice before bed, then sometimes a third time because he cannot remember whether the second check felt real enough.</p><p>his replacement phone contains almost none of the old social apps.</p><p>he does not reinstall instacam for weeks.</p><p>he does reinstall vapor.</p><p class="quiet">being home does not make the night smaller.</p>`,[["november",()=>endingClosure(3)]]);return}
-  if(step===3){endingScreen("november 2026","lia",`<div class="chatScene"><div class="bubbleLine">he's okay naman.</div><div class="bubbleLine">just different.</div><div class="bubbleLine">we're not together anymore.</div><div class="bubbleLine">not because of that night exactly.</div><div class="bubbleLine">he barely goes anywhere jce now.</div><div class="bubbleLine">and he still won't tell anyone where he was.</div><div class="bubbleLine">sometimes he starts to then just stops.</div></div><p class="quiet">lia does not ask jc what he thinks happened.</p>`,[["continue",()=>endingClosure(4)]]);return}
+  if(step===3){endingScreen("november 2026","lia",`<div class="chatScene"><div class="bubbleLine">he's okay naman.</div><div class="bubbleLine">just different.</div><div class="bubbleLine">we're not together anymore.</div><div class="bubbleLine">not because of that night exactly.</div><div class="bubbleLine">he barely goes anywhere alone now.</div><div class="bubbleLine">and he still won't tell anyone where he was.</div><div class="bubbleLine">sometimes he starts to then just stops.</div></div><p class="quiet">lia does not ask jc what he thinks happened.</p>`,[["continue",()=>endingClosure(4)]]);return}
   if(step===4){endingScreen("november 2026","maria",`<p class="quiet">months earlier, the harder choice cost maria sleep, one friendship, and the comfort of pretending she had never been involved. she never gets proof that she handled every part of it perfectly.</p><div class="chatScene"><div class="bubbleLine">GUYS</div><div class="bubbleLine">I GOT THE INTERNSHIP</div><div class="bubbleLine">SHUT UPPPP</div><div class="bubbleLine">I'M ACTUALLY SHAKING</div><div class="bubbleLine">also supervisor asked if i could take another task and i actually said no instead of saying maybe then panicking for three days</div><div class="bubbleLine">growth????</div><div class="bubbleLine">libre mo kami</div><div class="bubbleLine">NO</div></div><p>niko is not mentioned once.</p><p class="quiet">people he hurt keep having lives after him. that is not cruelty. it is just time.</p>`,[["continue",()=>endingClosure(5)]]);return}
   if(step===5){endingScreen("11:47 pm • weeks later","unknown caller",`<p>jc's phone lights up with an unknown number.</p><p>it rings once.</p><p>stops.</p><p>rings again thirty seconds later.</p><p>no voicemail arrives.</p>${endingChatHtml([["may","u answer unknown numbers now?"],["jc","not that one."],["may","good."],["jc","u awake?"],["may","obviously." ]])}<p class="quiet">the number never calls a third time.</p>`,[["continue",()=>endingClosure(6)]]);return}
   endingScreen("ending","FALSE CLOSURE",`<p><b>safe</b> is the word everyone uses because nobody has a better one.</p><p>niko came home.</p><p>his family got to touch him, feed him, argue with him, hear his bedroom door close.</p><p>but whatever happened between the waiting shed and the print shop stays locked behind the same sentence:</p><p class="quiet">i don't want to talk about it.</p><p>you helped somebody get home.</p><p><b>you did not get the old version of him back.</b></p>`,[["after",()=>postEndingInterpretation("closure")]]);
@@ -3158,14 +3158,14 @@ function endingFoulPlay(step){
     return
   }
   if(step===2){endingScreen("three days later","phone",`<p>workers clearing storm debris find niko's phone lodged behind a drainage grate off the service road.</p><p>the screen is shattered.</p><p>the device is powered off.</p><p>the SIM tray is empty.</p><p>water damage destroys most local data before it can be recovered.</p><p>the serial number matches niko's account records.</p><p class="quiet">the phone was not at the terminal when jc and may found the bag.</p><p class="quiet">now investigators know where one missing object ended up.</p>`,[["continue",()=>endingFoulPlay(3)]]);return}
-  if(step===3){endingScreen("case status","suspected foul play",`<p>the disappearance is no longer treated as a simple voluntary walk-off.</p><p>the blue-shirt man's movements, the recovered phone, witness accounts and the final laptop window are preserved as part of the same case.</p><p>investigators do not tell jc or may everything.</p><p>they do tell the family one thing:</p><p><b>niko did not simply leave the terminal jce and disappear by accident.</b></p><p class="quiet">that is more certainty than anyone had before.</p><p class="quiet">it is much less comforting than certainty sounded in their heads.</p>`,[["continue",()=>endingFoulPlay(4)]]);return}
+  if(step===3){endingScreen("case status","suspected foul play",`<p>the disappearance is no longer treated as a simple voluntary walk-off.</p><p>the blue-shirt man's movements, the recovered phone, witness accounts and the final laptop window are preserved as part of the same case.</p><p>investigators do not tell jc or may everything.</p><p>they do tell the family one thing:</p><p><b>niko did not simply leave the terminal alone and disappear by accident.</b></p><p class="quiet">that is more certainty than anyone had before.</p><p class="quiet">it is much less comforting than certainty sounded in their heads.</p>`,[["continue",()=>endingFoulPlay(4)]]);return}
   if(step===4){endingScreen("later","mama",`<p>after the forensic copy is completed, niko's mother receives the laptop.</p><p>the technician returns it with the desktop already awake.</p><p>she looks at the screen for a few seconds.</p><p>she does not open Messynger. she does not open Notes. she does not search for the version of her son strangers already read.</p><p>she closes the lid.</p>`,[["continue",()=>endingFoulPlay(5)]]);return}
   if(step===5){endingScreen("bag side pocket","",`<p>there is a house key on a faded basketball keychain.</p><p>she recognizes it immediately.</p><p>it is the key niko was supposed to use when he came home.</p><p class="quiet">she holds it long enough for the metal to warm in her hand.</p><p class="quiet">nothing else is opened.</p>`,[["continue",()=>endingFoulPlay(6)]]);return}
   endingScreen("ending","FOUL PLAY",`<p><b>the cheating was real.</b> it explains people he hurt, not the disappearance.</p><p><b>the mental-health deterioration was real.</b> it explains why niko doubted his own perception; it does not erase the pharmacy footage, the recovered phone, or the man's false denial.</p><p><b>the occult thread closes cleanly.</b> graffiti, a metal poster, random markings, and pattern-seeking under stress. nothing supernatural is confirmed.</p><p><b>the outside evidence is the thread that survives verification.</b></p><p>the blue-shirt man did meet niko. the phone did leave the terminal. his first statement was false.</p><p>there is still no violence shown and no clean recording of what happened after the service road.</p><p>niko's exact fate remains open, but the disappearance is now investigated as foul play.</p><p class="quiet">it was never a cursed laptop. it was just his laptop, his files, and the nine-minute gap that finally stopped being only his word against his own fear.</p>`,[["after",()=>postEndingInterpretation("foulplay")]]);
 }
 
 
-/* v76: ordinary-people character pass.
+/* v77: ordinary-people character pass + name-revert corruption hotfix.
    Adds deliberately boring Niko material, pre-Niko Lia material, a normal Bea baseline,
    a fuller but still mundane Dr. Reyes caseload glimpse, Maria ethical-growth callback,
    one post-ending Vince line, one wider-cast life beat, and restrained JC/May end-behavior. */
@@ -3765,7 +3765,7 @@ const legacyRandomTalk_UNUSED=[
   ["jc","you cold?"],
   ["may","i'm wet and standing under a terminal roof at midnight. what do u think"],
   ["jc","okay damn. i'll get coffee if that stall is still open."],
-  ["may","don't leave me jce with this man's relationship spreadsheet."],
+  ["may","don't leave me alone with this man's relationship spreadsheet."],
 
   ["may","imagine the owner comes back while we're sitting here."],
   ["jc","we give it back."],
@@ -4236,7 +4236,7 @@ function openFile(k){
     todo:`<div class="detail"><h4>todo.txt</h4><p>print activity</p><p>buy coffee</p><p>reply to mom</p><p>charger</p><p>bring umbrella</p><p>delete backup</p></div>`,
     private:`<div class="detail"><h4>private_notes.txt</h4><p>"keep everything separate."</p><p>"lia doesn't check laptop."</p><p>"never save real names if not needed."</p><p>"clear downloads after."</p></div>`,
     backup:`<div class="detail"><h4>phone_backup.zip</h4><p>backup created from android phone.</p><p>contains chats, contacts, and media.</p><button class="soft" onclick="closeWindowDetail('files');renderFolder('backup')">open backup</button></div>`,
-    latenightreceipt:`<div class="detail"><h4>late_receipt.pdf</h4><p>2 iced coffees</p><p>2 sandwiches</p><p>fries</p><p>paid cash</p><p>8:34 pm • aug 16</p><p class="muted">lia's chat that night says niko told her he was eating jce at home.</p></div>`,
+    latenightreceipt:`<div class="detail"><h4>late_receipt.pdf</h4><p>2 iced coffees</p><p>2 sandwiches</p><p>fries</p><p>paid cash</p><p>8:34 pm • aug 16</p><p class="muted">lia's chat that night says niko told her he was eating alone at home.</p></div>`,
     coffee2:`<div class="detail"><h4>coffee_receipt_0812.pdf</h4><p>2 drinks</p><p>1 pastry</p><p>paid cash</p><p>9:16 pm • aug 12</p></div>`,
     rainalert:`<div class="detail"><h4>rainfall_advisory_2248.html</h4><p><b>saved 10:48 pm • aug 17</b></p><p>cached weather advisory: heavy rain expected to continue through late evening. localized flooding possible on low-lying roads.</p><p class="muted">niko saved this before the final terminal searches. it shows he knew the weather was getting worse, not what he planned to do about it.</p></div>`,
     photo4430:`<div class="detail"><h4>img_4430.jpg</h4><p>blurry cafe selfie. niko's hoodie and half his face are visible.</p><p>a girl's hand is holding his wrist.</p></div>`,
@@ -4461,7 +4461,7 @@ function openFile(k){
     odd_underpass:`<div class="detail"><h4>underpass_symbol.jpg</h4><p>rough five-point star inside a circle spray-painted on concrete under an underpass.</p><p>there are other tags around it.</p><p class="muted">nothing identifies who painted it or what they meant by it.</p></div>`,
     odd_candles:`<div class="detail"><h4>black_candles.jpg</h4><p>two black candles on niko's desk beside a notebook.</p><p>a horror movie is paused on the laptop in the background and miso's tail is visible at the edge.</p><p class="muted">creepy-looking photo, but nothing in it shows a ritual taking place.</p></div>`,
     odd_goat:`<div class="detail"><h4>goat_poster.jpg</h4><p>torn black-and-white poster with a horned goat head and an inverted star.</p><p>small text at the bottom looks like a metal show date.</p><p class="muted">niko cropped out most of the event text when he saved the image.</p></div>`,
-    odd_chalk:`<div class="detail"><h4>chalk_circle.jpg</h4><p>a faded star-and-circle shape drawn in chalk behind a parking structure.</p><p>shoe prints and tire marks cross straight through it.</p><p class="muted">could be graffiti, a joke, art, or something else. the photo jce says nothing.</p></div>`,
+    odd_chalk:`<div class="detail"><h4>chalk_circle.jpg</h4><p>a faded star-and-circle shape drawn in chalk behind a parking structure.</p><p>shoe prints and tire marks cross straight through it.</p><p class="muted">could be graffiti, a joke, art, or something else. the photo alone says nothing.</p></div>`,
     odd_barsymbol:`<div class="detail"><h4>bar_symbol.jpg</h4><p>10:49 pm • marker drawing on the bar bathroom wall.</p><p>niko zoomed in on a hooked cross-and-circle shape.</p><p>other names, phone numbers, and random graffiti surround it.</p><p class="muted">the symbol is similar to one in niko's notes, but not identical.</p></div>`,
     odd_symbols:`<div class="detail"><h4>symbols_notes.txt</h4><p>pentagram / inverted pentagram / leviathan cross / sigils / band logos / random graffiti</p><p>"underpass one and bathroom one are NOT the same"</p><p>"goat poster is probably just metal shit"</p><p>"why do i keep noticing these now"</p><p>"could literally just be because i'm looking for them"</p><p class="muted">last line is underlined twice.</p></div>`,
     odd_333:`<div class="detail"><h4>3_33_log.txt</h4><p>aug 11 • woke up 3:33</p><p>aug 13 • noticed clock at 3:33</p><p>aug 15 • 3:31, kept looking until it changed</p><p>"okay that one doesn't count. i literally waited for it."</p><p>"obviously i'll notice 333 more if i'm checking for 333"</p><p class="muted">the file becomes more skeptical as it goes.</p></div>`,
@@ -4622,7 +4622,7 @@ function openFile(k){
   }
   showWindowDetail("files",fileHTML);
   if(k==="private")addJournal("private note says lia doesn't check the laptop.");
-  if(k==="latenightreceipt")addJournal("late food receipt shows two meals on a night niko told lia he was home jce.");
+  if(k==="latenightreceipt")addJournal("late food receipt shows two meals on a night niko told lia he was home alone.");
   if(k==="voiceexport")addJournal("voice export strongly suggests another girl knew about lia.");
   if(k==="thirstdump"){addJournal("downloads contains a manually organized zip of dozens of saved thirst-trap/story screenshots. gross, but not relevant to the final-night timeline.");setTimeout(()=>fieldTalk("may","why does he have a ZIP FILE of thirst traps like downloading them wasn't enough??"),260);}
   if(k==="storysaves")addJournal("niko systematically saved social-media stories from several women he was already talking to.");
@@ -4947,7 +4947,7 @@ const chats={
   ["them","NIKO"],
   ["them","remember what dr reyes said. notice it, check what you actually know, don't build the whole story first"],
   ["me","yeah yeah"],
-  ["them","and if somebody is ACTUALLY following u then call me or go somewhere crowded. don't go staring at them jce"],
+  ["them","and if somebody is ACTUALLY following u then call me or go somewhere crowded. don't go staring at them alone"],
   ["me","im not doing that"],
 
   ["them","good"],
@@ -5088,7 +5088,7 @@ const chats={
   ["them","reel attachment • baby laughs at ceiling fan for two straight minutes"],
   ["them","reel attachment • man uses umbrella as improvised fishing rod"],
   ["them","reel attachment • dog refuses to leave jeepney"],
-  ["them","reel attachment • guy tries carrying refrigerator jce"],
+  ["them","reel attachment • guy tries carrying refrigerator alone"],
   ["them","reel attachment • family karaoke singer misses every note confidently"],
   ["them","reel attachment • basketball ankle breaker compilation"],
   ["them","reel attachment • cat attacks printer while paper comes out"],
@@ -5430,13 +5430,13 @@ const chats={
  vince:{kind:"inbox",name:"vince",preview:"where'd u go",msgs:[
   ["them","where'd u go"],["them","u left your drink here"],["them","cam said u walked out"],["them","thought u were going to the terminal side"],
   ["them","niko?"],["them","answer when u see this"],["them","your bag still with u?"],["them","blue shirt guy asked if i knew you"],
-  ["them","i said no"],["them","call me"],["them","seriously don't take the back road if you're jce"],["them","cam THINKS someone followed you out"],
+  ["them","i said no"],["them","call me"],["them","seriously don't take the back road if you're alone"],["them","cam THINKS someone followed you out"],
   ["them","could literally just be somebody walking the same way idk"],["them","niko answer"],["them","your charger is still under the table btw"],["them","wait no that's not yours"],
   ["them","where the fuck did u go"]
  ]},
  cam:{kind:"inbox",name:"cam",preview:"u good?",msgs:[
   ["them","u good?"],["them","vince said u just disappeared"],["them","you were acting weird after that call"],["them","where are u"],
-  ["them","call me"],["them","don't go through the back road jce"],["them","someone was asking around after u left"],["them","niko answer"],
+  ["them","call me"],["them","don't go through the back road alone"],["them","someone was asking around after u left"],["them","niko answer"],
   ["them","was that guy with you earlier"],["them","blue shirt"],["them","i swear i saw him near the side street"],["them","or maybe it was just some other guy in blue. rain was crazy"],["them","if this is some girl drama i'm not getting involved"],
   ["them","just reply so i know you're alive"]
  ]},
@@ -5731,7 +5731,7 @@ const chats={
   ["them","december?????","jun 23, 2026 • 12:37 am"],
   ["them","i asked you. literally asked you. twice","jun 23, 2026 • 12:38 am"],
   ["me","ik","jun 23, 2026 • 12:39 am"],
-  ["them","i wouldve left u jce","jun 23, 2026 • 12:39 am"],
+  ["them","i wouldve left u alone","jun 23, 2026 • 12:39 am"],
   ["me","ik","jun 23, 2026 • 12:40 am"],
   ["them","no i dont think u do. u didnt even let me choose","jun 23, 2026 • 12:41 am"],
   ["them","does she know about me","jun 23, 2026 • 12:42 am"],
@@ -5790,7 +5790,7 @@ const chats={
  jane:{kind:"archived",name:"enaj",preview:"good morning copy paste king",msgs:[
   ["them","good morning copy paste king"],["me","shut up"],["them","'good morning pretty hope u slept well'"],["them","word for word"],
   ["me","how do you even know that"],["them","girls talk"],["me","apparently"],["them","you are so cooked"],
-  ["them","also maria is furious"],["me","she'll calm down"],["them","that sentence jce is why she shouldn't"]
+  ["them","also maria is furious"],["me","she'll calm down"],["them","that sentence alone is why she shouldn't"]
  ]},
  liana:{kind:"archived",name:"anail",preview:"your pocket said miss u too?",msgs:[
   ["them","don't call me when you're with her"],["me","i don't"],["them","you literally did yesterday"],["me","accident"],
@@ -6487,7 +6487,7 @@ keep it that way`],
  ["reply order","aug 17",`lia first if she double texts
 c after
 ash late night
-m only when jce
+m only when alone
 boys gc mute always`],
  ["bar","aug 17",`vince 10ish
 cam outside later
@@ -6495,7 +6495,7 @@ cash 500
 don't stay too late
 bring bag`],
  ["if i start doing this again","aug 17",`don't follow random people
-don't confront anyone jce
+don't confront anyone alone
 call mika
 go somewhere crowded
 write down what actually happened first
@@ -6540,7 +6540,7 @@ sleep first. decide tomorrow.`],
 
 probably neighbor
 nothing touched door
-leave it jce`],
+leave it alone`],
  ["camera zoom","aug 16",`do not zoom dark photos past 200%
 faces turn into shapes
 reflections turn into people
@@ -7251,7 +7251,7 @@ const spotifakeTracks=[
   {title:"Can I Miss You Tonight?",artist:"Eyecoat",album:"Let's Finish the Wedding",dur:"2:38",vibe:"late-night question with plausible deniability"},
   {title:"Marvin",artist:"His",album:"Invitation to Him",dur:"3:31",vibe:"soft guitar from the legally opposite band"},
   {title:"Mildflower",artist:"Mountain House",album:"Anxiety Cherry",dur:"3:39",vibe:"dream-pop flowers with reduced intensity"},
-  {title:"Captain Song",artist:"Gogo Peres",album:"Captain Song",dur:"3:32",vibe:"big singjcg folk-pop energy"},
+  {title:"Captain Song",artist:"Gogo Peres",album:"Captain Song",dur:"3:32",vibe:"big singalong folk-pop energy"},
   {title:"I Bet on Winning Cats",artist:"Mitzki",album:"Puberty 3",dur:"2:50",vibe:"same doomed betting instinct, better animal"},
   {title:"Disco Ball",artist:"Surf Blessing",album:"Disco Ball",dur:"2:33",vibe:"surf-rock glitter"},
   {title:"Laugh",artist:"Cigarettes Before Sleep",album:"Laugh",dur:"4:16",vibe:"slow smoky dream-pop but emotionally healthier"},
@@ -7410,7 +7410,7 @@ const spotifakeMessages=[
     ["them","shared a song • boy in blue — we fell out in november"],["them","title is so stupid"],["me","u saved it"],["them","irrelevant"],["me","caught"]
   ]},
   {name:"sam",preview:"90% people not texting back",track:67,msgs:[
-    ["them","your playlist is 90% people not texting back"],["me","that's a genre"],["them","apparently your favorite genre"],["me","leave me jce"],["them","shared a song • Eyecoat — Can I Miss You Tonight?"],["me","see good song"],["them","CASE IN POINT"]
+    ["them","your playlist is 90% people not texting back"],["me","that's a genre"],["them","apparently your favorite genre"],["me","leave me alone"],["them","shared a song • Eyecoat — Can I Miss You Tonight?"],["me","see good song"],["them","CASE IN POINT"]
   ]},
   {name:"aly",preview:"liked • Decent Looking",track:55,msgs:[
     ["me","shared a song • Suki Firehouse — Decent Looking"],["system","aly liked your song share"],["me","rating me or the song"],["system","seen 7 hours ago"]
@@ -7899,7 +7899,7 @@ students cited long commutes, crowded homes, and limited quiet study spaces.`
     time:"3:03 pm",
     title:"residents ask for brighter streetlights around nightlife and terminal-side roads",
     source:"city desk",
-    body:`residents and late-night workers are asking for additional lighting jcg several side roads connecting nightlife areas to transport terminals.
+    body:`residents and late-night workers are asking for additional lighting along several side roads connecting nightlife areas to transport terminals.
 
 commuters said some shortcuts become difficult to see after businesses close.
 
@@ -8336,7 +8336,7 @@ const instagramPosts=[
   {cap:"site visit fit + hard hat that makes my head look huge",meta:"aug 14 • 41 likes • 3 comments",comments:["ken: engineer kuno","mika.exe: the vest is carrying","niko: hate all of u"]},
   {cap:"miso occupying 80% of my chair",meta:"aug 11 • 63 likes • 8 comments",comments:["bea: MY CAT","niko: false","sammyyy: orange behavior"]},
   {cap:"late night plate. autodraft please stop crashing",meta:"aug 8 • 29 likes • 2 comments",comments:["joaq: skill issue","niko: blocked"]},
-  {cap:"court was empty so obviously i had to miss jce",meta:"aug 2 • 37 likes • 4 comments",comments:["vince: jumper still ugly","niko: efficient form"]},
+  {cap:"court was empty so obviously i had to miss alone",meta:"aug 2 • 37 likes • 4 comments",comments:["vince: jumper still ugly","niko: efficient form"]},
   {cap:"cheap coffee expensive emotional support",meta:"jul 28 • 52 likes • 5 comments",comments:["elle.jpg: dramatic","niko: accurate"]},
   {cap:"trying to make this road cross section stop looking cursed",meta:"jul 24 • 24 likes • 1 comment",comments:["mara: north arrow still wrong"]},
   {cap:"hair finally cooperating",meta:"jul 17 • 71 likes • 11 comments",comments:["kyla.wav: finally","ken: delete","niko: jealousy"]},
@@ -9012,7 +9012,7 @@ const marketplaceThreads=[
   {id:"universitybeltbuyer",kind:"inbox",name:"school-belt buyer",preview:"near the road that turns into a river when it rains",role:"selling",location:"school-belt flood road",item:"\ud83e\uddee calculator",price:600,status:"active",msgs:[["them","meet near school belt"],["me","if it rains cancel"],["them","why"],["me","because that whole road starts roleplaying as a river"],["them","HAHAHAHA"],["me","i am not waterproofing a calculator meetup"],["them","mall inside nalang"],["me","perfect"],["them","after class 5:30"],["me","check weather first pls"]]},
   {id:"northcirclebuyer",kind:"inbox",name:"big-circle buyer",preview:"near the giant monument circle",role:"selling",location:"giant monument circle",item:"\ud83c\udfae controller",price:650,status:"active",msgs:[["them","meet near the giant monument circle"],["me","which side"],["them","station side"],["me","there are multiple station exits"],["them","near mall"],["me","there are multiple malls"],["them","HAHA"],["me","this is why marketplace needs coordinates"],["them","sending pin"],["me","bless"]]},
   {id:"buscarouselbuyer",kind:"inbox",name:"bus-carousel buyer",preview:"just take the carousel bro",role:"selling",location:"bus-carousel stop",item:"\ud83d\uddb1\ufe0f mouse",price:350,status:"active",msgs:[["them","just take the carousel bro"],["me","with this bag?"],["them","yeah easy"],["me","every time someone says easy commute here i know pain is coming"],["them","station connects naman"],["me","connects through 3 escalators, 2 footbridges and personal growth"],["them","HAHAHAHA"],["them","weekend nalang"],["me","correct answer"]]},
-  {id:"southmainroadbuyer",kind:"inbox",name:"main-road buyer",preview:"meet jcg the road with nonstop subdivision entrances",role:"selling",location:"long south main road",item:"\u2328\ufe0f keyboard",price:1500,status:"active",msgs:[["them","meet jcg main road near subdivision entrances"],["me","which one"],["them","near the famous bakery"],["me","there are 17 famous bakeries"],["them","near the jeep stop"],["me","there are 900"],["them","HAHAHAHA"],["me","send pin before we accidentally meet in different barangays"],["them","okay okay"],["me","and not 6pm"],["them","why"],["me","because that road becomes one long brake light"],["them","8:30"],["me","deal"]]},
+  {id:"southmainroadbuyer",kind:"inbox",name:"main-road buyer",preview:"meet along the road with nonstop subdivision entrances",role:"selling",location:"long south main road",item:"\u2328\ufe0f keyboard",price:1500,status:"active",msgs:[["them","meet along main road near subdivision entrances"],["me","which one"],["them","near the famous bakery"],["me","there are 17 famous bakeries"],["them","near the jeep stop"],["me","there are 900"],["them","HAHAHAHA"],["me","send pin before we accidentally meet in different barangays"],["them","okay okay"],["me","and not 6pm"],["them","why"],["me","because that road becomes one long brake light"],["them","8:30"],["me","deal"]]},
   {id:"airportsidegpu",kind:"inbox",name:"airport-side seller",preview:"pickup behind the hotels near the runway",role:"buying",location:"runway hotel side",item:"\ud83e\udde9 used GPU",price:8500,status:"active",msgs:[["me","where can test"],["them","near hotels by runway side"],["me","specific pls"],["them","near casino area"],["me","that's a whole city of buildings"],["them","HAHA"],["me","i just need a plug and 15 mins"],["them","coffee shop lobby"],["me","okay send exact one"],["them","will do"],["me","i'm not wandering around hotel lobbies holding a gpu like i'm doing a deal"]]},
   {id:"warehousebuyer",kind:"inbox",name:"warehouse-side buyer",preview:"near warehouses after the service road",role:"selling",location:"warehouse side",item:"\ud83e\ude91 desk",price:1800,status:"active",msgs:[["them","pickup near warehouses after service road"],["me","that is the most south-side sentence i've read today"],["them","HAHAHA"],["me","which warehouse"],["them","blue gate"],["me","all warehouses have blue gates"],["them","near trucking yard"],["me","this keeps getting worse"],["them","send pin nalang"],["me","YES"]]},
   {id:"villagegatebuyer",kind:"inbox",name:"village gate buyer",preview:"near guardhouse where trikes line up",role:"selling",location:"village gate",item:"\ud83d\udd0a speaker",price:600,status:"active",msgs:[["them","meet near village gate"],["me","which landmark"],["them","guardhouse with trikes lined up"],["me","every subdivision in the south just felt attacked"],["them","HAHA"],["me","send street name"],["them","can't u just ask trike drivers"],["me","i am not telling a trike driver 'take me to the guy buying my speaker'"],["them","HAHAHAHA"],["them","sending pin"],["me","thank u"]]},
@@ -9197,7 +9197,7 @@ function renderAll(){
   updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderMarketplace();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderCheats();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();renderJournalCaseProgress();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
-const SAVE_KEY="lost_phone_save_v76";
+const SAVE_KEY="lost_phone_save_v77";
 let autosaveSteps=0;
 
 function createSaveData(){
