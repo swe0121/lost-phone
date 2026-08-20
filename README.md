@@ -1,19 +1,25 @@
 # Lost Phone
 
-After way too many commits, rewrites, fixes, added features, removed ideas, and changes to basically everything, I think I'm finally done with this game.
+After way too many commits, rewrites, fixes, removed ideas, added features, and changing basically everything at some point, I think I'm finally done with this game.
 
-What started as a small interactive mystery became way bigger than I expected. I spent a lot of time making the characters feel like actual people, making the device feel genuinely used, and making sure not everything you find has an obvious answer or purpose.
+Realistically, nobody is probably ever gonna find this repo, let alone actually play the whole thing lmao. But I still ended up putting way more work into it than I originally planned.
 
-There are a lot of things to explore, and you definitely don't need to see everything.
+What started as a small interactive mystery somehow became this whole thing with characters, conversations, apps, timestamps, random files, little details, and a bunch of stuff most players probably won't even find.
 
-Pay attention to the small stuff. Read old conversations. Check dates and timestamps. Sometimes something completely normal might matter later.
+And honestly, that's fine. I had fun making it.
 
-Or maybe it doesn't.
+If you somehow ended up here, just explore. You don't need to find everything, and not everything you find is supposed to mean something.
 
-Either way, I'm calling this the **final version of Lost Phone**.
+Some things might matter later.
 
-I could probably keep changing little things forever, but at some point I gotta stop looking through this thing too.
+Some probably mean nothing.
 
-Have fun exploring.
+After all these commits, this is officially the **final version of Lost Phone**. I'm not changing anything after this. No more rewrites, new features, or "one last fix" that somehow turns into another 20 commits lmao.
+
+Whatever's here is staying here.
+
+And if someone somehow actually plays this thing, thanks. Seriously. I probably made most of this knowing nobody would ever see half of it anyway.
+
+### [Play Lost Phone](https://swe0121.github.io/lost-phone/)
 
 `last successful sync: 11:38 PM`
