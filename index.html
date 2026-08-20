@@ -1118,16 +1118,16 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
     <h1>lost phone</h1>
     <div class="select-sub">choose whose side of tonight you remember</div>
     <div class="character-cards">
-      <button class="character-card" onclick="selectCharacter('jc')"><b>jc</b><span>aight, terminal's like five minutes from here na.
+      <button class="character-card" onclick="selectCharacter('jc')"><b>alon</b><span>aight, terminal's like five minutes from here na.
 this rain is getting stupid though.</span></button>
-      <button class="character-card" onclick="selectCharacter('may')"><b>may</b><span>hanggang terminal lang.
+      <button class="character-card" onclick="selectCharacter('may')"><b>haraya</b><span>hanggang terminal lang.
 this rain is getting stupid though.</span></button>
     </div>
     <div id="characterContinue" class="select-continue"></div>
   </div>
   <div id="dialogue" style="display:none">
     <div id="introTime"></div>
-    <div id="speaker">jc</div>
+    <div id="speaker">alon</div>
     <div id="dialogueText"></div>
     <div id="dialogueThought"></div>
     <div id="dialogueChoices"></div>
@@ -1139,7 +1139,8 @@ this rain is getting stupid though.</span></button>
     <h2>read me</h2>
     <div class="readme-kicker">lost phone • spoiler-free overview</div>
     <div class="readme-copy">
-      <div class="readme-opening">a found laptop. two people stuck at a terminal. an owner who is nowhere around.</div>
+      <div class="readme-opening">a found laptop. two people stuck at a flooded jeep terminal. an owner who is nowhere around.</div>
+      <p class="quiet">manila, philippines • august 18, 2026</p>
 
       <p><span class="white">lost phone</span> is a single-file browser mystery game. you explore somebody else's laptop, figure out who it belongs to, and decide what information is actually useful before the night moves on.</p>
       <p>the game is mostly text, fake desktop apps, cached messages, files, photos, logs, conversations, and choices. there is no combat and no fast reaction mechanic. most of the game is reading, comparing, remembering, and deciding what deserves your attention.</p>
@@ -1147,7 +1148,7 @@ this rain is getting stupid though.</span></button>
       <div class="readme-break"></div>
 
       <p class="white"><b>starting a game</b></p>
-      <p>press <b>start</b> on the main menu, choose <b>JC</b> or <b>May</b>, then follow the opening conversation until the laptop desktop becomes available.</p>
+      <p>press <b>start</b> on the main menu, choose <b>Alon</b> or <b>Haraya</b>, then follow the opening conversation until the laptop desktop becomes available.</p>
       <p>the two POVs share the same night and the same laptop, but their dialogue, choices, and some personal reactions are different. choosing one does not permanently lock the other.</p>
       <p>if you already have local progress, the main menu shows <b>continue</b>. that resumes the saved game instead of beginning a new opening.</p>
 
@@ -1207,7 +1208,7 @@ this rain is getting stupid though.</span></button>
 
       <div class="howto-section">
         <h3>the easy version</h3>
-        <div class="howto-callout"><b>start → choose JC or May → explore → reach the current clue target → use the case control shown in Our Notes → the next part opens → repeat until the final decision.</b></div>
+        <div class="howto-callout"><b>start → choose Alon or Haraya → explore → reach the current clue target → use the case control shown in Our Notes → the next part opens → repeat until the final decision.</b></div>
         <p>You still <b>do not need to read every file</b>. The game asks for a small number of strong discoveries in each section, then one simple case action when needed.</p>
       </div>
 
@@ -1225,7 +1226,7 @@ this rain is getting stupid though.</span></button>
 
       <div class="howto-section">
         <h3>☷ our notes</h3>
-        <p>Click <span class="howto-ui">☷</span> on the taskbar. <b>Our Notes</b> is an automatic list of important things JC and May have already noticed.</p>
+        <p>Click <span class="howto-ui">☷</span> on the taskbar. <b>Our Notes</b> is an automatic list of important things Alon and Haraya have already noticed.</p>
         <p>You do not type in it. Scroll through it when you forget what happened.</p>
         <p>If you are stuck, click <span class="howto-ui">need a lead?</span> inside Our Notes. It gives one optional next-step hint based on your current progress.</p>
       </div>
@@ -1257,7 +1258,7 @@ this rain is getting stupid though.</span></button>
 
       <div class="howto-section">
         <h3>wifi / hotspot</h3>
-        <p>Wi-Fi stays locked until the story unlocks it — you'll know when it does. After that, the taskbar button connects the laptop to JC's hotspot so uncached information can arrive.</p>
+        <p>Wi-Fi stays locked until the story unlocks it — you'll know when it does. After that, the taskbar button connects the laptop to Alon's hotspot so uncached information can arrive.</p>
       </div>
 
       <div class="howto-section">
@@ -1291,14 +1292,14 @@ this rain is getting stupid though.</span></button>
     <div id="webcam"></div>
     <div id="desktop">
       <div id="hint">maybe start with something normal. name, email, contacts.</div>
-      <button id="worldBadge" onclick="openWindow('terminal')"><b>12:23 am</b><br>heavy rain • ~50 waiting</button>
+      <button id="worldBadge" onclick="openWindow('terminal')"><b>12:23 am</b><br>heavy rain • no jeepneys</button>
       <button id="helpButton" onclick="openHowToPlay('game')" title="how to play">?</button>
 
       <div id="desktopIcons">
         <button class="desktop-icon" onclick="openWindow('files')"><span class="ico">📁</span><span class="lbl">files</span></button>
         <button class="desktop-icon" onclick="openWindow('messenger')"><span class="ico">💬</span><span class="lbl">messenger</span></button>
         <button class="desktop-icon" onclick="openWindow('news')"><span class="ico">📰</span><span class="lbl">news</span></button>
-        <button class="desktop-icon" onclick="openWindow('terminal')"><span class="ico">🚏</span><span class="lbl">terminal status</span></button>
+        <button class="desktop-icon" onclick="openWindow('terminal')"><span class="ico">🚏</span><span class="lbl">jeep terminal</span></button>
         <button class="desktop-icon" id="timelineIcon" style="display:none" onclick="openWindow('timeline')"><span class="ico">🧷</span><span class="lbl">our timeline</span></button>
         <button class="desktop-icon" onclick="openWindow('photos')"><span class="ico">🖼️</span><span class="lbl">photos</span></button>
         <button class="desktop-icon" onclick="openWindow('notes')"><span class="ico">📝</span><span class="lbl">notes</span></button>
@@ -1684,7 +1685,7 @@ this rain is getting stupid though.</span></button>
       </div>
 
       <div class="window" id="win-terminal">
-        <div class="window-bar"><div class="window-title">🚏 terminal status</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('terminal')">_</button><button class="win-btn close" onclick="closeWindow('terminal')">×</button></div></div>
+        <div class="window-bar"><div class="window-title">🚏 jeep terminal status</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('terminal')">_</button><button class="win-btn close" onclick="closeWindow('terminal')">×</button></div></div>
         <div class="window-body content"><div id="terminalBody"></div></div>
       </div>
 
@@ -1799,9 +1800,10 @@ const reviewedComparisons=new Set();
 let howToPlayReturn="menu";
 let pendingFreshStart=false;
 
+function leadName(name){return name==="jc"?"alon":name==="may"?"haraya":name}
 function displaySpeaker(name){
-  if((name==="jc"||name==="may")&&playerCharacter)return name===playerCharacter?"you":name;
-  return name;
+  if((name==="jc"||name==="may")&&playerCharacter)return name===playerCharacter?"you":leadName(name);
+  return leadName(name);
 }
 function otherLead(){return playerCharacter==="may"?"jc":"may"}
 function loadMeta(){
@@ -1877,23 +1879,23 @@ function selectCharacter(ch){
 function restartForPerspective(){localStorage.removeItem(SAVE_KEY);location.reload()}
 
 const introJC=[
- {speaker:"jc",text:`aight, terminal's like five minutes from here na.
+ {speaker:"jc",text:`aight, jeep terminal's like five minutes from here na.
 
 this rain is getting stupid though.`,choices:[["keep walking",1]]},
 
  {speaker:"may",text:`yeah yeah. hanggang terminal lang.
 
-my parents don't even know who u are 😭 they just know i'm out.
+my parents don't even know who u are they just know i'm out.
 
-they don't really care who i'm meeting, they just care if i get home. and if the terminal stops rides because of this rain i'm actually cooked.
+they don't really care who i'm meeting, they just care if i get home. and if the jeep terminal stops dispatching because of this rain i'm actually cooked.
 
-also u know u don't have to comment on every puddle just so there isn't silence right 😭`,choices:[["damn i'm a random 😭",2],["just laugh",3]]},
+also u know u don't have to comment on every puddle just so there isn't silence right`,choices:[["damn i'm a random",2],["just laugh",3]]},
 
- {speaker:"jc",text:`damn i'm literally just some random name they don't know 😭
+ {speaker:"jc",text:`damn i'm literally just some random name they don't know
 
 and i'm not commenting on every puddle. that last one was unusually deep.`,choices:[["continue",4]]},
 
- {speaker:"jc",text:`nah that's kinda funny 😭`,choices:[["continue",4]]},
+ {speaker:"jc",text:`nah that's kinda funny`,choices:[["continue",4]]},
 
  {speaker:"may",text:`exactly.
 
@@ -1903,43 +1905,43 @@ if they call they're gonna ask about the flood, not interrogate me about you.`,c
 
 less pressure for me then.`,choices:[["keep walking",7]]},
 
- {speaker:"jc",text:`and this is literally only the second time we've met irl 😭
+ {speaker:"jc",text:`and this is literally only the second time we've met irl
 
 so technically they don't even have anything to know yet.`,choices:[["continue",8]]},
 
- {speaker:"may",text:`EXACTLY 😭
+ {speaker:"may",text:`EXACTLY
 
 you're acting like my family has a case file on you.`,choices:[["keep walking",9]]},
 
- {speaker:"may",text:`don't say it like that 😭
+ {speaker:"may",text:`don't say it like that
 
 we've been talking for basically a year and this is still only the second time we've met irl.`,choices:[["yeah but still",9]]},
 
  {speaker:"jc",text:`yeah but still.
 
-also why are you walking like three steps ahead of me 😭`,choices:[["continue",10]]},
+also why are you walking like three steps ahead of me`,choices:[["continue",10]]},
 
- {speaker:"may",text:`because you walk slow.`,choices:[["i'm taller than you??",11],["look at may",12]]},
+ {speaker:"may",text:`because you walk slow.`,choices:[["i'm taller than you??",11],["look at haraya",12]]},
 
- {speaker:"jc",text:`i'm literally taller than you. how am i the slow one 😭`,choices:[["continue",12]]},
+ {speaker:"jc",text:`i'm literally taller than you. how am i the slow one`,choices:[["continue",12]]},
 
  {speaker:"jc",text:`...`,choices:[["say something",13]]},
 
  {speaker:"jc",text:`i can only see your scalp from here lmaooo`,choices:[["continue",14]]},
 
- {speaker:"may",text:`HUH??? 😭
+ {speaker:"may",text:`HUH???
 
-fuck you. i'm not even that short.`,choices:[["you're tiny",15],["my bad 😭",16]]},
+fuck you. i'm not even that short.`,choices:[["you're tiny",15],["my bad",16]]},
 
- {speaker:"jc",text:`you're tiny 😭`,choices:[["continue",17]]},
+ {speaker:"jc",text:`you're tiny`,choices:[["continue",17]]},
 
- {speaker:"jc",text:`my bad 😭
+ {speaker:"jc",text:`my bad
 
 that sounded less disrespectful in my head.`,choices:[["continue",17]]},
 
  {speaker:"may",text:`see this is why you're awkward in person.
 
-you text normally then irl you just say whatever enters your head 😭`,choices:[["deny it",18],["admit it",19]]},
+you text normally then irl you just say whatever enters your head`,choices:[["deny it",18],["admit it",19]]},
 
  {speaker:"jc",text:`i'm not awkward.
 
@@ -1947,29 +1949,29 @@ i'm just... thinking.`,choices:[["continue",20]]},
 
  {speaker:"jc",text:`okay maybe a little.
 
-this is literally only the second time, give me a break 😭`,choices:[["continue",20]]},
+this is literally only the second time, give me a break`,choices:[["continue",20]]},
 
  {speaker:"may",text:`mhm. sure.
 
 you were quiet as hell the first time too.
 
-also btw i still don't believe u when u say you're scared of women 😭 u really don't act like it.`,choices:[["i didn't know what to say",21],["you kept talking anyway",22]]},
+also btw i still don't believe u when u say you're scared of women u really don't act like it.`,choices:[["i didn't know what to say",21],["you kept talking anyway",22]]},
 
- {speaker:"jc",text:`i didn't know what to say 😭
+ {speaker:"jc",text:`i didn't know what to say
 
 you were just looking at me waiting for me to talk.
 
 the panic is internal. very efficient system.`,choices:[["continue",23]]},
 
- {speaker:"jc",text:`you kept talking anyway so i thought i was good 😭
+ {speaker:"jc",text:`you kept talking anyway so i thought i was good
 
 also being scared doesn't mean i have to look terrified 24/7.`,choices:[["continue",23]]},
 
  {speaker:"may",text:`because if i waited for you we'd still be standing there in silence.
 
-"internal panic" daw 😭 keep talking, i'm gonna block u again.`,choices:[["keep walking",24]]},
+"internal panic" daw keep talking, i'm gonna block u again.`,choices:[["keep walking",24]]},
 
- {speaker:"jc",text:`AGAIN is crazy 😭 at least give me like a thirty-day notice.
+ {speaker:"jc",text:`AGAIN is crazy at least give me like a thirty-day notice.
 
 anyway i'm still getting you to the terminal so be nice.`,choices:[["continue",25]]},
 
@@ -1979,7 +1981,7 @@ to the terminal. that's it.
 
 after that i can commute home myself.`,choices:[["yeah yeah",26]]},
 
- {speaker:"jc",text:`yeah yeah 😭
+ {speaker:"jc",text:`yeah yeah
 
 professional terminal escort service.`,choices:[["keep walking",27]]},
 
@@ -1987,7 +1989,7 @@ professional terminal escort service.`,choices:[["keep walking",27]]},
 
  {speaker:"jc",text:`maybe.
 
-i'm not letting you say i abandoned you at a terminal 😭`,choices:[["continue",30]]},
+i'm not letting you say i abandoned you at a terminal`,choices:[["continue",30]]},
 
  {speaker:"jc",text:`no comment.`,choices:[["continue",30]]},
 
@@ -1995,11 +1997,15 @@ i'm not letting you say i abandoned you at a terminal 😭`,choices:[["continue"
 
 ...wait. look at the road.
 
-that water was NOT that high earlier 😭
+that water was NOT that high earlier
 
-people at the terminal aren't even moving.`,choices:[["keep walking",31]]},
+people at the terminal aren't even moving.
+
+and i don't see a single jeep leaving either. parang every week na lang may bagong bagyo or ulan alert`,choices:[["keep walking",31]]},
 
  {speaker:"jc",text:`yeah we might be stuck here for a while.
+
+one hard rain and the whole commute system just folds. jeep terminal na nga, wala pang jeep
 
 wait, fuck...`,choices:[["what happened?",32]]},
 
@@ -2015,7 +2021,7 @@ who leaves a whole bag here in this rain?`,choices:[["pick it up",35],["kick it 
 
  {speaker:"jc",text:`yeah. wait, there's actually something inside.`,choices:[["open the bag",37]]},
 
- {speaker:"may",text:`why are you kicking random shit 😭 just open it.`,choices:[["open the bag",37]]},
+ {speaker:"may",text:`why are you kicking random shit just open it.`,choices:[["open the bag",37]]},
 
  {speaker:"jc",text:`yo what the fuck, there's a laptop in here.`,choices:[["check the bag more",38],["take the laptop out",39]]},
 
@@ -2042,25 +2048,25 @@ wala talaga.`,choices:[["open the laptop",42]]},
 just find the owner first. that's it.`,choices:[["use the laptop",99]]}
 ];
 
-/* May route: choices are May's choices. The same objective events happen, but the player never picks JC's dialogue for him. */
+/* May route: choices are May's choices. The same objective events happen, but the player never picks Alon's dialogue for him. */
 const introMay=[
- {speaker:"may",text:`yeah yeah. hanggang terminal lang.
+ {speaker:"may",text:`yeah yeah. hanggang jeep terminal lang.
 
 this rain is getting stupid though.
 
-my parents don't even know who u are 😭 they just know i'm out.`,choices:[["keep walking",1]]},
+my parents don't even know who u are they just know i'm out.`,choices:[["keep walking",1]]},
 
- {speaker:"jc",text:`aight 😭 i'm literally just some random name they don't know.
+ {speaker:"jc",text:`aight i'm literally just some random name they don't know.
 
-also terminal's like five minutes from here na.`,choices:[["tell him they don't care who you're meeting",2],["tease him about narrating puddles",3]]},
+also jeep terminal's like five minutes from here na.`,choices:[["tell him they don't care who you're meeting",2],["tease him about narrating puddles",3]]},
 
  {speaker:"may",text:`they don't really care who i'm meeting. they care if i get home.
 
 if they call they're gonna ask about the flood, not interrogate me about you.`,choices:[["continue",4]]},
 
- {speaker:"may",text:`also u know u don't have to comment on every puddle just so there isn't silence right 😭`,choices:[["continue",5]]},
+ {speaker:"may",text:`also u know u don't have to comment on every puddle just so there isn't silence right`,choices:[["continue",5]]},
 
- {speaker:"jc",text:`damn okay 😭 less pressure for me then.
+ {speaker:"jc",text:`damn okay less pressure for me then.
 
 still funny that i'm basically an unnamed side character to them.`,choices:[["remind him this is only meet #2",6],["tell him to relax",7]]},
 
@@ -2068,11 +2074,11 @@ still funny that i'm basically an unnamed side character to them.`,choices:[["re
 
 that last one was unusually deep.`,choices:[["call bullshit",8],["let him have the puddle",9]]},
 
- {speaker:"may",text:`and this is literally only the second time we've met irl 😭
+ {speaker:"may",text:`and this is literally only the second time we've met irl
 
 we've been talking for basically a year and you've appeared twice.`,choices:[["continue",10]]},
 
- {speaker:"may",text:`relax 😭 you're acting like my family has a case file on you.`,choices:[["continue",10]]},
+ {speaker:"may",text:`relax you're acting like my family has a case file on you.`,choices:[["continue",10]]},
 
  {speaker:"may",text:`you absolutely narrate random shit when you don't know what to say.
 
@@ -2080,13 +2086,13 @@ puddles included.`,choices:[["continue",11]]},
 
  {speaker:"may",text:`fine. unusually deep puddle. i'll give you that one.`,choices:[["continue",11]]},
 
- {speaker:"jc",text:`okay but why are you walking like three steps ahead of me 😭`,choices:[["because u walk slow",12],["tell him to keep up",13]]},
+ {speaker:"jc",text:`okay but why are you walking like three steps ahead of me`,choices:[["because u walk slow",12],["tell him to keep up",13]]},
 
- {speaker:"jc",text:`i'm literally taller than you. how am i the slow one 😭`,choices:[["insult his walking speed",14],["ignore that and keep walking",15]]},
+ {speaker:"jc",text:`i'm literally taller than you. how am i the slow one`,choices:[["insult his walking speed",14],["ignore that and keep walking",15]]},
 
  {speaker:"may",text:`because u walk slow. height clearly isn't helping.`,choices:[["continue",16]]},
 
- {speaker:"may",text:`keep up then 😭 i'm not slowing down just because your legs forgot their job.`,choices:[["continue",16]]},
+ {speaker:"may",text:`keep up then i'm not slowing down just because your legs forgot their job.`,choices:[["continue",16]]},
 
  {speaker:"may",text:`idk. skill issue.`,choices:[["continue",16]]},
 
@@ -2098,9 +2104,9 @@ yeah i can still only see your scalp from up here lmaooo`,choices:[["threaten to
 
  {speaker:"may",text:`keep talking and i'm gonna block u again.`,choices:[["continue",19]]},
 
- {speaker:"may",text:`SHUT UP 😭 i'm not even that short.`,choices:[["continue",19]]},
+ {speaker:"may",text:`SHUT UP i'm not even that short.`,choices:[["continue",19]]},
 
- {speaker:"jc",text:`AGAIN is crazy 😭
+ {speaker:"jc",text:`AGAIN is crazy
 
 at least give me like a thirty-day notice.`,choices:[["instant suspension",20],["tell him there's no notice",21]]},
 
@@ -2112,37 +2118,37 @@ at least give me like a thirty-day notice.`,choices:[["instant suspension",20],[
 
 also you're proving my point because i thought you said i was the awkward one.`,choices:[["call him awkward",23],["bring up the first meetup",24]]},
 
- {speaker:"may",text:`you ARE awkward in person 😭
+ {speaker:"may",text:`you ARE awkward in person
 
 you text normally then irl you just say whatever enters your head.`,choices:[["continue",25]]},
 
  {speaker:"may",text:`you were quiet as hell the first time too.
 
-like you'd look at me for half a second then look somewhere else 😭`,choices:[["continue",25]]},
+like you'd look at me for half a second then look somewhere else`,choices:[["continue",25]]},
 
- {speaker:"jc",text:`okay maybe a little 😭
+ {speaker:"jc",text:`okay maybe a little
 
 this is literally only the second time, give me a break.`,choices:[["tell him you don't believe he's scared of women",26],["say he doesn't act scared",27]]},
 
- {speaker:"may",text:`also btw i still don't believe u when u say you're scared of women 😭 u really don't act like it.`,choices:[["continue",28]]},
+ {speaker:"may",text:`also btw i still don't believe u when u say you're scared of women u really don't act like it.`,choices:[["continue",28]]},
 
  {speaker:"may",text:`that's why i don't buy the whole "scared of women" thing.
 
-you don't act scared. u act normal then randomly remember you're shy 😭`,choices:[["continue",28]]},
+you don't act scared. u act normal then randomly remember you're shy`,choices:[["continue",28]]},
 
  {speaker:"jc",text:`the panic is internal. very efficient system.
 
-i can be terrified and still look normal 😭`,choices:[["make fun of internal panic",29],["tell him you had to carry the silence anyway",30]]},
+i can be terrified and still look normal`,choices:[["make fun of internal panic",29],["tell him you had to carry the silence anyway",30]]},
 
- {speaker:"may",text:`"internal panic" daw 😭 professional exterior my ass.`,choices:[["continue",31]]},
+ {speaker:"may",text:`"internal panic" daw professional exterior my ass.`,choices:[["continue",31]]},
 
  {speaker:"may",text:`because if i waited for you we'd still be standing there in silence.
 
-somebody had to keep the conversation alive 😭`,choices:[["continue",31]]},
+somebody had to keep the conversation alive`,choices:[["continue",31]]},
 
- {speaker:"jc",text:`okay okay 😭
+ {speaker:"jc",text:`okay okay
 
-anyway i'm still getting you to the terminal so be nice.`,choices:[["say you can commute home yourself",32],["call out that he'll wait anyway",33]]},
+anyway i'm still getting you to the jeep terminal so be nice.`,choices:[["say you can commute home yourself",32],["call out that he'll wait anyway",33]]},
 
  {speaker:"may",text:`to the terminal. that's it.
 
@@ -2150,25 +2156,29 @@ after that i can commute home myself.`,choices:[["continue",34]]},
 
  {speaker:"may",text:`you say that like you're not gonna stand there until i actually get on something.`,choices:[["continue",35]]},
 
- {speaker:"jc",text:`yeah yeah 😭 professional terminal escort service.`,choices:[["keep walking",36]]},
+ {speaker:"jc",text:`yeah yeah professional terminal escort service.`,choices:[["keep walking",36]]},
 
  {speaker:"jc",text:`...maybe.
 
-i'm not letting you say i abandoned you at a terminal 😭`,choices:[["tell him paasa anyway",37],["just say 'mhm'",38]]},
+i'm not letting you say i abandoned you at a terminal`,choices:[["tell him paasa anyway",37],["just say 'mhm'",38]]},
 
  {speaker:"may",text:`mhm.
 
 ...wait. look at the road.`,choices:[["continue",39]]},
 
- {speaker:"may",text:`paasa ka anyway 😭 but fine. terminal escort points for today.`,choices:[["continue",39]]},
+ {speaker:"may",text:`paasa ka anyway but fine. terminal escort points for today.`,choices:[["continue",39]]},
 
  {speaker:"may",text:`mhm. knew it.`,choices:[["continue",39]]},
 
- {speaker:"may",text:`that water was NOT that high earlier 😭
+ {speaker:"may",text:`that water was NOT that high earlier
 
-people at the terminal aren't even moving.`,choices:[["keep walking",40]]},
+people at the terminal aren't even moving.
+
+and i don't see a single jeep leaving either. parang every week na lang may bagong bagyo or ulan alert`,choices:[["keep walking",40]]},
 
  {speaker:"jc",text:`yeah we might be stuck here for a while.
+
+one hard rain and the whole commute system just folds. jeep terminal na nga, wala pang jeep
 
 wait, fuck...`,choices:[["ask what happened",41],["look where he's looking",42]]},
 
@@ -2180,9 +2190,9 @@ wait, fuck...`,choices:[["ask what happened",41],["look where he's looking",42]]
 
  {speaker:"may",text:`is that a bag?
 
-wait, it was beside the bench. like half under it.`,choices:[["check if anyone nearby owns it",46],["tell jc to pick it up",47]]},
+wait, it was beside the bench. like half under it.`,choices:[["check if anyone nearby owns it",46],["tell alon to pick it up",47]]},
 
- {speaker:"may",text:`move your foot 😭 is that a bag?`,choices:[["check if anyone nearby owns it",46],["tell jc to pick it up",47]]},
+ {speaker:"may",text:`move your foot is that a bag?`,choices:[["check if anyone nearby owns it",46],["tell alon to pick it up",47]]},
 
  {speaker:"may",text:`who leaves a whole bag here in this rain?
 
@@ -2229,7 +2239,7 @@ const STORY_DATE_LABEL="tuesday, august 18, 2026";
 const STORY_FOUND_TIME="12:23 am";
 function updateIntroClock(){
   const el=document.getElementById("introTime");
-  if(el) el.textContent=STORY_FOUND_TIME+"  •  "+STORY_DATE_LABEL;
+  if(el) el.textContent=STORY_FOUND_TIME+"  •  "+STORY_DATE_LABEL+"  •  manila, philippines";
 }
 updateIntroClock();
 
@@ -2306,8 +2316,8 @@ function startDesktop(){
   startTerminalAmbience();
   renderAll();renderYourPhone();updateConnectionUI();updateTerminalStatus();
   showFirstBootResidue();
-  addJournal("12:23 am • heavy rain and flooding stalled the terminal. found niko's warm bag half under a bench near the terminal-side road. laptop was already unlocked.");
-  addJournal("jc and may are stranded in the covered terminal area until the flooding goes down or rides start moving again.");
+  addJournal("12:23 am • heavy rain and flooding stalled the jeep terminal. no jeepneys are dispatching. found niko's warm bag half under a bench near the terminal-side road. laptop was already unlocked.");
+  addJournal("alon and haraya are stranded in the covered jeep terminal until the flooding goes down and jeepneys start dispatching again.");
   setTimeout(()=>fieldTalk("may","yeah... we're not going anywhere rn. might as well figure out whose laptop this is."),1100);
 }
 const introEl=document.getElementById("intro");
@@ -2333,8 +2343,8 @@ function updateConnectionUI(){
     const unlocked=Boolean(storyFlags.hotspotUnlocked);
     b.classList.toggle("locked",!unlocked);
     b.setAttribute("aria-disabled",unlocked?"false":"true");
-    b.title=unlocked?"jc-phone hotspot":"hotspot unavailable until you speak with terminal security";
-    b.textContent=!unlocked?"wifi 🔒":hotspotOn?"wifi • jc-phone":"wifi ✕";
+    b.title=unlocked?"alon-phone hotspot":"hotspot unavailable until you speak with terminal security";
+    b.textContent=!unlocked?"wifi 🔒":hotspotOn?"wifi • alon-phone":"wifi ✕";
   }
   const bat=document.getElementById("batteryBtn");
   if(bat)bat.textContent="🔋 "+batteryPercent+"%";
@@ -2345,8 +2355,8 @@ function unlockHotspotFromSecurity(){
   storyFlags.metSecurity=true;
   storyFlags.hotspotUnlocked=true;
   updateConnectionUI();
-  addJournal(storyTimeLabel()+" • after speaking with terminal security, jc can use his phone hotspot if they need to contact niko's people. the terminal wifi is not being used.");
-  toast("wifi","jc-phone hotspot is now available");
+  addJournal(storyTimeLabel()+" • after speaking with terminal security, alon can use his phone hotspot if they need to contact niko's people. the terminal wifi is not being used.");
+  toast("wifi","alon-phone hotspot is now available");
 }
 function setBattery(n){batteryPercent=Math.max(5,Math.min(100,n));updateConnectionUI()}
 function addIncoming(k,text){
@@ -2361,7 +2371,7 @@ function syncLiveMessages(){
   setTimeout(()=>addIncoming("lia","niko? where are you"),350);
   setTimeout(()=>addIncoming("vince","if u see this call me. seriously."),750);
   setTimeout(()=>addIncoming("mama","anak update ka naman pag nakita mo to"),1100);
-  setTimeout(()=>toast("messenger","new messages synced through jc's hotspot"),1250);
+  setTimeout(()=>toast("messenger","new messages synced through alon's hotspot"),1250);
 }
 function syncVinceLive(){
   if(storyFlags.vinceLive)return;
@@ -2378,8 +2388,8 @@ function connectHotspot(){
   if(hotspotOn)return true;
   hotspotOn=true;
   updateConnectionUI();
-  toast("wifi","connected to jc-phone hotspot");
-  addJournal(storyTimeLabel()+" • jc connected the laptop to his phone hotspot so they can contact the owner. everything before 12:23 remains historical/local evidence.");
+  toast("wifi","connected to alon-phone hotspot");
+  addJournal(storyTimeLabel()+" • alon connected the laptop to his phone hotspot so they can contact the owner. everything before 12:23 remains historical/local evidence.");
   syncLiveMessages();
   if(storyStage>=7)syncVinceLive();
   if(currentChat)openChat(currentChat);
@@ -2391,7 +2401,7 @@ function toggleHotspot(){
     return;
   }
   if(!hotspotOn){connectHotspot();return}
-  hotspotOn=false;updateConnectionUI();toast("wifi","disconnected from jc-phone hotspot");
+  hotspotOn=false;updateConnectionUI();toast("wifi","disconnected from alon-phone hotspot");
   if(currentChat)openChat(currentChat);
 }
 function showStoryPrompt(speakerName,text,choices){
@@ -2509,40 +2519,41 @@ function showNextLead(){
 
 function terminalSnapshot(){
   const stages=[
-    {rain:"heavy",flood:"rising",route:"most routes delayed",waiting:"~50+",coffee:"open",power:"grid"},
-    {rain:"heavy",flood:"rising",route:"several suspended",waiting:"~48",coffee:"open",power:"grid"},
-    {rain:"heavy",flood:"high",route:"several suspended",waiting:"~42",coffee:"open",power:"grid"},
-    {rain:"heavy",flood:"high",route:"limited movement",waiting:"~38",coffee:"open",power:"grid"},
-    {rain:"heavy",flood:"high",route:"limited movement",waiting:"~33",coffee:"open",power:"grid"},
-    {rain:"heavy",flood:"stable",route:"limited movement",waiting:"~29",coffee:"open",power:"grid"},
-    {rain:"heavy",flood:"stable",route:"limited movement",waiting:"~24",coffee:"open",power:"generator"},
-    {rain:"moderate-heavy",flood:"slowly receding",route:"some routes testing",waiting:"~20",coffee:"open",power:"generator"},
-    {rain:"moderate",flood:"receding",route:"limited service",waiting:"~18",coffee:"closing",power:"generator"},
-    {rain:"moderate",flood:"receding",route:"limited service",waiting:"~14",coffee:"closed",power:"generator"},
-    {rain:"light-moderate",flood:"receding",route:"may's route resuming",waiting:"~10",coffee:"closed",power:"grid / generator standby"}
+    {rain:"heavy",flood:"rising",route:"none dispatching",waiting:"~50+",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"rising",route:"none dispatching",waiting:"~48",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"high",route:"routes suspended / none dispatching",waiting:"~42",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"high",route:"drivers holding for floodwater",waiting:"~38",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"high",route:"very limited dispatch",waiting:"~33",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"stable",route:"very limited dispatch",waiting:"~29",coffee:"open",power:"grid"},
+    {rain:"heavy",flood:"stable",route:"very limited dispatch",waiting:"~24",coffee:"open",power:"generator"},
+    {rain:"moderate-heavy",flood:"slowly receding",route:"some jeep routes testing",waiting:"~20",coffee:"open",power:"generator"},
+    {rain:"moderate",flood:"receding",route:"limited jeepney service",waiting:"~18",coffee:"closing",power:"generator"},
+    {rain:"moderate",flood:"receding",route:"limited jeepney service",waiting:"~14",coffee:"closed",power:"generator"},
+    {rain:"light-moderate",flood:"receding",route:"haraya's jeep route resuming",waiting:"~10",coffee:"closed",power:"grid / generator standby"}
   ];
   return stages[Math.min(storyStage,stages.length-1)];
 }
 function updateTerminalStatus(){
   const st=terminalSnapshot();
   const b=document.getElementById("worldBadge");
-  if(b)b.innerHTML=`<b>${storyTimeLabel()}</b><br>${st.rain} rain • ${st.waiting} waiting`;
+  if(b)b.innerHTML=`<b>${storyTimeLabel()}</b><br>${st.route} • ${st.waiting} waiting`;
   if(document.getElementById("win-terminal")?.classList.contains("active"))renderTerminalStatus();
 }
 function renderTerminalStatus(){
   const st=terminalSnapshot();
   const body=document.getElementById("terminalBody");if(!body)return;
-  body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">terminal-side waiting area</h3><span class="timeline-score">night status</span></div>
+  body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">jeep terminal waiting area</h3><span class="timeline-score">night status</span></div>
   <div class="detail status-grid">
     <b>time</b><span>${storyTimeLabel()} • aug 18, 2026</span>
+    <b>location</b><span>manila, philippines</span>
     <b>rain</b><span>${st.rain}</span>
     <b>flood</b><span>${st.flood}</span>
-    <b>transport</b><span>${st.route}</span>
+    <b>jeepneys</b><span>${st.route}</span>
     <b>waiting</b><span>${st.waiting} passengers</span>
     <b>coffee stall</b><span>${st.coffee}</span>
     <b>power</b><span>${st.power}</span>
   </div>
-  <div class="detail"><p>${storyStage<6?"rain and announcements keep filling the covered terminal.":storyStage<9?"the terminal is getting quieter. individual footsteps and vehicles are easier to hear now.":"the night is visibly winding down. empty benches outnumber occupied ones."}</p>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">decide what to do with the laptop</button>`:""}</div>`;
+  <div class="detail"><p>${storyStage<4?"rain and announcements keep filling the covered jeep terminal. floodwater has stopped normal dispatch and no jeepneys are leaving yet.":storyStage<8?"the jeep terminal is still mostly stalled. a few drivers are watching the roads and waiting for the water to drop.":storyStage<9?"a few jeepneys are finally testing routes as the terminal gets quieter.":"the night is visibly winding down. limited jeepney service is returning and empty benches outnumber occupied ones."}</p>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">decide what to do with the laptop</button>`:""}</div>`;
 }
 
 const timelineDefs=[
@@ -2562,7 +2573,7 @@ const timelineDefs=[
  ["12:11","laptop photographed inside bag","photo","photo_bagfloor"],
  ["12:14","lid closed / sleep","base","file_cache_session"],
  ["12:18","man asks security about a phone","witness","world_phoneclue"],
- ["12:23","jc and may find the bag","base","world_found"]
+ ["12:23","alon and haraya find the bag","base","world_found"]
 ];
 
 const EVIDENCE_LABELS={
@@ -2679,7 +2690,7 @@ function renderTimeline(){
   }
   const rows=timelineDefs.map(([time,label,kind,key])=>timelineKnown(key)?`<div class="timeline-row ${["device","witness","photo"].includes(kind)?"critical":""}"><span class="t">${time}</span><span>${label}</span><button class="timeline-flag ${bookmarkedEvidence.has(key)?"on":""}" onclick="event.stopPropagation();toggleEvidenceBookmark('${key}')" title="flag for later">${bookmarkedEvidence.has(key)?"★":"☆"}</button></div>`:`<div class="timeline-row unknown"><span class="t">${time}</span><span>???</span><span></span></div>`).join("");
   const count=timelineKnownCount();
-  body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">11:33 pm → 12:23 am</h3><span class="timeline-score">${count}/${timelineDefs.length} anchored</span></div><div class="detail"><p class="muted">jc only adds entries they actually found. blanks stay blank.</p>${rows}</div>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">we need to decide what to do</button>`:""}${renderCaseWorkbench()}`;
+  body.innerHTML=`<div class="timeline-head"><h3 style="margin:0">11:33 pm → 12:23 am</h3><span class="timeline-score">${count}/${timelineDefs.length} anchored</span></div><div class="detail"><p class="muted">alon only adds entries they actually found. blanks stay blank.</p>${rows}</div>${story.endingReady?`<button class="soft" onclick="offerEndingChoice()">we need to decide what to do</button>`:""}${renderCaseWorkbench()}`;
 }
 function markEvidence(id){if(id)evidence.add(id)}
 function cheatingScore(){return ["chat_celine","chat_ash","chat_maria","chat_boys","file_girlmatrix","file_copylog","file_templates"].filter(k=>seen.has(k)).length}
@@ -2689,7 +2700,7 @@ function finalScore(){return ["file_cache_session","file_cache_sync","file_btlog
 function canFoulPlayEnding(){return storyFlags.humanizedNiko&&storyFlags.mentalEstablished&&storyFlags.foulPlayPossible&&seen.has("photo_glass")&&seen.has("chat_rj")&&seen.has("chat_vince")&&seen.has("file_odd_route")&&seen.has("photo_waitingshed")&&storyFlags.heardPhoneClue&&finalScore()>=7}
 function setAct(n){
   if(n<=story.act)return;story.act=n;
-  if(n===2){storyFlags.caseBoardUnlocked=true;addJournal(storyTimeLabel()+" • jc and may open a simple Case Board to keep the growing mess organized.");fieldTalk("jc","okay. before this becomes fifty tabs in my head, i'm making a tiny case board. label one thing and flag one thing when we have enough.",4700);updateHint("case board unlocked. this section needs 3 strong relationship contradictions + one confidence label + one revisit flag.");}
+  if(n===2){storyFlags.caseBoardUnlocked=true;addJournal(storyTimeLabel()+" • alon and haraya open a simple Case Board to keep the growing mess organized.");fieldTalk("jc","okay. before this becomes fifty tabs in my head, i'm making a tiny case board. label one thing and flag one thing when we have enough.",4700);updateHint("case board unlocked. this section needs 3 strong relationship contradictions + one confidence label + one revisit flag.");}
   if(n===3){storyFlags.beaBikeUnlocked=true;addJournal(storyTimeLabel()+" • bea's old chat points to a bike video in niko's videos folder.");fieldTalk("may","wait. bea mentioned some old bike video. can we look at one thing that isn't relationship warfare for a second?",4700);}
   if(n===4){addJournal(storyTimeLabel()+" • the investigation shifts from niko's relationships to notes about sleep, perception, therapy and the odd folder.");updateHint("what niko experienced and what objectively happened are not always the same thing.");}
   if(n===5){addJournal(storyTimeLabel()+" • outside witnesses begin confirming parts of niko's last night. this is no longer explainable by his private notes alone.");storyFlags.timelineUnlocked=true;const ti=document.getElementById("timelineIcon");if(ti){ti.style.display="";const lbl=ti.querySelector(".lbl");if(lbl)lbl.textContent="our timeline";}addJournal(storyTimeLabel()+" • the Case Board expands into Our Timeline now that the final-night pieces matter.");fieldTalk("jc","okay. case board's becoming a timeline now. four independent final-night clues before we call anything a pattern.",4300);updateHint("our timeline is active. this section needs 4 independent final-night clues.");}
@@ -2795,11 +2806,11 @@ function endingHomeChat(kind,next){
         ["may","u still thinking about the nine minutes"],
         ["jc","yeah."],
         ["may","i keep checking my phone like somebody's gonna message us."],
-        ["jc","security has our numbers."],
+        ["alon","security has our numbers."],
         ["may","that's not what i meant."],
         ["jc","i know."],
         ["may","don't disappear rn."],
-        ["jc","i'm here."],
+        ["alon","i'm here."],
         ["may","okay. goodnight."],
         ["jc","goodnight."]
       ],
@@ -2814,8 +2825,8 @@ function endingHomeChat(kind,next){
         ["jc","ma pauwi na ko sorry medyo"],
         ["may","yeah. like he was trying to sound normal."],
         ["jc","don't do that to yourself."],
-        ["may","says u 😭"],
-        ["jc","fair."],
+        ["may","says u"],
+        ["alon","fair."],
         ["may","if some random number calls tomorrow don't answer."],
         ["jc","deal."],
         ["may","actually promise."],
@@ -2833,17 +2844,17 @@ function endingHomeChat(kind,next){
         ["may","lock ur door."],
         ["jc","already did."],
         ["may","don't joke rn."],
-        ["jc","i'm not."],
+        ["alon","i'm not."],
         ["may","that guy asked about a phone like five minutes before we found the bag."],
         ["jc","i know."],
         ["may","i hate that i know that."],
         ["jc","put your phone on charge and try to sleep."],
-        ["may","why does charging matter 😭"],
+        ["may","why does charging matter"],
         ["jc","so u don't vanish from my notifications."],
         ["may","that was almost sweet."],
-        ["jc","almost."],
+        ["alon","almost."],
         ["may","goodnight."],
-        ["jc","goodnight."]
+        ["alon","goodnight."]
       ],
       note:"outside their separate houses, rainwater is still moving through the gutters."
     }
@@ -2853,40 +2864,40 @@ function endingHomeChat(kind,next){
 }
 function endingCoda(next=endingCredits){
   const thought=POV_THOUGHTS.food_coda?.[playerCharacter]||"";
-  endingScreen("before they leave the terminal","",`<p>the rain has weakened to a steady drizzle. engines finally start turning over again.</p><p>neither of them says anything about the laptop for almost a full minute.</p><p class="quiet">may: next time, actual food somewhere normal.</p><p class="quiet">jc: daylight?</p><p class="quiet">may: obviously.</p><p class="quiet"><b>may: and i'm picking the place.</b></p>${thought?`<p class="quiet"><i>${thought}</i></p>`:""}` ,[["go home",()=>endingHomeChat(story.ending,next)]]);
+  endingScreen("before they leave the terminal","",`<p>the rain has weakened to a steady drizzle. engines finally start turning over again.</p><p>neither of them says anything about the laptop for almost a full minute.</p><p class="quiet">haraya: next time, actual food somewhere normal.</p><p class="quiet">alon: daylight?</p><p class="quiet">haraya: obviously.</p><p class="quiet"><b>haraya: and i'm picking the place.</b></p>${thought?`<p class="quiet"><i>${thought}</i></p>`:""}` ,[["go home",()=>endingHomeChat(story.ending,next)]]);
 }
 function endingCredits(){
   const otherDone=Boolean(completedPerspective[otherLead()]);
-  completedPerspective[playerCharacter||"jc"]=true;saveMeta();saveGame(false);
+  completedPerspective[playerCharacter||"alon"]=true;saveMeta();saveGame(false);
   endingScreen("lost phone","thanks for playing",`<p class="quiet">some blanks stay blank.</p>${otherDone?`<p class="quiet">some just look different from the other side.</p>`:""}` ,[["return to laptop",()=>document.getElementById("endingOverlay").classList.remove("show")],["new game",()=>restartForPerspective()]]);
 }
 function endingUnresolved(step){
   if(step===0){endingScreen("local draft • 11:56 pm","draft_message.txt",`<div class="draft">ma pauwi na ko sorry medyo</div><p class="quiet">no recipient survives in the file. no punctuation. no second sentence.</p><p>it is the closest thing on the laptop to a goodbye, which is exactly why jc refuses to call it one.</p>`,[["close the file",()=>endingUnresolved(1)]]);return}
-  if(step===1){endingScreen("2:31 am","handoff",`<p>jc and may give the bag and laptop to terminal security.</p><p>the guard writes <b>NIKO DE LA CRUZ</b> on a paper log, seals the charger and loose items in a clear evidence bag, and puts everything behind the desk.</p><p>jc takes one photo of the log number before they leave.</p><p>outside, the first jeep on may's route pulls in.</p><p class="quiet">the bench where the bag was found is already occupied by somebody else.</p>`,[["leave the terminal",()=>endingCoda(()=>endingUnresolved(2))]]);return}
-  if(step===2){endingScreen("8:46 am","the next morning",`<p>niko's mother reaches the terminal after sunrise.</p><p>the laptop is there.</p><p>his charger is there.</p><p>his papers are there.</p><p>his <b>phone, wallet and house keys are not.</b></p><p>security can tell her when the bag was logged. they cannot tell her where her son went.</p><p>a formal missing-person report begins with the same timestamps jc and may were staring at hours earlier.</p><p class="quiet">lia's last cached message still says: <b>call me when you're home if i'm still awake</b>.</p>`,[["six days later",()=>endingUnresolved(3)]]);return}
+  if(step===1){endingScreen("2:31 am","handoff",`<p>alon and haraya give the bag and laptop to terminal security.</p><p>the guard writes <b>NIKO DE LA CRUZ</b> on a paper log, seals the charger and loose items in a clear evidence bag, and puts everything behind the desk.</p><p>alon takes one photo of the log number before they leave.</p><p>outside, the first jeep on haraya's route pulls in.</p><p class="quiet">the bench where the bag was found is already occupied by somebody else.</p>`,[["leave the terminal",()=>endingCoda(()=>endingUnresolved(2))]]);return}
+  if(step===2){endingScreen("8:46 am","the next morning",`<p>niko's mother reaches the terminal after sunrise.</p><p>the laptop is there.</p><p>his charger is there.</p><p>his papers are there.</p><p>his <b>phone, wallet and house keys are not.</b></p><p>security can tell her when the bag was logged. they cannot tell her where her son went.</p><p>a formal missing-person report begins with the same timestamps alon and haraya were staring at hours earlier.</p><p class="quiet">lia's last cached message still says: <b>call me when you're home if i'm still awake</b>.</p>`,[["six days later",()=>endingUnresolved(3)]]);return}
   if(step===3){endingScreen("august 24, 2026","missing",`<p>a photocopied missing-person poster is taped beside the terminal entrance.</p><p>the rain stain from that night is still visible halfway up the concrete curb.</p><p>the coffee stall owner has told the same uncertain story enough times that he now starts it with, "i'm not sure."</p><p>the number ending in 4421 never contacts niko's accounts again.</p><p>no new login appears.</p><p>no bank transaction gives anyone a route.</p><p>no camera produces a clean face.</p><p class="quiet">there is no body. there is no call. there is no confirmed sighting that closes the gap.</p>`,[["continue",()=>endingUnresolved(4)]]);return}
-  endingScreen("ending","UNRESOLVED",`<p>eventually the story becomes a list of ordinary things that stopped happening.</p><p>bea stops sending "fries" messages to a chat that never answers.</p><p>mama keeps niko's room exactly the same because changing it feels too much like choosing an ending.</p><p>lia deletes the heart from his contact name, then leaves the thread archived instead of deleting it.</p><p>jc still has the photo of the terminal log number.</p><p>may still remembers the warm laptop under his hand.</p><p class="quiet"><b>12:14. 12:18. 12:23.</b></p><p class="quiet">three timestamps. no person between them.</p>`,[["credits",()=>endingCredits()]]);
+  endingScreen("ending","UNRESOLVED",`<p>eventually the story becomes a list of ordinary things that stopped happening.</p><p>bea stops sending "fries" messages to a chat that never answers.</p><p>mama keeps niko's room exactly the same because changing it feels too much like choosing an ending.</p><p>lia deletes the heart from his contact name, then leaves the thread archived instead of deleting it.</p><p>alon still has the photo of the terminal log number.</p><p>may still remembers the warm laptop under his hand.</p><p class="quiet"><b>12:14. 12:18. 12:23.</b></p><p class="quiet">three timestamps. no person between them.</p>`,[["credits",()=>endingCredits()]]);
 }
 function endingClosure(step){
-  if(step===0){endingScreen("2:36 am","family contact",`<p>they use the contact information on the laptop to reach niko's mother.</p><p>she answers on the third call.</p><p>jc explains where they found the bag. may fills in the parts he forgets.</p><p>security keeps the laptop until morning, but the family has the log number and the exact location.</p><p class="quiet">before hanging up, niko's mother asks one question twice: "his phone isn't there?"</p>`,[["leave the terminal",()=>endingCoda(()=>endingClosure(1))]]);return}
-  if(step===1){endingScreen("august 20, 2026","NIKO DE LA CRUZ LOCATED SAFE",`<p>two days later, a message reaches jc through niko's family.</p><p>niko walked into his cousin's print shop shortly before opening.</p><p>he was exhausted, dehydrated and missing his phone.</p><p>there was no injury serious enough to keep him in a hospital.</p><p>when asked where he had been, he said only:</p><p class="quiet"><b>"i don't want to talk about it."</b></p><p>for a few seconds, <i>alive</i> feels like a complete answer.</p><p>then everyone starts asking the next question.</p>`,[["september",()=>endingClosure(2)]]);return}
+  if(step===0){endingScreen("2:36 am","family contact",`<p>they use the contact information on the laptop to reach niko's mother.</p><p>she answers on the third call.</p><p>alon explains where they found the bag. haraya fills in the parts he forgets.</p><p>security keeps the laptop until morning, but the family has the log number and the exact location.</p><p class="quiet">before hanging up, niko's mother asks one question twice: "his phone isn't there?"</p>`,[["leave the terminal",()=>endingCoda(()=>endingClosure(1))]]);return}
+  if(step===1){endingScreen("august 20, 2026","NIKO DE LA CRUZ LOCATED SAFE",`<p>two days later, a message reaches alon through niko's family.</p><p>niko walked into his cousin's print shop shortly before opening.</p><p>he was exhausted, dehydrated and missing his phone.</p><p>there was no injury serious enough to keep him in a hospital.</p><p>when asked where he had been, he said only:</p><p class="quiet"><b>"i don't want to talk about it."</b></p><p>for a few seconds, <i>alive</i> feels like a complete answer.</p><p>then everyone starts asking the next question.</p>`,[["september",()=>endingClosure(2)]]);return}
   if(step===2){endingScreen("september 2026","after",`<p>niko attends one appointment with dr. reyes with his mother waiting outside.</p><p>he stops taking the terminal-side route entirely.</p><p>he checks the door twice before bed, then sometimes a third time because he cannot remember whether the second check felt real enough.</p><p>his replacement phone contains almost none of the old social apps.</p><p>he does not reinstall instagram for weeks.</p><p>he does reinstall steam.</p><p class="quiet">being home does not make the night smaller.</p>`,[["november",()=>endingClosure(3)]]);return}
-  if(step===3){endingScreen("november 2026","lia",`<div class="chatScene"><div class="bubbleLine">he's okay naman.</div><div class="bubbleLine">just different.</div><div class="bubbleLine">we're not together anymore.</div><div class="bubbleLine">not because of that night exactly.</div><div class="bubbleLine">he barely goes anywhere alone now.</div><div class="bubbleLine">and he still won't tell anyone where he was.</div><div class="bubbleLine">sometimes he starts to then just stops.</div></div><p class="quiet">lia does not ask jc what he thinks happened.</p>`,[["continue",()=>endingClosure(4)]]);return}
-  if(step===4){endingScreen("november 2026","maria",`<div class="chatScene"><div class="bubbleLine">GUYS</div><div class="bubbleLine">I GOT THE INTERNSHIP 😭😭😭</div><div class="bubbleLine">SHUT UPPPP</div><div class="bubbleLine">I'M ACTUALLY SHAKING</div><div class="bubbleLine">libre mo kami</div><div class="bubbleLine">NO 😭</div></div><p>niko is not mentioned once.</p><p class="quiet">people he hurt keep having lives after him. that is not cruelty. it is just time.</p>`,[["continue",()=>endingClosure(5)]]);return}
-  if(step===5){endingScreen("11:47 pm • weeks later","unknown caller",`<p>jc's phone lights up with an unknown number.</p><p>it rings once.</p><p>stops.</p><p>rings again thirty seconds later.</p><p>no voicemail arrives.</p>${endingChatHtml([["may","u answer unknown numbers now?"],["jc","not that one."],["may","good."],["jc","u awake?"],["may","obviously." ]])}<p class="quiet">the number never calls a third time.</p>`,[["continue",()=>endingClosure(6)]]);return}
+  if(step===3){endingScreen("november 2026","lia",`<div class="chatScene"><div class="bubbleLine">he's okay naman.</div><div class="bubbleLine">just different.</div><div class="bubbleLine">we're not together anymore.</div><div class="bubbleLine">not because of that night exactly.</div><div class="bubbleLine">he barely goes anywhere alone now.</div><div class="bubbleLine">and he still won't tell anyone where he was.</div><div class="bubbleLine">sometimes he starts to then just stops.</div></div><p class="quiet">lia does not ask alon what he thinks happened.</p>`,[["continue",()=>endingClosure(4)]]);return}
+  if(step===4){endingScreen("november 2026","maria",`<div class="chatScene"><div class="bubbleLine">GUYS</div><div class="bubbleLine">I GOT THE INTERNSHIP</div><div class="bubbleLine">SHUT UPPPP</div><div class="bubbleLine">I'M ACTUALLY SHAKING</div><div class="bubbleLine">libre mo kami</div><div class="bubbleLine">NO</div></div><p>niko is not mentioned once.</p><p class="quiet">people he hurt keep having lives after him. that is not cruelty. it is just time.</p>`,[["continue",()=>endingClosure(5)]]);return}
+  if(step===5){endingScreen("11:47 pm • weeks later","unknown caller",`<p>alon's phone lights up with an unknown number.</p><p>it rings once.</p><p>stops.</p><p>rings again thirty seconds later.</p><p>no voicemail arrives.</p>${endingChatHtml([["may","u answer unknown numbers now?"],["jc","not that one."],["may","good."],["jc","u awake?"],["may","obviously." ]])}<p class="quiet">the number never calls a third time.</p>`,[["continue",()=>endingClosure(6)]]);return}
   endingScreen("ending","FALSE CLOSURE",`<p><b>safe</b> is the word everyone uses because nobody has a better one.</p><p>niko came home.</p><p>his family got to touch him, feed him, argue with him, hear his bedroom door close.</p><p>but whatever happened between the waiting shed and the print shop stays locked behind the same sentence:</p><p class="quiet">i don't want to talk about it.</p><p>you helped somebody get home.</p><p><b>you did not get the old version of him back.</b></p>`,[["credits",()=>endingCredits()]]);
 }
 function endingFoulPlay(step){
-  if(step===0){endingScreen("2:34 am","preserve evidence",`<p>jc stops opening files.</p><p>may writes down the last five timestamps they can verify while security calls the police desk.</p><p>the laptop stays powered on, photographed exactly as they found it, then goes into a sealed bag.</p><p>for the first time all night, nobody treats it like a puzzle.</p><p class="quiet">the guard asks both of them to repeat where the bag was found separately.</p>`,[["leave the terminal",()=>endingCoda(()=>endingFoulPlay(1))]]);return}
+  if(step===0){endingScreen("2:34 am","preserve evidence",`<p>alon stops opening files.</p><p>may writes down the last five timestamps they can verify while security calls the police desk.</p><p>the laptop stays powered on, photographed exactly as they found it, then goes into a sealed bag.</p><p>for the first time all night, nobody treats it like a puzzle.</p><p class="quiet">the guard asks both of them to repeat where the bag was found separately.</p>`,[["leave the terminal",()=>endingCoda(()=>endingFoulPlay(1))]]);return}
   if(step===1){
     endingScreen("two days later","evidence review",`<p>a camera from a closed pharmacy across the road has a better angle than the terminal system.</p><div class="cctv-hold"><span class="stamp">CAM 03 • 12:13:58–12:14:06 • NO AUDIO</span><div class="cctv-frame"></div><p>niko and another figure walk through the edge of frame together. nothing happens. they just keep walking.</p></div><p>niko looks back toward the terminal twice.</p><p>the man points toward the service road.</p><p>there is no audio.</p><p>nothing in the clip shows an attack.</p><p>but the man is identifiable.</p><p>when questioned, he initially says he never met niko.</p><p class="quiet">the footage makes that statement impossible.</p>`,[]);
     const a=document.getElementById("endingActions");
     setTimeout(()=>{if(story.ending==="foulplay"&&a&&!a.children.length){const b=document.createElement("button");b.textContent="continue";b.onclick=()=>endingFoulPlay(2);a.appendChild(b)}},6500);
     return
   }
-  if(step===2){endingScreen("three days later","phone",`<p>workers clearing storm debris find niko's phone lodged behind a drainage grate off the service road.</p><p>the screen is shattered.</p><p>the device is powered off.</p><p>the SIM tray is empty.</p><p>water damage destroys most local data before it can be recovered.</p><p>the serial number matches niko's account records.</p><p class="quiet">the phone was not at the terminal when jc and may found the bag.</p><p class="quiet">now investigators know where one missing object ended up.</p>`,[["continue",()=>endingFoulPlay(3)]]);return}
-  if(step===3){endingScreen("case status","suspected foul play",`<p>the disappearance is no longer treated as a simple voluntary walk-off.</p><p>the blue-shirt man's movements, the recovered phone, witness accounts and the final laptop window are preserved as part of the same case.</p><p>investigators do not tell jc or may everything.</p><p>they do tell the family one thing:</p><p><b>niko did not simply leave the terminal alone and disappear by accident.</b></p><p class="quiet">that is more certainty than anyone had before.</p><p class="quiet">it is much less comforting than certainty sounded in their heads.</p>`,[["continue",()=>endingFoulPlay(4)]]);return}
-  if(step===4){endingScreen("later","mama",`<p>after the forensic copy is completed, niko's mother receives the laptop.</p><p>the desktop opens exactly where jc and may left it.</p><p>she clicks <b>miso_sleeping.jpg</b>.</p><p>orange cat. niko's backpack. file comment: <span class="quiet">useless animal ❤️</span></p><p>her cursor passes over Messenger, Notes, Downloads and the folders strangers had to search to find him.</p><p>she opens none of them.</p><p>then she closes the lid.</p>`,[["continue",()=>endingFoulPlay(5)]]);return}
+  if(step===2){endingScreen("three days later","phone",`<p>workers clearing storm debris find niko's phone lodged behind a drainage grate off the service road.</p><p>the screen is shattered.</p><p>the device is powered off.</p><p>the SIM tray is empty.</p><p>water damage destroys most local data before it can be recovered.</p><p>the serial number matches niko's account records.</p><p class="quiet">the phone was not at the terminal when alon and haraya found the bag.</p><p class="quiet">now investigators know where one missing object ended up.</p>`,[["continue",()=>endingFoulPlay(3)]]);return}
+  if(step===3){endingScreen("case status","suspected foul play",`<p>the disappearance is no longer treated as a simple voluntary walk-off.</p><p>the blue-shirt man's movements, the recovered phone, witness accounts and the final laptop window are preserved as part of the same case.</p><p>investigators do not tell alon or may everything.</p><p>they do tell the family one thing:</p><p><b>niko did not simply leave the terminal alone and disappear by accident.</b></p><p class="quiet">that is more certainty than anyone had before.</p><p class="quiet">it is much less comforting than certainty sounded in their heads.</p>`,[["continue",()=>endingFoulPlay(4)]]);return}
+  if(step===4){endingScreen("later","mama",`<p>after the forensic copy is completed, niko's mother receives the laptop.</p><p>the desktop opens exactly where alon and haraya left it.</p><p>she clicks <b>miso_sleeping.jpg</b>.</p><p>orange cat. niko's backpack. file comment: <span class="quiet">useless animal ❤️</span></p><p>her cursor passes over Messenger, Notes, Downloads and the folders strangers had to search to find him.</p><p>she opens none of them.</p><p>then she closes the lid.</p>`,[["continue",()=>endingFoulPlay(5)]]);return}
   if(step===5){endingScreen("bag side pocket","",`<p>there is a house key on a faded basketball keychain.</p><p>she recognizes it immediately.</p><p>it is the key niko was supposed to use when he came home.</p><p class="quiet">she holds it long enough for the metal to warm in her hand.</p><p class="quiet">nothing else is opened.</p>`,[["continue",()=>endingFoulPlay(6)]]);return}
   endingScreen("ending","FOUL PLAY",`<p>the occult images were unrelated graffiti, a metal poster, random markings and a frightened person trying to make patterns behave.</p><p>most of the repeated cars, numbers and symbols went nowhere.</p><p>the blue-shirt man did.</p><p>the phone did.</p><p>the lie about never meeting niko did.</p><p>there is still no clean recording of what happened after the service road.</p><p>there is still no version of the night that gives the family everything back.</p><p class="quiet"><b>the case remains open.</b></p><p class="quiet">it was never a cursed laptop.</p><p class="quiet">it was just his laptop. his files. his life.</p><p class="quiet">and for nine minutes, it was the closest thing anyone had to where he went.</p>`,[["credits",()=>endingCredits()]]);
 }
@@ -2908,129 +2919,171 @@ const ambientScenesByAct={
     [
       ["may",`we really went from awkward second meet to opening a stranger's laptop in like ten minutes.`],
       ["jc",`efficient use of meetup number two.`],
-      ["may",`do NOT call this efficient 😭`],
+      ["may",`do NOT call this efficient`],
       ["jc",`memorable, then.`],
       ["may",`unfortunately.`]
     ],
     [
       ["may",`btw, for someone who's "scared of women," you're very comfortable arguing with me.`],
       ["jc",`you don't count.`],
-      ["may",`WHAT DOES THAT MEAN 😭`],
+      ["may",`WHAT DOES THAT MEAN`],
       ["jc",`i mean i'm already used to you. that sounded worse out loud.`],
       ["may",`horrible save.`],
       ["jc",`internal panic. professional exterior.`]
     ],
     [
       ["jc",`still funny your parents don't even know who i am.`],
-      ["may",`they know i'm stuck in a flood. that's currently more useful information 😭`],
+      ["may",`they know i'm stuck in a flood. that's currently more useful information`],
       ["jc",`unnamed side character survives another scene.`],
       ["may",`barely.`]
+    ],
+    [
+      ["may",`one decent rain and the whole commute system just taps out`],
+      ["jc",`we're literally at a jeep terminal with no jeepneys.`],
+      ["may",`it's just a roof with chairs at this point.`],
+      ["jc",`premium manila waiting simulator.`],
+      ["may",`shut up i'm already pissed`]
     ]
   ],
   2:[
     [
       ["may",`if u ever make a spreadsheet about me i'm actually blocking u permanently.`],
-      ["jc",`mine would have one row: may — mood changes every four minutes.`],
+      ["jc",`mine would have one row: haraya — mood changes every four minutes.`],
       ["may",`BLOCKED.`],
-      ["jc",`see? live demonstration 😭`]
+      ["jc",`see? live demonstration`]
     ],
     [
       ["may",`u joke but you're the one who goes "alright" like customer service when u get nonchalant.`],
-      ["jc",`thank you for contacting jc support. your complaint has been ignored.`],
-      ["may",`i hate u 😭`],
+      ["jc",`thank you for contacting alon support. your complaint has been ignored.`],
+      ["may",`i hate u`],
       ["jc",`ticket closed.`]
     ],
     [
       ["may",`every time this man says "it's complicated" i get annoyed.`],
-      ["jc",`at least i say go with the flow.`],
-      ["may",`THAT IS NOT BETTER 😭`],
-      ["jc",`takes two to tango nga diba.`],
+      ["alon",`at least i say go with the flow.`],
+      ["may",`THAT IS NOT BETTER`],
+      ["alon",`takes two to tango nga diba.`],
       ["may",`that is somehow an even worse answer.`]
+    ],
+    [
+      ["may",`parang every week na lang may bagong typhoon, lpa, or ulan warning`],
+      ["jc",`weather app says heavy rain. commute system says good luck.`],
+      ["may",`then everybody acts surprised na baha ulit.`],
+      ["jc",`manila tradition.`],
+      ["may",`unfortunately.`]
     ]
   ],
   3:[
     [
       ["may",`almost a year of talking and i'm still learning random shit about u on meet number two.`],
-      ["jc",`that's called content longevity.`],
-      ["may",`that's called low attendance 😭`],
-      ["jc",`high retention though.`],
+      ["alon",`that's called content longevity.`],
+      ["may",`that's called low attendance`],
+      ["alon",`high retention though.`],
       ["may",`paasa marketing strategy.`]
     ],
     [
-      ["jc",`this is the part where the laptop starts feeling like an actual person's stuff again.`],
+      ["alon",`this is the part where the laptop starts feeling like an actual person's stuff again.`],
       ["may",`yeah. family, school, games, cat.`],
-      ["jc",`then fifty terrible decisions in messenger.`],
+      ["alon",`then fifty terrible decisions in messenger.`],
       ["may",`people are annoyingly capable of being more than one thing.`]
     ],
     [
       ["may",`when we get out of here i want actual food somewhere normal.`],
-      ["jc",`normal as in no abandoned electronics?`],
+      ["alon",`normal as in no abandoned electronics?`],
       ["may",`that is the minimum requirement.`],
-      ["jc",`fair.`]
+      ["alon",`fair.`]
+    ],
+    [
+      ["jc",`still no jeepneys moving.`],
+      ["may",`i've checked like five times`],
+      ["jc",`u checking harder isn't gonna lower the flood.`],
+      ["may",`let me cope.`],
+      ["jc",`valid.`]
     ]
   ],
   4:[
     [
-      ["may",`not comparing your dumb sleep habits to what niko's dealing with, but u disappearing mid convo every midnight still pisses me off 😭`],
-      ["jc",`i'm literally beside u right now. where am i gonna disappear to.`],
+      ["may",`not comparing your dumb sleep habits to what niko's dealing with, but u disappearing mid convo every midnight still pisses me off`],
+      ["alon",`i'm literally beside u right now. where am i gonna disappear to.`],
       ["may",`you'd find a way. midnight hits and your soul logs out.`],
-      ["jc",`sleep has excellent timing.`],
+      ["alon",`sleep has excellent timing.`],
       ["may",`one second we're talking, next morning it's just "morning" like nothing happened.`],
-      ["jc",`morning continuity.`],
+      ["alon",`morning continuity.`],
       ["may",`rejected.`]
     ],
     [
       ["may",`if i say i'm not scared, don't start analyzing me okay.`],
-      ["jc",`wasn't gonna.`],
+      ["alon",`wasn't gonna.`],
       ["may",`liar. u notice everything then act nonchalant about noticing it.`],
-      ["jc",`that's an extremely specific allegation.`],
-      ["may",`because i've had basically a year of evidence 😭`]
+      ["alon",`that's an extremely specific allegation.`],
+      ["may",`because i've had basically a year of evidence`]
     ],
     [
-      ["jc",`this got serious fast.`],
+      ["alon",`this got serious fast.`],
       ["may",`yeah.`],
-      ["jc",`you okay?`],
+      ["alon",`you okay?`],
       ["may",`ask me again when we're not standing in a flooded terminal reading a stranger's therapy notes.`],
-      ["jc",`fair.`]
+      ["alon",`fair.`]
+    ],
+    [
+      ["may",`rain sounds worse again.`],
+      ["jc",`yeah. if another announcement says "temporary suspension" i'm taking it personally.`],
+      ["may",`temporary in commute language means nobody knows`],
+      ["jc",`accurate.`]
     ]
   ],
   5:[
     [
       ["may",`okay. the part i hate is other people are confirming pieces now.`],
-      ["jc",`yeah. it's not just niko writing that he noticed someone anymore.`],
+      ["alon",`yeah. it's not just niko writing that he noticed someone anymore.`],
       ["may",`and you're doing that nonchalant voice again.`],
-      ["jc",`i'm trying not to make it worse.`],
+      ["alon",`i'm trying not to make it worse.`],
       ["may",`...okay. that one i believe.`]
     ],
     [
-      ["jc",`you grabbed my sleeve again.`],
+      ["alon",`you grabbed my sleeve again.`],
       ["may",`no i didn't.`],
-      ["jc",`you literally still have it.`],
-      ["may",`shut up and look at the screen 😭`],
-      ["jc",`noted.`]
+      ["alon",`you literally still have it.`],
+      ["may",`shut up and look at the screen`],
+      ["alon",`noted.`]
     ],
     [
       ["may",`if this actually turns into something serious, you're talking to security with me.`],
-      ["jc",`with you? i thought you were assigning me the whole conversation.`],
+      ["alon",`with you? i thought you were assigning me the whole conversation.`],
       ["may",`absolutely not. you'll say "uh hi" twice and forget the important part.`],
-      ["jc",`one incident. permanent reputation.`]
+      ["alon",`one incident. permanent reputation.`]
+    ],
+    [
+      ["may",`everyone here looks tired as hell.`],
+      ["jc",`flooded roads, midnight, no jeepneys. yeah.`],
+      ["may",`half the terminal's just staring outside waiting for one driver to finally say kaya na.`],
+      ["jc",`and the other half is checking their phones like refresh fixes drainage.`],
+      ["may",`don't attack me personally`]
     ]
   ],
   6:[
     [
       ["may",`if u ghost after tonight i'm blocking u for real.`],
-      ["jc",`after surviving a flood and this laptop? that's my reward?`],
+      ["alon",`after surviving a flood and this laptop? that's my reward?`],
       ["may",`character development test.`],
-      ["jc",`do i at least get probation.`],
+      ["alon",`do i at least get probation.`],
       ["may",`no.`],
-      ["jc",`takes two to tango nga diba.`],
-      ["may",`STOP USING THAT WHEN U DON'T HAVE AN ANSWER 😭`]
+      ["alon",`takes two to tango nga diba.`],
+      ["may",`STOP USING THAT WHEN U DON'T HAVE AN ANSWER`]
     ],
     [
-      ["jc",`we're not gonna fill every blank, are we.`],
+      ["alon",`we're not gonna fill every blank, are we.`],
       ["may",`probably not.`],
-      ["jc",`weirdly hate that less than i did an hour ago.`],
+      ["alon",`weirdly hate that less than i did an hour ago.`],
       ["may",`good. some blanks are just blanks.`]
+    ],
+    [
+      ["jc",`i just saw an actual jeep move.`],
+      ["may",`don't joke.`],
+      ["jc",`serious. one finally left.`],
+      ["may",`oh my god civilization`],
+      ["jc",`historic manila transport event.`],
+      ["may",`shut up and check if it's my route.`]
     ]
   ]
 };
@@ -3083,86 +3136,86 @@ function scheduleAmbientDialogue(){
   },6200);
 }
 const legacyRandomTalk_UNUSED=[
-  ["may","you know we're supposed to be finding the owner, right? not doing a full background check 😭"],
+  ["may","you know we're supposed to be finding the owner, right? not doing a full background check"],
   ["jc","i'm literally looking for a name. this guy just has 900 files for no reason."],
   ["may","your laptop probably looks worse."],
-  ["jc","mine has like three folders. school, games, and shit i forgot to delete."],
+  ["alon","mine has like three folders. school, games, and shit i forgot to delete."],
   ["may","that's somehow not better."],
 
   ["may","btw my mom is actually gonna kill me if i get home late."],
-  ["jc","why is that suddenly my problem 😭"],
+  ["jc","why is that suddenly my problem"],
   ["may","because you're the reason i'm still outside."],
   ["jc","YOU stopped to look at the bag first."],
   ["may","details."],
 
   ["jc","your parents seriously don't know who i am at all?"],
-  ["may","nope 😭"],
-  ["jc","damn i'm literally an unnamed side character."],
+  ["may","nope"],
+  ["alon","damn i'm literally an unnamed side character."],
   ["may","they don't care who i'm meeting, relax. they care more if the road is flooded."],
 
   ["may","you're way quieter irl than in chat btw."],
-  ["jc","i know 😭"],
+  ["alon","i know"],
   ["may","like in chat you never shut up."],
-  ["jc","that's crazy because YOU send five messages at once."],
+  ["alon","that's crazy because YOU send five messages at once."],
   ["may","irrelevant."],
 
   ["may","the first time we met you barely looked at me."],
-  ["jc","i was looking at you 😭"],
+  ["jc","i was looking at you"],
   ["may","for like half a second then you'd look somewhere else."],
-  ["jc","okay yeah maybe."],
+  ["alon","okay yeah maybe."],
   ["may","awkward ass."],
 
-  ["jc","wait stand still."],
+  ["alon","wait stand still."],
   ["may","why."],
-  ["jc","yeah i can still only see your scalp from up here lmaooo"],
-  ["may","SHUT UP 😭"],
+  ["alon","yeah i can still only see your scalp from up here lmaooo"],
+  ["may","SHUT UP"],
 
-  ["jc","you know what's funny, i had like ten things i was gonna talk about before meeting you."],
+  ["alon","you know what's funny, i had like ten things i was gonna talk about before meeting you."],
   ["may","and?"],
-  ["jc","forgot all of them the second i saw you 😭"],
+  ["jc","forgot all of them the second i saw you"],
   ["may","LMAOOO that's actually sad."],
 
   ["may","you looked nervous when you saw me earlier."],
-  ["jc","i was not nervous."],
+  ["alon","i was not nervous."],
   ["may","you said 'hey' twice."],
-  ["jc","okay i was resetting 😭"],
+  ["alon","okay i was resetting"],
 
-  ["may","we've been talking for basically a year and we've met TWICE 😭"],
-  ["jc","limited edition appearances."],
+  ["may","we've been talking for basically a year and we've met TWICE"],
+  ["alon","limited edition appearances."],
   ["may","low attendance."],
-  ["jc","high impact though."],
+  ["alon","high impact though."],
   ["may","debatable."],
 
   ["may","u act so nonchalant sometimes it's actually annoying."],
-  ["jc","i'm literally standing in flood water waiting with you 😭"],
+  ["jc","i'm literally standing in flood water waiting with you"],
   ["may","that's not a defense."],
   ["jc","this is extremely chalant behavior actually."],
   ["may","that's not even a word."],
-  ["jc","it is now."],
+  ["alon","it is now."],
 
   ["may","this is such an aquarius answer."],
-  ["jc","says the one who changes mood every second."],
+  ["alon","says the scorpio na nagpapalit mood every two seconds. kinda scary actually."],
   ["may","my mood has RANGE."],
-  ["jc","your range has no cooldown 😭"],
+  ["alon","yeah, range. i'm just trying not to get caught in the rotation."],
   ["may","shut up."],
 
   ["may","paasa ka kasi."],
-  ["jc","we'll see how things work out nga 😭 go with the flow diba. takes two to tango."],
+  ["alon","we'll see how things work out nga go with the flow diba. takes two to tango."],
   ["may","you just combined every non-answer known to man."],
   ["jc","efficient communication."],
   ["may","NONCHALANT."],
   ["jc","allegedly."],
 
   ["may","u know what actually pisses me off? every midnight u disappear MID CONVO."],
-  ["jc","that's called falling asleep 😭"],
+  ["jc","that's called falling asleep"],
   ["may","without saying anything half the time??"],
-  ["jc","sleep be jumping me."],
+  ["alon","sleep be jumping me."],
   ["may","one second you're typing then next morning it's just 'morning' like nothing happened."],
-  ["jc","seamless transition."],
-  ["may","NO 😭"],
+  ["alon","seamless transition."],
+  ["may","NO"],
 
-  ["jc","you call me nonchalant but you've sent 'fine whatever' and then five messages right after."],
-  ["may","because YOU disappear and make me mad 😭"],
+  ["alon","you call me nonchalant but you've sent 'fine whatever' and then five messages right after."],
+  ["may","because YOU disappear and make me mad"],
   ["jc","says the mood-changing allegations are false."],
   ["may","different case. dismissed."],
 
@@ -3173,16 +3226,16 @@ const legacyRandomTalk_UNUSED=[
 
   ["jc","if this turns into some crime shit i'm blaming you."],
   ["may","you stepped on the bag."],
-  ["jc","physics blamed me first."],
+  ["alon","physics blamed me first."],
 
   ["may","if my mom calls she's just gonna ask if the flood went down."],
   ["jc","not gonna ask who's with you?"],
-  ["may","why would she 😭 she doesn't even know you exist."],
+  ["may","why would she she doesn't even know you exist."],
 
   ["jc","why does every guy have like twelve nba screenshots saved."],
   ["may","you literally sent me basketball edits last week."],
   ["jc","those were important."],
-  ["may","sure 😭"],
+  ["may","sure"],
 
   ["may","wait you use cologne?"],
   ["jc","why are you saying that like it's shocking."],
@@ -3197,37 +3250,37 @@ const legacyRandomTalk_UNUSED=[
   ["may","i said the memes. relax."],
 
   ["may","remember when you lost your wallet and blamed the jeep driver?"],
-  ["jc","i found it in my bag like ten minutes later. let that go."],
+  ["alon","i found it in my bag like ten minutes later. let that go."],
   ["may","never."],
 
-  ["jc","his 2k build is ass btw."],
+  ["alon","his 2k build is ass btw."],
   ["may","you don't even know this man and you're judging his game build."],
-  ["jc","some things are objectively wrong."],
+  ["alon","some things are objectively wrong."],
 
   ["may","you know you're standing really close, right?"],
-  ["jc","there's one laptop 😭 where else am i supposed to look from."],
+  ["jc","there's one laptop where else am i supposed to look from."],
   ["may","i'm just saying."],
   ["jc","..."],
   ["may","see? awkward again."],
 
   ["jc","you keep leaning into the screen too."],
   ["may","because i can't see."],
-  ["jc","skill issue."],
-  ["may","height privilege isn't a skill 😭"],
+  ["alon","skill issue."],
+  ["may","height privilege isn't a skill"],
 
   ["may","if we actually find this guy, you're talking."],
-  ["jc","why me??"],
+  ["alon","why me??"],
   ["may","you picked it up."],
-  ["jc","you noticed it."],
+  ["alon","you noticed it."],
   ["may","you stepped on it."],
 
-  ["jc","you hungry?"],
+  ["alon","you hungry?"],
   ["may","kinda."],
-  ["jc","we've been staring at this laptop too long."],
+  ["alon","we've been staring at this laptop too long."],
   ["may","terminal first."],
 
   ["may","if we miss the jeep because of this laptop i'm blaming you."],
-  ["jc","you say that like i'm the one opening every folder 😭"],
+  ["alon","you say that like i'm the one opening every folder"],
   ["may","you literally clicked appdata."],
   ["jc","because it looked suspicious."],
 
@@ -3241,147 +3294,147 @@ const legacyRandomTalk_UNUSED=[
   ["may","...yeah maybe don't mention that part."],
 
   ["jc","if someone named enilec messages i'm closing this shit."],
-  ["may","that's literally celine backwards 😭"],
+  ["may","that's literally celine backwards"],
   ["jc","WAIT IT IS??"],
   ["may","civil engineering student btw."],
   ["jc","leave my degree out of this."],
 
   ["may","my parents already know i'm stuck because of the flood."],
-  ["jc","so i'm not involved in the explanation at all?"],
-  ["may","correct 😭 you're irrelevant to the weather report."],
+  ["alon","so i'm not involved in the explanation at all?"],
+  ["may","correct you're irrelevant to the weather report."],
 
-  ["jc","you scared?"],
+  ["alon","you scared?"],
   ["may","no."],
-  ["jc","you grabbed my sleeve like twice."],
+  ["alon","you grabbed my sleeve like twice."],
   ["may","because you moved the laptop."],
-  ["jc","mhm."],
+  ["alon","mhm."],
 
 
-  ["may","why does this man have more unread chats than i have contacts 😭"],
-  ["jc","don't expose your contact list like that."],
+  ["may","why does this man have more unread chats than i have contacts"],
+  ["alon","don't expose your contact list like that."],
 
   ["jc","the boys gc calling him out is actually killing me."],
   ["may","even his own friends know he's doing too much."],
 
   ["may","maria sent like fifty messages with no reply."],
-  ["jc","yeah that's brutal."],
+  ["alon","yeah that's brutal."],
   ["may","and watch him come back with 'sorry i was overwhelmed'."],
-  ["jc","it's literally in his notes 😭"],
+  ["jc","it's literally in his notes"],
 
-  ["jc","a spreadsheet for girls is supervillain behavior."],
+  ["alon","a spreadsheet for girls is supervillain behavior."],
   ["may","not even a good supervillain. he left it on his laptop."],
 
   ["may","imagine finding out your good morning text came from clipboard history."],
-  ["jc","i would evaporate."],
+  ["alon","i would evaporate."],
 
-  ["jc","same sunset photo to three people is insane."],
-  ["may","at least take different pictures 😭"],
-  ["jc","you're criticizing technique now??"],
-  ["may","NO 😭"],
+  ["alon","same sunset photo to three people is insane."],
+  ["may","at least take different pictures"],
+  ["alon","you're criticizing technique now??"],
+  ["may","NO"],
 
   ["may","why do guys keep boys gcs named shit like the unemployment line."],
   ["jc","because we're creative."],
   ["may","that's not the word i'd use."],
 
-  ["may","wait he has a cat named miso 😭"],
-  ["jc","okay that's the first good thing i've learned about him."],
+  ["may","wait he has a cat named miso"],
+  ["alon","okay that's the first good thing i've learned about him."],
   ["may","the cat is innocent."],
 
-  ["jc","he failed his driving test because he forgot the signal 😭"],
+  ["alon","he failed his driving test because he forgot the signal"],
   ["may","don't laugh, you'd probably forget where the brake is."],
-  ["jc","crazy disrespect."],
+  ["alon","crazy disrespect."],
 
   ["may","used camera wishlist is kinda normal."],
-  ["jc","yeah until you open the next file and it's psychological warfare.xlsx."],
+  ["alon","yeah until you open the next file and it's psychological warfare.xlsx."],
 
   ["may","why is stop lying when small truth would've been easier in his old goals."],
-  ["jc","damn. even old niko knew current niko was gonna be a problem."],
+  ["alon","damn. even old niko knew current niko was gonna be a problem."],
 
-  ["jc","seven recipients for the same good morning line is INSANE."],
-  ["may","imagine receiving romance by spreadsheet mail merge 😭"],
+  ["alon","seven recipients for the same good morning line is INSANE."],
+  ["may","imagine receiving romance by spreadsheet mail merge"],
 
   ["may","he copied private messages to the boys gc."],
-  ["jc","yeah that's actually lower than the cheating somehow."],
+  ["alon","yeah that's actually lower than the cheating somehow."],
 
   ["may","you've been reading maria's crashout for five minutes."],
-  ["jc","there are like fifty messages 😭"],
+  ["jc","there are like fifty messages"],
   ["may","because he ghosted her after acting obsessed."],
 
   ["jc","i can't believe six situationships in a hoodie is a real sentence on this laptop."],
   ["may","she cooked him though."],
 
   ["may","if you ever say it's complicated after lying i'm throwing your laptop away."],
-  ["jc","why am i catching strays 😭"],
+  ["alon","why am i catching strays"],
 
-  ["jc","terminal still exists btw."],
+  ["alon","terminal still exists btw."],
   ["may","thank you for remembering after investigating seventeen women."],
-  ["jc","i'm not investigating the women, i'm investigating HIM 😭"]
+  ["alon","i'm not investigating the women, i'm investigating HIM"]
 ,
-  ["may","grabe ang daming random shit dito 😭"],
-  ["jc","this is what a normal laptop looks like. chaos."],
+  ["may","grabe ang daming random shit dito"],
+  ["alon","this is what a normal laptop looks like. chaos."],
   ["may","normal daw pero may 14 versions ng final_final."],
-  ["jc","that's school culture."],
+  ["alon","that's school culture."],
 
   ["jc","wait this meme is actually funny."],
-  ["may","focus ka 😭"],
+  ["may","focus ka"],
   ["jc","i am focused. on the meme."],
 
-  ["may","why is there a skibidi file here 😭"],
+  ["may","why is there a skibidi file here"],
   ["jc","don't judge the archive."],
   ["may","i'm judging heavily."],
 
-  ["jc","look at this group project folder. final_final_REAL 😭"],
+  ["jc","look at this group project folder. final_final_REAL"],
   ["may","valid naman yan."],
   ["jc","see? we're the same."],
   ["may","don't push it."],
 
   ["may","ang dami niyang school files tbh."],
   ["jc","yeah normal student clutter."],
-  ["may","then biglang hidden relationship database 😭"],
+  ["may","then biglang hidden relationship database"],
   ["jc","dual major in civil engineering and being awful."],
 
   ["jc","why are u leaning closer again."],
   ["may","small text."],
   ["jc","sure, 'small text'."],
-  ["may","gago focus 😭"],
+  ["may","gago focus"],
 
   ["may","if my ride leaves because of this, ikaw maghahanap ng next."],
   ["jc","deal."],
   ["may","why did u agree that fast."],
   ["jc","because i'll still wait with u anyway."],
   ["may","..."],
-  ["jc","what"],
-  ["may","nothing 😭"],
+  ["alon","what"],
+  ["may","nothing"],
 
-  ["jc","u got quiet."],
+  ["alon","u got quiet."],
   ["may","i'm reading."],
   ["jc","mhm."],
-  ["may","stop looking at me 😭"],
+  ["may","stop looking at me"],
   ["jc","i'm looking at the screen."],
   ["may","liar."],
 
-  ["may","this girl is typing half tagalog half english exactly like me 😭"],
-  ["jc","maybe everyone texts like that."],
+  ["may","this girl is typing half tagalog half english exactly like me"],
+  ["alon","maybe everyone texts like that."],
   ["may","not you when you're nervous irl."],
-  ["jc","why does everything come back to that 😭"],
+  ["jc","why does everything come back to that"],
 
   ["jc","wait 'bat mo ko iniignore' is such a scary first line."],
   ["may","because he deserves it."],
 
   ["may","gago he wrote 'don't use same excuse twice in one week' AGAIN."],
-  ["jc","consistency king, unfortunately."],
+  ["alon","consistency king, unfortunately."],
 
-  ["jc","why does he have a literal reply score sheet."],
-  ["may","parang CRM pero for cheating 😭"],
-  ["jc","that's actually the worst way to describe it because it's accurate."],
+  ["alon","why does he have a literal reply score sheet."],
+  ["may","parang CRM pero for cheating"],
+  ["alon","that's actually the worst way to describe it because it's accurate."],
 
   ["may","okay brainrot folder muna. i need a break from this man's inbox."],
   ["jc","finally something healthy."],
   ["may","skibidi is not healthy."],
 
   ["jc","his school project is literally a pedestrian footbridge design."],
-  ["may","he had terminal research and still couldn't figure out his own life 😭"],
-  ["jc","okay that's foul."],
+  ["may","he had terminal research and still couldn't figure out his own life"],
+  ["alon","okay that's foul."],
 
   ["may","wait hint says timestamps."],
   ["jc","yeah, some shit overlaps."],
@@ -3394,49 +3447,49 @@ const legacyRandomTalk_UNUSED=[
   ["may","occasionally."],
 
   ["may","second meet and we're investigating a stranger's appdata folder."],
-  ["jc","romantic."],
-  ["may","don't ever say that again 😭"],
+  ["alon","romantic."],
+  ["may","don't ever say that again"],
 
   ["jc","u hungry?"],
   ["may","yes but if we leave now i'll keep thinking about this."],
-  ["jc","same."],
+  ["alon","same."],
   ["may","annoying."],
 
   ["may","why do i feel like the boring files are actually hiding the useful shit."],
-  ["jc","because that's usually how it works."],
+  ["alon","because that's usually how it works."],
   ["may","civil engineering moment."],
   ["jc","finally some respect."],
   ["may","don't get used to it."]
 
 ,
-  ["may","save mo nga progress. pag nag refresh to ayoko ulitin lahat 😭"],
-  ["jc","yeah may local save na."],
+  ["may","save mo nga progress. pag nag refresh to ayoko ulitin lahat"],
+  ["alon","yeah may local save na."],
   ["may","wow useful ka today."],
-  ["jc","TODAY lang??"],
+  ["alon","TODAY lang??"],
 
-  ["jc","uncle jojo sent like ten reels sunod sunod 😭"],
+  ["alon","uncle jojo sent like ten reels sunod sunod"],
   ["may","every family has one tito na ganyan."],
-  ["jc","'WATCH TILL END' tapos 8 minute reel."],
+  ["alon","'WATCH TILL END' tapos 8 minute reel."],
 
   ["may","okay family gc is actually cute."],
-  ["jc","until someone brings out karaoke."],
+  ["alon","until someone brings out karaoke."],
   ["may","coward."],
 
-  ["jc","bea extorting him for fries is so sibling coded."],
-  ["may","she knows her leverage 😭"],
+  ["alon","bea extorting him for fries is so sibling coded."],
+  ["may","she knows her leverage"],
 
   ["may","WAIT HE HAS A CAT"],
-  ["jc","miso."],
+  ["alon","miso."],
   ["may","okay laptop investigation paused. cat first."],
-  ["jc","finally something we agree on."],
+  ["alon","finally something we agree on."],
 
-  ["may","the flood is literally getting higher 😭"],
-  ["jc","yeah that jeep line has not moved in like twenty minutes."],
+  ["may","the flood is literally getting higher"],
+  ["alon","yeah that jeep line has not moved in like twenty minutes."],
   ["may","my mom is gonna ask why i'm still here."],
   ["jc","for once 'baha' is not even an excuse. it's just the situation."],
 
-  ["jc","you cold?"],
-  ["may","i'm wet and standing under a terminal roof at midnight. what do u think 😭"],
+  ["alon","you cold?"],
+  ["may","i'm wet and standing under a terminal roof at midnight. what do u think"],
   ["jc","okay damn. i'll get coffee if that stall is still open."],
   ["may","don't leave me alone with this man's relationship spreadsheet."],
 
@@ -3448,7 +3501,7 @@ const legacyRandomTalk_UNUSED=[
   ["jc","the weirdest part is this laptop stopped at 12:14."],
   ["may","and we found it at 12:23."],
   ["jc","nine minutes."],
-  ["may","don't say it like that while i'm looking at the bench 😭"],
+  ["may","don't say it like that while i'm looking at the bench"],
 
   ["may","there are like fifty people stuck here because of the rain."],
   ["jc","which means whoever left that bag could've just blended in."],
@@ -3458,46 +3511,46 @@ const legacyRandomTalk_UNUSED=[
   ["may","yeah instead we got trapped here and became unpaid detectives."],
 
   ["jc","civil engineering fieldwork."],
-  ["may","shut up 😭"],
+  ["may","shut up"],
 
   ["may","rain is so loud i can barely hear the announcements."],
   ["jc","good thing we're reading some guy's satan folder for entertainment."],
-  ["may","DO NOT call it the satan folder 😭"],
+  ["may","DO NOT call it the satan folder"],
 
   ["may","what if all the symbol stuff is literally just because he likes horror."],
   ["jc","could be."],
   ["may","and what if some of it isn't."],
-  ["jc","also could be. very helpful."],
+  ["alon","also could be. very helpful."],
 
-  ["jc","that's the annoying part. half his notes are him telling himself not to assume shit."],
+  ["alon","that's the annoying part. half his notes are him telling himself not to assume shit."],
   ["may","then other people confirm one random detail and we're back to zero."],
 
   ["may","imagine being stuck here, thinking someone's following u, with rain this bad."],
   ["jc","yeah... whether anyone actually was or not, that would suck."],
 
   ["may","i checked the road again. water's still high."],
-  ["jc","so we remain trapped with niko de la cruz and his seventeen questionable folders."],
+  ["alon","so we remain trapped with niko de la cruz and his seventeen questionable folders."],
   ["may","unfortunately."],
 
   ["may","kinda funny we barely knew what to talk about earlier and now we've been arguing over timestamps for an hour."],
   ["jc","shared trauma but make it civil engineering."],
-  ["may","don't call snooping shared trauma 😭"],
+  ["may","don't call snooping shared trauma"],
 
-  ["jc","you were the one saying don't go full detective."],
+  ["alon","you were the one saying don't go full detective."],
   ["may","yeah well now i wanna know who the blue shirt guy is."],
   ["jc","character development."],
 
   ["may","when we get out of here we're getting actual food."],
-  ["jc","that's assuming a jeep ever moves again."],
+  ["alon","that's assuming a jeep ever moves again."],
   ["may","don't manifest that."],
 
-  ["jc","you keep checking the bench every time we find something."],
+  ["alon","you keep checking the bench every time we find something."],
   ["may","because it was NINE MINUTES."],
-  ["jc","okay fair."],
+  ["alon","okay fair."],
 
   ["may","this is probably the most i've heard you talk irl."],
   ["jc","apparently i just needed a missing-person laptop to become conversational."],
-  ["may","terrible requirement 😭"],
+  ["may","terrible requirement"],
 
   ["jc","if we tell a guard, you're doing the talking."],
   ["may","of course. you'll say 'uh hi' twice again."],
@@ -3506,12 +3559,12 @@ const legacyRandomTalk_UNUSED=[
   ["may","i'm not scared of the laptop. i'm scared that every normal person outside suddenly looks suspicious now."],
   ["jc","yeah. that's worse actually."],
 
-  ["jc","if we leave before figuring this out you're gonna keep thinking about it."],
+  ["alon","if we leave before figuring this out you're gonna keep thinking about it."],
   ["may","so are you."],
   ["jc","...yeah."],
 
-  ["may","my mom literally just said 'baha pa ba' and that's it 😭"],
-  ["jc","see. zero questions about the mysterious man beside you."],
+  ["may","my mom literally just said 'baha pa ba' and that's it"],
+  ["alon","see. zero questions about the mysterious man beside you."],
   ["may","because you're not mysterious. you're just wet and annoying."]
 ];
 
@@ -3526,7 +3579,7 @@ function fieldTalk(speaker,text,duration=3300,source="triggered"){
   fieldTalkEl.classList.add("show");
   if(speaker==="may"&&text==="paasa ka kasi."){
     if(playerCharacter==="may")showThought("you say it like a joke because asking it seriously would turn this into a different conversation.",4600);
-    if(playerCharacter==="jc")showThought("you know exactly why she says it. the joke is easier to answer than the serious version.",4600);
+    if(playerCharacter==="alon")showThought("you know exactly why she says it. the joke is easier to answer than the serious version.",4600);
   }
   talkTimer=setTimeout(()=>fieldTalkEl.classList.remove("show"),duration);
 }
@@ -3587,51 +3640,51 @@ function progressCreep(){return;}
 function progressStory(){
   if(storyPromptOpen||story.ending)return;
   if(storyStage===0 && storyFlags.foundIdentity){
-    storyStage=1;advanceStory(7);addJournal(storyTimeLabel()+" • terminal announcement: several routes are temporarily suspended because water is rising on nearby roads.");fieldTalk("terminal","attention: some routes are temporarily suspended due to flooding. passengers are advised to remain under the covered area.",4300);
+    storyStage=1;advanceStory(7);addJournal(storyTimeLabel()+" • jeep terminal announcement: routes are temporarily suspended because water is rising on nearby roads. no jeepneys are being dispatched yet.");fieldTalk("terminal","attention: jeepney dispatch is temporarily suspended due to flooding. passengers are advised to remain under the covered area.",4300);
   }else if(storyStage===1 && storyFlags.heardMamaVoicemail){
     storyStage=2;advanceStory(8);fieldTalk("may","cached messages only tell us so much. keep it offline for now. if this gets serious, we ask security first.",4700);
   }else if(storyStage===2 && story.act>=2){
-    storyStage=3;advanceStory(9);storyFlags.mayAteMemory=true;addJournal(storyTimeLabel()+" • may's mom called to ask about the flood and whether rides were moving. she did not ask who may was with.");
-    fieldTalk("may","my mom literally just asked 'baha pa ba' and told me to stay dry. see? she does not care who i'm meeting 😭",4700);
+    storyStage=3;advanceStory(9);storyFlags.mayAteMemory=true;addJournal(storyTimeLabel()+" • haraya's mom called to ask about the flood and whether rides were moving. she did not ask who haraya was with.");
+    fieldTalk("may","my mom literally just asked 'baha pa ba' and told me to stay dry. see? she does not care who i'm meeting",4700);
     setTimeout(()=>fieldTalk("may","random, this place smells exactly like the terminal my ate used to pick me up from after school. she'd buy me taho when we got stuck waiting.",5200),4900);
-    setTimeout(()=>fieldTalk("jc","wait, you have an ate? how have i never heard this story 😭",4300),10200);
-    setTimeout(()=>fieldTalk("may","you never asked. basic may lore. quiz next time.",4300),14600);
+    setTimeout(()=>fieldTalk("jc","wait, you have an ate? how have i never heard this story",4300),10200);
+    setTimeout(()=>fieldTalk("may","you never asked. basic haraya lore. quiz next time.",4300),14600);
     setTimeout(()=>fieldTalk("jc","there's a quiz now??",3000),19100);
-    setTimeout(()=>fieldTalk("may","we've talked basically a year. u should know at least SOME lore 😭",4200),22200);
+    setTimeout(()=>fieldTalk("may","we've talked basically a year. u should know at least SOME lore",4200),22200);
   }else if(storyStage===3 && story.act>=3){
-    storyStage=4;advanceStory(12);showStoryPrompt("may","that security guard keeps looking over here. should we talk to him about where we found the bag?",[["log the bag with security",()=>{storyFlags.toldGuard=true;storyFlags.metSecurity=true;addJournal(storyTimeLabel()+" • terminal security logged the bag. the side bench is outside the useful terminal camera angle.");fieldTalk("security","that side bench isn't in our useful angle. road camera mostly faces traffic. keep it with you while we log it. terminal wifi's down, so if you need to contact the owner, use your own data.",6200);unlockHotspotFromSecurity();setTimeout(()=>fieldTalk("may","okay. NOW your hotspot makes sense. only if we actually need to message somebody.",4200),6400);}],["ask about the cameras first",()=>{storyFlags.metSecurity=true;addJournal(storyTimeLabel()+" • jc and may spoke with terminal security about the side bench. the useful cameras mostly face traffic, not the bench.");fieldTalk("security","the side bench isn't in our useful angle. road camera mostly faces traffic. if you're trying to reach the owner, terminal wifi's down—use your own data.",6000);unlockHotspotFromSecurity();setTimeout(()=>fieldTalk("may","alright. hotspot's an option now. cached stuff first unless we really need it.",4200),6200);}]]);
+    storyStage=4;advanceStory(12);showStoryPrompt("may","that security guard keeps looking over here. should we talk to him about where we found the bag?",[["log the bag with security",()=>{storyFlags.toldGuard=true;storyFlags.metSecurity=true;addJournal(storyTimeLabel()+" • terminal security logged the bag. the side bench is outside the useful terminal camera angle.");fieldTalk("security","that side bench isn't in our useful angle. road camera mostly faces traffic. keep it with you while we log it. terminal wifi's down, so if you need to contact the owner, use your own data.",6200);unlockHotspotFromSecurity();setTimeout(()=>fieldTalk("may","okay. NOW your hotspot makes sense. only if we actually need to message somebody.",4200),6400);}],["ask about the cameras first",()=>{storyFlags.metSecurity=true;addJournal(storyTimeLabel()+" • alon and haraya spoke with terminal security about the side bench. the useful cameras mostly face traffic, not the bench.");fieldTalk("security","the side bench isn't in our useful angle. road camera mostly faces traffic. if you're trying to reach the owner, terminal wifi's down—use your own data.",6000);unlockHotspotFromSecurity();setTimeout(()=>fieldTalk("may","alright. hotspot's an option now. cached stuff first unless we really need it.",4200),6200);}]]);
   }else if(storyStage===4 && story.act>=4){
-    storyStage=5;advanceStory(13);const mayAskLabel=playerCharacter==="may"?"ask him yourself":"let may ask";const jcAskLabel=playerCharacter==="jc"?"ask him yourself":"let jc ask";showStoryPrompt("jc","coffee stall guy's been here since before us. ask if he saw anyone by the bench?",[[mayAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor vaguely remembers someone near the side bench around midnight, but rain blocked his view.");fieldTalk("may","he said maybe someone was there. dark top. that's it. rain ruined everything else.",5000);maybeTahoCallback();}],[jcAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor remembers almost nothing useful through the rain.");fieldTalk("may","wow you talked to a stranger without narrating a puddle first 😭",4200);maybeTahoCallback();}]]);
+    storyStage=5;advanceStory(13);const mayAskLabel=playerCharacter==="may"?"ask him yourself":"let haraya ask";const jcAskLabel=playerCharacter==="jc"?"ask him yourself":"let alon ask";showStoryPrompt("jc","coffee stall guy's been here since before us. ask if he saw anyone by the bench?",[[mayAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor vaguely remembers someone near the side bench around midnight, but rain blocked his view.");fieldTalk("may","he said maybe someone was there. dark top. that's it. rain ruined everything else.",5000);maybeTahoCallback();}],[jcAskLabel,()=>{storyFlags.vendorAsked=true;addJournal(storyTimeLabel()+" • stall vendor remembers almost nothing useful through the rain.");fieldTalk("may","wow you talked to a stranger without narrating a puddle first",4200);maybeTahoCallback();}]]);
   }else if(storyStage===5 && story.act>=5){
     storyStage=6;advanceStory(14);setBattery(49);addJournal(storyTimeLabel()+" • terminal lights blinked and the generator kicked in. laptop battery: 49%.");toast("terminal power","brief outage • generator active");fieldTalk("jc","terminal power. not the laptop. nothing supernatural happened. battery's at 49 though.",4300);
-    setTimeout(()=>fieldTalk("may","and don't u dare use low battery as an excuse to disappear mid convo later 😭",4200),4600);
+    setTimeout(()=>fieldTalk("may","and don't u dare use low battery as an excuse to disappear mid convo later",4200),4600);
     setTimeout(()=>fieldTalk("jc","i'm never escaping this allegation am i.",3300),9000);
   }else if(storyStage===6 && foulScore()>=3){
     storyStage=7;advanceStory(15);if(hotspotOn){syncVinceLive();addJournal(storyTimeLabel()+" • vince sent new messages asking where the laptop was found.");}else fieldTalk("may","we should probably connect your hotspot soon. people are actually looking for him.",4500);
   }else if(storyStage===7 && story.act>=6){
-    storyStage=8;advanceStory(14);addJournal(storyTimeLabel()+" • terminal is noticeably emptier. may freezes when she sees a stranger in blue, then jc makes her look at what is actually in front of them: delivery helmet, food bag, different person.");
+    storyStage=8;advanceStory(14);addJournal(storyTimeLabel()+" • terminal is noticeably emptier. haraya freezes when she sees a stranger in blue, then alon makes her look at what is actually in front of them: delivery helmet, food bag, different person.");
     fieldTalk("may","wait. blue shirt. across the terminal.",4300);
     setTimeout(()=>showPOVThought("blue_freeze",4800),650);
-    setTimeout(()=>fieldTalk("jc","look again. same color doesn't make him the same guy. helmet. food bag. he's waiting for a pickup.",5200),4400);
+    setTimeout(()=>fieldTalk("alon","look again. same color doesn't make him the same guy. helmet. food bag. he's waiting for a pickup.",5200),4400);
     setTimeout(()=>fieldTalk("may","...right. okay. i froze for a second. that's annoying.",4700),9700);
     setTimeout(()=>fieldTalk("jc","yeah. no guessing. timeline only.",4000),14500);
     setTimeout(()=>fieldTalk("may","...thanks. don't get smug about being useful once.",3900),18800);
-    setTimeout(()=>fieldTalk("jc","too late. this is going on my résumé.",3600),22900);
+    setTimeout(()=>fieldTalk("alon","too late. this is going on my résumé.",3600),22900);
   }else if(storyStage===8 && timelineKnownCount()>=8){
     storyStage=9;advanceStory(16);storyFlags.toldGuard=true;storyFlags.heardPhoneClue=true;markEvidence("world_phoneclue");addJournal(storyTimeLabel()+" • security remembers a soaked man asking around 12:18 if anyone had turned in a PHONE. dark cap/jacket. no name. guard remembers him being oddly calm for how drenched he was.");fieldTalk("security","around 12:18 a soaked guy asked if anyone turned in a phone. dark cap, dark jacket. weird thing is he was really calm for how soaked he was. could still be unrelated. i didn't get a name.",7200);
   }else if(storyStage===9 && finalScore()>=6){
-    storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • may's route begins limited service. the coffee stall is closed and most benches are empty.");
+    storyStage=10;advanceStory(17);setBattery(34);story.endingReady=true;addJournal(storyTimeLabel()+" • haraya's jeep route begins limited service. the coffee stall is closed and most benches are empty.");
     fieldTalk("may","you're quiet.",2500);
     setTimeout(()=>fieldTalk("jc","yeah.",2200),2600);
     setTimeout(()=>showPOVThought("late_silence",3600),3100);
     setTimeout(()=>fieldTalk("may","...",1600),5000);
     setTimeout(()=>fieldTalk("jc","...",1600),6700);
     setTimeout(()=>fieldTalk("may","it's okay.",2500),8400);
-    setTimeout(()=>showStoryPrompt("may",`my route's moving again. we have to leave soon.
+    setTimeout(()=>showStoryPrompt("may",`there's finally a jeep loading for my route. we have to leave soon.
 
 also next time we hang out, i want actual food somewhere normal. daylight. zero abandoned laptops. and i'm picking the place. that's non-negotiable.
 
-one last thing: do we hand this over now, or keep enough of the timeline to explain why this feels wrong?`,[["open our timeline",()=>openWindow("timeline")],["decide what to do",()=>offerEndingChoice()],["five more minutes",()=>fieldTalk("jc","five. then we go. and yeah... normal food next time. deal.",4000)]]),11000);
+one last thing: do we hand this over now, or keep enough of the timeline to explain why this feels wrong?`,[["open our timeline",()=>openWindow("timeline")],["decide what to do",()=>offerEndingChoice()],["five more minutes",()=>fieldTalk("alon","five. then we go. and yeah... normal food next time. deal.",4000)]]),11000);
   }
   updateTerminalStatus();renderTimeline();
 }
@@ -3852,7 +3905,7 @@ function renderFileSidebar(){
 function toggleHiddenItems(){
   if(story.act<2){toast("files","nothing useful is exposed yet");return}
   showHiddenFiles=!showHiddenFiles;renderFileSidebar();
-  if(showHiddenFiles){renderFolder(".cache");addJournal("hidden items are visible now.");setTimeout(()=>fieldTalk("may","hidden files. okay. now this feels less like finding an email address 😭"),200)}else renderFolder("recent");
+  if(showHiddenFiles){renderFolder(".cache");addJournal("hidden items are visible now.");setTimeout(()=>fieldTalk("may","hidden files. okay. now this feels less like finding an email address"),200)}else renderFolder("recent");
 }
 function renderFolder(name,el){
   currentFileFolder=name;
@@ -3902,7 +3955,7 @@ function openFile(k){
     meme:`<div class="detail"><h4>meme_44.jpg</h4><p>cat meme.</p></div>`,
     photo4431:`<div class="detail"><h4>img_4431.jpg</h4><p>two drinks, two plates, niko's laptop on the table.</p></div>`,
     mirror:`<div class="detail"><h4>mirror_0811.jpg</h4><p>a girl holding niko's hoodie. her face is cropped out.</p></div>`,
-    road:`<div class="detail"><h4>road_evening.jpg</h4><p>concrete barrier, lamp posts, wet pavement.</p><p><b>may:</b> "wait... this looks kinda familiar."</p><p><b>jc:</b> "maybe. roads look the same at night."</p></div>`,
+    road:`<div class="detail"><h4>road_evening.jpg</h4><p>concrete barrier, lamp posts, wet pavement.</p><p><b>haraya:</b> "wait... this looks kinda familiar."</p><p><b>alon:</b> "maybe. roads look the same at night."</p></div>`,
     screen2:`<div class="detail"><h4>screen_0816.png</h4><p><b>lia:</b> "call me when you're home"</p><p><b>niko:</b> "already home"</p><p class="muted">screenshot time 9:14 pm.</p></div>`,
     screen3:`<div class="detail"><h4>screen_0812.png</h4><p><b>lia:</b> "you sleeping?"</p><p><b>niko:</b> "yeah i'm tired"</p><p class="muted">timestamp 10:02 pm.</p></div>`,
     dbms:`<div class="detail"><h4>surveying_activity2.pdf</h4><p>closed traverse exercise: bearings, azimuths, latitude/departure, Bowditch correction, and a final closure check.</p></div>`,
@@ -3916,7 +3969,7 @@ function openFile(k){
     civil3dpoints:`<div class="detail"><h4>civil3d_points.csv</h4><p>point no., northing, easting, elevation, description</p><p>101–146 • classroom surveying dataset</p></div>`,
     refs:`<div class="detail"><h4>references</h4><p>structural tables, building-code excerpts, surveying formulas, DPWH references, concrete design notes, and citation screenshots.</p></div>`,
     chatbackup1:`<div class="detail"><h4>chat_backup_1.txt</h4><p><b>celine:</b> "don't message when you're with her"</p><p><b>niko:</b> "i know"</p><p><b>celine:</b> "you literally said that last time"</p></div>`,
-    chatbackup2:`<div class="detail"><h4>chat_backup_2.txt</h4><p><b>ash:</b> "you told me you were single"</p><p><b>niko:</b> "it's complicated"</p><p><b>ash:</b> "nah don't do that 😭"</p></div>`,
+    chatbackup2:`<div class="detail"><h4>chat_backup_2.txt</h4><p><b>ash:</b> "you told me you were single"</p><p><b>niko:</b> "it's complicated"</p><p><b>ash:</b> "nah don't do that"</p></div>`,
     backupPhotoA:`<div class="detail"><h4>saved_photo_a.jpg</h4><p>niko and a girl reflected in a dark elevator door.</p><p>her face is blurred by motion.</p></div>`,
     backupPhotoB:`<div class="detail"><h4>saved_photo_b.jpg</h4><p>another girl's selfie wearing niko's hoodie.</p><p>different hair and phone case from the other photos.</p></div>`,
     contactexport:`<div class="detail"><h4>contacts_export.csv</h4><p>lia, mama, ken, mara, celine, ash, m, j</p><p>celine appears twice under two different display names.</p></div>`,
@@ -4086,7 +4139,7 @@ function openFile(k){
     camwishlist:`<div class="detail"><h4>camera_wishlist.txt</h4><p>used sony a6000</p><p>canon m50 if cheap</p><p>50mm lens eventually</p><p>"stop spending on food first"</p></div>`,
     beaschool:`<div class="detail"><h4>bea_school.txt</h4><p>bea project due friday</p><p>print colored pages</p><p>buy illustration board</p><p>"don't forget again"</p></div>`,
     oldgoals:`<div class="detail"><h4>old_goals.txt</h4><p>save money</p><p>fix sleep</p><p>stop lying when small truth would've been easier</p><p>go gym consistently</p><p>be better to people</p><p class="muted">created january. never edited again.</p></div>`,
-    bea_bike:`<div class="detail"><h4>bea_bike_2022.mp4</h4><p>bea wobbles down a quiet street on a bicycle while niko runs behind her holding the seat.</p><p><b>niko:</b> "PEDAL PEDAL PEDAL DON'T LOOK BACK 😭"</p><p>he lets go. bea keeps riding.</p><p><b>niko:</b> "AYYYY LET'S GO"</p><p class="muted">nothing else happens. no useful clue.</p></div>`,
+    bea_bike:`<div class="detail"><h4>bea_bike_2022.mp4</h4><p>bea wobbles down a quiet street on a bicycle while niko runs behind her holding the seat.</p><p><b>niko:</b> "PEDAL PEDAL PEDAL DON'T LOOK BACK"</p><p>he lets go. bea keeps riding.</p><p><b>niko:</b> "AYYYY LET'S GO"</p><p class="muted">nothing else happens. no useful clue.</p></div>`,
     dog_bark:`<div class="detail"><h4>bingo_bark_old.m4a</h4><p>00:06</p><p>an old dog barks twice. niko laughs in the background.</p><p class="muted">saved years ago. never deleted.</p></div>`,
     appointment_plan:`<div class="detail"><h4>appointment_plan_0819.pdf</h4><p>sleep check</p><p>perceptual symptoms</p><p>missed appointments</p><p>ask permission to involve family / support person if symptoms continue</p><p>review safety plan</p><p class="muted">prepared for a follow-up that never happened.</p></div>`,
     niko_raw:`<div class="detail"><h4>quiet.txt</h4><p>i hate that i can't tell anymore.</p><p>sometimes i know i'm probably connecting shit that isn't connected and it still feels obvious.</p><p>then when something actually happens i don't know if i'm supposed to trust myself.</p><p>i'm tired of asking people if they saw it too.</p><p>i just want my head quiet for one night.</p><p class="muted">no recipient. no title beyond the filename.</p></div>`,
@@ -4112,7 +4165,7 @@ function openFile(k){
     odd_wristband:`<div class="detail"><h4>torn_wristband.jpg</h4><p>blue paper wristband, wet at one edge.</p><p>back has "500 - v" written in pen.</p><p class="muted">could relate to vince's ₱500 note, or not. handwriting is too small to compare.</p></div>`,
     odd_route:`<div class="detail"><h4>route_markup.png</h4><p>cached screenshot of two possible walks from the bar area toward the terminal.</p><p>one route uses the main road. the shorter route cuts through the terminal-side road near the bench.</p><p>there is a small circle near the waiting shed with no label.</p><p class="muted">the screenshot was saved at 11:36 pm, two minutes before the network dropped.</p></div>`,
     odd_saved:`<div class="detail"><h4>saved_for_later.txt</h4><p>"satanic panic explained"</p><p>"symbols that horror movies keep getting wrong"</p><p>"why repeated numbers feel meaningful"</p><p>"sleep paralysis / shadow figures"</p><p>"frequency illusion"</p><p>"old church symbols people mistake for occult signs"</p><p class="muted">a mix of horror-interest links and reality-checking material.</p></div>`,
-    odd_bagcheck:`<div class="detail"><h4>night_bag_check.txt</h4><p>laptop</p><p>charger</p><p>mouse</p><p>phone</p><p>wallet</p><p>keys</p><p>powerbank</p><p>umbrella</p><p>blue notebook?</p><p class="muted">last edited aug 17, 9:41 pm. the bag jc and may found contains the laptop, charger, mouse and loose papers. this list does not prove everything was packed.</p></div>`,
+    odd_bagcheck:`<div class="detail"><h4>night_bag_check.txt</h4><p>laptop</p><p>charger</p><p>mouse</p><p>phone</p><p>wallet</p><p>keys</p><p>powerbank</p><p>umbrella</p><p>blue notebook?</p><p class="muted">last edited aug 17, 9:41 pm. the bag alon and haraya found contains the laptop, charger, mouse and loose papers. this list does not prove everything was packed.</p></div>`,
     odd_photogaps:`<div class="detail"><h4>photo_index_gaps.txt</h4><p>IMG_4481 • indexed 12:03</p><p>IMG_4482 • missing</p><p>IMG_4483 • missing</p><p>IMG_4484 • indexed 12:07</p><p class="muted">the index only proves two expected filenames are absent. they may have been deleted, never fully written, or created on another device.</p></div>`,
     odd_4421:`<div class="detail"><h4>number_4421_notes.txt</h4><p>last four: 4421</p><p>called 10:56 / 11:27 / 11:33</p><p>"no saved contact"</p><p>"could be bar? delivery? someone from before?"</p><p>"stop guessing"</p><p class="muted">niko never identified the number in this file.</p></div>`,
     odd_glass:`<div class="detail"><h4>terminal_glass.jpg</h4><p>12:05 am • rain-covered glass near the terminal-side shelter.</p><p>one dark figure is visible outside, but the reflection doubles the shape and makes distance impossible to judge.</p><p>slight directional motion blur runs across the whole frame; the camera was moving when the image was taken.</p><p class="muted">could be one person, a reflection, or two overlapping people.</p><button class="soft" onclick="refuseGlassZoom()">zoom in</button></div>`,
@@ -4131,7 +4184,7 @@ function openFile(k){
     noteautosave:`<div class="detail"><h4>note_autosave_history.log</h4><p>note: don't look outside</p><p>aug 16 • cached copy: "wait 20 min before looking."</p><p>aug 16 • newer local autosave: "wait 15 min before looking."</p><p>aug 18 12:09 • notes cache rebuilt from newer local autosave during file activity.</p><p class="muted">no network sync was required. the wording changed because the notes app exposed a newer local draft, not because the file changed by itself.</p></div>`,
     templates:`<div class="detail"><h4>messages.txt</h4><p>"good morning pretty, hope u slept well"</p><p>"text me when u get home"</p><p>"you know i don't talk to anyone else like this"</p><p>"sorry i fell asleep"</p><p>"my battery died"</p><p class="muted">some lines have c, ash, m, and lia typed beside them.</p></div>`,
     birthdays:`<div class="detail"><h4>dates.txt</h4><p>lia • feb 4</p><p>c • jun 18</p><p>ash • oct 2</p><p>m • ???</p><p>"remember favorite drinks"</p></div>`,
-    screensend:`<div class="detail"><h4>sent_3x.png</h4><p>three messenger windows side by side.</p><p>niko sent the exact same mirror selfie to three different chats within six minutes.</p><p>the visible replies are: "cute", "finally 😭", and "thought u were asleep?"</p></div>`,
+    screensend:`<div class="detail"><h4>sent_3x.png</h4><p>three messenger windows side by side.</p><p>niko sent the exact same mirror selfie to three different chats within six minutes.</p><p>the visible replies are: "cute", "finally", and "thought u were asleep?"</p></div>`,
     excuses2:`<div class="detail"><h4>excuses_v2.txt</h4><p>fell asleep</p><p>mom needed me</p><p>phone charging</p><p>group work</p><p>bad signal</p><p>headache</p><p>"don't use same excuse twice in one week"</p></div>`,
     giftlist:`<div class="detail"><h4>gift_ideas.txt</h4><p>lia • flowers</p><p>c • coffee</p><p>ash • keychain?</p><p>m • ask what she likes</p><p>"keep receipts out of bag"</p></div>`,
     calllog:`<div class="detail"><h4>call_log.csv</h4><p>lia • 9:02 pm • missed</p><p>c • 9:05 pm • 11 min</p><p>lia • 9:18 pm • missed</p><p>ash • 10:14 pm • 4 min</p><p>lia • 10:22 pm • outgoing • 2 min</p><p>m • 10:31 pm • 8 min</p></div>`,
@@ -4238,9 +4291,9 @@ function openFile(k){
     oldphoto1:`<div class="detail"><h4>IMG_8701.jpg</h4><p>dark selfie reflection in a shop window.</p><p>niko is visible.</p><p>someone else is standing behind him but only a shoulder shows.</p></div>`,
     oldnotes:`<div class="detail"><h4>notes_old.txt</h4><p>"if anyone checks laptop, recent stuff is useless anyway."</p><p>"old files still there."</p><p>"fix aliases later."</p></div>`,
     oldvoice:`<div class="detail"><h4>rec_old_4.m4a</h4><p>00:11</p><p>street noise.</p><p>a male voice says: "you keep doing this and someone's gonna catch you."</p><p>niko laughs.</p></div>`,
-    msgcache:`<div class="detail"><h4>messenger_cache.db</h4><p>cached fragments recovered.</p><p><b>enilec:</b> "you said you'd stop replying to her"</p><p><b>hsa:</b> "why'd you send me the same pic again 😭"</p><p><b>airam:</b> "don't call me while you're with lia"</p><p class="muted">database contains more rows but most are unreadable.</p></div>`,
+    msgcache:`<div class="detail"><h4>messenger_cache.db</h4><p>cached fragments recovered.</p><p><b>enilec:</b> "you said you'd stop replying to her"</p><p><b>hsa:</b> "why'd you send me the same pic again"</p><p><b>airam:</b> "don't call me while you're with lia"</p><p class="muted">database contains more rows but most are unreadable.</p></div>`,
     thumbcache:`<div class="detail"><h4>thumbs.db</h4><p>recovered thumbnails:</p><p>girl in black hoodie</p><p>restaurant table</p><p>bar entrance</p><p>dark road</p><p>inside of black bag</p><p>spray-painted star-in-circle under an underpass</p><p class="muted">all thumbnails predate 12:23 am.</p></div>`,
-    recentplaces:`<div class="detail"><h4>recent_places.dat</h4><p>cafe</p><p>terminal road</p><p>bar district</p><p>24h store</p><p>parking area</p><p>unknown path</p><p class="muted">one route ends close to where jc and may found the bag.</p></div>`,
+    recentplaces:`<div class="detail"><h4>recent_places.dat</h4><p>cafe</p><p>terminal road</p><p>bar district</p><p>24h store</p><p>parking area</p><p>unknown path</p><p class="muted">one route ends close to where alon and haraya found the bag.</p></div>`,
     sessionlog:`<div class="detail"><h4>session.log</h4><p>10:41 pm • wake</p><p>11:07 pm • messenger opened</p><p>11:32 pm • camera opened</p><p>11:38 pm • network disconnected</p><p>11:48 pm • recorder opened</p><p>12:03 am • recorder opened</p><p>12:07 am • photos / recorder</p><p>12:09 am • files opened</p><p>12:14 am • lid closed / sleep</p><p class="muted">nothing here identifies who was using the laptop during the final minutes.</p></div>`,
     notiflog:`<div class="detail"><h4>notification.log</h4><p>lia: where are you</p><p>vince: u still here?</p><p>cam: answer me</p><p>lia: niko pls</p><p>system: camera access</p><p>system: location unavailable</p><p class="muted">all cached locally.</p></div>`,
     aliases:`<div class="detail"><h4>aliases.json</h4><p>enilec = celine</p><p>hsa = ash</p><p>airam = maria</p><p>alleb = bella</p><p>enaj = jane</p><p>anail = liana</p><p class="muted">the names were manually changed.</p></div>`,
@@ -4252,12 +4305,12 @@ function openFile(k){
   if(k==="private")addJournal("private note says lia doesn't check the laptop.");
   if(k==="latenightreceipt")addJournal("late food receipt shows two meals on a night niko told lia he was home alone.");
   if(k==="voiceexport")addJournal("voice export strongly suggests another girl knew about lia.");
-  if(k==="thirstdump"){addJournal("downloads contains a manually organized zip of dozens of saved thirst-trap/story screenshots. gross, but not relevant to the final-night timeline.");setTimeout(()=>fieldTalk("may","why does he have a ZIP FILE of thirst traps 😭 like downloading them wasn't enough??"),260);}
+  if(k==="thirstdump"){addJournal("downloads contains a manually organized zip of dozens of saved thirst-trap/story screenshots. gross, but not relevant to the final-night timeline.");setTimeout(()=>fieldTalk("may","why does he have a ZIP FILE of thirst traps like downloading them wasn't enough??"),260);}
   if(k==="storysaves")addJournal("niko systematically saved social-media stories from several women he was already talking to.");
   if(k==="dmscreens"){addJournal("a download archive contains screenshots of private conversations apparently prepared for sharing in a group chat.");setTimeout(()=>fieldTalk("may","nah saving people's private messages just to send them around is actually nasty."),260);}
   if(k==="unfollows")addJournal("niko manually tracked who unfollowed him and sometimes noted new people appearing in their stories.");
   if(k==="pickuplines")addJournal("downloaded pickup-line notes are marked with reminders about which lines were already used.");
-  if(k==="incognitoexport"){addJournal("a saved browser export contains searches about hiding activity, viewing stories quietly, and stripping screenshot metadata. none are final-night evidence.");setTimeout(()=>fieldTalk("jc","okay this download folder is making him look worse in completely different ways."),260);}
+  if(k==="incognitoexport"){addJournal("a saved browser export contains searches about hiding activity, viewing stories quietly, and stripping screenshot metadata. none are final-night evidence.");setTimeout(()=>fieldTalk("alon","okay this download folder is making him look worse in completely different ways."),260);}
   if(k==="profilecheck")addJournal("profile_checklist.txt manually tracks several women's privacy/activity changes and when not to reveal that niko noticed them.");
   if(k==="camerarolldump")addJournal("camera-roll backup is mostly normal clutter with a smaller pile of saved social-media screenshots mixed in.");
   if(k==="dontopenlol")setTimeout(()=>fieldTalk("may","the folder literally says do not open and he didn't even password it. incredible."),260);
@@ -4266,29 +4319,29 @@ function openFile(k){
   if(k==="taxi")addJournal("a ride receipt from last night was cancelled before a dropoff was recorded.");
   if(k==="barvoice")addJournal("recording from a bar has a guy asking niko if he's okay.");
   if(k==="templates"){addJournal("niko kept copy-paste message lines with different girls' initials beside them.");setTimeout(()=>fieldTalk("may","wait... why are there names beside the same messages?"),250);}
-  if(k==="screensend"){addJournal("niko sent the same selfie to three different chats minutes apart.");setTimeout(()=>fieldTalk("jc","nahhh. same pic three times?? 😭"),250);}
+  if(k==="screensend"){addJournal("niko sent the same selfie to three different chats minutes apart.");setTimeout(()=>fieldTalk("alon","nahhh. same pic three times??"),250);}
   if(k==="excuses2"){addJournal("there's literally a second list of excuses with a reminder not to repeat them.");setTimeout(()=>fieldTalk("may","okay this is actually weird. who keeps a list like this?"),250);}
   if(k==="calllog")addJournal("call log shows him bouncing between lia and other contacts minutes apart.");
-  if(k==="girlmatrix"){addJournal("people.xlsx tracks what different girls believe, like, and get upset about.");setTimeout(()=>fieldTalk("may","nah he made a SPREADSHEET?? 😭"),260);}
-  if(k==="copylog"){addJournal("reply_notes.txt is basically a cheat sheet for excuses and emotional responses.");setTimeout(()=>fieldTalk("jc","this man has customer support scripts for lying 😭"),260);}
+  if(k==="girlmatrix"){addJournal("people.xlsx tracks what different girls believe, like, and get upset about.");setTimeout(()=>fieldTalk("may","nah he made a SPREADSHEET??"),260);}
+  if(k==="copylog"){addJournal("reply_notes.txt is basically a cheat sheet for excuses and emotional responses.");setTimeout(()=>fieldTalk("alon","this man has customer support scripts for lying"),260);}
   if(k==="sentgrid"){addJournal("sent media grid shows the same photos reused across different girls.");}
   if(k==="draftcache"){addJournal("hidden drafts repeat the same intimate lines for multiple recipient ids.");}
   if(k==="clipboard"){addJournal("clipboard cache shows repeated copy-paste reassurance lines.");}
   if(k==="contactnotes"){addJournal("hidden contact notes record what each girl knows about the others.");}
   if(k==="notif2"){addJournal("notification history shows multiple girls confronting niko during the same ninety-minute window.");}
   if(k==="archivemap"){addJournal("archive rules hide certain girls whenever lia is active.");setTimeout(()=>fieldTalk("may","he automated hiding chats when lia was online??"),260);}
-  if(k==="peoplestate"){addJournal("hidden people-state file tracks how suspicious or attached different girls are.");setTimeout(()=>fieldTalk("may","he has STATUS EFFECTS for people?? 😭"),260);}
+  if(k==="peoplestate"){addJournal("hidden people-state file tracks how suspicious or attached different girls are.");setTimeout(()=>fieldTalk("may","he has STATUS EFFECTS for people??"),260);}
   if(k==="replyscores"){addJournal("reply score sheet ranks which reassurance or excuse works on each person.");}
-  if(k==="ghostcycles"){addJournal("ghost-cycles file shows repeated disappear, apologize, return patterns.");setTimeout(()=>fieldTalk("jc","he logs the ghosting cycles???? what 😭"),260);}
+  if(k==="ghostcycles"){addJournal("ghost-cycles file shows repeated disappear, apologize, return patterns.");setTimeout(()=>fieldTalk("alon","he logs the ghosting cycles???? what"),260);}
   if(k==="renamehist"){addJournal("rename history confirms more women were reversed into aliases.");}
   if(k==="templv3"){addJournal("newer message template file contains label avoidance and caught-lying scripts.");}
   if(k==="draftqueue"){addJournal("draft queue shows niko messaging different girls within minutes of each other.");}
 
   if(k==="privateshare"){addJournal("private_share.log shows niko copied private messages and media out of girls' chats into the boys gc.");setTimeout(()=>fieldTalk("may","nah sharing private messages to his friends is actually disgusting."),260);}
   if(k==="presencewatch"){addJournal("presence-watch data suggests niko repeatedly checked when ghosted girls came online.");}
-  if(k==="relnotes"){addJournal("relationship backup file describes different manipulation tactics for different girls.");setTimeout(()=>fieldTalk("jc","'disappear then reassure'?? this is actually calculated."),260);}
+  if(k==="relnotes"){addJournal("relationship backup file describes different manipulation tactics for different girls.");setTimeout(()=>fieldTalk("alon","'disappear then reassure'?? this is actually calculated."),260);}
   if(k==="msgstats"){addJournal("message statistics show the same intimate lines reused across many recipients.");}
-  if(k==="camevents"){addJournal("camera log shows the camera was opened twice during the 36-minute offline window.");setTimeout(()=>fieldTalk("jc","camera at 12:03... okay. but who was even using this then?"),260);}
+  if(k==="camevents"){addJournal("camera log shows the camera was opened twice during the 36-minute offline window.");setTimeout(()=>fieldTalk("alon","camera at 12:03... okay. but who was even using this then?"),260);}
   if(k==="btlog"||k==="usblog"){addJournal("unknown device activity appears around the final midnight session.");}
   if(k==="oldgoals"){addJournal("an old goals file says niko once wrote that he wanted to stop lying and be better to people.");}
   if(k==="rainalert"){addJournal("niko saved a heavy-rain advisory at 10:48 pm, well before his final terminal searches. he knew the weather was worsening before he headed toward the terminal-side route.");}
@@ -4302,14 +4355,14 @@ function openFile(k){
   if(k==="door_checks"){addJournal("door-check log shows niko repeatedly checking the same spaces, then trying to stop himself because nothing had changed.");}
   if(k==="same_people"){addJournal("niko kept a list of people or vehicles that felt familiar, but also wrote reminders that familiarity was not proof he was being followed.");setTimeout(()=>fieldTalk("may","this makes the blue shirt thing harder. he noticed people before too... but that doesn't mean nobody was actually there."),260);}
   if(k==="sleep_notes_aug"){addJournal("sleep log shows several very short nights before aug 17, which niko and his therapist both linked to worse perceptual symptoms.");}
-  if(k==="unsent_0817"){addJournal("an unsent local draft from 11:56 asks why someone was asking where niko was, then immediately says it could be nothing. no recipient survived in the file.");setTimeout(()=>fieldTalk("jc","that's either nothing... or really not nothing."),260);}
+  if(k==="unsent_0817"){addJournal("an unsent local draft from 11:56 asks why someone was asking where niko was, then immediately says it could be nothing. no recipient survived in the file.");setTimeout(()=>fieldTalk("alon","that's either nothing... or really not nothing."),260);}
   if(k==="odd_symbols"){addJournal("niko had been collecting occult-looking symbols, but his own notes repeatedly say the images do not actually match.");setTimeout(()=>fieldTalk("may","okay this looks satanic as hell, but he literally wrote that they're not the same symbol."),260);}
   if(k==="odd_333"){addJournal("niko logged repeated-number coincidences, then caught himself creating one by waiting for the clock to hit 3:33.");}
-  if(k==="odd_forum"){setTimeout(()=>fieldTalk("jc","so he was deep in creepy internet rabbit holes too. doesn't mean any of this shit is real."),260);}
+  if(k==="odd_forum"){setTimeout(()=>fieldTalk("alon","so he was deep in creepy internet rabbit holes too. doesn't mean any of this shit is real."),260);}
   if(k==="odd_calls"){addJournal("the same unsaved number contacted niko three times before the network cut out. there is no surviving message tying the number to anyone.");setTimeout(()=>fieldTalk("may","and now we get another person who could be important or could be food delivery. amazing."),260);}
   if(k==="odd_route"){addJournal("a route screenshot saved at 11:36 shows the shorter terminal-side path near the bench where the bag was found.");}
   if(k==="odd_barsymbol"){setTimeout(()=>fieldTalk("may","if i was already looking for symbols i'd probably notice that too. still creepy though."),260);}
-  if(k==="odd_bagcheck"){addJournal("niko's aug 17 bag checklist includes a phone, wallet, keys and powerbank that were not in the bag jc and may found. the checklist does not prove they were packed.");setTimeout(()=>fieldTalk("jc","okay so the laptop bag is not necessarily the whole set of stuff he left with."),260);}
+  if(k==="odd_bagcheck"){addJournal("niko's aug 17 bag checklist includes a phone, wallet, keys and powerbank that were not in the bag alon and haraya found. the checklist does not prove they were packed.");setTimeout(()=>fieldTalk("alon","okay so the laptop bag is not necessarily the whole set of stuff he left with."),260);}
   if(k==="odd_photogaps"){addJournal("two expected image filenames are missing between 12:03 and 12:07, but the index cannot show whether they were deleted or never completed.");}
   if(k==="odd_4421"){addJournal("niko himself tried to identify the unsaved number ending 4421 and wrote several guesses, then told himself to stop guessing.");}
   if(k==="odd_glass"||k==="odd_benchwide"){addJournal("more midnight images place the laptop near the terminal-side shelter, but rain, reflections and blur make the people/shapes useless for identification.");}
@@ -4320,7 +4373,7 @@ function openFile(k){
   if(k==="noteautosave"){addJournal("the changed line in 'don't look outside' is explained by a newer local autosave being exposed when the notes cache rebuilt. mundane version history, not a supernatural change.");}
 
   if(k==="aliases"){addJournal("hidden alias file maps the reversed names to real girls.");setTimeout(()=>fieldTalk("may","wait... so he literally renamed them backwards??"),250);}
-  if(k==="sessionlog"){addJournal("session log ends at 12:14 am, nine minutes before we found the warm bag.");setTimeout(()=>fieldTalk("jc","12:14. we found this at 12:23... that's only nine minutes."),250);}
+  if(k==="sessionlog"){addJournal("session log ends at 12:14 am, nine minutes before we found the warm bag.");setTimeout(()=>fieldTalk("alon","12:14. we found this at 12:23... that's only nine minutes."),250);}
   if(k==="recentplaces"){addJournal("hidden recent-places file includes the road near where the bag was found.");}
   if(k==="thumbcache"){addJournal("thumbnail cache includes the terminal-side road and the inside of the same black bag.");}
   if(k==="oldvoice"){addJournal("old recording has a guy warning niko that someone would catch him.");}
@@ -4333,10 +4386,10 @@ const chats={
  lia:{kind:"inbox",name:"lia ❤️",preview:"you home na?",msgs:[
   ["them","you home na?"],["them","niko"],["them","don't disappear again pls"],["me","on my way home"],
   ["them","okay ingat"],["them","message me pag nasa house ka na"],["them","also don't forget tomorrow"],["me","i won't"],
-  ["them","btw i finally finished that stupid presentation"],["me","the group one?"],["them","YES 😭 they changed my slides three times"],["me","good luck tomorrow"],["them","i need a new group not luck"],
-  ["them","you said that last time 😭"],["me","i know i know"],["them","what time are you leaving tomorrow"],["me","around 2 maybe"],
-  ["them","maybe??"],["me","2 😭"],["them","better"],["them","also did you eat"],["me","yeah"],["them","actual food?"],
-  ["me","yes mom"],["them","shut up 😭"],["them","also u barely slept last night"],["me","i'm fine"],
+  ["them","btw i finally finished that stupid presentation"],["me","the group one?"],["them","YES they changed my slides three times"],["me","good luck tomorrow"],["them","i need a new group not luck"],
+  ["them","you said that last time"],["me","i know i know"],["them","what time are you leaving tomorrow"],["me","around 2 maybe"],
+  ["them","maybe??"],["me","2"],["them","better"],["them","also did you eat"],["me","yeah"],["them","actual food?"],
+  ["me","yes mom"],["them","shut up"],["them","also u barely slept last night"],["me","i'm fine"],
   ["them","you've been asking me weird stuff like if i saw the same car outside"],["me","forget it"],
   ["them","i'm not mad. i'm worried. just sleep when u get home"],["me","okay"],
   ["them","call me when you're home if i'm still awake"],["me","okay"],["them","goodnight if i pass out"],["me","goodnight ❤️"]
@@ -4344,14 +4397,14 @@ const chats={
  mama:{kind:"inbox",name:"mama",preview:"did you eat?",msgs:[
   ["them","did you eat?"],["me","later"],["them","wag puro coffee"],["me","yeah ma"],["them","bring umbrella"],["me","i have one"],
   ["them","sure?"],["me","..."],["them","exactly"],["them","also buy rice tomorrow"],["me","how much"],["them","5kg"],
-  ["me","okay"],["them","and tell bea to stop using my charger"],["me","that's between you two 😭"],["them","ikaw kuya"],["me","unfair"],
+  ["me","okay"],["them","and tell bea to stop using my charger"],["me","that's between you two"],["them","ikaw kuya"],["me","unfair"],
   ["them","also sleep tonight. you were walking around the hallway again last night"],["me","i thought someone knocked"],["them","nobody knocked anak"],["me","yeah i know"]
  ]},
  bea:{kind:"inbox",name:"bea",preview:"kuya where's my charger",msgs:[
   ["them","kuya where's my charger"],["me","why are you asking me"],["them","because you steal everything"],["me","YOUR charger is literally mine"],
-  ["them","mom said share"],["me","mom says a lot of things 😭"],["them","buy me fries later"],["me","no"],["them","i'll tell mom you went out again"],
+  ["them","mom said share"],["me","mom says a lot of things"],["them","buy me fries later"],["me","no"],["them","i'll tell mom you went out again"],
   ["me","blackmail at 15 is crazy"],["them","fries."],["me","fine"],
-  ["them","also kuya stop checking my door at 2am 😭"],["me","i thought i heard something"],["them","IT WAS THE TV"],["me","okay damn"],["them","sleep pls"]
+  ["them","also kuya stop checking my door at 2am"],["me","i thought i heard something"],["them","IT WAS THE TV"],["me","okay damn"],["them","sleep pls"]
  ]},
  drreyes:{kind:"inbox",name:"dr. andrea reyes",preview:"niko, checking in again",msgs:[
   ["them","hi niko. checking in after last session."],
@@ -4389,23 +4442,23 @@ const chats={
  ]},
  mika:{kind:"inbox",name:"mika",preview:"did u even go to ur appointment",msgs:[
   ["them","did u even go to ur appointment"],["me","nah"],["them","again??"],["me","didn't feel like talking"],
-  ["them","you keep doing that then ghosting her for a week 😭"],["me","i'll message"],["them","you said that last time"],
+  ["them","you keep doing that then ghosting her for a week"],["me","i'll message"],["them","you said that last time"],
   ["them","also sleep pls. u sounded exhausted yesterday"],["me","im fine"],["them","i know. just saying"],
-  ["them","also stop sending me the same parking lot pics asking if it's the same car 😭"],
+  ["them","also stop sending me the same parking lot pics asking if it's the same car"],
   ["me","it looked the same"],
   ["them","one was gray and one was literally white"],
   ["me","lighting"],
-  ["them","NIKO 😭"],
+  ["them","NIKO"],
   ["them","remember what dr reyes said. notice it, check what you actually know, don't build the whole story first"],
   ["me","yeah yeah"],
   ["them","and if somebody is ACTUALLY following u then call me or go somewhere crowded. don't go staring at them alone"],
   ["me","im not doing that"],
 
   ["them","good"],
-  ["them","also the satanic-looking wall pics 😭"],["me","what about them"],
+  ["them","also the satanic-looking wall pics"],["me","what about them"],
   ["them","u sent me three saying SAME SYMBOL and none of them are the same"],["me","they're similar"],
   ["them","one is graffiti, one is a metal poster, one looks like someone drew a star while bored"],
-  ["me","okay 😭"],["them","creepy is allowed. turning every creepy thing into one giant clue is where u lose me"],
+  ["me","okay"],["them","creepy is allowed. turning every creepy thing into one giant clue is where u lose me"],
   ["me","fair"],
   ["them","at least answer dr reyes before she starts sending carrier pigeons"],["me","later"],["them","LATER MERCHANT"],
   ["them","u going out tonight?"],["me","yeah for a bit"],["them","sleep after pls"],["me","yes mom"],
@@ -4416,12 +4469,12 @@ const chats={
    ["them","u still need somewhere to crash?"],["me","nah okay na"],["them","sure? yesterday u were asking if u could sleep here"],
    ["me","changed my mind"],["them","everything okay sa bahay?"],["me","yeah just didn't wanna be there for a bit"],
    ["them","aight. offer stands"],["them","also u left class early again"],["me","head hurt"],["them","sleep man"],
-   ["them","if u disappear on group work i WILL fail u myself 😭"],["me","noted"]
+   ["them","if u disappear on group work i WILL fail u myself"],["me","noted"]
   ]},
   toni:{kind:"inbox",name:"toni • print shop",preview:"you were jumpy earlier",msgs:[
    ["them","you were jumpy earlier"],["me","was i"],["them","u asked me twice if the same guy was outside"],
    ["me","looked familiar"],["them","i only saw delivery rider + two customers"],["me","yeah probably nothing"],
-   ["them","u also forgot your change again"],["me","keep it 😭"],["them","₱37 generational wealth thanks"],
+   ["them","u also forgot your change again"],["me","keep it"],["them","₱37 generational wealth thanks"],
    ["them","serious tho go home and sleep"],["me","later"]
   ]},
 
@@ -4429,7 +4482,7 @@ const chats={
   ["them","good morning mga anak"],
   ["them","sino may dala ng yelo sa sunday"],
   ["them","niko ikaw nalang"],
-  ["me","bat ako agad 😭"],
+  ["me","bat ako agad"],
   ["them","ikaw may malaking bag"],
   ["me","that logic is crazy"],
   ["them","dala ka nalang 2 bags ice"],
@@ -4441,14 +4494,14 @@ const chats={
   ["them","uncle jojo wag ka magdala malaking speaker pls"],
   ["them","HAHAHAHAHAHA"],
   ["them","grabe kayo sakin"],
-  ["them","last time rinig hanggang labas 😭"],
+  ["them","last time rinig hanggang labas"],
   ["them","music is life"],
   ["me","tito pls"],
   ["them","niko what time dating mo"],
   ["me","12 maybe"],
   ["them","MAYBE"],
   ["them","yan nanaman maybe"],
-  ["me","12 😭"],
+  ["me","12"],
   ["them","better"],
   ["them","bring ice"],
   ["me","YES I KNOW"],
@@ -4465,11 +4518,11 @@ const chats={
   ["them","ETO PA"],
   ["them","reel attachment • basketball fail compilation"],
   ["them","mas magaling pa sayo yung bata 😂"],
-  ["me","tito grabe 😭"],
+  ["me","tito grabe"],
   ["them","JOKE LANG"],
   ["them","reel attachment • dog wearing sunglasses"],
   ["them","WATCH TILL END"],
-  ["me","nasa class ako 😭"],
+  ["me","nasa class ako"],
   ["them","mamaya mo panoorin"],
   ["them","reel attachment • motivational edit"],
   ["them","NEVER GIVE UP 💪💪💪"],
@@ -4477,7 +4530,7 @@ const chats={
   ["them","important yan"],
   ["them","reel attachment • uncle dancing at wedding"],
   ["them","HAHAHA KAMUKHA NI TITO BEN"],
-  ["me","😭"],
+  ["me",""],
   ["them","oh eto nba"],
   ["them","reel attachment • old basketball highlights"],
   ["them","solid"],
@@ -4487,7 +4540,7 @@ const chats={
   ["them","eto last na"],
   ["them","reel attachment • random cooking hack"],
   ["them","LAST NA TALAGA"],
-  ["me","you said that 4 reels ago 😭"],
+  ["me","you said that 4 reels ago"],
   ["them","HAHAHAHA"],
   ["them","reel attachment • guy fixing electric fan"],
   ["them","useful yan"],
@@ -4509,7 +4562,7 @@ const chats={
   ["them","also sabihin mo kay bea dala niya notebook niya sunday"],
   ["me","sige"],
   ["them","kumain ka na ba"],
-  ["me","why does everyone ask me this 😭"],
+  ["me","why does everyone ask me this"],
   ["them","because puro kape ka"],
   ["me","family propaganda"]
  ]},
@@ -4522,7 +4575,7 @@ const chats={
   ["them","school okay?"],
   ["me","okay naman"],
   ["them","grades"],
-  ["me","passing 😭"],
+  ["me","passing"],
   ["them","passing is fine but improve"],
   ["me","yes sir"],
   ["them","save some for emergency"],
@@ -4541,7 +4594,7 @@ const chats={
   ["me","maybe"],
   ["them","MAYBE NANAMAN"],
   ["them","niko's favorite word"],
-  ["me","may ginagawa 😭"],
+  ["me","may ginagawa"],
   ["them","girl nanaman ba yan"],
   ["me","GAGO"],
   ["them","HAHAHAHAHAHA"],
@@ -4556,32 +4609,32 @@ const chats={
  ]},
 
  mara:{kind:"inbox",name:"mara",preview:"send the pdf pls",msgs:[
-  ["them","send the pdf pls"],["me","wait lang"],["them","i need it before 8 😭"],["me","yeah yeah"],["them","thanks"],
-  ["them","also page 4 is wrong"],["me","WHAT"],["them","good luck 😭"],["me","why did nobody say this earlier"],["them","we did"],
+  ["them","send the pdf pls"],["me","wait lang"],["them","i need it before 8"],["me","yeah yeah"],["them","thanks"],
+  ["them","also page 4 is wrong"],["me","WHAT"],["them","good luck"],["me","why did nobody say this earlier"],["them","we did"],
   ["me","where"],["them","gc"],["me","i muted it"],["them","skill issue"]
  ]},
- ken:{kind:"inbox",name:"ken",preview:"why do u have satanic shit saved 😭",msgs:[
+ ken:{kind:"inbox",name:"ken",preview:"why do u have satanic shit saved",msgs:[
   ["them","may class ba tomorrow"],["me","i think so"],["them","very useful info"],["me","edi ikaw magtanong"],["them","HAHAHAHA"],
   ["them","u playing later?"],["me","maybe"],["them","translation no"],["me","depends if i get home early"],["them","u never do"],
   ["me","true"],["them","also your bracket still trash"],["me","we're not starting this again"],["them","i have receipts"],["me","blocked"],
-  ["them","also WHY do u have satanic shit saved 😭"],["me","horror rabbit hole"],["them","there's literally a goat head in ur downloads"],
-  ["me","metal poster"],["them","and black candles??"],["me","they look cool"],["them","ur cat is in the pic too 😭"],["me","miso summoned it"],
-  ["them","gago 😭"],["them","fr tho stop staying up until 3am zooming into graffiti"],["me","yeah yeah"],
-  ["them","u sent me a wall drawing asking if i'd seen it before"],["me","did u"],["them","NO 😭 and that does not mean secret cult"],["me","i didn't say cult"],
+  ["them","also WHY do u have satanic shit saved"],["me","horror rabbit hole"],["them","there's literally a goat head in ur downloads"],
+  ["me","metal poster"],["them","and black candles??"],["me","they look cool"],["them","ur cat is in the pic too"],["me","miso summoned it"],
+  ["them","gago"],["them","fr tho stop staying up until 3am zooming into graffiti"],["me","yeah yeah"],
+  ["them","u sent me a wall drawing asking if i'd seen it before"],["me","did u"],["them","NO and that does not mean secret cult"],["me","i didn't say cult"],
   ["them","you didn't have to"]
  ]},
  group:{kind:"inbox",name:"school group",preview:"final na ba to",msgs:[
-  ["them","final na ba to"],["me","i think so"],["them","what do you mean you think so 😭"],["me","i'll check again later"],
+  ["them","final na ba to"],["me","i think so"],["them","what do you mean you think so"],["me","i'll check again later"],
   ["them","niko upload mo na"],["me","wait lang"],["them","this man said wait lang for 2 hours"],["me","shut up"],
   ["them","title page still wrong"],["me","WHO CHANGED IT"],["them","not me"],["them","not me either"],["me","amazing team"]
  ]},
  boys:{kind:"inbox",name:"the unemployment line",preview:"delete names idiot",msgs:[
-  ["them","who's free friday"],["me","depends"],["them","depends on which girl replies? 😭"],["me","fuck off"],
-  ["them","you renamed them backwards again"],["them","delete names idiot"],["me","it's easier"],["them","how is enilec easier than celine 😭"],
+  ["them","who's free friday"],["me","depends"],["them","depends on which girl replies?"],["me","fuck off"],
+  ["them","you renamed them backwards again"],["them","delete names idiot"],["me","it's easier"],["them","how is enilec easier than celine"],
   ["me","i know who it is"],["them","lia still doesn't know?"],["me","obviously"],["them","you're actually cooked"],
   ["them","didn't maria catch you active last week"],["me","yeah"],["them","what'd u say"],["me","laptop was open"],
   ["them","LMAOOOO"],["them","and she believed that?"],["me","eventually"],["them","you are terrible"],
-  ["me","dramatic"],["them","same good morning message too?"],["me","if it works it works"],["them","that's genuinely disgusting 😭"],
+  ["me","dramatic"],["them","same good morning message too?"],["me","if it works it works"],["them","that's genuinely disgusting"],
   ["me","okay therapist"],["them","u literally keep a notes file of excuses"],["me","because i forget what i already said"],
   ["them","THAT MAKES IT WORSE"],["them","also stop sending screenshots here"],["me","why"],["them","because one day you're gonna send the wrong screenshot to the wrong person"],
   ["me","hasn't happened"],["them","yet"],["them","lia deserves better btw"],["me","don't start"],["them","not starting. stating"],
@@ -4590,7 +4643,7 @@ const chats={
   ["them","that is the funniest thing you've ever typed"]
  ]},
  ballgc:{kind:"inbox",name:"hoops gc",preview:"that trade is fake",msgs:[
-  ["them","that trade is fake"],["me","source?"],["them","trust me"],["me","so no source"],["them","😭"],
+  ["them","that trade is fake"],["me","source?"],["them","trust me"],["me","so no source"],["them",""],
   ["them","u watching highlights later"],["me","yeah"],["them","your point guard list still ass btw"],["me","blocked"],
   ["them","curry top 2 minimum"],["me","minimum??"],["them","don't start"],["me","you started it"]
  ]},
@@ -4603,14 +4656,14 @@ const chats={
   ["them","bring ice"],["me","why me"],["them","because u have hands"],["me","great reason"],["them","also kuya marco bringing the karaoke"],["me","i'm suddenly busy"]
  ]},
  jerome:{kind:"inbox",name:"jerome hs",preview:"u still got that old jersey",msgs:[
-  ["them","u still got that old jersey"],["me","yeah somewhere"],["them","sell it to me"],["me","why 😭"],["them","nostalgia"],
+  ["them","u still got that old jersey"],["me","yeah somewhere"],["them","sell it to me"],["me","why"],["them","nostalgia"],
   ["me","you hated that jersey"],["them","i've grown"],["me","into bad taste"],["them","still annoying i see"],
   ["them","btw reunion next month"],["me","might go"],["them","u always say might"],["me","commitment issues"],["them","apparently in every area of life"],["me","shut up"]
  ]},
- ari:{kind:"inbox",name:"ari",preview:"none of those symbols match 😭",msgs:[
-  ["them","none of those symbols match 😭"],["me","they kinda do"],["them","no they do not"],
+ ari:{kind:"inbox",name:"ari",preview:"none of those symbols match",msgs:[
+  ["them","none of those symbols match"],["me","they kinda do"],["them","no they do not"],
   ["them","underpass is basically a pentagram"],["them","poster is a band logo"],["them","bar wall is random marker bullshit"],
-  ["me","what about the chalk one"],["them","what ABOUT it 😭"],["me","looks deliberate"],["them","drawing a shape deliberately still doesn't mean satan"],
+  ["me","what about the chalk one"],["them","what ABOUT it"],["me","looks deliberate"],["them","drawing a shape deliberately still doesn't mean satan"],
   ["me","okay professor occult"],["them","u asked ME"],
   ["them","the pdf i sent is just symbol history btw. don't use it to convince yourself every wall is connected"],
   ["me","i know"],["them","good"],["them","also satanic panic article is actually interesting"],["me","reading it rn"],
@@ -4626,7 +4679,7 @@ const chats={
   ["me","he just asked something"],
   ["them","about what"],
   ["me","nothing"],
-  ["them","okay mysterious 😭"],
+  ["them","okay mysterious"],
   ["them","u still here?"],
   ["them","vince said u walked out"],
   ["them","niko?"]
@@ -4645,7 +4698,7 @@ const chats={
   ["them","just reply so i know you're alive"]
  ]},
  barber:{kind:"inbox",name:"barber kuya j",preview:"same cut?",msgs:[
-  ["them","same cut?"],["me","yeah but don't make top short pls 😭"],["them","HAHA noted"],["me","last time traumatized me"],
+  ["them","same cut?"],["me","yeah but don't make top short pls"],["them","HAHA noted"],["me","last time traumatized me"],
   ["them","arte"],["me","i looked 12"],["them","u still look 12"],["me","blocked"]
  ]},
  pcrepair:{kind:"inbox",name:"pc repair",preview:"temps still high?",msgs:[
@@ -4657,7 +4710,7 @@ const chats={
   ["them","you said you'd call"],["me","i know"],["them","then why'd you disappear"],["me","family shit"],
   ["them","you always have family shit when lia is around"],["me","don't start"],["them","i'm not starting anything YOU started this"],
   ["them","you told me you were basically done with her"],["me","i said complicated"],["them","no you literally said 'it's ending anyway'"],
-  ["me","same difference"],["them","NO IT ISN'T 😭"],["them","you asked me to wait for you"],["me","i never said wait"],
+  ["me","same difference"],["them","NO IT ISN'T"],["them","you asked me to wait for you"],["me","i never said wait"],
   ["them","you said 'give me time' what else does that mean"],["me","you're twisting it"],["them","oh my god"],
   ["them","and why am i saved as enilec again"],["me","privacy"],["them","from WHO niko"],["me","relax"],
   ["them","don't tell me to relax"],["them","you literally get jealous when i reply to marco but YOU HAVE A GIRLFRIEND"],
@@ -4666,9 +4719,9 @@ const chats={
   ["me","because you were being weird"],["them","niko please listen to yourself"]
  ]},
  ash:{kind:"archived",name:"hsa",preview:"you said you're single",msgs:[
-  ["them","you said you're single"],["me","it's complicated"],["them","that's not the same thing 😭"],["me","i know"],
+  ["them","you said you're single"],["me","it's complicated"],["them","that's not the same thing"],["me","i know"],
   ["them","does she know about me"],["me","no"],["them","wtf niko"],["them","so when you said 'i don't talk to anyone else like this' that was bullshit too?"],
-  ["me","not what i meant"],["them","what else could that mean 😭"],["me","you're making it bigger than it is"],["them","nah you're actually insane"],
+  ["me","not what i meant"],["them","what else could that mean"],["me","you're making it bigger than it is"],["them","nah you're actually insane"],
   ["them","you asked me if i was talking to other guys"],["me","because i was curious"],["them","and got mad when i said yes"],["me","i didn't get mad"],
   ["them","you literally stopped replying"],["me","i was busy"],["them","RIGHT after i said it"],["me","coincidence"],["them","you are exhausting"]
  ]},
@@ -4693,35 +4746,35 @@ const chats={
   ["them","actually maybe i should anyway"],["them","you know what? yeah"],["them","i'm done protecting your stupid secrets"]
  ]},
  bella:{kind:"archived",name:"alleb",preview:"same selfie lmao",msgs:[
-  ["them","same selfie lmao"],["me","what"],["them","ash showed me 😭"],["them","you sent us the SAME pic"],["me","okay?"],
+  ["them","same selfie lmao"],["me","what"],["them","ash showed me"],["them","you sent us the SAME pic"],["me","okay?"],
   ["them","within like five minutes niko"],["me","it was a good pic"],["them","LMFAOOOO"],["them","you're shameless"],["me","dramatic"],
   ["them","and stop calling everyone pretty like it's a script"],["me","i don't"],["them","jane literally has the same message"],["me","you girls have a group chat or something"],
-  ["them","maybe 😭"],["me","that's terrifying"],["them","GOOD"]
+  ["them","maybe"],["me","that's terrifying"],["them","GOOD"]
  ]},
  jane:{kind:"archived",name:"enaj",preview:"good morning copy paste king",msgs:[
-  ["them","good morning copy paste king"],["me","shut up 😭"],["them","'good morning pretty hope u slept well'"],["them","word for word"],
+  ["them","good morning copy paste king"],["me","shut up"],["them","'good morning pretty hope u slept well'"],["them","word for word"],
   ["me","how do you even know that"],["them","girls talk"],["me","apparently"],["them","you are so cooked"],
   ["them","also maria is furious"],["me","she'll calm down"],["them","that sentence alone is why she shouldn't"]
  ]},
  liana:{kind:"archived",name:"anail",preview:"your pocket said miss u too?",msgs:[
   ["them","don't call me when you're with her"],["me","i don't"],["them","you literally did yesterday"],["me","accident"],
-  ["them","how do you accidentally call someone 😭"],["me","pocket"],["them","your pocket said 'miss u' too?"],["me","okay relax"],
+  ["them","how do you accidentally call someone"],["me","pocket"],["them","your pocket said 'miss u' too?"],["me","okay relax"],
   ["them","LMAO"],["them","you know what's funny"],["me","what"],["them","you were asking why i followed some guy the same day"],
   ["me","i was joking"],["them","no you weren't"],["me","whatever"],["them","exactly"]
  ]},
  sarah:{kind:"archived",name:"haras",preview:"why are you mad at ME",msgs:[
   ["them","why are you mad at ME"],["me","i'm not"],["them","you got weird after i said i was hanging with josh"],["me","do whatever u want"],
-  ["them","see 😭"],["them","you literally have a girlfriend"],["me","it's not like that"],["them","then what is it like"],
+  ["them","see"],["them","you literally have a girlfriend"],["me","it's not like that"],["them","then what is it like"],
   ["me","forget it"],["them","no explain"],["me","i just don't trust him"],["them","YOU DON'T KNOW HIM"],
   ["me","i know guys"],["them","apparently you know a lot of girls too"],["me","what's that supposed to mean"],["them","ask celine"]
  ]},
  nicole:{kind:"archived",name:"elocin",preview:"you asked me to be exclusive",msgs:[
   ["them","you asked me to be exclusive"],["me","i asked if you were talking to anyone"],["them","then said you weren't"],["me","i wasn't serious with anyone"],
   ["them","YOU HAVE A GIRLFRIEND"],["me","it's complicated"],["them","that word needs to be deleted from your vocabulary"],
-  ["them","you told me you hate situationships 😭"],["me","i do"],["them","YOU ARE SIX SITUATIONSHIPS IN A HOODIE"]
+  ["them","you told me you hate situationships"],["me","i do"],["them","YOU ARE SIX SITUATIONSHIPS IN A HOODIE"]
  ]},
  kyla:{kind:"archived",name:"alyk",preview:"same compliment too?",msgs:[
-  ["them","same compliment too?"],["me","what"],["them","'you make my days better'"],["me","i meant it"],["them","to how many people 😭"],
+  ["them","same compliment too?"],["me","what"],["them","'you make my days better'"],["me","i meant it"],["them","to how many people"],
   ["me","why is everyone comparing screenshots"],["them","because you're bad at this"],["me","apparently"],["them","very"]
  ]},
  trisha:{kind:"archived",name:"ahsirt",preview:"did you send her message to the gc?",msgs:[
@@ -4744,7 +4797,7 @@ const chats={
   ["them","u left this"],["them","photo attachment"],["them","black charger?"],["them","hello"],["them","i'll leave it with the cashier"]
  ]},
  nina:{kind:"requests",name:"nina",preview:"random but did we match before",msgs:[
-  ["them","random but did we match before"],["them","your face looks familiar"],["them","or maybe i'm wrong 😭"]
+  ["them","random but did we match before"],["them","your face looks familiar"],["them","or maybe i'm wrong"]
  ]},
  kate:{kind:"requests",name:"kate",preview:"your friend gave me this account",msgs:[
   ["them","your friend gave me this account"],["them","said you play 2k"],["them","need one more for a private lobby later"]
@@ -4822,7 +4875,7 @@ function openChat(k){
     addReply("we found niko's laptop near the terminal",()=>replyVince(1));
     addReply("where did niko go after the bar?",()=>replyVince(2));
   }else if((k==="lia"||k==="mama"||k==="vince")&&!hotspotOn){
-    replyBar.innerHTML=`<span class="muted" style="font-size:11px">${storyFlags.hotspotUnlocked?"offline cached chat • connect jc's hotspot to send a message":"offline cached chat • hotspot unavailable until you speak with terminal security"}</span>`;
+    replyBar.innerHTML=`<span class="muted" style="font-size:11px">${storyFlags.hotspotUnlocked?"offline cached chat • connect alon's hotspot to send a message":"offline cached chat • hotspot unavailable until you speak with terminal security"}</span>`;
   }else{
     replyBar.innerHTML=`<span class="muted" style="font-size:11px">${hotspotOn?"online • maybe don't message random people":"offline cached chat • maybe don't message random people"}</span>`;
   }
@@ -4835,7 +4888,7 @@ function openChat(k){
     setTimeout(()=>fieldTalk("may","he ghosted his therapist too... damn."),280);
   }
   if(k==="mika"){
-    setTimeout(()=>fieldTalk("jc","so this wasn't new. his friend already knew he kept skipping appointments."),280);
+    setTimeout(()=>fieldTalk("alon","so this wasn't new. his friend already knew he kept skipping appointments."),280);
   }
 
   if(k==="ari"){
@@ -4855,10 +4908,10 @@ function openChat(k){
   }
 
   if(k==="familygc"){
-    setTimeout(()=>fieldTalk("jc","okay finally normal family shit. ice, cake, and speaker complaints 😭"),280);
+    setTimeout(()=>fieldTalk("alon","okay finally normal family shit. ice, cake, and speaker complaints"),280);
   }
   if(k==="unclejojo"){
-    setTimeout(()=>fieldTalk("may","every family has that one uncle na puro reels 😭"),280);
+    setTimeout(()=>fieldTalk("may","every family has that one uncle na puro reels"),280);
   }
   if(k==="titalena"){
     addJournal("niko sometimes helps at a family print shop.");
@@ -4873,7 +4926,7 @@ function openChat(k){
   }
   if(k==="maria"){
     addJournal("maria's chat is almost entirely unanswered. she says niko acted serious, ghosted her, then came back repeatedly.");
-    setTimeout(()=>fieldTalk("jc","nah she is LOSING it and he's not even replying 😭"),280);
+    setTimeout(()=>fieldTalk("alon","nah she is LOSING it and he's not even replying"),280);
   }
   if(k==="celine"){
     addJournal("celine says niko told her his relationship with lia was basically ending.");
@@ -4881,11 +4934,11 @@ function openChat(k){
   }
   if(k==="ash"){
     addJournal("ash says niko explicitly told her he was single.");
-    setTimeout(()=>fieldTalk("jc","that's not even vague anymore. he straight up lied."),280);
+    setTimeout(()=>fieldTalk("alon","that's not even vague anymore. he straight up lied."),280);
   }
   if(k==="bella"){
     addJournal("bella caught niko sending identical selfies to multiple girls.");
-    setTimeout(()=>fieldTalk("may","same selfie to multiple girls is crazy work 😭"),280);
+    setTimeout(()=>fieldTalk("may","same selfie to multiple girls is crazy work"),280);
   }
   if(k==="jane"){
     addJournal("jane recognized one of niko's repeated copy-paste good morning messages.");
@@ -4896,8 +4949,8 @@ function openChat(k){
   if(k==="vince"||k==="cam"){
     addJournal("vince and cam were trying to locate niko around midnight.");
   }
-  if(k==="nicole"){addJournal("nicole says niko pushed exclusivity while hiding an existing girlfriend.");setTimeout(()=>fieldTalk("may","'six situationships in a hoodie' is CRAZY 😭"),280);}
-  if(k==="trisha"){addJournal("trisha says niko shared lia's private message with the boys gc.");setTimeout(()=>fieldTalk("jc","nah sharing her private message to the gc is actually foul."),280);}
+  if(k==="nicole"){addJournal("nicole says niko pushed exclusivity while hiding an existing girlfriend.");setTimeout(()=>fieldTalk("may","'six situationships in a hoodie' is CRAZY"),280);}
+  if(k==="trisha"){addJournal("trisha says niko shared lia's private message with the boys gc.");setTimeout(()=>fieldTalk("alon","nah sharing her private message to the gc is actually foul."),280);}
   if(k==="sarah"){addJournal("sarah says niko got jealous over another guy while he was hiding multiple girls himself.");}
   if(k==="kyla"){addJournal("kyla recognizes another repeated compliment niko reused.");}
   if(k==="grace"){addJournal("grace says niko ghosted her but kept checking when she came online.");}
@@ -4917,12 +4970,12 @@ function showTypingPause(label="typing…",duration=1600){
 }
 function replyLia(type){
   replyBar.innerHTML="";
-  if(type===3){addJournal("lia seems worried about niko. jc and may chose not to reply yet.");return}
+  if(type===3){addJournal("lia seems worried about niko. alon and haraya chose not to reply yet.");return}
   pushPresentMsg(type===1?"hi, we found niko's laptop":"hi, do you know niko?");
   setTimeout(()=>pushMsg("them",type===1?"what?? where did you find it?":"yeah. why? sino to?"),500);
   setTimeout(()=>pushMsg("them","he told me he was on his way home before midnight"),950);
   setTimeout(()=>pushMsg("them","is he with you?"),1350);
-  setTimeout(()=>pushMsg("them","sorry if i'm typing weird. i have a presentation in the morning and my group is still fixing slides 😭"),1900);
+  setTimeout(()=>pushMsg("them","sorry if i'm typing weird. i have a presentation in the morning and my group is still fixing slides"),1900);
   setTimeout(()=>pushMsg("them","i've been trying to finish that and keep checking if he replied"),2400);
   setTimeout(()=>pushMsg("them","you have no idea how many times he disappears then comes back acting normal"),2950);
   setTimeout(()=>pushMsg("them","how was i supposed to know when something was actually wrong"),3450);
@@ -4996,7 +5049,7 @@ stop drawing everything on layer 0 idiot`],
  ["surveying","aug 14",`check backsight
 check foresight
 close traverse before leaving site
-if error is huge DO NOT just edit one point until it looks right 😭`],
+if error is huge DO NOT just edit one point until it looks right`],
  ["draft","aug 14",`need to fix this first before i tell anyone
 
 wala pa namang sure
@@ -5076,7 +5129,7 @@ knicks trade half the team for one guy and still lose round 2
 expansion team makes conference finals fast
 coach gets fired at halftime eventually
 
-THESE ARE PREDICTIONS NOT PROMISES 😭`],
+THESE ARE PREDICTIONS NOT PROMISES`],
  ["football agenda","aug 16",`messi sucks
 not in my goat conversation
 
@@ -5323,7 +5376,7 @@ function openPhoto(id){
   const map={
     cafe:`<div class="detail"><h4>cafe</h4><p>niko sitting across from whoever took it. only his hand and hoodie show.</p></div>`,
     food:`<div class="detail"><h4>dinner</h4><p>two drinks. two plates.</p><p>lia's chat says niko told her he ate at home that night.</p></div>`,
-    road:`<div class="detail"><h4>evening road</h4><p>concrete barrier, lamp posts, wet pavement.</p><p><b>may:</b> "wait... this looks kinda familiar."</p><p><b>jc:</b> "maybe. roads look the same at night."</p></div>`,
+    road:`<div class="detail"><h4>evening road</h4><p>concrete barrier, lamp posts, wet pavement.</p><p><b>haraya:</b> "wait... this looks kinda familiar."</p><p><b>alon:</b> "maybe. roads look the same at night."</p></div>`,
     class:`<div class="detail"><h4>classroom</h4><p>whiteboard full of diagrams. normal class photo.</p></div>`,
     desk:`<div class="detail"><h4>desk at night</h4><p>laptop, notebook, charger, coffee.</p><p>there's a second phone face down near the edge.</p></div>`,
     mirror:`<div class="detail"><h4>mirror</h4><p>a girl is holding niko's hoodie. her face is outside the frame.</p></div>`,
@@ -5344,14 +5397,14 @@ function openPhoto(id){
     terminal_glass:`<div class="detail"><h4>12:05 am</h4><p>rain-covered glass near the terminal-side shelter.</p><p>a dark figure outside is doubled by reflection. there is no useful face or clothing detail.</p><p>the entire frame has slight directional motion blur, consistent with the camera moving while the shutter fired.</p><p class="muted">the image cannot establish whether one or two people are visible.</p><button class="soft" onclick="refuseGlassZoom()">zoom in</button></div>`,
     bench_wide:`<div class="detail"><h4>12:09 am</h4><p>wide blurry view toward the bench and flooded curb.</p><p>the bench itself appears empty. a dark shape near the leg could be a bag, shadow, or pooled water.</p><p class="muted">two minutes later the laptop appears in an inside-bag image.</p></div>`,
     street:`<div class="detail"><h4>11:57 pm</h4><p>dark street photo. image is tilted like the phone was being put away.</p></div>`,
-    waitingshed:`<div class="detail"><h4>12:07 am</h4><p>rain-smeared photo facing a covered waiting shed near the terminal-side road.</p><p>a person with an umbrella is visible at the far edge of the frame.</p><p>face, clothes, and direction of travel can't be made out.</p><p class="muted">the same bench area where jc and may later find the bag appears farther down the road.</p></div>`,
+    waitingshed:`<div class="detail"><h4>12:07 am</h4><p>rain-smeared photo facing a covered waiting shed near the terminal-side road.</p><p>a person with an umbrella is visible at the far edge of the frame.</p><p>face, clothes, and direction of travel can't be made out.</p><p class="muted">the same bench area where alon and haraya later find the bag appears farther down the road.</p></div>`,
     bagfloor:`<div class="detail"><h4>12:11 am</h4><p>inside of a black bag. blurry zipper and laptop corner.</p><p>a clear card sleeve sewn into the inner flap looks empty. a short braided cable lies loose beside the mesh pocket with nothing attached.</p><p class="muted">photo orientation is sideways. the image cannot show whether either detail was unusual before this moment.</p></div>`,
   };
   showWindowDetail("photos",map[id]||`<div class="detail muted">nothing useful.</div>`);
   if(id==="hallway"||id==="hoodie"||id==="hands")addJournal("more photos don't line up with what niko told lia.");
   if(id==="hallway_empty"||id==="window_zoom"||id==="samecar")addJournal("several photos look like niko was documenting people or places he felt suspicious about, but the images themselves don't prove anyone was following him.");
   if(id==="underpass_symbol"||id==="goat_poster"||id==="chalk_circle"||id==="bar_symbol")addJournal("niko photographed several occult-looking symbols, but the wider images and his own notes suggest they may be unrelated graffiti, posters, or coincidence.");
-  if(id==="black_candles")setTimeout(()=>fieldTalk("jc","this looks evil until u notice the chips and cat 😭"),260);
+  if(id==="black_candles")setTimeout(()=>fieldTalk("alon","this looks evil until u notice the chips and cat"),260);
   if(id==="waitingshed"){addJournal("12:07 am photo shows the terminal-side waiting shed in heavy rain, with one unidentifiable umbrella figure. the bench area is nearby.");setTimeout(()=>fieldTalk("may","that's basically where we are... but that person could be literally anybody."),260);}
   if(id==="terminal_glass"||id==="bench_wide"){addJournal("midnight photos show the same terminal-side area through rain and reflections, but none identifies who was there.");}
 }
@@ -6108,10 +6161,10 @@ function openNews(i){
     <p class="muted" style="font-size:10px;margin-top:18px">fictional in-game news feed</p>
   </div>`;
 
-  if(i===1)setTimeout(()=>fieldTalk("jc","terminal lines too 😭 we're actually never getting you home."),300);
+  if(i===1)setTimeout(()=>fieldTalk("jc","terminal lines too we're actually never getting you home."),300);
   if(i===5)setTimeout(()=>fieldTalk("may","120 for rice and ulam is criminal."),300);
-  if(i===9)setTimeout(()=>fieldTalk("jc","okay nah this point guard ranking is trash."),300);
-  if(i===11)setTimeout(()=>fieldTalk("may","the lizard article being trending is so philippines coded 😭"),300);
+  if(i===9)setTimeout(()=>fieldTalk("alon","okay nah this point guard ranking is trash."),300);
+  if(i===11)setTimeout(()=>fieldTalk("may","the lizard article being trending is so philippines coded"),300);
 }
 
 function restoreNewsPage(){
@@ -6127,7 +6180,7 @@ function renderYoutube(){
 function watchYT(i){
   markSeen("yt_"+i);
   toast("youtube",`offline • cached thumbnail and watch progress for "${youtubeItems[i][0]}"`);
-  if(i===0)setTimeout(()=>fieldTalk("jc","see? nba highlights. finally something normal on this laptop."),250);
+  if(i===0)setTimeout(()=>fieldTalk("alon","see? nba highlights. finally something normal on this laptop."),250);
   if(i===4)setTimeout(()=>fieldTalk("may","you literally have haircut references too, don't judge him."),250);
 }
 
@@ -6218,11 +6271,11 @@ function openSports(i){
     memes:`<div class="detail"><h4>basketball memes</h4><p>23 low-quality reaction images, legacy slander, missed-free-throw edits, fake trade graphics, and screenshots of niko losing sports arguments.</p></div>`
   };
   showWindowDetail("sports",pages[key]||`<div class="detail">nothing cached.</div>`,item[1]);
-  if(key==="nba_takes")setTimeout(()=>fieldTalk("may","oh my god he has an AGENDA folder 😭",3400),250);
+  if(key==="nba_takes")setTimeout(()=>fieldTalk("may","oh my god he has an AGENDA folder",3400),250);
   if(key==="nba_predictions")setTimeout(()=>fieldTalk("jc","jokic retiring mid-season for horses might be the least impossible one here somehow."),250);
   if(key==="football_takes")setTimeout(()=>fieldTalk("may","yeah no i'm not getting involved in the messi argument. that's how friendships end."),250);
-  if(key==="mlb_takes")setTimeout(()=>fieldTalk("jc","'SPEND MONEY THEN' in all caps is crazy 😭"),250);
-  if(key==="bracket")setTimeout(()=>fieldTalk("jc","wait his bracket is actually terrible 😭"),250);
+  if(key==="mlb_takes")setTimeout(()=>fieldTalk("jc","'SPEND MONEY THEN' in all caps is crazy"),250);
+  if(key==="bracket")setTimeout(()=>fieldTalk("jc","wait his bracket is actually terrible"),250);
 }
 
 const autocadDrawings=[
@@ -6288,14 +6341,14 @@ const steamFriends=[
 ];
 
 const steamChats={
-  "mika.exe":{preview:"u sold that round 😭",status:"replied",msgs:[
-    ["me","rank?"],["them","give me 10"],["me","u said that 30 mins ago"],["them","CE PLATE 😭"],["me","same excuse as me that's illegal"],["them","u sold that round yesterday don't talk"],["me","one bad round"],["them","six bad rounds"]
+  "mika.exe":{preview:"u sold that round",status:"replied",msgs:[
+    ["me","rank?"],["them","give me 10"],["me","u said that 30 mins ago"],["them","CE PLATE"],["me","same excuse as me that's illegal"],["them","u sold that round yesterday don't talk"],["me","one bad round"],["them","six bad rounds"]
   ]},
   "elle.jpg":{preview:"u playing fifa later?",status:"seen",msgs:[
     ["me","u playing fifa later?"],["me","fc whatever"],["system","seen 2 days ago"]
   ]},
   "sammyyy":{preview:"maybe after dinner",status:"replied",msgs:[
-    ["me","gta later?"],["them","maybe after dinner"],["me","that's basically no"],["them","says YOU 😭"],["me","fair"]
+    ["me","gta later?"],["them","maybe after dinner"],["me","that's basically no"],["them","says YOU"],["me","fair"]
   ]},
   "kyla.wav":{preview:"ty lol",status:"replied",msgs:[
     ["me","that clutch was actually crazy"],["them","ty lol"],["me","carry me siege next"],["them","absolutely not"]
@@ -6304,7 +6357,7 @@ const steamChats={
     ["me","stardew?"],["me","i need somebody to judge my farm"],["system","sent 4 days ago • no reply"]
   ]},
   "jules ♡":{preview:"ur the one who screamed first",status:"replied",msgs:[
-    ["me","lethal later"],["them","only if u stop leaving me behind 😭"],["me","i was getting scrap"],["them","ur the one who screamed first"],["me","strategic warning"]
+    ["me","lethal later"],["them","only if u stop leaving me behind"],["me","i was getting scrap"],["them","ur the one who screamed first"],["me","strategic warning"]
   ]},
   "riaa":{preview:"u still play siege?",status:"seen",msgs:[
     ["me","u still play siege?"],["system","seen yesterday"]
@@ -6315,14 +6368,14 @@ const steamChats={
   "aly.jpg":{preview:"fc rematch?",status:"no reply",msgs:[
     ["me","fc rematch?"],["me","u got lucky last time"],["system","sent 3 days ago • no reply"]
   ]},
-  "dani.wav":{preview:"invite me when ken leaves 😭",status:"replied",msgs:[
-    ["them","invite me when ken leaves 😭"],["me","why 😭"],["them","he backseats EVERYTHING"],["me","valid"],["them","rank later?"],["me","after plate"]
+  "dani.wav":{preview:"invite me when ken leaves",status:"replied",msgs:[
+    ["them","invite me when ken leaves"],["me","why"],["them","he backseats EVERYTHING"],["me","valid"],["them","rank later?"],["me","after plate"]
   ]},
   "jen.jpg":{preview:"hey u still play dbd?",status:"no reply",msgs:[
     ["me","hey u still play dbd?"],["me","nvm saw u were offline"],["system","sent 5 days ago • no reply"]
   ]},
   "faith.exe":{preview:"you still owe me one game",status:"replied",msgs:[
-    ["them","you still owe me one game"],["me","i was literally doing school"],["them","u were on 2k"],["me","research"],["them","blocked 😭"]
+    ["them","you still owe me one game"],["me","i was literally doing school"],["them","u were on 2k"],["me","research"],["them","blocked"]
   ]}
 };
 
@@ -6335,7 +6388,7 @@ function openSteamFriends(){
   const femaleCount=steamFriends.filter(x=>x[2]==="female").length;
   showWindowDetail("steam",`<div class="detail"><h4>cached friends</h4><p>${steamFriends.length} visible in offline cache • ${femaleCount} female-presenting profiles/usernames in this slice</p><p class="muted">mostly gaming usernames and display names. being on this list does not establish any relationship or case connection.</p></div>`+
     steamFriends.map((f,i)=>`<div class="index-row" onclick="openSteamFriend(${i})"><b>${f[0]}</b><small>${f[1]}</small><div class="social-row-meta">${f[3]} ${steamChats[f[0]]?steamStatusBadge(steamChats[f[0]].status):""}</div></div>`).join(""),"friends");
-  setTimeout(()=>fieldTalk("may","why is his steam friends list basically all girls too 😭 this man collected contacts in every app.",4000),250);
+  setTimeout(()=>fieldTalk("may","why is his steam friends list basically all girls too this man collected contacts in every app.",4000),250);
 }
 function openSteamFriend(i){
   const f=steamFriends[i];if(!f)return;markExtra("steam_friend_"+i);
@@ -6410,14 +6463,14 @@ const instagramPosts=[
   {cap:"sunset looked better irl",meta:"jun 30 • 48 likes • 6 comments",comments:["ria.s: camera betrayed u","niko: always"]},
   {cap:"structural analysis won today unfortunately",meta:"jun 21 • 22 likes • 2 comments",comments:["mads: survived?","niko: barely"]},
   {cap:"6'2 and still getting told to reach the top shelf",meta:"jun 14 • 58 likes • 7 comments",comments:["bea: because u are there","niko: exploitation"]},
-  {cap:"random night drive playlist did its job",meta:"jun 4 • 45 likes • 4 comments",comments:["faith.exe: drive and don't think? 😭","niko: elite playlist name"]}
+  {cap:"random night drive playlist did its job",meta:"jun 4 • 45 likes • 4 comments",comments:["faith.exe: drive and don't think?","niko: elite playlist name"]}
 ];
 const instagramDMs={
   "ela.jpg":{name:"ela",preview:"HAHA the coffee was mid",status:"replied",msgs:[
-    ["me","u always find the best cafes"],["them","HAHA the coffee was mid"],["me","pictures fooled me"],["them","that's literally the point 😭"]
+    ["me","u always find the best cafes"],["them","HAHA the coffee was mid"],["me","pictures fooled me"],["them","that's literally the point"]
   ]},
   "sammyyy":{name:"sam",preview:"seen 19h ago",status:"seen",msgs:[
-    ["me","pretty"],["them","tyy 😭"],["me","u free fri?"],["system","seen 19 hours ago"]
+    ["me","pretty"],["them","tyy"],["me","u free fri?"],["system","seen 19 hours ago"]
   ]},
   "kyla.wav":{name:"kyla",preview:"send me the cursed bracket",status:"replied",msgs:[
     ["them","send me the cursed bracket"],["me","no you'll use it against me"],["them","correct"],["me","at least ur honest"]
@@ -6425,8 +6478,8 @@ const instagramDMs={
   "ria.s":{name:"ria",preview:"seen yesterday",status:"seen",msgs:[
     ["me","this fit >>>"],["system","seen yesterday"]
   ]},
-  "trishh":{name:"trish",preview:"why do u keep disappearing 😭",status:"replied",msgs:[
-    ["them","why do u keep liking my story then disappearing 😭"],["me","busy"],["them","you say busy then you're online gaming"],["me","different kind of busy"],["them","terrible answer"]
+  "trishh":{name:"trish",preview:"why do u keep disappearing",status:"replied",msgs:[
+    ["them","why do u keep liking my story then disappearing"],["me","busy"],["them","you say busy then you're online gaming"],["me","different kind of busy"],["them","terrible answer"]
   ]},
   "faith.exe":{name:"faith",preview:"okay mr civil engineer",status:"replied",msgs:[
     ["me","site visit cooked me"],["them","okay mr civil engineer"],["me","respect the vest"],["them","never"]
@@ -6434,8 +6487,8 @@ const instagramDMs={
   "jen.jpg":{name:"jen",preview:"sent 3d ago",status:"no reply",msgs:[
     ["me","random but ur playlist was good"],["me","what was the second song"],["system","sent 3 days ago • no reply"]
   ]},
-  "mari.mp3":{name:"mari",preview:"accident daw 😭",status:"replied",msgs:[
-    ["them","why are u liking my old posts 😭"],["me","accident"],["them","THREE accidents?"],["me","phone slipped multiple times"],["them","liar 😭"]
+  "mari.mp3":{name:"mari",preview:"accident daw",status:"replied",msgs:[
+    ["them","why are u liking my old posts"],["me","accident"],["them","THREE accidents?"],["me","phone slipped multiple times"],["them","liar"]
   ]},
   "nixie":{name:"nix",preview:"seen 5d ago",status:"seen",msgs:[
     ["me","ur story scared the shit out of me"],["me","what game was that"],["system","seen 5 days ago"]
@@ -6584,14 +6637,14 @@ function openExtraFile(k){
 }
 
 const phoneOlderChat=[
-  ["may","u disappeared again 😭"],
+  ["may","u disappeared again"],
   ["jc","i fell asleep"],
   ["may","MID CONVO"],
   ["jc","very peaceful exit"],
-  ["may","you do that every midnight then wake up acting normal 😭"],
+  ["may","you do that every midnight then wake up acting normal"],
   ["jc","morning continuity"],
   ["may","paasa ka"],
-  ["jc","we'll see how things work out nga 😭"],
+  ["jc","we'll see how things work out nga"],
   ["may","THERE. nonchalant answer again"],
   ["jc","go with the flow diba. takes two to tango"],
   ["may","that is three non-answers in one message"],
@@ -6599,12 +6652,12 @@ const phoneOlderChat=[
   ["may","aquarius talaga"],
   ["jc","says the one who changes mood every second"],
   ["may","that's different"],
-  ["jc","of course it is 😭"],
+  ["jc","of course it is"],
   ["may","btw i don't believe u when u say you're scared of women"],
-  ["jc","why 😭"],
+  ["jc","why"],
   ["may","because u don't act scared. u act normal then randomly remember you're shy"],
   ["jc","internal panic. professional exterior"],
-  ["may","professional is CRAZY 😭"],
+  ["may","professional is CRAZY"],
   ["may","keep talking i'm gonna block u again"],
   ["jc","again?? at least give me notice"],
   ["may","no. instant suspension"],
@@ -6615,7 +6668,7 @@ const phoneOlderChat=[
 const phoneChat=[
   ["may","terminal nalang?"],
   ["jc","yeah i'll walk u there"],
-  ["may","u don't have to 😭"],
+  ["may","u don't have to"],
   ["jc","already outside"],
   ["may","?????"],
   ["jc","just go"],
@@ -6638,12 +6691,12 @@ function renderYourPhone(){
     if(storyStage>=3)notes.push(["mom","baha pa ba? update pag may masasakyan ka."]);
   }
   const phoneBattery=Math.max(18,(who==="jc"?84:76)-storyStage*4);
-  body.innerHTML=`<div class="phone-shell"><div class="phone-top"><b>${who}'s phone</b><span>${storyTimeLabel()} • ${phoneBattery}%</span></div><div class="detail"><b>${other}</b><p class="muted">older chat • a few saved messages</p></div><div class="phone-chat">${oldRows}</div><div class="detail"><b>${other}</b><p class="muted">before tonight</p></div><div class="phone-chat">${rows}</div><div class="detail"><b>notifications</b>${notes.map(n=>`<div class="phone-notif"><b>${n[0]}</b>${n[1]}</div>`).join("")}<p class="extra-warning">your phone is character texture only. it never counts as case evidence.</p></div></div>`;
+  body.innerHTML=`<div class="phone-shell"><div class="phone-top"><b>${leadName(who)}'s phone</b><span>${storyTimeLabel()} • ${phoneBattery}%</span></div><div class="detail"><b>${leadName(other)}</b><p class="muted">older chat • a few saved messages</p></div><div class="phone-chat">${oldRows}</div><div class="detail"><b>${leadName(other)}</b><p class="muted">before tonight</p></div><div class="phone-chat">${rows}</div><div class="detail"><b>notifications</b>${notes.map(n=>`<div class="phone-notif"><b>${n[0]}</b>${n[1]}</div>`).join("")}<p class="extra-warning">your phone is character texture only. it never counts as case evidence.</p></div></div>`;
 }
 
 function openMetaMeme(){
   markExtra("meta_ui_meme");
-  showWindowDetail("memes",`<div class="detail"><h4>found_weird_desktop_game.png</h4><div class="mini-desktop"><div class="mini-icons"><span>📁</span><span>💬</span><span>🚏</span><span>🖼️</span><span>🌐</span><span>✉️</span><span>🎙️</span><span>🗑️</span><span>🧮</span><span>😂</span></div><div class="mini-badge">12:59 am<br>heavy rain • ~33 waiting</div></div><p>POV u find someone's unlocked laptop and suddenly think you're a detective</p><p class="muted">comments:</p><p>just turn it in 😭</p><p>op opened the recycle bin before contacts</p><p>average civil engineering student</p><p class="extra-warning">optional joke • not evidence</p></div>`);
+  showWindowDetail("memes",`<div class="detail"><h4>found_weird_desktop_game.png</h4><div class="mini-desktop"><div class="mini-icons"><span>📁</span><span>💬</span><span>🚏</span><span>🖼️</span><span>🌐</span><span>✉️</span><span>🎙️</span><span>🗑️</span><span>🧮</span><span>😂</span></div><div class="mini-badge">12:59 am<br>heavy rain • ~33 waiting</div></div><p>POV u find someone's unlocked laptop and suddenly think you're a detective</p><p class="muted">comments:</p><p>just turn it in</p><p>op opened the recycle bin before contacts</p><p>average civil engineering student</p><p class="extra-warning">optional joke • not evidence</p></div>`);
 }
 
 function renderGames(){
@@ -6770,7 +6823,7 @@ const CHEAT_CODES=[
   {code:"moonlightcalculatorconcretebanana",name:"act 4 • humanize Niko",desc:"marks Bea + Miso context and opens therapy/perception material.",run:()=>cheatAct4()},
   {code:"refrigeratorparachuteheadphonescement",name:"act 5 • outside witnesses",desc:"adds enough mental-health context and opens RJ/Vince/Cam/final-night material.",run:()=>cheatAct5()},
   {code:"crocodileblueprintmidnighttelephone",name:"act 6 • timeline",desc:"adds suspicious independent evidence and unlocks the final timeline.",run:()=>cheatAct6()},
-  {code:"satellitepancakeconstructionhelmet",name:"security + hotspot",desc:"marks the security encounter complete and unlocks JC's hotspot without switching it on.",run:()=>cheatHotspot()},
+  {code:"satellitepancakeconstructionhelmet",name:"security + hotspot",desc:"marks the security encounter complete and unlocks Alon's hotspot without switching it on.",run:()=>cheatHotspot()},
   {code:"thunderstormspaghettielevator",name:"all files + chats",desc:"opens every story-gated file/chat tier and shows hidden folders without starting an ending.",run:()=>cheatAllAccess()},
   {code:"hyperventilatingwatermelonarchitecture",name:"full progression",desc:"fills all major prerequisites and final-window evidence so every ending can be reached.",run:()=>cheatFullProgress()},
   {code:"hippopotamuscalculatorumbrella",name:"ending choice menu",desc:"full-unlocks the finale and immediately opens the normal final decision menu.",run:()=>{cheatFullProgress(false);setTimeout(()=>offerEndingChoice(),100)}},
