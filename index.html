@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v64</title>
+<title>Lost Phone v66</title>
 <!-- v44: clean spoiler-free README + detailed gameplay-focused How to Play. -->
 <!-- v34: expanded multi-sport agenda archive; National Baller Association/football/Major League Basebrawl takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
@@ -1154,6 +1154,32 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
   .sf-hero{grid-template-columns:96px 1fr}.sf-cover{width:96px}.sf-hero h1{font-size:26px}.sf-message-grid{grid-template-columns:1fr}.sf-msg-list{border-right:0;border-bottom:1px solid #292e33;padding-bottom:8px}
 }
 
+
+/* v66 • dedicated MarketMess */
+#win-marketplace{width:min(1080px,94%);height:min(730px,90%);background:#0e1115}
+.marketplace-shell{display:grid;grid-template-columns:205px minmax(0,1fr);min-height:0;background:#0e1115;color:#edf1f4}
+.market-side{background:#11151a;border-right:1px solid #252b31;padding:14px 10px;overflow:auto}
+.market-logo{font-size:17px;padding:5px 9px 15px}.market-nav{display:block;width:100%;border:0;background:transparent;color:#aab2ba;text-align:left;padding:9px 10px;border-radius:7px;cursor:pointer;font-size:11px;font-weight:700;margin-bottom:2px}
+.market-nav:hover,.market-nav.active{background:#1c2229;color:#fff}.market-rule{height:1px;background:#2a3037;margin:12px 7px}.market-side-label{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:#737d86;padding:0 10px 7px}
+.market-main{display:flex;flex-direction:column;min-width:0;min-height:0}.market-topbar{display:flex;gap:8px;padding:10px 13px;border-bottom:1px solid #272d34;background:#14181d}
+.market-search{flex:1;min-width:0;background:#21262d;border:1px solid #363d45;color:#fff;border-radius:18px;padding:9px 13px;font-size:11px;outline:none}.market-search:focus{border-color:#73808b}
+.market-scroll{flex:1;overflow:auto;padding:16px 18px 34px}.market-hero{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px;border-radius:11px;background:linear-gradient(135deg,#1b2731,#15191e);border:1px solid #2b333c;margin-bottom:14px}
+.market-hero h1{margin:0 0 5px;font-size:24px}.market-hero p{margin:0;color:#a7b0b8;font-size:11px}.market-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.market-stat{padding:11px;border:1px solid #293039;background:#171c22;border-radius:8px}.market-stat b{display:block;font-size:17px}.market-stat small{color:#929ba4;font-size:9px}
+.market-section-title{font-size:16px;margin:18px 0 9px}.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px}
+.market-card{background:#171c22;border:1px solid #293039;border-radius:9px;padding:11px;cursor:pointer}.market-card:hover{background:#1d242b}.market-card .pic{height:105px;border-radius:7px;background:linear-gradient(135deg,#263646,#1c252e);display:grid;place-items:center;font-size:32px;margin-bottom:9px}
+.market-card b{display:block;font-size:12px}.market-card small{display:block;color:#929ba4;margin-top:4px;font-size:9px;line-height:1.35}.market-price{font-size:16px!important;color:#fff!important;font-weight:800}
+.market-status{display:inline-block;border:1px solid #3b454f;border-radius:10px;padding:2px 6px;font-size:8px;color:#aab3bb;margin-top:6px}.market-status.sold,.market-status.disputed{color:#ffb4b4;border-color:#754747}.market-status.reserved{color:#ffe29b;border-color:#75643d}.market-status.active{color:#9be8b3;border-color:#3e7350}
+.market-thread-row{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:9px;align-items:center;padding:9px;border-radius:8px;cursor:pointer;border-bottom:1px solid #242a31}.market-thread-row:hover{background:#1b2127}
+.market-avatar{width:36px;height:36px;border-radius:50%;background:#29323b;display:grid;place-items:center;font-size:16px}.market-thread-row b{font-size:11px}.market-thread-row small{display:block;color:#949da6;font-size:9px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.market-thread-meta{font-size:8px;color:#818b95;text-align:right}.market-chat{display:flex;flex-direction:column;gap:7px;max-width:720px}.market-bubble{max-width:78%;padding:8px 10px;border-radius:13px;background:#20262d;font-size:11px;line-height:1.4}
+.market-bubble.me{align-self:flex-end;background:#2c6140}.market-bubble.system{align-self:center;background:transparent;color:#7f8992;font-size:9px}.market-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.market-offer{background:#151a20;border:1px solid #2a323a;border-radius:9px;padding:11px;margin:10px 0}.market-offer-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:5px 0;font-size:10px}
+.market-meetup{display:grid;grid-template-columns:minmax(140px,1fr) minmax(220px,2fr) auto;gap:9px;padding:9px;border-bottom:1px solid #252c33;align-items:center;font-size:10px;cursor:pointer}.market-meetup:hover{background:#1a2026}.market-meetup small{display:block;color:#919aa3;margin-top:3px}
+.market-detail-head{display:flex;gap:13px;align-items:center;margin-bottom:12px}.market-detail-pic{width:92px;height:92px;border-radius:9px;background:linear-gradient(135deg,#2a3b4c,#202a34);display:grid;place-items:center;font-size:30px}.market-detail-head h2{margin:0 0 4px}.market-detail-head p{margin:2px 0;color:#98a1aa;font-size:10px}
+.market-empty{padding:35px;text-align:center;color:#7e8892}
+@media(max-width:700px){.marketplace-shell{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}.market-side{display:flex;gap:4px;overflow-x:auto;border-right:0;border-bottom:1px solid #252b31;padding:7px}.market-logo,.market-rule,.market-side-label{display:none}.market-nav{width:auto;white-space:nowrap;padding:7px 9px}.market-main{grid-row:2}.market-stats{grid-template-columns:repeat(2,1fr)}.market-meetup{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1359,6 +1385,7 @@ this rain is getting stupid though.</span></button>
       <div id="desktopIcons">
         <button class="desktop-icon" onclick="openWindow('files')"><span class="ico">📁</span><span class="lbl">files</span></button>
         <button class="desktop-icon" onclick="openWindow('messenger')"><span class="ico">💬</span><span class="lbl">messynger</span></button>
+        <button class="desktop-icon" onclick="openWindow('marketplace')"><span class="ico">🛒</span><span class="lbl">marketmess</span></button>
         <button class="desktop-icon" onclick="openWindow('news')"><span class="ico">📰</span><span class="lbl">news</span></button>
         <button class="desktop-icon" onclick="openWindow('terminal')"><span class="ico">🚏</span><span class="lbl">jeep terminal</span></button>
         <button class="desktop-icon" id="timelineIcon" style="display:none" onclick="openWindow('timeline')"><span class="ico">🧷</span><span class="lbl">our timeline</span></button>
@@ -1444,6 +1471,7 @@ this rain is getting stupid though.</span></button>
         <div class="start-grid">
           <button class="start-item" onclick="openWindow('files')">📁<br>files</button>
           <button class="start-item" onclick="openWindow('messenger')">💬<br>messynger</button>
+          <button class="start-item" onclick="openWindow('marketplace')">🛒<br>marketmess</button>
           <button class="start-item" onclick="openWindow('photos')">🖼️<br>photos</button>
           <button class="start-item" onclick="openWindow('browser')">🌐<br>browser</button>
           <button class="start-item" onclick="openWindow('mail')">✉️<br>mail</button>
@@ -1513,6 +1541,32 @@ this rain is getting stupid though.</span></button>
             <div class="messages" id="messages"><div class="bubble sys">nothing selected</div></div>
             <div class="replybar" id="replyBar"></div>
           </div>
+        </div>
+      </div>
+
+
+      <div class="window" id="win-marketplace">
+        <div class="window-bar"><div class="window-title">🛒 marketmess</div><div class="window-actions"><button class="win-btn" onclick="closeWindow('marketplace')">_</button><button class="win-btn close" onclick="closeWindow('marketplace')">×</button></div></div>
+        <div class="window-body marketplace-shell">
+          <aside class="market-side">
+            <div class="market-logo">🛒 <b>marketmess</b></div>
+            <button class="market-nav active" data-market-tab="home" onclick="setMarketplaceTab('home')">⌂ home</button>
+            <button class="market-nav" data-market-tab="selling" onclick="setMarketplaceTab('selling')">🏷 selling</button>
+            <button class="market-nav" data-market-tab="buying" onclick="setMarketplaceTab('buying')">🧾 buying</button>
+            <button class="market-nav" data-market-tab="messages" onclick="setMarketplaceTab('messages')">💬 messages</button>
+            <button class="market-nav" data-market-tab="requests" onclick="setMarketplaceTab('requests')">📨 requests</button>
+            <button class="market-nav" data-market-tab="saved" onclick="setMarketplaceTab('saved')">☆ saved</button>
+            <div class="market-rule"></div>
+            <div class="market-side-label">commute damage</div>
+            <button class="market-nav" data-market-tab="meetups" onclick="setMarketplaceTab('meetups')">🚉 meetup list</button>
+          </aside>
+          <main class="market-main">
+            <div class="market-topbar">
+              <input id="marketSearch" class="market-search" placeholder="search items, buyers, sellers, places..." oninput="renderMarketplace(this.value)">
+              <button class="soft" onclick="marketplaceCreateDraft()">+ sell</button>
+            </div>
+            <div id="marketplaceBody" class="market-scroll"></div>
+          </main>
         </div>
       </div>
 
@@ -1911,6 +1965,11 @@ let spotifakeRepeat=false;
 let spotifakeVolume=72;
 const spotifakeHistory=[];
 let spotifakeHistoryPos=-1;
+const marketplaceSaved=new Set();
+const marketplaceArchived=new Set();
+const marketplaceOfferNotes={};
+const marketplaceListingState={};
+let marketplaceTab="home";
 let maeSpamIndex=0;
 let maeSpamTimer=null;
 
@@ -2595,6 +2654,7 @@ function openWindow(name){
   if(name==="browser") browserHome();
   if(name==="files") renderFolder(currentFileFolder||"recent");
   if(name==="messenger"){renderChats(document.getElementById('msgSearch')?.value||''); if(!currentChat){const first=Object.keys(chats).find(k=>chats[k].kind===chatMode&&isChatUnlocked(k));if(first)setTimeout(()=>openChat(first),0);}}
+  if(name==="marketplace")renderMarketplace(document.getElementById("marketSearch")?.value||"");
   if(name==="news") renderNews(currentNewsFilter||'all');
   if(name==="videos") renderVideos();
   if(name==="downloadsapp") renderDownloadsApp();
@@ -2640,7 +2700,8 @@ const APP_DISPLAY_NAMES={
   steam:"vapor",
   discord:"dischord",
   youtube:"viewtube",
-  autocad:"autodraft"
+  autocad:"autodraft",
+  marketplace:"marketmess"
 };
 function toast(title,text){
   clearTimeout(toastTimer);
@@ -4631,7 +4692,42 @@ const chats={
   ["me","what"],
   ["them","love u"],
   ["me","love u too"],
-  ["them","okay now goodnight"]
+  ["them","okay now goodnight"],
+  ["me","random question"],
+  ["them","that sounds dangerous"],
+  ["me","why does my city have so much fucking green in it"],
+  ["them","WHAT 😭"],
+  ["me","look around"],
+  ["me","railings green"],
+  ["me","waiting sheds green"],
+  ["me","trash bins green"],
+  ["me","basketball court green"],
+  ["me","city hall banners green"],
+  ["me","some random wall? green"],
+  ["them","maybe they got a bulk discount on green paint"],
+  ["me","that's what i'm saying"],
+  ["me","they see one ugly wall and go yeah paint it green"],
+  ["them","you're beefing with municipal paint now"],
+  ["me","because then it rains for 20 minutes and half the road is underwater"],
+  ["me","traffic is already shit"],
+  ["me","flood comes in and now everybody is moving at 0.4 kmh"],
+  ["them","and you're still staring at the green railings apparently"],
+  ["me","THE GREEN IS MOCKING ME"],
+  ["them","mhm sure"],
+  ["me","service road traffic, flooded intersections, random roadwork"],
+  ["me","then boom"],
+  ["me","fresh green paint"],
+  ["them","problem solved"],
+  ["me","exactly"],
+  ["them","maybe the paint is waterproof"],
+  ["me","can't be asked anymore"],
+  ["them","u say that then complain about it for another 20 mins"],
+  ["me","because i need witnesses"],
+  ["them","okay i'm listening"],
+  ["me","thank u"],
+  ["them","but if u start sending me pictures of green fences i'm muting u"],
+  ["me","already took two"],
+  ["them","NIKO"]
  ]},
  mama:{kind:"inbox",name:"mama",preview:"did you eat?",msgs:[
   ["them","did you eat?"],["me","later"],["them","wag puro coffee"],["me","yeah ma"],["them","bring umbrella"],["me","i have one"],
@@ -5129,7 +5225,26 @@ const chats={
   ["them","i'm putting 'maybe' on your gravestone"],
   ["me","accurate"],
   ["them","and sleep before 3"],
-  ["me","everyone is a cop"]
+  ["me","everyone is a cop"],
+  ["them","did u see city hall's new video"],
+  ["me","the dramatic one"],
+  ["them","YES"],
+  ["me","why does our mayor enter every event like secret service cleared the building first"],
+  ["them","HAHAHAHA"],
+  ["them","bro thinks city hall is the white house"],
+  ["me","one ribbon cutting and there are six camera angles"],
+  ["them","slow motion handshake"],
+  ["me","dramatic music"],
+  ["them","flag behind him"],
+  ["me","sir pls fix drainage"],
+  ["them","priorities"],
+  ["me","next video gonna say STATE OF THE CITY with an eagle flying"],
+  ["them","then cut to freshly painted green railings"],
+  ["me","DON'T START WITH THE GREEN"],
+  ["them","HAHAHAHAHAHA"],
+  ["me","traffic still ass but cinematic trailer goes hard"],
+  ["them","city governance season finale"],
+  ["me","renewed for another season unfortunately"]
  ]},
  group:{kind:"inbox",name:"school group",preview:"final na ba to",msgs:[
   ["them","final na ba to"],["me","i think so"],["them","what do you mean you think so"],["me","i'll check again later"],
@@ -5160,7 +5275,21 @@ const chats={
   ["me","hasn't happened"],["them","yet"],["them","lia deserves better btw"],["me","don't start"],["them","not starting. stating"],
   ["them","and if you're gonna keep doing this at least stop acting jealous when they talk to other guys"],["me","different"],["them","HOW"],["me","it just is"],
   ["them","insane answer"],["them","vince said you're coming tonight?"],["me","maybe 10"],["them","don't bring drama with you"],["me","i never do"],
-  ["them","that is the funniest thing you've ever typed"]
+  ["them","that is the funniest thing you've ever typed"],
+  ["them","who got stuck in traffic today"],
+  ["me","me"],
+  ["them","where"],
+  ["me","everywhere"],
+  ["them","helpful"],
+  ["me","city planning is just vibes"],
+  ["them","mayor gonna post a reel about it"],
+  ["me","with presidential lighting"],
+  ["them","HAHAHAHA"],
+  ["me","i'm serious bro thinks he's addressing congress"],
+  ["them","meanwhile knee-deep flood outside"],
+  ["me","and somebody just painted the barrier green again"],
+  ["them","niko vs green paint episode 46"],
+  ["me","i will win eventually"]
  ]},
  ballgc:{kind:"inbox",name:"hoops gc",preview:"that trade is fake",msgs:[
   ["them","that trade is fake"],["me","source?"],["them","trust me"],["me","so no source"],["them",""],
@@ -5310,11 +5439,6 @@ const chats={
   ["them","that is not a thing"],["me","it is now"],["them","bring tape tomorrow"],["me","noted"]
  ]},
 
- denise:{kind:"inbox",name:"denise",preview:"u still selling that keyboard?",msgs:[
-  ["them","u still selling that keyboard?"],["me","yeah"],["them","hm"],["me","1200"],["them","last price"],
-  ["me","1100"],["them","1000 pickup today"],["me","1050"],["them","grabe 50"],["me","principle"],
-  ["them","fine"],["them","where meetup"],["me","terminal side maybe"],["them","i'll message if tuloy"]
- ]},
 
  rina:{kind:"inbox",name:"rina • old classmate",preview:"happy birthday bea btw",msgs:[
   ["them","happy birthday bea btw"],["me","wrong sibling"],["them","I KNOW i'm telling u to tell her"],["me","oh"],
@@ -5374,220 +5498,44 @@ const chats={
  ]},
 
 
- monitorbuyer:{kind:"inbox",name:"marketplace • lance",preview:"144hz po?",msgs:[
-  ["them","144hz po?"],["me","75hz"],["them","sure po 75 lang"],["me","it's literally in the listing"],
-  ["them","pwede 144 if overclock"],["me","that's not how monitors work"],["them","ah okay"],
-  ["them","2k po kunin ko"],["me","listed 3200"],["them","cash naman po"],["me","still 3200"],
-  ["them","2500"],["me","no"],["them","last 2600"],["me","my last is still 3200"],["them","seen"]
- ]},
-
- headsetbuyer:{kind:"inbox",name:"marketplace • jen",preview:"swap sa rice cooker?",msgs:[
-  ["them","available headset?"],["me","yeah"],["them","may issue"],["me","none just upgraded"],
-  ["them","hm last"],["me","900"],["them","swap sa rice cooker?"],["me","what"],["them","brand new almost"],
-  ["me","how is it brand new almost"],["them","used twice"],["me","no thanks"],["them","plus 200"],["me","still no"],
-  ["them","sayang"]
- ]},
-
- controllerbuyer:{kind:"inbox",name:"marketplace • dods",preview:"drift ba boss",msgs:[
-  ["them","drift ba boss"],["me","slight on right stick"],["them","slight how slight"],["me","only noticeable in menus sometimes"],
-  ["them","so may drift"],["me","yes that's why it's cheap"],["them","200"],["me","listed 650"],
-  ["them","may drift eh"],["me","then don't buy it"],["them","300 pickup now"],["me","500"],
-  ["them","350"],["me","500"],["them","matigas ka boss"],["me","it's a controller"]
- ]},
-
- bookbuyer:{kind:"inbox",name:"marketplace • pam",preview:"madami highlight?",msgs:[
-  ["them","available pa structural analysis book"],["me","yeah"],["them","madami highlight?"],["me","kinda"],
-  ["them","how many pages"],["me","like 60%"],["them","SIXTY"],["me","academic seasoning"],
-  ["them","may answers written"],["me","some"],["them","actually useful"],["me","exactly"],
-  ["them","350?"],["me","400"],["them","deal"]
- ]},
-
- standbuyer:{kind:"inbox",name:"marketplace • arvin",preview:"free delivery po?",msgs:[
-  ["them","laptop stand available"],["me","yes"],["them","150 po?"],["me","200"],
-  ["them","150 + free delivery"],["me","brother the delivery costs more than 50"],["them","near lang naman"],
-  ["me","where"],["them","cavite"],["me","that is not near"],["them","HAHAHAHA"],["them","pickup nalang maybe"]
- ]},
-
- lensseller:{kind:"inbox",name:"marketplace • camera lens",preview:"read description sir",msgs:[
-  ["me","available?"],["them","yes"],["me","fungus or haze?"],["them","read description sir"],
-  ["me","it says clean optics"],["them","yes"],["me","so no fungus"],["them","minimal"],
-  ["me","minimal fungus is still fungus"],["them","very small only"],["me","send pic"],
-  ["them","photo attachment • lens under flashlight"],["me","yeah that's fungus"],["them","negotiable sir"]
- ]},
-
- chairseller:{kind:"inbox",name:"marketplace • chair seller",preview:"pickup only sir",msgs:[
-  ["me","available chair?"],["them","yes sir"],["me","can deliver manila"],["them","pickup only sir"],
-  ["me","where"],["them","bulacan"],["me","damn"],["them","worth the drive sir ergonomic"],
-  ["me","i don't have a car"],["them","book lalamove"],["me","shipping gonna cost the chair"],["them","quality sir"]
- ]},
-
- weirdtrade:{kind:"inbox",name:"marketplace • ron",preview:"trade aquarium?",msgs:[
-  ["them","boss trade keyboard"],["me","for what"],["them","aquarium 20 gallon"],["me","why would i need that"],
-  ["them","pwede fish setup"],["me","i have a cat"],["them","perfect entertainment"],["me","for the cat??"],
-  ["them","HAHAHA"],["me","no trade"],["them","plus 300"],["me","still aquarium"]
- ]},
-
- oldphonebuyer:{kind:"inbox",name:"marketplace • miguel",preview:"battery health?",msgs:[
-  ["them","battery health"],["me","81"],["them","original screen"],["me","yes"],["them","face id"],
-  ["me","works"],["them","issue"],["me","small scratch top left"],["them","pic"],["me","photo attachment • screen corner"],
-  ["them","grabe microscopic"],["me","that's why i said small"],["them","5k"],["me","listed 7"],["them","meet 5.5"],
-  ["me","6.5"],["them","6"],["me","6.3"],["them","deal if charger"],["me","cable only"],["them","deal"]
- ]},
 
 
- bicutanbuyer:{kind:"inbox",name:"marketplace • bicutan buyer",preview:"bicutan service road meetup?",msgs:[
-  ["them","available pa keyboard?"],["me","yeah"],["them","bicutan ka meetup?"],["me","where exactly"],
-  ["them","service road lang"],["me","service road WHERE"],["them","near sm bicutan side"],
-  ["me","that service road is a traffic shithole at literally any hour"],
-  ["them","HAHA manageable naman"],["me","no it isn't"],
-  ["them","sunday morning nalang"],["me","still somehow traffic"],
-  ["them","grabe ka naman"],["me","i've spent half a lifetime stuck there"],
-  ["them","pwede naman tawid ka nalang"],["me","with a keyboard box??"],
-  ["them","exercise"],["me","buyer giving me side quests now"],
-  ["them","okay okay meet near entrance nalang"],["me","better"]
- ]},
 
- bicutanseller:{kind:"inbox",name:"marketplace • bicutan gpu",preview:"pickup service road boss",msgs:[
-  ["me","still available gpu?"],["them","yes boss"],["me","location"],["them","bicutan service road"],
-  ["me","why is everything i want located on that cursed road"],
-  ["them","HAHAHA traffic lang naman"],["me","'traffic lang' is doing insane work there"],
-  ["them","after rush hour ka"],["me","there is no after rush hour in bicutan"],
-  ["them","10pm"],["me","somehow still red on maps"],
-  ["them","pwede lalamove"],["me","for a gpu i wanna test it first"],
-  ["them","fair boss"],["them","weekend nalang"]
- ]},
 
- taftgreen:{kind:"inbox",name:"marketplace • taft pickup",preview:"near green school kuya",msgs:[
-  ["them","kuha mo today kuya?"],["me","where meetup"],["them","taft"],
-  ["me","where sa taft"],["them","near the big green school kuya"],
-  ["me","that narrows it down enough actually"],["them","HAHA"],
-  ["them","gate side pwede"],["me","what time"],["them","5pm"],
-  ["me","5pm taft is evil"],["them","after class lang kasi"],
-  ["me","i'm gonna arrive looking 40 years older"],["them","worth it naman 300 lang item"],
-  ["me","that's the problem. commute costs emotional damage more than the item"],
-  ["them","HAHAHAHA"],["them","6 nalang?"],["me","6 is less evil"]
- ]},
 
- lrtbuyer:{kind:"inbox",name:"marketplace • lrt edsa buyer",preview:"lrt ka nalang kuya",msgs:[
-  ["them","meetup taft kuya"],["me","i'm coming from the other side"],
-  ["them","lrt ka nalang kuya easy"],["me","easy???"],
-  ["them","mrt taft then lipat lrt edsa"],["me","that transfer is packed as hell"],
-  ["me","mrt taft is full, lrt edsa is full, the walkway is full"],
-  ["me","and somehow that whole area always smells like heat + exhaust + everyone's commute"],
-  ["them","HAHAHAHA accurate"],["them","mabilis lang naman"],
-  ["me","mabilis if i become liquid and squeeze between people"],
-  ["them","weekend tayo"],["me","better"],
-  ["them","near station exit lang"],["me","deal"]
- ]},
 
- taftseller:{kind:"inbox",name:"marketplace • taft seller",preview:"station meetup only",msgs:[
-  ["me","available camera bag?"],["them","yes"],["me","can meet halfway"],["them","taft station only"],
-  ["me","lrt or mrt"],["them","lrt side"],["me","damn"],
-  ["them","why"],["me","mrt taft to lrt edsa interchange at rush hour is human tetris"],
-  ["them","HAHA"],["me","and everyone is sweating"],
-  ["them","aircon naman train"],["me","getting inside is the boss fight"],
-  ["them","7pm pwede"],["me","fine i will suffer for the camera bag"]
- ]},
 
- festivalbuyer:{kind:"inbox",name:"marketplace • festival mall",preview:"festival mall nalang?",msgs:[
-  ["them","available pa controller"],["me","yes"],["them","alabang meetup?"],["me","where"],
-  ["them","festival mall"],["me","inside or outside"],
-  ["them","inside para aircon"],["me","finally a buyer with civilization"],
-  ["them","food court?"],["me","which floor"],["them","near cinema side"],
-  ["me","okay"],["them","saturday 2pm"],["me","deal"],
-  ["them","bring cable pls"],["me","yeah"],
-  ["them","and let me test"],["me","obviously"]
- ]},
 
- atcbuyer:{kind:"inbox",name:"marketplace • alabang town center",preview:"atc meetup boss?",msgs:[
-  ["them","boss available headset"],["me","yeah"],["them","ATC meetup?"],
-  ["me","i can do alabang but ATC is kinda out of the way"],["them","festival?"],
-  ["me","festival easier"],["them","traffic sa alabang zapote eh"],
-  ["me","everything south is one traffic decision away from disaster"],
-  ["them","HAHA real"],["them","festival entrance nalang"],
-  ["me","deal"],["them","4pm"],["me","okay"]
- ]},
 
- alabanglowball:{kind:"inbox",name:"marketplace • alabang buyer",preview:"500 + punta ka alabang",msgs:[
-  ["them","500 boss"],["me","listed 900"],["them","500 pickup alabang"],
-  ["me","you want 400 off AND u want me to travel to alabang"],
-  ["them","meet halfway"],["me","your halfway is still alabang"],
-  ["them","HAHA"],["them","600"],["me","800"],
-  ["them","650"],["me","800"],
-  ["them","700 final"],["me","800 final"],
-  ["them","750 festival mall"],["me","fine"],
-  ["them","deal"],["me","the commute defeated me"]
- ]},
 
- sucatbuyer:{kind:"inbox",name:"marketplace • sucat",preview:"sucat exit lang boss",msgs:[
-  ["them","available monitor arm"],["me","yeah"],["them","sucat meetup"],["me","where"],
-  ["them","near exit lang boss"],["me","which side"],["them","service road"],
-  ["me","why do marketplace people live exclusively beside service roads"],
-  ["them","HAHAHA"],["them","easy landmark yellow gas station"],
-  ["me","there are like four"],
-  ["them","near chicken place"],["me","this is getting worse"],
-  ["them","send pin nalang"],["me","PLEASE"]
- ]},
 
- pasayrotunda:{kind:"inbox",name:"marketplace • pasay rotunda",preview:"edsa taft meetup boss",msgs:[
-  ["them","edsa taft meetup boss"],["me","what item again"],["them","mouse"],
-  ["me","i'm not entering edsa taft rush hour for a 350 peso mouse"],
-  ["them","HAHAHAHA"],["them","station lang"],
-  ["me","station lang has 9000 people"],
-  ["them","6pm"],["me","that's literally the worst time"],
-  ["them","8? 😂"],["me","8 is survivable"],
-  ["them","deal"],["me","if i disappear the mouse is yours"]
- ]},
 
- moabuyer:{kind:"inbox",name:"marketplace • moa buyer",preview:"moa globe meetup?",msgs:[
-  ["them","meetup moa"],["me","globe?"],["them","yeah"],
-  ["me","every marketplace meetup in moa is apparently legally required to happen at the globe"],
-  ["them","easy landmark eh"],["me","fair"],
-  ["them","3pm sunday"],["me","okay"],
-  ["them","wear black para makita kita"],["me","half of moa will be wearing black"],
-  ["them","hold the keyboard 😂"],["me","that'll do it"]
- ]},
 
- baclaranbuyer:{kind:"inbox",name:"marketplace • baclaran",preview:"dito ka nalang station",msgs:[
-  ["them","boss dito ka nalang baclaran station"],["me","i thought u said taft"],
-  ["them","mas malapit ako baclaran now"],["me","you changed the meetup while i'm already commuting"],
-  ["them","one station lang"],["me","with this crowd one station is an expedition"],
-  ["them","sorry boss"],["me","send exact exit"],
-  ["them","exit near church side"],["me","okay don't move again please"],
-  ["them","HAHA okay"]
- ]},
 
- magallanesbuyer:{kind:"inbox",name:"marketplace • magallanes",preview:"underpass meetup?",msgs:[
-  ["them","magallanes meetup boss"],["me","station?"],["them","underpass side"],
-  ["me","send pin because magallanes landmarks are just roads on top of other roads"],
-  ["them","HAHAHA"],["them","near convenience store"],
-  ["me","there's always a convenience store"],
-  ["them","i'll send live loc"],["me","thank god"],
-  ["them","7:30"],["me","deal"]
- ]},
 
- alabangchair:{kind:"inbox",name:"marketplace • alabang chair seller",preview:"festival loading bay pickup",msgs:[
-  ["me","still available chair"],["them","yes sir"],["me","meetup possible"],["them","festival mall loading side pickup"],
-  ["me","it's a chair so fair"],["them","can't bring inside mall sir"],
-  ["me","yeah i'd look insane walking through the food court with an office chair"],
-  ["them","HAHA"],["them","can test naman"],["me","how"],
-  ["them","upo ka lang sir"],["me","excellent testing methodology"],
-  ["them","saturday? "],["me","sure"]
- ]},
 
- marketbuyer:{kind:"inbox",name:"marketplace • kevin",preview:"hm po available pa po?",msgs:[
-  ["them","hm po available pa po?"],["me","yes available"],["them","last price po"],["me","850"],
-  ["them","700 po kunin ko now"],["me","800 last"],["them","750"],["me","800"],
-  ["them","location po"],["me","near terminal"],["them","pwede 780 boss"],["me","800 talaga"],
-  ["them","sige po"],["them","may issue po?"],["me","none"],["them","complete box?"],["me","unit + cable only"],
-  ["them","ahh"],["them","780 na po"],["me","800"],["them","seen"]
- ]},
 
- classbuyer:{kind:"inbox",name:"random buyer • migs",preview:"available pa po yung calculator?",msgs:[
-  ["them","available pa po yung calculator?"],["me","yes"],["them","hm po"],["me","600"],
-  ["them","fx-991ex po ba"],["me","yeah"],["them","orig? lol"],["me","yes"],["them","500 pickup"],
-  ["me","550"],["them","deal"],["them","tomorrow po"],["me","okay"],["them","salamat"]
- ]},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  laundry:{kind:"inbox",name:"laundry ate",preview:"sir ready na po",msgs:[
   ["them","sir ready na po laundry"],["me","until what time"],["them","9pm po"],["me","pickup 8"],["them","okay po"],
@@ -5739,39 +5687,22 @@ const chats={
  ]},
 
 
- bicutanreq:{kind:"requests",name:"marketplace • bicutan",preview:"service road meetup po",msgs:[
-  ["them","service road meetup po"],["them","near sm bicutan"],["them","available pa?"]
- ]},
- taftreq:{kind:"requests",name:"marketplace • taft student",preview:"green school gate meetup?",msgs:[
-  ["them","green school gate meetup?"],["them","after class 6pm"],["them","cash po"]
- ]},
- alabangreq:{kind:"requests",name:"marketplace • alabang",preview:"festival mall boss?",msgs:[
-  ["them","festival mall boss?"],["them","saturday"],["them","700 cash"]
- ]},
- lrtcheap:{kind:"requests",name:"marketplace • lrt buyer",preview:"lrt ka lang kuya",msgs:[
-  ["them","lrt ka lang kuya"],["them","station meetup mabilis"],["them","last price?"]
- ]},
- sucatreq:{kind:"requests",name:"marketplace • sucat buyer",preview:"near service road po",msgs:[
-  ["them","near service road po"],["them","can meetup tonight"],["them","hello boss"]
- ]},
- marketmouse:{kind:"requests",name:"marketplace • dianne",preview:"available mouse?",msgs:[
-  ["them","available mouse?"],["them","rgb working?"],["them","can ship"],["them","hello seller"]
- ]},
- marketdesk:{kind:"requests",name:"marketplace • paul",preview:"desk still available?",msgs:[
-  ["them","desk still available?"],["them","actual dimensions pls"],["them","kasya 2 monitors?"]
- ]},
- marketcam:{kind:"requests",name:"marketplace • ivy",preview:"camera strap hm?",msgs:[
-  ["them","camera strap hm?"],["them","original?"],["them","can meetup tomorrow"]
- ]},
- marketcalc2:{kind:"requests",name:"marketplace • theo",preview:"swap calculator?",msgs:[
-  ["them","swap calculator sa mechanical keyboard?"],["them","blue switch"],["them","plus cash ako"]
- ]},
- marketspeaker:{kind:"requests",name:"marketplace • max",preview:"speaker available pa boss",msgs:[
-  ["them","speaker available pa boss"],["them","battery ilang hours"],["them","600 kunin now"]
- ]},
- fbmarket2:{kind:"requests",name:"marketplace • aya",preview:"available pa po?",msgs:[
-  ["them","available pa po?"],["them","hm last"],["them","can meetup manila"],["them","hello po"]
- ]},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  printerclient:{kind:"requests",name:"unknown • print",preview:"magkano po 40 pages?",msgs:[
   ["them","magkano po 40 pages?"],["them","black white po"],["them","pwede rush"],["them","sorry wrong account ba"]
  ]},
@@ -5779,9 +5710,6 @@ const chats={
   ["them","rain seven later?"],["them","toni said u play"],["them","need 1"],["them","nvm full na"]
  ]},
 
- seller:{kind:"requests",name:"marketplace seller",preview:"still interested in mouse?",msgs:[
-  ["them","still interested in mouse?"],["them","can do 900 last price"],["them","pickup only"]
- ]}
 }
 
 function isChatModeAvailable(mode){
@@ -6442,7 +6370,7 @@ const history=[
  ["how to disable find my device windos","aug 15, 4:06 am"],
  
  ["can messynger active status be wrong","aug 10, 2:14 am"],
- ["bicutan service road traffic best time","aug 15, 4:12 pm"],["mrt taft to lrt edsa transfer crowd","aug 14, 6:03 pm"],["festival mall alabang closing time","aug 12, 7:44 pm"],["how to clear recent places windos 11","aug 9, 11:51 pm"],
+ ["cubao mrt rush hour crowd","aug 16, 5:14 pm"],["alabang zapote traffic sunday","aug 15, 9:32 pm"],["españa flood update rain","aug 15, 5:40 pm"],["pitx gate map arrivals","aug 13, 4:22 pm"],["one ayala terminal map","aug 12, 6:06 pm"],["bgc bus route from ayala","aug 11, 3:48 pm"],["bicutan service road traffic best time","aug 15, 4:12 pm"],["mrt taft to lrt edsa transfer crowd","aug 14, 6:03 pm"],["festival mall alabang closing time","aug 12, 7:44 pm"],["how to clear recent places windos 11","aug 9, 11:51 pm"],
  ["how to hide photos in windos","aug 9, 11:43 pm"],
  ["vince bar staff manila","aug 17, 9:51 pm"],
  ["bar cctv retention how long","aug 17, 10:02 pm"],
@@ -8650,8 +8578,169 @@ function submitMenuCheat(){
 }
 
 
+const marketplaceThreads=[
+  {id:"mae_reservation",kind:"inbox",name:"mae",preview:"reservation payment • ₱500 unresolved",role:"selling",location:"Metro Manila",item:"⌨️ compact keyboard",price:1500,status:"disputed",msgs:[["them","still available?"],["me","yeah"],["them","can reserve until friday?"],["me","send 500 reservation then i'll hold it"],["them","okay send gcash"],["me","same number"],["them","sent ₱500"],["system","payment screenshot attachment • ₱500"],["them","reserved na?"],["me","yeah"],["them","thank u"],["them","friday meetup right"],["system","later complaints continue on Messynger, Instacam, and Mail after the listing disappears"]]},
+  {id:"denise",kind:"inbox",name:"denise",preview:"u still selling that keyboard?",role:"selling",location:"Metro Manila",item:"⌨️ keyboard",price:50,status:"active",msgs:[["them","u still selling that keyboard?"],["me","yeah"],["them","hm"],["me","1200"],["them","last price"],["me","1100"],["them","1000 pickup today"],["me","1050"],["them","grabe 50"],["me","principle"],["them","fine"],["them","where meetup"],["me","terminal side maybe"],["them","i'll message if tuloy"]]},
+  {id:"monitorbuyer",kind:"inbox",name:"lance",preview:"144hz po?",role:"selling",location:"Metro Manila",item:"🖥️ monitor",price:2600,status:"active",msgs:[["them","144hz po?"],["me","75hz"],["them","sure po 75 lang"],["me","it's literally in the listing"],["them","pwede 144 if overclock"],["me","that's not how monitors work"],["them","ah okay"],["them","2k po kunin ko"],["me","listed 3200"],["them","cash naman po"],["me","still 3200"],["them","2500"],["me","no"],["them","last 2600"],["me","my last is still 3200"],["them","seen"]]},
+  {id:"headsetbuyer",kind:"inbox",name:"jen",preview:"swap sa rice cooker?",role:"selling",location:"Metro Manila",item:"🎧 headset",price:200,status:"active",msgs:[["them","available headset?"],["me","yeah"],["them","may issue"],["me","none just upgraded"],["them","hm last"],["me","900"],["them","swap sa rice cooker?"],["me","what"],["them","brand new almost"],["me","how is it brand new almost"],["them","used twice"],["me","no thanks"],["them","plus 200"],["me","still no"],["them","sayang"]]},
+  {id:"controllerbuyer",kind:"inbox",name:"dods",preview:"drift ba boss",role:"selling",location:"Metro Manila",item:"🎮 controller",price:650,status:"active",msgs:[["them","drift ba boss"],["me","slight on right stick"],["them","slight how slight"],["me","only noticeable in menus sometimes"],["them","so may drift"],["me","yes that's why it's cheap"],["them","200"],["me","listed 650"],["them","may drift eh"],["me","then don't buy it"],["them","300 pickup now"],["me","500"],["them","350"],["me","500"],["them","matigas ka boss"],["me","it's a controller"]]},
+  {id:"bookbuyer",kind:"inbox",name:"pam",preview:"madami highlight?",role:"selling",location:"Metro Manila",item:"📚 structural analysis book",price:60,status:"reserved",msgs:[["them","available pa structural analysis book"],["me","yeah"],["them","madami highlight?"],["me","kinda"],["them","how many pages"],["me","like 60%"],["them","SIXTY"],["me","academic seasoning"],["them","may answers written"],["me","some"],["them","actually useful"],["me","exactly"],["them","350?"],["me","400"],["them","deal"]]},
+  {id:"standbuyer",kind:"inbox",name:"arvin",preview:"free delivery po?",role:"selling",location:"Cavite",item:"💻 laptop stand",price:50,status:"active",msgs:[["them","laptop stand available"],["me","yes"],["them","150 po?"],["me","200"],["them","150 + free delivery"],["me","brother the delivery costs more than 50"],["them","near lang naman"],["me","where"],["them","cavite"],["me","that is not near"],["them","HAHAHAHA"],["them","pickup nalang maybe"]]},
+  {id:"lensseller",kind:"inbox",name:"camera lens",preview:"read description sir",role:"buying",location:"Metro Manila",item:"📷 camera lens",price:500,status:"active",msgs:[["me","available?"],["them","yes"],["me","fungus or haze?"],["them","read description sir"],["me","it says clean optics"],["them","yes"],["me","so no fungus"],["them","minimal"],["me","minimal fungus is still fungus"],["them","very small only"],["me","send pic"],["them","photo attachment • lens under flashlight"],["me","yeah that's fungus"],["them","negotiable sir"]]},
+  {id:"chairseller",kind:"inbox",name:"chair seller",preview:"pickup only sir",role:"buying",location:"Bulacan",item:"🪑 office chair",price:500,status:"active",msgs:[["me","available chair?"],["them","yes sir"],["me","can deliver manila"],["them","pickup only sir"],["me","where"],["them","bulacan"],["me","damn"],["them","worth the drive sir ergonomic"],["me","i don't have a car"],["them","book lalamove"],["me","shipping gonna cost the chair"],["them","quality sir"]]},
+  {id:"weirdtrade",kind:"inbox",name:"ron",preview:"trade aquarium?",role:"selling",location:"Metro Manila",item:"⌨️ keyboard",price:300,status:"active",msgs:[["them","boss trade keyboard"],["me","for what"],["them","aquarium 20 gallon"],["me","why would i need that"],["them","pwede fish setup"],["me","i have a cat"],["them","perfect entertainment"],["me","for the cat??"],["them","HAHAHA"],["me","no trade"],["them","plus 300"],["me","still aquarium"]]},
+  {id:"oldphonebuyer",kind:"inbox",name:"miguel",preview:"battery health?",role:"selling",location:"Alabang Town Center",item:"📦 marketplace item",price:81,status:"reserved",msgs:[["them","battery health"],["me","81"],["them","original screen"],["me","yes"],["them","face id"],["me","works"],["them","issue"],["me","small scratch top left"],["them","pic"],["me","photo attachment • screen corner"],["them","grabe microscopic"],["me","that's why i said small"],["them","5k"],["me","listed 7"],["them","meet 5.5"],["me","6.5"],["them","6"],["me","6.3"],["them","deal if charger"],["me","cable only"],["them","deal"]]},
+  {id:"bicutanbuyer",kind:"inbox",name:"bicutan buyer",preview:"bicutan service road meetup?",role:"selling",location:"Bicutan",item:"⌨️ keyboard",price:500,status:"active",msgs:[["them","available pa keyboard?"],["me","yeah"],["them","bicutan ka meetup?"],["me","where exactly"],["them","service road lang"],["me","service road WHERE"],["them","near sm bicutan side"],["me","that service road is a traffic shithole at literally any hour"],["them","HAHA manageable naman"],["me","no it isn't"],["them","sunday morning nalang"],["me","still somehow traffic"],["them","grabe ka naman"],["me","i've spent half a lifetime stuck there"],["them","pwede naman tawid ka nalang"],["me","with a keyboard box??"],["them","exercise"],["me","buyer giving me side quests now"],["them","okay okay meet near entrance nalang"],["me","better"]]},
+  {id:"bicutanseller",kind:"inbox",name:"bicutan gpu",preview:"pickup service road boss",role:"buying",location:"Bicutan",item:"🧩 used GPU",price:500,status:"active",msgs:[["me","still available gpu?"],["them","yes boss"],["me","location"],["them","bicutan service road"],["me","why is everything i want located on that cursed road"],["them","HAHAHA traffic lang naman"],["me","'traffic lang' is doing insane work there"],["them","after rush hour ka"],["me","there is no after rush hour in bicutan"],["them","10pm"],["me","somehow still red on maps"],["them","pwede lalamove"],["me","for a gpu i wanna test it first"],["them","fair boss"],["them","weekend nalang"]]},
+  {id:"taftgreen",kind:"inbox",name:"taft pickup",preview:"near green school kuya",role:"selling",location:"Taft",item:"📦 marketplace item",price:300,status:"active",msgs:[["them","kuha mo today kuya?"],["me","where meetup"],["them","taft"],["me","where sa taft"],["them","near the big green school kuya"],["me","that narrows it down enough actually"],["them","HAHA"],["them","gate side pwede"],["me","what time"],["them","5pm"],["me","5pm taft is evil"],["them","after class lang kasi"],["me","i'm gonna arrive looking 40 years older"],["them","worth it naman 300 lang item"],["me","that's the problem. commute costs emotional damage more than the item"],["them","HAHAHAHA"],["them","6 nalang?"],["me","6 is less evil"]]},
+  {id:"lrtbuyer",kind:"inbox",name:"lrt edsa buyer",preview:"lrt ka nalang kuya",role:"selling",location:"Taft",item:"📦 marketplace item",price:500,status:"reserved",msgs:[["them","meetup taft kuya"],["me","i'm coming from the other side"],["them","lrt ka nalang kuya easy"],["me","easy???"],["them","mrt taft then lipat lrt edsa"],["me","that transfer is packed as hell"],["me","mrt taft is full, lrt edsa is full, the walkway is full"],["me","and somehow that whole area always smells like heat + exhaust + everyone's commute"],["them","HAHAHAHA accurate"],["them","mabilis lang naman"],["me","mabilis if i become liquid and squeeze between people"],["them","weekend tayo"],["me","better"],["them","near station exit lang"],["me","deal"]]},
+  {id:"taftseller",kind:"inbox",name:"taft seller",preview:"station meetup only",role:"buying",location:"Taft",item:"📷 camera bag",price:500,status:"active",msgs:[["me","available camera bag?"],["them","yes"],["me","can meet halfway"],["them","taft station only"],["me","lrt or mrt"],["them","lrt side"],["me","damn"],["them","why"],["me","mrt taft to lrt edsa interchange at rush hour is human tetris"],["them","HAHA"],["me","and everyone is sweating"],["them","aircon naman train"],["me","getting inside is the boss fight"],["them","7pm pwede"],["me","fine i will suffer for the camera bag"]]},
+  {id:"festivalbuyer",kind:"inbox",name:"festival mall",preview:"festival mall nalang?",role:"selling",location:"Festival Mall",item:"🎮 controller",price:500,status:"reserved",msgs:[["them","available pa controller"],["me","yes"],["them","alabang meetup?"],["me","where"],["them","festival mall"],["me","inside or outside"],["them","inside para aircon"],["me","finally a buyer with civilization"],["them","food court?"],["me","which floor"],["them","near cinema side"],["me","okay"],["them","saturday 2pm"],["me","deal"],["them","bring cable pls"],["me","yeah"],["them","and let me test"],["me","obviously"]]},
+  {id:"atcbuyer",kind:"inbox",name:"alabang town center",preview:"atc meetup boss?",role:"selling",location:"Festival Mall",item:"🎧 headset",price:500,status:"reserved",msgs:[["them","boss available headset"],["me","yeah"],["them","ATC meetup?"],["me","i can do alabang but ATC is kinda out of the way"],["them","festival?"],["me","festival easier"],["them","traffic sa alabang zapote eh"],["me","everything south is one traffic decision away from disaster"],["them","HAHA real"],["them","festival entrance nalang"],["me","deal"],["them","4pm"],["me","okay"]]},
+  {id:"alabanglowball",kind:"inbox",name:"alabang buyer",preview:"500 + punta ka alabang",role:"selling",location:"Festival Mall",item:"📦 marketplace item",price:900,status:"reserved",msgs:[["them","500 boss"],["me","listed 900"],["them","500 pickup alabang"],["me","you want 400 off AND u want me to travel to alabang"],["them","meet halfway"],["me","your halfway is still alabang"],["them","HAHA"],["them","600"],["me","800"],["them","650"],["me","800"],["them","700 final"],["me","800 final"],["them","750 festival mall"],["me","fine"],["them","deal"],["me","the commute defeated me"]]},
+  {id:"sucatbuyer",kind:"inbox",name:"sucat",preview:"sucat exit lang boss",role:"selling",location:"Sucat",item:"🖥️ monitor arm",price:500,status:"active",msgs:[["them","available monitor arm"],["me","yeah"],["them","sucat meetup"],["me","where"],["them","near exit lang boss"],["me","which side"],["them","service road"],["me","why do marketplace people live exclusively beside service roads"],["them","HAHAHA"],["them","easy landmark yellow gas station"],["me","there are like four"],["them","near chicken place"],["me","this is getting worse"],["them","send pin nalang"],["me","PLEASE"]]},
+  {id:"pasayrotunda",kind:"inbox",name:"pasay rotunda",preview:"edsa taft meetup boss",role:"selling",location:"EDSA-Taft",item:"🖱️ mouse",price:350,status:"reserved",msgs:[["them","edsa taft meetup boss"],["me","what item again"],["them","mouse"],["me","i'm not entering edsa taft rush hour for a 350 peso mouse"],["them","HAHAHAHA"],["them","station lang"],["me","station lang has 9000 people"],["them","6pm"],["me","that's literally the worst time"],["them","8? 😂"],["me","8 is survivable"],["them","deal"],["me","if i disappear the mouse is yours"]]},
+  {id:"moabuyer",kind:"inbox",name:"moa buyer",preview:"moa globe meetup?",role:"selling",location:"MOA",item:"⌨️ keyboard",price:500,status:"active",msgs:[["them","meetup moa"],["me","globe?"],["them","yeah"],["me","every marketplace meetup in moa is apparently legally required to happen at the globe"],["them","easy landmark eh"],["me","fair"],["them","3pm sunday"],["me","okay"],["them","wear black para makita kita"],["me","half of moa will be wearing black"],["them","hold the keyboard 😂"],["me","that'll do it"]]},
+  {id:"baclaranbuyer",kind:"inbox",name:"baclaran",preview:"dito ka nalang station",role:"selling",location:"Taft",item:"📦 marketplace item",price:500,status:"active",msgs:[["them","boss dito ka nalang baclaran station"],["me","i thought u said taft"],["them","mas malapit ako baclaran now"],["me","you changed the meetup while i'm already commuting"],["them","one station lang"],["me","with this crowd one station is an expedition"],["them","sorry boss"],["me","send exact exit"],["them","exit near church side"],["me","okay don't move again please"],["them","HAHA okay"]]},
+  {id:"magallanesbuyer",kind:"inbox",name:"magallanes",preview:"underpass meetup?",role:"selling",location:"Magallanes",item:"📦 marketplace item",price:500,status:"reserved",msgs:[["them","magallanes meetup boss"],["me","station?"],["them","underpass side"],["me","send pin because magallanes landmarks are just roads on top of other roads"],["them","HAHAHA"],["them","near convenience store"],["me","there's always a convenience store"],["them","i'll send live loc"],["me","thank god"],["them","7:30"],["me","deal"]]},
+  {id:"alabangchair",kind:"inbox",name:"alabang chair seller",preview:"festival loading bay pickup",role:"buying",location:"Festival Mall",item:"🪑 office chair",price:500,status:"active",msgs:[["me","still available chair"],["them","yes sir"],["me","meetup possible"],["them","festival mall loading side pickup"],["me","it's a chair so fair"],["them","can't bring inside mall sir"],["me","yeah i'd look insane walking through the food court with an office chair"],["them","HAHA"],["them","can test naman"],["me","how"],["them","upo ka lang sir"],["me","excellent testing methodology"],["them","saturday? "],["me","sure"]]},
+  {id:"cubaobuyer",kind:"inbox",name:"cubao",preview:"gateway or farmers boss?",role:"selling",location:"Cubao",item:"🖥️ monitor",price:500,status:"active",msgs:[["them","meetup cubao boss"],["me","where exactly"],["them","gateway"],["me","which side"],["them","near farmers"],["me","gateway AND farmers are not the same answer"],["them","connected naman boss"],["me","that's how i end up walking through three buildings carrying a monitor"],["them","HAHAHAHA"],["them","mrt exit side nalang"],["me","which exit"],["them","i'll send pic"],["me","thank god"],["them","6pm"],["me","cubao 6pm is a social experiment"],["them","7:30?"],["me","much better"]]},
+  {id:"monumentobuyer",kind:"inbox",name:"monumento",preview:"monumento circle meetup?",role:"selling",location:"Monumento",item:"📦 marketplace item",price:500,status:"active",msgs:[["them","boss monumento meetup"],["me","lrt side?"],["them","circle"],["me","that's still like twelve possible corners"],["them","near mall"],["me","there are several malls"],["them","HAHA sorry"],["them","near station entrance"],["me","send pin pls"],["them","sige"],["me","what time"],["them","5:30"],["me","monumento at 5:30 is gonna turn me into dust"],["them","rush hour lang boss"],["me","'lang' again doing heroic work"]]},
+  {id:"guadalupebuyer",kind:"inbox",name:"guadalupe",preview:"guada station kuya",role:"selling",location:"Guadalupe",item:"📦 marketplace item",price:500,status:"reserved",msgs:[["them","guada station meetup kuya"],["me","platform side or outside"],["them","outside near market"],["me","why do all meetup locations involve stairs + heat"],["them","exercise kuya"],["me","marketplace buyers keep giving me fitness plans"],["them","HAHA"],["me","what time"],["them","6pm"],["me","guadalupe 6pm is shoulder-to-shoulder mode"],["them","7:30 nalang"],["me","yes please"],["them","cash exact"],["me","deal"]]},
+  {id:"shawbuyer",kind:"inbox",name:"shaw",preview:"shaw crossing lang",role:"selling",location:"Shaw",item:"📦 marketplace item",price:500,status:"reserved",msgs:[["them","meet shaw crossing"],["me","which mall side"],["them","either"],["me","that's not how crossing works 😭"],["them","HAHA whichever u arrive first"],["me","i'm gonna get trapped on the wrong side of edsa"],["them","mrt ka"],["me","i know"],["them","then easy"],["me","nothing involving edsa at 6pm is easy"],["them","7:45"],["me","deal"]]},
+  {id:"ortigasbuyer",kind:"inbox",name:"ortigas",preview:"megamall building b?",role:"selling",location:"Megamall",item:"📦 marketplace item",price:500,status:"active",msgs:[["them","megamall meetup"],["me","A or B"],["them","B"],["me","which entrance"],["them","fashion hall side"],["me","that's not building B"],["them","WAIT"],["me","see this is how marketplace disappearances happen"],["them","HAHAHAHA"],["them","okay building A pala"],["me","i'm screenshotting this"],["them","sorry boss"],["them","food court nalang"],["me","finally coordinates humans understand"]]},
+  {id:"quiapobuyer",kind:"inbox",name:"quiapo",preview:"quiapo church side boss",role:"selling",location:"Quiapo",item:"📷 camera lens",price:500,status:"active",msgs:[["them","quiapo meetup boss"],["me","where"],["them","church side"],["me","specific landmark pls"],["them","near underpass"],["me","the underpass has the population of a small country"],["them","HAHA"],["them","near camera stores"],["me","that narrows it down slightly"],["them","i'll wear red cap"],["me","half of quiapo has a red cap"],["them","i'll hold the lens box"],["me","perfect"]]},
+  {id:"divisoriabuyer",kind:"inbox",name:"divisoria",preview:"168 mall meetup?",role:"selling",location:"Divisoria",item:"⌨️ keyboard",price:168,status:"active",msgs:[["them","168 mall boss"],["me","inside?"],["them","front entrance"],["me","i'm bringing a keyboard box through divisoria foot traffic"],["them","kaya yan"],["me","u say that because you're already there"],["them","HAHAHAHA"],["them","morning nalang para di crowded"],["me","divisoria has been crowded since the invention of commerce"],["them","8am"],["me","fine"],["them","coffee libre ko"],["me","suddenly reasonable"]]},
+  {id:"espanabuyer",kind:"inbox",name:"españa",preview:"españa meetup after rain?",role:"selling",location:"España",item:"📦 marketplace item",price:500,status:"active",msgs:[["them","españa meetup later"],["me","if it rains i'm not going"],["them","ambon lang daw"],["me","'ambon lang' and then espana becomes a canal"],["them","HAHAHA grabe"],["me","i'm serious i'm not swimming with a motherboard"],["them","meet inside mall nalang"],["me","which mall"],["them","near university belt"],["me","send exact pin pls"],["them","sige"],["me","and check weather first"]]},
+  {id:"bgcbuyer",kind:"inbox",name:"bgc",preview:"high street meetup?",role:"selling",location:"BGC",item:"📚 book",price:500,status:"reserved",msgs:[["them","high street meetup boss"],["me","yeah but which block"],["them","near coffee shop"],["me","bro every building has a coffee shop"],["them","HAHA"],["them","near big bookstore"],["me","okay that's usable"],["them","6:30"],["me","coming from outside bgc at 6:30 is gonna hurt"],["them","bus ka"],["me","public transport to bgc is a side quest"],["them","grab? 😂"],["me","item costs less than grab"],["them","fair"],["them","8 nalang"],["me","deal"]]},
+  {id:"oneayalabuyer",kind:"inbox",name:"one ayala",preview:"one ayala terminal boss",role:"selling",location:"One Ayala",item:"📦 marketplace item",price:500,status:"active",msgs:[["them","one ayala meetup"],["me","inside terminal?"],["them","ground floor"],["me","finally a location with actual signs"],["them","HAHA"],["them","5:30"],["me","okay but edsa is gonna be cooked"],["them","mrt nalang"],["me","yeah if i can physically enter the train"],["them","rush hour problems"],["me","rush hour is not an hour it's a lifestyle"],["them","7pm"],["me","better"]]},
+  {id:"pitxbuyer",kind:"inbox",name:"pitx",preview:"pitx gate meetup?",role:"selling",location:"PITX",item:"📦 marketplace item",price:400,status:"reserved",msgs:[["them","PITX meetup boss"],["me","what gate"],["them","arrivals"],["me","which arrivals level"],["them","ground"],["me","okay"],["them","coming from south ka?"],["me","no"],["them","layo mo pala"],["me","yeah this ₱400 item is becoming an infrastructure tour"],["them","HAHAHAHA"],["them","can add 50"],["me","50 pesos for spiritual damages"],["them","deal 😂"]]},
+  {id:"laspinasbuyer",kind:"inbox",name:"las piñas",preview:"alabang-zapote meetup?",role:"selling",location:"Southmall",item:"📦 marketplace item",price:500,status:"active",msgs:[["them","las piñas meetup boss"],["me","where"],["them","alabang-zapote road"],["me","no ❤️"],["them","HAHAHA bakit"],["me","that road can turn 3km into a documentary"],["them","traffic lang"],["me","traffic LANG AGAIN"],["them","near mall naman"],["me","which one"],["them","southmall"],["me","okay that's at least specific"],["them","sunday morning"],["me","acceptable"]]},
+  {id:"southmallbuyer",kind:"inbox",name:"southmall",preview:"southmall food court?",role:"selling",location:"Southmall",item:"📦 marketplace item",price:100,status:"active",msgs:[["them","southmall meetup"],["me","inside?"],["them","food court"],["me","what time"],["them","3pm sunday"],["me","okay"],["them","u coming from alabang?"],["me","other direction"],["them","traffic alabang zapote"],["me","i know. i can already feel my lifespan decreasing"],["them","HAHA"],["them","i'll add 100 for transpo"],["me","best buyer i've met this week"]]},
+  {id:"makatiseller",kind:"inbox",name:"makati",preview:"ayala triangle side",role:"buying",location:"Makati",item:"📷 lens filter",price:500,status:"active",msgs:[["me","available lens filter?"],["them","yes"],["me","meet where"],["them","ayala triangle side"],["me","after office hours?"],["them","6pm"],["me","so the entire cbd empties at once"],["them","basically 😂"],["me","can we do 8"],["them","8 okay"],["me","thank u"],["them","near underpass entrance"],["me","send pin"],["them","will do"]]},
+  {id:"mandabuyer",kind:"inbox",name:"mandaluyong",preview:"boni meetup boss?",role:"selling",location:"Boni",item:"📦 marketplace item",price:500,status:"reserved",msgs:[["them","boni station meetup"],["me","which side"],["them","pioneer"],["me","okay"],["them","5pm"],["me","that train is gonna be compressed human storage"],["them","HAHAHAHA"],["them","6:30?"],["me","still bad but survivable"],["them","7:30"],["me","now we're negotiating time instead of price"],["them","better deal 😂"]]},
+  {id:"marketbuyer",kind:"inbox",name:"kevin",preview:"hm po available pa po?",role:"selling",location:"Metro Manila",item:"📦 marketplace item",price:800,status:"active",msgs:[["them","hm po available pa po?"],["me","yes available"],["them","last price po"],["me","850"],["them","700 po kunin ko now"],["me","800 last"],["them","750"],["me","800"],["them","location po"],["me","near terminal"],["them","pwede 780 boss"],["me","800 talaga"],["them","sige po"],["them","may issue po?"],["me","none"],["them","complete box?"],["me","unit + cable only"],["them","ahh"],["them","780 na po"],["me","800"],["them","seen"]]},
+  {id:"classbuyer",kind:"inbox",name:"random buyer • migs",preview:"available pa po yung calculator?",role:"selling",location:"Metro Manila",item:"🧮 calculator",price:500,status:"reserved",msgs:[["them","available pa po yung calculator?"],["me","yes"],["them","hm po"],["me","600"],["them","fx-991ex po ba"],["me","yeah"],["them","orig? lol"],["me","yes"],["them","500 pickup"],["me","550"],["them","deal"],["them","tomorrow po"],["me","okay"],["them","salamat"]]},
+  {id:"cubaoreq",kind:"requests",name:"cubao",preview:"farmers meetup po?",role:"selling",location:"Cubao",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","farmers meetup po?"],["them","after 6"],["them","available pa boss"]]},
+  {id:"monumentoreq",kind:"requests",name:"monumento",preview:"lrt station po",role:"selling",location:"Monumento",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","lrt station po"],["them","cash meetup"],["them","last price?"]]},
+  {id:"guadareq",kind:"requests",name:"guadalupe",preview:"guada lang kuya",role:"selling",location:"Guadalupe",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","guada lang kuya"],["them","station exit"],["them","today sana"]]},
+  {id:"quiaporeq",kind:"requests",name:"quiapo",preview:"quiapo po meetup",role:"selling",location:"Quiapo",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","quiapo po meetup"],["them","camera stores side"],["them","available?"]]},
+  {id:"bgcreq",kind:"requests",name:"bgc",preview:"high street boss?",role:"selling",location:"BGC",item:"📦 marketplace item",price:200,status:"request",msgs:[["them","high street boss?"],["them","tonight"],["them","can lower 200"]]},
+  {id:"pitxreq",kind:"requests",name:"pitx",preview:"pitx po meet",role:"selling",location:"PITX",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","pitx po meet"],["them","gate 3"],["them","cash po"]]},
+  {id:"southmallreq",kind:"requests",name:"southmall",preview:"southmall meetup",role:"selling",location:"Southmall",item:"📦 marketplace item",price:700,status:"request",msgs:[["them","southmall meetup"],["them","sunday"],["them","700 cash"]]},
+  {id:"bicutanreq",kind:"requests",name:"bicutan",preview:"service road meetup po",role:"selling",location:"Bicutan",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","service road meetup po"],["them","near sm bicutan"],["them","available pa?"]]},
+  {id:"taftreq",kind:"requests",name:"taft student",preview:"green school gate meetup?",role:"selling",location:"Taft",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","green school gate meetup?"],["them","after class 6pm"],["them","cash po"]]},
+  {id:"alabangreq",kind:"requests",name:"alabang",preview:"festival mall boss?",role:"selling",location:"Festival Mall",item:"📦 marketplace item",price:700,status:"request",msgs:[["them","festival mall boss?"],["them","saturday"],["them","700 cash"]]},
+  {id:"lrtcheap",kind:"requests",name:"lrt buyer",preview:"lrt ka lang kuya",role:"selling",location:"Metro Manila",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","lrt ka lang kuya"],["them","station meetup mabilis"],["them","last price?"]]},
+  {id:"sucatreq",kind:"requests",name:"sucat buyer",preview:"near service road po",role:"selling",location:"Sucat",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","near service road po"],["them","can meetup tonight"],["them","hello boss"]]},
+  {id:"marketmouse",kind:"requests",name:"dianne",preview:"available mouse?",role:"selling",location:"Metro Manila",item:"🖱️ mouse",price:500,status:"request",msgs:[["them","available mouse?"],["them","rgb working?"],["them","can ship"],["them","hello seller"]]},
+  {id:"marketdesk",kind:"requests",name:"paul",preview:"desk still available?",role:"selling",location:"Metro Manila",item:"🖥️ monitor",price:500,status:"request",msgs:[["them","desk still available?"],["them","actual dimensions pls"],["them","kasya 2 monitors?"]]},
+  {id:"marketcam",kind:"requests",name:"ivy",preview:"camera strap hm?",role:"selling",location:"Metro Manila",item:"📷 camera strap",price:500,status:"request",msgs:[["them","camera strap hm?"],["them","original?"],["them","can meetup tomorrow"]]},
+  {id:"marketcalc2",kind:"requests",name:"theo",preview:"swap calculator?",role:"selling",location:"Metro Manila",item:"⌨️ keyboard",price:500,status:"request",msgs:[["them","swap calculator sa mechanical keyboard?"],["them","blue switch"],["them","plus cash ako"]]},
+  {id:"marketspeaker",kind:"requests",name:"max",preview:"speaker available pa boss",role:"selling",location:"Metro Manila",item:"🔊 speaker",price:600,status:"request",msgs:[["them","speaker available pa boss"],["them","battery ilang hours"],["them","600 kunin now"]]},
+  {id:"fbmarket2",kind:"requests",name:"aya",preview:"available pa po?",role:"selling",location:"Manila",item:"📦 marketplace item",price:500,status:"request",msgs:[["them","available pa po?"],["them","hm last"],["them","can meetup manila"],["them","hello po"]]},
+  {id:"seller",kind:"requests",name:"marketplace seller",preview:"still interested in mouse?",role:"selling",location:"Metro Manila",item:"🖱️ mouse",price:900,status:"request",msgs:[["them","still interested in mouse?"],["them","can do 900 last price"],["them","pickup only"]]}
+];
+const marketplaceListings=[
+{id:"compact_keyboard",title:"⌨️ compact keyboard",price:1500,mode:"selling",status:"reserved",location:"Metro Manila",note:"Mae sent ₱500 reservation money. Later dispute is cross-platform."},
+{id:"gaming_mouse",title:"🖱️ gaming mouse",price:350,mode:"selling",status:"active",location:"Pasay",note:"cheap mouse • one buyer still wants station meetup"},
+{id:"controller",title:"🎮 controller",price:650,mode:"selling",status:"active",location:"Metro Manila",note:"slight right-stick drift • priced accordingly"},
+{id:"monitor",title:"🖥️ 75hz monitor",price:3200,mode:"selling",status:"active",location:"Bicutan",note:"no dead pixels • buyer keeps asking about 144hz"},
+{id:"headset",title:"🎧 gaming headset",price:900,mode:"selling",status:"active",location:"Alabang",note:"upgraded • complete cable"},
+{id:"structural_book",title:"📚 structural analysis book",price:400,mode:"selling",status:"reserved",location:"Metro Manila",note:"about 60% highlighted • academic seasoning"},
+{id:"old_phone",title:"📱 old phone",price:7000,mode:"selling",status:"reserved",location:"Metro Manila",note:"81% battery health • tiny screen scratch"},
+{id:"laptop_stand",title:"💻 laptop stand",price:200,mode:"selling",status:"active",location:"Metro Manila",note:"buyer requested free delivery to Cavite somehow"},
+{id:"camera_lens",title:"📷 camera lens",price:4200,mode:"buying",status:"active",location:"Bicutan",note:"seller says 'minimal fungus'"},
+{id:"office_chair",title:"🪑 office chair",price:2800,mode:"buying",status:"active",location:"Alabang",note:"pickup near mall loading side"},
+{id:"lens_filter",title:"📷 lens filter",price:450,mode:"buying",status:"active",location:"Makati",note:"meetup after office rush"},
+{id:"gpu",title:"🧩 used GPU",price:8500,mode:"buying",status:"active",location:"Bicutan",note:"Niko wants to test before paying"}
+];
+function marketplaceEffectiveStatus(x){return marketplaceListingState[x.id]||x.status}
+function marketplacePrice(v){return `₱${Number(v||0).toLocaleString("en-PH")}`}
+function marketplaceThreadById(id){return marketplaceThreads.find(x=>x.id===id)}
+function marketplaceThreadStatus(t){if(t.id==="mae_reservation")return "disputed";if(marketplaceArchived.has(t.id))return "archived";return t.status||"active"}
+function setMarketplaceTab(tab){marketplaceTab=tab;renderMarketplace(document.getElementById("marketSearch")?.value||"")}
+function marketplaceSyncNav(){document.querySelectorAll(".market-nav").forEach(b=>b.classList.toggle("active",b.dataset.marketTab===marketplaceTab))}
+function marketplaceCard(x){
+  const st=marketplaceEffectiveStatus(x),saved=marketplaceSaved.has("listing:"+x.id);
+  return `<div class="market-card" onclick="openMarketplaceListing('${x.id}')"><div class="pic">${x.title.split(" ")[0]}</div><b>${x.title.replace(/^[^ ]+ /,"")}</b><small class="market-price">${marketplacePrice(x.price)}</small><small>${x.location} • ${x.mode}</small><span class="market-status ${st}">${st}</span>${saved?`<small>★ saved</small>`:""}</div>`
+}
+function marketplaceThreadRow(t){
+  const st=marketplaceThreadStatus(t),saved=marketplaceSaved.has("thread:"+t.id);
+  return `<div class="market-thread-row" onclick="openMarketplaceThread('${t.id}')"><div class="market-avatar">${t.role==="buying"?"🧾":"💸"}</div><div><b>${saved?"★ ":""}${t.name}</b><small>${t.item} • ${t.preview}</small></div><div class="market-thread-meta">${t.location}<br>${st}</div></div>`
+}
+function marketplaceFilteredThreads(filter="",mode="all"){
+  const q=String(filter||"").trim().toLowerCase();
+  return marketplaceThreads.filter(t=>{
+    if(mode==="requests"&&t.kind!=="requests")return false;
+    if(mode==="messages"&&t.kind==="requests")return false;
+    if(mode==="selling"&&t.role!=="selling")return false;
+    if(mode==="buying"&&t.role!=="buying")return false;
+    if(mode==="saved"&&!marketplaceSaved.has("thread:"+t.id))return false;
+    const hay=[t.name,t.preview,t.location,t.item,t.role,...t.msgs.map(x=>x[1])].join(" ").toLowerCase();
+    return !q||hay.includes(q);
+  })
+}
+function renderMarketplace(filter=""){
+  const body=document.getElementById("marketplaceBody");if(!body)return;
+  marketplaceSyncNav();
+  const q=String(filter||"");
+  const sell=marketplaceListings.filter(x=>x.mode==="selling"),buy=marketplaceListings.filter(x=>x.mode==="buying");
+  const req=marketplaceThreads.filter(x=>x.kind==="requests").length;
+  const places=[...new Set(marketplaceThreads.map(x=>x.location).filter(x=>x&&x!=="Metro Manila"))].length;
+  if(marketplaceTab==="home"){
+    body.innerHTML=`<div class="market-hero"><div><h1>marketmess</h1><p>all of Niko's buying, selling, lowballs and meetup suffering live here now.</p></div><div style="font-size:38px">🛒</div></div><div class="market-stats"><div class="market-stat"><b>${sell.length}</b><small>selling listings</small></div><div class="market-stat"><b>${buy.length}</b><small>things he's buying</small></div><div class="market-stat"><b>${req}</b><small>requests</small></div><div class="market-stat"><b>${places}</b><small>meetup areas</small></div></div><h2 class="market-section-title">your listings</h2><div class="market-grid">${sell.map(marketplaceCard).join("")}</div><h2 class="market-section-title">recent chats</h2>${marketplaceFilteredThreads(q,"messages").slice(0,14).map(marketplaceThreadRow).join("")}`;
+    return
+  }
+  if(marketplaceTab==="selling"){
+    body.innerHTML=`<h1>selling</h1><p class="muted">Niko's own listings and buyer chats.</p><div class="market-grid">${sell.filter(x=>!q||[x.title,x.location,x.note].join(" ").toLowerCase().includes(q.toLowerCase())).map(marketplaceCard).join("")}</div><h2 class="market-section-title">buyer chats</h2>${marketplaceFilteredThreads(q,"selling").filter(x=>x.kind!=="requests").map(marketplaceThreadRow).join("")}`;
+    return
+  }
+  if(marketplaceTab==="buying"){
+    body.innerHTML=`<h1>buying</h1><p class="muted">stuff Niko was trying to buy from other people.</p><div class="market-grid">${buy.filter(x=>!q||[x.title,x.location,x.note].join(" ").toLowerCase().includes(q.toLowerCase())).map(marketplaceCard).join("")}</div><h2 class="market-section-title">seller chats</h2>${marketplaceFilteredThreads(q,"buying").filter(x=>x.kind!=="requests").map(marketplaceThreadRow).join("")}`;
+    return
+  }
+  if(marketplaceTab==="messages"){
+    const rows=marketplaceFilteredThreads(q,"messages");body.innerHTML=`<h1>messages</h1><p class="muted">buyer/seller chats only. Messynger is personal again.</p>${rows.map(marketplaceThreadRow).join("")||`<div class="market-empty">no matches.</div>`}`;return
+  }
+  if(marketplaceTab==="requests"){
+    const rows=marketplaceFilteredThreads(q,"requests");body.innerHTML=`<h1>requests</h1><p class="muted">unaccepted offers and random lowballs.</p>${rows.map(marketplaceThreadRow).join("")||`<div class="market-empty">no matches.</div>`}`;return
+  }
+  if(marketplaceTab==="saved"){
+    const ls=marketplaceListings.filter(x=>marketplaceSaved.has("listing:"+x.id)&&(!q||[x.title,x.location].join(" ").toLowerCase().includes(q.toLowerCase()))),ts=marketplaceFilteredThreads(q,"saved");
+    body.innerHTML=`<h1>saved</h1><h2 class="market-section-title">listings</h2><div class="market-grid">${ls.map(marketplaceCard).join("")||`<div class="market-empty">no saved listings.</div>`}</div><h2 class="market-section-title">chats</h2>${ts.map(marketplaceThreadRow).join("")||`<div class="market-empty">no saved chats.</div>`}`;return
+  }
+  if(marketplaceTab==="meetups"){
+    const rows=marketplaceThreads.filter(t=>t.location&&t.location!=="Metro Manila"&&(!q||[t.location,t.name,t.item,t.preview].join(" ").toLowerCase().includes(q.toLowerCase())));
+    body.innerHTML=`<h1>meetup list</h1><p class="muted">the Metro Manila side quest list.</p>`+(rows.map(t=>`<div class="market-meetup" onclick="openMarketplaceThread('${t.id}')"><div>📍 <b>${t.location}</b></div><div>${t.item}<small>${t.preview}</small></div><div>${t.role==="selling"?"buyer":"seller"}</div></div>`).join("")||`<div class="market-empty">no matches.</div>`);return
+  }
+}
+function toggleMarketplaceSaved(key){if(marketplaceSaved.has(key))marketplaceSaved.delete(key);else marketplaceSaved.add(key);renderMarketplace(document.getElementById("marketSearch")?.value||"");if(typeof saveGame==="function")saveGame(false)}
+function openMarketplaceListing(id){
+  const x=marketplaceListings.find(v=>v.id===id);if(!x)return;const st=marketplaceEffectiveStatus(x),saved=marketplaceSaved.has("listing:"+id);
+  showWindowDetail("marketplace",`<div class="detail"><div class="market-detail-head"><div class="market-detail-pic">${x.title.split(" ")[0]}</div><div><h2>${x.title.replace(/^[^ ]+ /,"")}</h2><p class="market-price">${marketplacePrice(x.price)}</p><p>${x.location} • ${x.mode}</p><span class="market-status ${st}">${st}</span></div></div><p>${x.note}</p><div class="market-actions"><button onclick="toggleMarketplaceSaved('listing:${id}');openMarketplaceListing('${id}')">${saved?"★ saved":"☆ save"}</button><button onclick="cycleMarketplaceListing('${id}')">change status</button><button onclick="marketplaceFindRelated('${x.title.replace(/^[^ ]+ /,"").replace(/'/g,"")}')">related chats</button></div><p class="muted">local controls only. nothing gets posted online.</p></div>`,"listing")
+}
+function cycleMarketplaceListing(id){
+  const x=marketplaceListings.find(v=>v.id===id);if(!x)return;const states=x.mode==="selling"?["active","reserved","sold","hidden"]:["active","watching","bought","hidden"],cur=marketplaceEffectiveStatus(x),idx=states.indexOf(cur);
+  marketplaceListingState[id]=states[(idx<0?0:idx+1)%states.length];openMarketplaceListing(id);renderMarketplace(document.getElementById("marketSearch")?.value||"");if(typeof saveGame==="function")saveGame(false)
+}
+function marketplaceFindRelated(term){closeWindowDetail("marketplace");marketplaceTab="messages";const input=document.getElementById("marketSearch");if(input)input.value=term;renderMarketplace(term)}
+function openMarketplaceThread(id){
+  const t=marketplaceThreadById(id);if(!t)return;const rows=t.msgs.map(([who,msg])=>`<div class="market-bubble ${who==="me"?"me":who==="system"?"system":""}">${msg}</div>`).join(""),saved=marketplaceSaved.has("thread:"+id),arch=marketplaceArchived.has(id),note=marketplaceOfferNotes[id]||"";
+  showWindowDetail("marketplace",`<div class="detail"><h2>${t.name}</h2><p>${t.item} • ${t.location}</p><span class="market-status ${marketplaceThreadStatus(t)}">${marketplaceThreadStatus(t)}</span></div><div class="market-chat">${rows}</div><div class="market-offer"><b>local meetup / offer note</b><div class="market-offer-row"><span>rough asking price</span><strong>${marketplacePrice(t.price)}</strong></div><input id="marketNoteInput" style="width:100%" placeholder="e.g. 7:30 • exact cash • station exit" value="${String(note).replace(/"/g,"&quot;")}"></div><div class="market-actions"><button onclick="toggleMarketplaceSaved('thread:${id}');openMarketplaceThread('${id}')">${saved?"★ saved":"☆ save chat"}</button><button onclick="toggleMarketplaceArchive('${id}')">${arch?"restore":"archive"}</button><button onclick="saveMarketplaceNote('${id}')">save note</button><button onclick="marketplaceCounterOffer('${id}')">draft counter</button></div><p class="muted">drafts/notes are local only. Alon and Haraya are not messaging buyers from Niko's account.</p>`,"market chat")
+}
+function toggleMarketplaceArchive(id){if(marketplaceArchived.has(id))marketplaceArchived.delete(id);else marketplaceArchived.add(id);renderMarketplace(document.getElementById("marketSearch")?.value||"");openMarketplaceThread(id);if(typeof saveGame==="function")saveGame(false)}
+function saveMarketplaceNote(id){marketplaceOfferNotes[id]=document.getElementById("marketNoteInput")?.value||"";toast("marketplace","note saved locally");if(typeof saveGame==="function")saveGame(false)}
+function marketplaceCounterOffer(id){
+  const t=marketplaceThreadById(id);if(!t)return;const amount=t.role==="selling"?Math.max(50,t.price-100):Math.max(50,t.price-200);marketplaceOfferNotes[id]=`draft counter: ${marketplacePrice(amount)} • not sent`;toast("marketplace",`drafted ${marketplacePrice(amount)} • not sent`);openMarketplaceThread(id);if(typeof saveGame==="function")saveGame(false)
+}
+function marketplaceCreateDraft(){
+  showWindowDetail("marketplace",`<div class="detail"><h2>new listing draft</h2><input style="width:100%;margin:5px 0" placeholder="item title"><input style="width:100%;margin:5px 0" placeholder="price"><input style="width:100%;margin:5px 0" placeholder="meetup area"><textarea style="width:100%;min-height:80px;margin:5px 0" placeholder="description"></textarea><button onclick="toast('marketplace','draft saved locally • not posted')">save draft</button><p class="muted">offline mockup only.</p></div>`,"sell item")
+}
+
+
 function renderAll(){
-  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderCheats();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();renderJournalCaseProgress();refreshDesktopShortcuts();updateTerminalStatus();
+  updateClock();renderFileSidebar();renderFolder(currentFileFolder||"recent");renderChats();renderMarketplace();renderNotes();renderPhotos();renderMail();renderContacts();renderCalendar();renderMusic();renderRecorder();renderRecycle();renderSticky();renderSettings();renderVideos();renderDownloadsApp();renderGames();renderDiscord();renderWeatherCache();renderClockApp();renderCalculator();renderAutoCAD();renderYourPhone();renderYoutube();renderSports();renderSteam();renderInstagram();renderCheats();renderMemes();renderSnips();renderNews();renderTerminalStatus();renderTimeline();renderJournalCaseProgress();refreshDesktopShortcuts();updateTerminalStatus();
 }
 
 const SAVE_KEY="lost_phone_save_v20";
@@ -8659,7 +8748,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:26,
+    version:27,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -8679,7 +8768,9 @@ function createSaveData(){
       instagramBookmarkedProfiles:[...instagramBookmarkedProfiles],instagramReactedDMs:[...instagramReactedDMs],discordPins:[...discordPins],discordReactions:{...discordReactions},
       gameFavorites:[...gameFavorites],spotifakeLikes:[...spotifakeLikes],spotifakePlaylist:[...spotifakePlaylist],
       spotifakeMessageReactions:[...spotifakeMessageReactions],spotifakeQueue:[...spotifakeQueue],
-      spotifakeCurrentTrack,spotifakeElapsed,spotifakeShuffle,spotifakeRepeat,spotifakeVolume,maeSpamIndex
+      spotifakeCurrentTrack,spotifakeElapsed,spotifakeShuffle,spotifakeRepeat,spotifakeVolume,
+      marketplaceSaved:[...marketplaceSaved],marketplaceArchived:[...marketplaceArchived],marketplaceOfferNotes:{...marketplaceOfferNotes},marketplaceListingState:{...marketplaceListingState},
+      maeSpamIndex
     }
   };
 }
@@ -8791,6 +8882,10 @@ function applySaveData(data){
   spotifakeShuffle=!!ui.spotifakeShuffle;spotifakeRepeat=!!ui.spotifakeRepeat;
   spotifakeVolume=Number.isFinite(Number(ui.spotifakeVolume))?Number(ui.spotifakeVolume):72;
   spotifakePlaying=false;
+  marketplaceSaved.clear();(ui.marketplaceSaved||[]).forEach(x=>marketplaceSaved.add(x));
+  marketplaceArchived.clear();(ui.marketplaceArchived||[]).forEach(x=>marketplaceArchived.add(x));
+  Object.keys(marketplaceOfferNotes).forEach(k=>delete marketplaceOfferNotes[k]);Object.assign(marketplaceOfferNotes,ui.marketplaceOfferNotes||{});
+  Object.keys(marketplaceListingState).forEach(k=>delete marketplaceListingState[k]);Object.assign(marketplaceListingState,ui.marketplaceListingState||{});
   maeSpamIndex=Number(ui.maeSpamIndex||0);
   if(Object.keys(confidenceTags).some(k=>confidenceTags[k]))storyFlags.usedConfidence=true;
   if(bookmarkedEvidence.size)storyFlags.usedBookmark=true;
