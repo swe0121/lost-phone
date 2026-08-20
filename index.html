@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v58</title>
+<title>Lost Phone</title>
 <!-- v44: clean spoiler-free README + detailed gameplay-focused How to Play. -->
 <!-- v34: expanded multi-sport agenda archive; National Baller Association/football/Major League Basebrawl takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
@@ -1797,6 +1797,20 @@ const seen=new Set(), journal=[];
 const confidenceTags={};
 const bookmarkedEvidence=new Set();
 const reviewedComparisons=new Set();
+
+// v61 player-facing app interaction state. These do not score evidence.
+const mailStars=new Set();
+const mailUnread=new Set();
+const instagramLikedPosts=new Set();
+const instagramSavedPosts=new Set();
+const instagramBookmarkedProfiles=new Set();
+const instagramReactedDMs=new Set();
+const discordPins=new Set();
+const discordReactions={};
+const gameFavorites=new Set();
+let maeSpamIndex=0;
+let maeSpamTimer=null;
+
 let howToPlayReturn="menu";
 let pendingFreshStart=false;
 
@@ -2380,6 +2394,38 @@ function syncVinceLive(){
   addIncoming("vince","don't go down the side road rn. water's bad and i can't reach him.");
   toast("messenger","vince sent new messages");
 }
+function startMaeLiveSpam(){
+  if(!hotspotOn||!chats.mae||maeSpamTimer)return;
+  const burst=[
+    "oh NOW you're online",
+    "niko???",
+    "HELLO",
+    "refund me",
+    "i got the online notification don't play with me",
+    "₱500",
+    "send. it. back.",
+    "why did you reconnect just to ignore me again",
+    "i'm actually impressed at this point",
+    "this is reminder number like 40",
+    "niko pls just refund it and i'll stop",
+    "actually no answer first because WHAT was the plan here"
+  ];
+  const tick=()=>{
+    if(!hotspotOn){maeSpamTimer=null;return;}
+    if(maeSpamIndex>=burst.length){maeSpamTimer=null;return;}
+    const msg=burst[maeSpamIndex++];
+    addIncoming("mae",msg);
+    if(instagramDMs["mae.r"] && maeSpamIndex%3===0){
+      instagramDMs["mae.r"].msgs.push(["them",msg]);
+      instagramDMs["mae.r"].preview=msg;
+      instagramDMs["mae.r"].status="new message";
+    }
+    toast("messenger",`mae • ${msg}`);
+    if(typeof saveGame==="function")saveGame(false);
+    maeSpamTimer=setTimeout(tick,1450+Math.floor(Math.random()*1100));
+  };
+  maeSpamTimer=setTimeout(tick,900);
+}
 function connectHotspot(){
   if(!storyFlags.hotspotUnlocked){
     toast("wifi","not available yet • talk to terminal security first");
@@ -2391,6 +2437,7 @@ function connectHotspot(){
   toast("wifi","connected to alon-phone hotspot");
   addJournal(storyTimeLabel()+" • alon connected the laptop to his phone hotspot so they can contact the owner. everything before 12:23 remains historical/local evidence.");
   syncLiveMessages();
+  startMaeLiveSpam();
   if(storyStage>=7)syncVinceLive();
   if(currentChat)openChat(currentChat);
   return true;
@@ -2742,7 +2789,7 @@ function announceCaseProgress(k,actBefore){
   else if(actBefore>=6&&finalKeys.has(k)){toast("case progress",`final window • ${Math.min(finalScore(),6)}/6`);}
 }
 function isChatUnlocked(k){
-  const cheating=["boys","celine","ash","maria","bella","jane","liana","sarah","nicole","kyla","trisha","grace"];
+  const cheating=["boys","celine","ash","maria","bella","jane","liana","sarah","nicole","kyla","trisha","grace","angel","trixie","sam","ela","patricia","joy"];
   const mental=["drreyes","mika","ari"];
   const foul=["rj","vince","cam","paolo","toni"];
   if(k==="mama")return storyFlags.heardMamaVoicemail;
@@ -2756,7 +2803,7 @@ function isChatUnlocked(k){
 function isContactUnlocked(id){
   if(id==="mama")return storyFlags.foundIdentity;
   if(id==="lia")return storyFlags.heardMamaVoicemail;
-  if(["celine","c2","ash","m","j","enilec","hsa","airam","alleb","enaj","anail"].includes(id))return story.act>=2;
+  if(["celine","c2","ash","m","j","enilec","hsa","airam","alleb","enaj","anail","angel","trixie","sam","ela","patricia","joy","legna","eixirt","mas","ale","aicirtap","yoj"].includes(id))return story.act>=2;
   if(["drreyes","clinic","mika","ari"].includes(id))return story.act>=4;
   if(["vince","rj","cam","paolo","toni","bartender"].includes(id))return story.act>=5;
   return true;
@@ -4400,19 +4447,202 @@ const chats={
   ["me","yes mom"],["them","shut up"],["them","also u barely slept last night"],["me","i'm fine"],
   ["them","you've been asking me weird stuff like if i saw the same car outside"],["me","forget it"],
   ["them","i'm not mad. i'm worried. just sleep when u get home"],["me","okay"],
-  ["them","call me when you're home if i'm still awake"],["me","okay"],["them","goodnight if i pass out"],["me","goodnight ❤️"]
+  ["them","call me when you're home if i'm still awake"],["me","okay"],["them","goodnight if i pass out"],["me","goodnight ❤️"],
+  ["them","btw u still owe me coffee from last week"],
+  ["me","i bought last time"],
+  ["them","THAT WAS WATER"],
+  ["me","expensive water"],
+  ["them","u are so annoying"],
+  ["them","did u submit your plates already"],
+  ["me","almost"],
+  ["them","almost is not submitted"],
+  ["me","why are u sounding like my prof"],
+  ["them","because your prof is right"],
+  ["them","send pic when you're done"],
+  ["me","why"],
+  ["them","because i wanna see??"],
+  ["me","later"],
+  ["them","see this is what i mean u always say later"],
+  ["me","i literally have class"],
+  ["them","okay okay"],
+  ["them","also my mom asked if i'm still talking to 'that tall guy'"],
+  ["me","what'd u say"],
+  ["them","secret"],
+  ["me","wow"],
+  ["them","i said yes obviously"],
+  ["them","don't get excited"],
+  ["me","too late"],
+  ["them","gross"],
+  ["them","u awake"],
+  ["me","yeah"],
+  ["them","can't sleep"],
+  ["me","same"],
+  ["them","call?"],
+  ["me","give me 5"],
+  ["them","you always say 5 then take 20"],
+  ["me","accurate"],
+  ["them","niko"],
+  ["me","coming"],
+  ["them","you disappeared for like an hour again"],
+  ["me","fell asleep"],
+  ["them","with the lights on??"],
+  ["me","talent"],
+  ["them","i'm being serious"],
+  ["them","when u disappear without saying anything i don't know if you're asleep, ignoring me, outside, whatever"],
+  ["me","okay i'm sorry"],
+  ["them","i don't need a whole apology every time. just tell me"],
+  ["me","i will"],
+  ["them","you said that before"],
+  ["me","i know"],
+  ["them","also stop asking who i'm with every time i go out"],
+  ["me","i don't"],
+  ["them","you literally asked 'who else is there' three times"],
+  ["me","curious"],
+  ["them","mhm"],
+  ["them","and then when i ask where YOU are i get 'outside'"],
+  ["me","fair"],
+  ["them","EXACTLY"],
+  ["them","send miso"],
+  ["me","he's sleeping"],
+  ["them","send"],
+  ["me","photo attachment • orange cat folded into laundry"],
+  ["them","MY SON"],
+  ["me","your son doesn't pay rent"],
+  ["them","neither do u probably"],
+  ["me","crazy accusation"],
+  ["them","goodnight"],
+  ["me","goodnight"],
+  ["them","wait"],
+  ["me","what"],
+  ["them","love u"],
+  ["me","love u too"],
+  ["them","okay now goodnight"]
  ]},
  mama:{kind:"inbox",name:"mama",preview:"did you eat?",msgs:[
   ["them","did you eat?"],["me","later"],["them","wag puro coffee"],["me","yeah ma"],["them","bring umbrella"],["me","i have one"],
   ["them","sure?"],["me","..."],["them","exactly"],["them","also buy rice tomorrow"],["me","how much"],["them","5kg"],
   ["me","okay"],["them","and tell bea to stop using my charger"],["me","that's between you two"],["them","ikaw kuya"],["me","unfair"],
-  ["them","also sleep tonight. you were walking around the hallway again last night"],["me","i thought someone knocked"],["them","nobody knocked anak"],["me","yeah i know"]
+  ["them","also sleep tonight. you were walking around the hallway again last night"],["me","i thought someone knocked"],["them","nobody knocked anak"],["me","yeah i know"],
+  ["them","asan ka"],
+  ["me","school"],
+  ["them","anong oras uwi"],
+  ["me","later"],
+  ["them","what time later"],
+  ["me","maybe 8"],
+  ["them","maybe nanaman"],
+  ["them","message pag aalis ka na"],
+  ["me","yes ma"],
+  ["them","nakasakay ka na"],
+  ["me","not yet"],
+  ["them","ulan dito"],
+  ["them","dala mo payong"],
+  ["me","yes"],
+  ["them","sure"],
+  ["me","YES"],
+  ["them","okay"],
+  ["them","update"],
+  ["me","still waiting"],
+  ["them","may jeep"],
+  ["me","wala"],
+  ["them","wag ka dumaan sa baha"],
+  ["me","i know"],
+  ["them","text pag nakasakay"],
+  ["them","anak"],
+  ["them","nakasakay ka na"],
+  ["me","yeah"],
+  ["them","okay"],
+  ["them","battery mo"],
+  ["me","42"],
+  ["them","charge"],
+  ["me","on the jeep ma"],
+  ["them","okay"],
+  ["them","text pag baba"],
+  ["them","nasa bahay ka na"],
+  ["me","walking"],
+  ["them","malakas ulan"],
+  ["me","2 mins"],
+  ["them","ingat"],
+  ["them","did you eat"],
+  ["me","yes"],
+  ["them","ano"],
+  ["me","rice"],
+  ["them","with what"],
+  ["me","food"],
+  ["them","niko"],
+  ["me","chicken"],
+  ["them","okay"],
+  ["them","take vitamins"],
+  ["me","yes"],
+  ["them","bea said you took her powerbank"],
+  ["me","she took mine first"],
+  ["them","ibalik mo nalang"],
+  ["me","why am i always the peace treaty"],
+  ["them","ikaw kuya"],
+  ["me","there it is"],
+  ["them","anak"],
+  ["them","where are you"],
+  ["them","call me when you see this"],
+  ["them","don't stay out too late"],
+  ["them","ulan ulit"],
+  ["them","update"]
  ]},
  bea:{kind:"inbox",name:"bea",preview:"kuya where's my charger",msgs:[
   ["them","kuya where's my charger"],["me","why are you asking me"],["them","because you steal everything"],["me","YOUR charger is literally mine"],
   ["them","mom said share"],["me","mom says a lot of things"],["them","buy me fries later"],["me","no"],["them","i'll tell mom you went out again"],
   ["me","blackmail at 15 is crazy"],["them","fries."],["me","fine"],
-  ["them","also kuya stop checking my door at 2am"],["me","i thought i heard something"],["them","IT WAS THE TV"],["me","okay damn"],["them","sleep pls"]
+  ["them","also kuya stop checking my door at 2am"],["me","i thought i heard something"],["them","IT WAS THE TV"],["me","okay damn"],["them","sleep pls"],
+  ["them","KUYA"],
+  ["me","what"],
+  ["them","wifi password"],
+  ["me","same as always"],
+  ["them","IT'S NOT WORKING"],
+  ["me","skill issue"],
+  ["them","mom said fix it"],
+  ["me","restart router"],
+  ["them","YOU restart it"],
+  ["me","i'm not home"],
+  ["them","useless"],
+  ["them","also where's my black hoodie"],
+  ["me","why would i have it"],
+  ["them","because everything disappears into your room"],
+  ["me","check chair"],
+  ["them","WHAT chair"],
+  ["me","your chair"],
+  ["them","oh"],
+  ["them","found it"],
+  ["me","apologize"],
+  ["them","no"],
+  ["them","kuya print this"],
+  ["them","pdf attachment • science worksheet"],
+  ["me","when"],
+  ["them","now"],
+  ["me","i'm outside"],
+  ["them","tomorrow 7am then"],
+  ["me","why do u tell me these at midnight"],
+  ["them","because i remembered at midnight"],
+  ["me","incredible"],
+  ["them","also buy fries"],
+  ["me","NO"],
+  ["them","mama"],
+  ["me","don't"],
+  ["them","MAAAAA"],
+  ["me","fine"],
+  ["them","large"],
+  ["me","you get small"],
+  ["them","then i expose your secret"],
+  ["me","what secret"],
+  ["them","idk i'll make one"],
+  ["me","criminal"],
+  ["them","miso threw up"],
+  ["me","WHERE"],
+  ["them","your bed"],
+  ["me","you're lying"],
+  ["them","mhm"],
+  ["me","BEA"],
+  ["them","jk hallway"],
+  ["me","i hate you"],
+  ["them","love u kuya"],
+  ["them","also answer mom she's asking where u are"]
  ]},
  drreyes:{kind:"inbox",name:"dr. andrea reyes",preview:"niko, checking in again",msgs:[
   ["them","hi niko. checking in after last session."],
@@ -4477,13 +4707,31 @@ const chats={
    ["them","u still need somewhere to crash?"],["me","nah okay na"],["them","sure? yesterday u were asking if u could sleep here"],
    ["me","changed my mind"],["them","everything okay sa bahay?"],["me","yeah just didn't wanna be there for a bit"],
    ["them","aight. offer stands"],["them","also u left class early again"],["me","head hurt"],["them","sleep man"],
-   ["them","if u disappear on group work i WILL fail u myself"],["me","noted"]
+   ["them","if u disappear on group work i WILL fail u myself"],["me","noted"],
+  ["them","u bringing calculator tomorrow"],
+  ["me","yeah"],
+  ["them","bring extra battery"],
+  ["me","why"],
+  ["them","mine died"],
+  ["me","skill issue"],
+  ["them","i'm sleeping at 1 tonight"],
+  ["me","proud of u"],
+  ["them","you should try it"],
+  ["me","don't push your beliefs on me"]
   ]},
   toni:{kind:"inbox",name:"toni • print shop",preview:"you were jumpy earlier",msgs:[
    ["them","you were jumpy earlier"],["me","was i"],["them","u asked me twice if the same guy was outside"],
    ["me","looked familiar"],["them","i only saw delivery rider + two customers"],["me","yeah probably nothing"],
    ["them","u also forgot your change again"],["me","keep it"],["them","₱37 generational wealth thanks"],
-   ["them","serious tho go home and sleep"],["me","later"]
+   ["them","serious tho go home and sleep"],["me","later"],
+  ["them","shop closes 7 tomorrow"],
+  ["me","got it"],
+  ["them","your tita left food here"],
+  ["me","what"],
+  ["them","pancit"],
+  ["me","save some"],
+  ["them","if kuya marco doesn't eat it first"],
+  ["me","guard it with your life"]
   ]},
 
  familygc:{kind:"inbox",name:"family gc",preview:"sino may dala ng yelo",msgs:[
@@ -4515,7 +4763,45 @@ const chats={
   ["me","YES I KNOW"],
   ["them","baka makalimutan mo"],
   ["me","wow trust issues"],
-  ["them","valid naman"]
+  ["them","valid naman"],
+  ["them","good morning"],
+  ["them","good morning"],
+  ["them","GOOD MORNING"],
+  ["them","niko seen lang"],
+  ["them","ayan naka seen"],
+  ["them","bat tahimik yan lagi sa gc"],
+  ["me","i'm literally in class"],
+  ["them","pero naka seen"],
+  ["me","because notification"],
+  ["them","reply ka naman minsan anak"],
+  ["me","hello family"],
+  ["them","WOW nagsalita"],
+  ["them","miracle"],
+  ["them","screenshot niyo rare event"],
+  ["me","i regret replying"],
+  ["them","HAHAHAHA"],
+  ["them","niko anong gusto mo sa sunday"],
+  ["me","anything"],
+  ["them","anything daw"],
+  ["them","wala talaga ambag"],
+  ["me","i'm bringing ice"],
+  ["them","after 900 reminders"],
+  ["me","still counts"],
+  ["them","bea says u owe her fries"],
+  ["me","WHY IS THIS IN THE FAMILY GC"],
+  ["them","accountability"],
+  ["them","niko bakit di ka sumagot kay mama kanina"],
+  ["me","phone was charging"],
+  ["them","ayan nanaman charging"],
+  ["them","favorite excuse"],
+  ["me","IT WAS ACTUALLY CHARGING"],
+  ["them","mhm"],
+  ["them","okay basta update next time"],
+  ["them","and reply here once in a while"],
+  ["me","noted"],
+  ["them","he'll disappear again"],
+  ["me","goodbye"],
+  ["them","SEE"]
  ]},
 
  unclejojo:{kind:"inbox",name:"uncle jojo",preview:"WATCH TILL END 😂",msgs:[
@@ -4553,7 +4839,51 @@ const chats={
   ["them","reel attachment • guy fixing electric fan"],
   ["them","useful yan"],
   ["them","👍👍👍"],
-  ["them","goodnight"]
+  ["them","goodnight"],
+  ["them","GOOD MORNING"],
+  ["them","reel attachment • jeep driver singing power ballad"],
+  ["them","GALING"],
+  ["them","👍"],
+  ["me","morning tito"],
+  ["them","kumain ka na"],
+  ["me","yeah"],
+  ["them","good 👍"],
+  ["them","reel attachment • man repairing rice cooker with spoon"],
+  ["them","PWEDE TO"],
+  ["me","please do not try that"],
+  ["them","bakit"],
+  ["me","electricity"],
+  ["them","👍"],
+  ["them","reel attachment • old man crossing up teenager in basketball"],
+  ["them","IKAW TO PAG TUMANDA"],
+  ["me","why is that an insult"],
+  ["them","compliment yan"],
+  ["them","👍👍"],
+  ["them","uuwi ka sunday"],
+  ["me","yeah"],
+  ["them","dala cards"],
+  ["me","what cards"],
+  ["them","UNO"],
+  ["me","bea has them"],
+  ["them","sabihin mo dalhin"],
+  ["me","tell her yourself"],
+  ["them","👍"],
+  ["them","reel attachment • cat smacking another cat"],
+  ["them","MISO"],
+  ["me","accurate"],
+  ["them","HAHAHAHA"],
+  ["them","👍"],
+  ["them","reel attachment • motivational gym speech"],
+  ["them","DISCIPLINE"],
+  ["me","dad already lectures me enough"],
+  ["them","listen to your dad"],
+  ["me","team up pa kayo"],
+  ["them","👍"],
+  ["them","reel attachment • flooded street with man paddling basin"],
+  ["them","MANILA TRANSPORT"],
+  ["me","actually accurate"],
+  ["them","ingat ulan"],
+  ["them","👍"]
  ]},
 
  titalena:{kind:"inbox",name:"tita lena",preview:"may printer pa ba kayo",msgs:[
@@ -4572,7 +4902,18 @@ const chats={
   ["them","kumain ka na ba"],
   ["me","why does everyone ask me this"],
   ["them","because puro kape ka"],
-  ["me","family propaganda"]
+  ["me","family propaganda"],
+  ["them","anak thank you sa print"],
+  ["me","np"],
+  ["them","ang liit nung font sa page 8"],
+  ["me","that's the file"],
+  ["them","ah okay"],
+  ["them","next time bigger"],
+  ["me","tell whoever made it"],
+  ["them","ikaw nalang sabihin mo"],
+  ["me","why me"],
+  ["them","marunong ka computer"],
+  ["me","fair enough"]
  ]},
 
  dad:{kind:"inbox",name:"dad",preview:"sent 3000",msgs:[
@@ -4592,7 +4933,54 @@ const chats={
   ["me","i don't"],
   ["them","your mother says otherwise"],
   ["me","betrayal"],
-  ["them","call sunday"]
+  ["them","call sunday"],
+  ["them","ok"],
+  ["me","that's it?"],
+  ["them","yes"],
+  ["them","study"],
+  ["me","i am"],
+  ["them","good"],
+  ["them","save money"],
+  ["me","yeah"],
+  ["them","not yeah"],
+  ["them","do it"],
+  ["me","okay"],
+  ["them","life gets expensive"],
+  ["them","when you have money don't think you have to spend it"],
+  ["me","i know"],
+  ["them","you know many things"],
+  ["them","doing is different"],
+  ["me","damn"],
+  ["them","language"],
+  ["me","sorry"],
+  ["them","school first"],
+  ["them","friends can wait"],
+  ["me","i still need friends"],
+  ["them","after school"],
+  ["me","that's not how that works"],
+  ["them","ok"],
+  ["them","exercise"],
+  ["me","i play basketball"],
+  ["them","regularly"],
+  ["me","sometimes"],
+  ["them","then regularly"],
+  ["them","sleep early"],
+  ["me","trying"],
+  ["them","don't try"],
+  ["them","sleep"],
+  ["me","yes sir"],
+  ["them","respect your mother"],
+  ["me","i do"],
+  ["them","help your sister"],
+  ["me","she terrorizes me"],
+  ["them","still your sister"],
+  ["me","okay"],
+  ["them","good"],
+  ["them","call me"],
+  ["me","now?"],
+  ["them","sunday"],
+  ["me","okay"],
+  ["them","ok"]
  ]},
 
  cousins2:{kind:"inbox",name:"pinsan gc",preview:"sino laro mamaya",msgs:[
@@ -4613,13 +5001,37 @@ const chats={
   ["them","translation wala yan"],
   ["me","faithless family"],
   ["them","bring ice sunday"],
-  ["me","EVEN HERE???"]
+  ["me","EVEN HERE???"],
+  ["them","niko online ka"],
+  ["me","why"],
+  ["them","need one"],
+  ["me","doing plates"],
+  ["them","boring"],
+  ["me","degree unfortunately"],
+  ["them","10 mins lang"],
+  ["me","that's how it starts"],
+  ["them","coward"],
+  ["me","correct"]
  ]},
 
  mara:{kind:"inbox",name:"mara",preview:"send the pdf pls",msgs:[
   ["them","send the pdf pls"],["me","wait lang"],["them","i need it before 8"],["me","yeah yeah"],["them","thanks"],
   ["them","also page 4 is wrong"],["me","WHAT"],["them","good luck"],["me","why did nobody say this earlier"],["them","we did"],
-  ["me","where"],["them","gc"],["me","i muted it"],["them","skill issue"]
+  ["me","where"],["them","gc"],["me","i muted it"],["them","skill issue"],
+  ["them","where are u"],
+  ["me","library"],
+  ["them","again"],
+  ["me","aircon"],
+  ["them","valid"],
+  ["them","did prof upload rubric"],
+  ["me","no"],
+  ["them","he hates us"],
+  ["me","real"],
+  ["them","also can u check my beam labels"],
+  ["me","send"],
+  ["them","image attachment"],
+  ["me","why is column 4 floating"],
+  ["them","DON'T LOOK AT THAT"]
  ]},
  ken:{kind:"inbox",name:"ken",preview:"why do u have satanic shit saved",msgs:[
   ["them","may class ba tomorrow"],["me","i think so"],["them","very useful info"],["me","edi ikaw magtanong"],["them","HAHAHAHA"],
@@ -4629,12 +5041,36 @@ const chats={
   ["me","metal poster"],["them","and black candles??"],["me","they look cool"],["them","ur cat is in the pic too"],["me","miso summoned it"],
   ["them","gago"],["them","fr tho stop staying up until 3am zooming into graffiti"],["me","yeah yeah"],
   ["them","u sent me a wall drawing asking if i'd seen it before"],["me","did u"],["them","NO and that does not mean secret cult"],["me","i didn't say cult"],
-  ["them","you didn't have to"]
+  ["them","you didn't have to"],
+  ["them","send your notes"],
+  ["me","which"],
+  ["them","strength of materials"],
+  ["me","my notes are ass"],
+  ["them","better than mine"],
+  ["me","low bar"],
+  ["them","also game later"],
+  ["me","maybe"],
+  ["them","i'm putting 'maybe' on your gravestone"],
+  ["me","accurate"],
+  ["them","and sleep before 3"],
+  ["me","everyone is a cop"]
  ]},
  group:{kind:"inbox",name:"school group",preview:"final na ba to",msgs:[
   ["them","final na ba to"],["me","i think so"],["them","what do you mean you think so"],["me","i'll check again later"],
   ["them","niko upload mo na"],["me","wait lang"],["them","this man said wait lang for 2 hours"],["me","shut up"],
-  ["them","title page still wrong"],["me","WHO CHANGED IT"],["them","not me"],["them","not me either"],["me","amazing team"]
+  ["them","title page still wrong"],["me","WHO CHANGED IT"],["them","not me"],["them","not me either"],["me","amazing team"],
+  ["them","who has the latest dwg"],
+  ["me","me"],
+  ["them","UPLOAD"],
+  ["me","wait"],
+  ["them","we have been waiting since lunch"],
+  ["me","uploading"],
+  ["them","file says final_final2"],
+  ["me","that's the latest"],
+  ["them","why"],
+  ["me","don't ask"],
+  ["them","civil engineering is a disease"],
+  ["me","real"]
  ]},
  boys:{kind:"inbox",name:"the unemployment line",preview:"delete names idiot",msgs:[
   ["them","who's free friday"],["me","depends"],["them","depends on which girl replies?"],["me","fuck off"],
@@ -4653,20 +5089,54 @@ const chats={
  ballgc:{kind:"inbox",name:"hoops gc",preview:"that trade is fake",msgs:[
   ["them","that trade is fake"],["me","source?"],["them","trust me"],["me","so no source"],["them",""],
   ["them","u watching highlights later"],["me","yeah"],["them","your point guard list still ass btw"],["me","blocked"],
-  ["them","currywurst top 2 minimum"],["me","minimum??"],["them","don't start"],["me","you started it"]
+  ["them","currywurst top 2 minimum"],["me","minimum??"],["them","don't start"],["me","you started it"],
+  ["them","game friday"],
+  ["me","where"],
+  ["them","same court"],
+  ["me","time"],
+  ["them","7"],
+  ["me","might be late"],
+  ["them","of course"],
+  ["them","bring water this time"],
+  ["me","i had water"],
+  ["them","you drank ours"]
  ]},
  twok:{kind:"inbox",name:"2Kay frauds",preview:"your build has no defense",msgs:[
   ["them","your build has no defense"],["me","i score"],["them","and give up 40"],["me","team issue"],["them","LMAO"],
-  ["them","run later"],["me","after 9 maybe"],["them","same guard?"],["me","yeah"],["them","delete him"],["me","never"]
+  ["them","run later"],["me","after 9 maybe"],["them","same guard?"],["me","yeah"],["them","delete him"],["me","never"],
+  ["them","new build"],
+  ["me","send"],
+  ["them","screenshot attachment"],
+  ["me","why is he 5'11"],
+  ["them","SPEED"],
+  ["me","food for every guard"],
+  ["them","trust"],
+  ["me","i don't"]
  ]},
  cousins:{kind:"inbox",name:"cousins",preview:"sunday lunch",msgs:[
   ["them","sunday lunch sa lola"],["me","what time"],["them","12"],["me","i'll be late"],["them","as usual"],
-  ["them","bring ice"],["me","why me"],["them","because u have hands"],["me","great reason"],["them","also kuya marco bringing the karaoke"],["me","i'm suddenly busy"]
+  ["them","bring ice"],["me","why me"],["them","because u have hands"],["me","great reason"],["them","also kuya marco bringing the karaoke"],["me","i'm suddenly busy"],
+  ["them","lola asking if you're coming"],
+  ["me","yeah"],
+  ["them","reply sa gc then"],
+  ["me","why"],
+  ["them","because you never reply"],
+  ["me","i reply"],
+  ["them","once per fiscal quarter"],
+  ["me","efficient"]
  ]},
  jerome:{kind:"inbox",name:"jerome hs",preview:"u still got that old jersey",msgs:[
   ["them","u still got that old jersey"],["me","yeah somewhere"],["them","sell it to me"],["me","why"],["them","nostalgia"],
   ["me","you hated that jersey"],["them","i've grown"],["me","into bad taste"],["them","still annoying i see"],
-  ["them","btw reunion next month"],["me","might go"],["them","u always say might"],["me","commitment issues"],["them","apparently in every area of life"],["me","shut up"]
+  ["them","btw reunion next month"],["me","might go"],["them","u always say might"],["me","commitment issues"],["them","apparently in every area of life"],["me","shut up"],
+  ["them","found old class pic"],
+  ["me","delete it"],
+  ["them","u had that horrible haircut"],
+  ["me","DELETE"],
+  ["them","sending reunion gc"],
+  ["me","i will sue"],
+  ["them","too late"],
+  ["me","blocked again"]
  ]},
  ari:{kind:"inbox",name:"ari",preview:"none of those symbols match",msgs:[
   ["them","none of those symbols match"],["me","they kinda do"],["them","no they do not"],
@@ -4707,11 +5177,153 @@ const chats={
  ]},
  barber:{kind:"inbox",name:"barber kuya j",preview:"same cut?",msgs:[
   ["them","same cut?"],["me","yeah but don't make top short pls"],["them","HAHA noted"],["me","last time traumatized me"],
-  ["them","arte"],["me","i looked 12"],["them","u still look 12"],["me","blocked"]
+  ["them","arte"],["me","i looked 12"],["them","u still look 12"],["me","blocked"],
+  ["them","free saturday 3pm"],
+  ["me","book me"],
+  ["them","same long top"],
+  ["me","YES"],
+  ["them","noted prince charming"],
+  ["me","don't start"],
+  ["them","bring exact change"],
+  ["me","yes kuya"]
  ]},
  pcrepair:{kind:"inbox",name:"pc repair",preview:"temps still high?",msgs:[
   ["them","temps still high?"],["me","yeah like 90"],["them","bring it tomorrow"],["me","how much if fan cleaning lang"],
-  ["them","depends after check"],["me","okay"],["them","don't game on bed"],["me","i don't"],["them","everyone says that"]
+  ["them","depends after check"],["me","okay"],["them","don't game on bed"],["me","i don't"],["them","everyone says that"],
+  ["them","fan cleaned"],
+  ["me","temps?"],
+  ["them","better"],
+  ["me","how much"],
+  ["them","450"],
+  ["me","okay pickup later"],
+  ["them","bring charger"],
+  ["me","why"],
+  ["them","you forgot it last time"],
+  ["me","fair"]
+ ]},
+
+ rhea:{kind:"inbox",name:"rhea",preview:"u complain i don't reply then vanish too",msgs:[
+  ["me","u don't even reply to me anymore"],
+  ["them","HELLO???"],
+  ["them","you replied to my last message after EIGHT HOURS"],
+  ["me","i was busy"],
+  ["them","and i wasn't allowed to be busy?"],
+  ["me","not what i said"],
+  ["them","that's literally what u complain about every time"],
+  ["me","because u just react to my messages"],
+  ["them","sometimes there's nothing to say"],
+  ["me","damn"],
+  ["them","what do u want me to reply to 'just got home'"],
+  ["me","anything"],
+  ["them","congrats on arriving home"],
+  ["me","see now you're making fun of me"],
+  ["them","because you're dramatic"],
+  ["me","i'm not"],
+  ["them","you sent 'aight' then disappeared because i liked your message instead of replying"],
+  ["me","that was unrelated"],
+  ["them","mhm"],
+  ["them","anyway did u finish your plate"],
+  ["me","no"],
+  ["them","go do that instead of monitoring my replies"],
+  ["me","rude"]
+ ]},
+
+ jessa:{kind:"inbox",name:"jessa • surveying",preview:"send coordinates pls",msgs:[
+  ["them","send coordinates pls"],["me","wait"],["them","we're literally waiting at the site"],["me","wrong file hold on"],
+  ["them","niko"],["me","sent"],["them","thank u"],["them","also your handwriting is criminal"],["me","engineer font"],
+  ["them","that is not a thing"],["me","it is now"],["them","bring tape tomorrow"],["me","noted"]
+ ]},
+
+ denise:{kind:"inbox",name:"denise",preview:"u still selling that keyboard?",msgs:[
+  ["them","u still selling that keyboard?"],["me","yeah"],["them","hm"],["me","1200"],["them","last price"],
+  ["me","1100"],["them","1000 pickup today"],["me","1050"],["them","grabe 50"],["me","principle"],
+  ["them","fine"],["them","where meetup"],["me","terminal side maybe"],["them","i'll message if tuloy"]
+ ]},
+
+ rina:{kind:"inbox",name:"rina • old classmate",preview:"happy birthday bea btw",msgs:[
+  ["them","happy birthday bea btw"],["me","wrong sibling"],["them","I KNOW i'm telling u to tell her"],["me","oh"],
+  ["them","idiot"],["me","will tell her"],["them","how's CE"],["me","pain"],["them","good choice then"],["me","how's yours"],
+  ["them","different pain"],["me","beautiful"]
+ ]},
+
+
+ mae:{kind:"inbox",name:"mae",preview:"niko where is my ₱500",msgs:[
+  ["them","niko where is my ₱500"],
+  ["them","you said you'd send it back friday"],
+  ["them","it's monday"],
+  ["them","hello"],
+  ["them","you literally viewed my story"],
+  ["them","so don't tell me u didn't see this"],
+  ["them","i sent 500 because YOU said you'd reserve it for me"],
+  ["them","then suddenly the listing disappeared"],
+  ["them","if you sold it to someone else just say that and send my money back"],
+  ["them","niko"],
+  ["them","????"],
+  ["them","this is actually embarrassing"],
+  ["them","i messaged you on instacam too"],
+  ["them","and emailed because apparently i have to contact you like customer support"],
+  ["them","give me my ₱500 back pls"],
+  ["system","seen aug 16 • no reply"],
+  ["them","niko"],
+  ["them","NIKO"],
+  ["them","answer me"],
+  ["them","i'm not asking you for free money i'm asking for MY money"],
+  ["them","₱500 is still ₱500"],
+  ["them","you had time to post a story"],
+  ["them","you had time to like somebody's post"],
+  ["them","you had time to be online in games"],
+  ["them","but suddenly typing 'sorry i'll refund u' is impossible??"],
+  ["them","hello????"],
+  ["them","i have the gcash receipt btw"],
+  ["them","and screenshots of the listing"],
+  ["them","and screenshots of you saying RESERVED"],
+  ["them","so idk why you're acting like disappearing makes this go away"],
+  ["them","send it back"],
+  ["them","500"],
+  ["them","five hundred pesos"],
+  ["them","₱500.00 since maybe the decimals will help"],
+  ["them","niko de la cruz i swear"],
+  ["them","i'm literally gonna keep messaging"],
+  ["them","good morning refund me"],
+  ["them","good afternoon refund me"],
+  ["them","advance good evening refund me"],
+  ["them","this is your daily ₱500 reminder"],
+  ["them","day 4 of customer support not responding"],
+  ["them","⭐ one star seller"],
+  ["them","would not recommend"],
+  ["them","refund"],
+  ["them","refund"],
+  ["them","REFUND"],
+  ["system","last cached message • aug 17, 11:31 pm"]
+ ]},
+
+ marketbuyer:{kind:"inbox",name:"marketplace • kevin",preview:"hm po available pa po?",msgs:[
+  ["them","hm po available pa po?"],["me","yes available"],["them","last price po"],["me","850"],
+  ["them","700 po kunin ko now"],["me","800 last"],["them","750"],["me","800"],
+  ["them","location po"],["me","near terminal"],["them","pwede 780 boss"],["me","800 talaga"],
+  ["them","sige po"],["them","may issue po?"],["me","none"],["them","complete box?"],["me","unit + cable only"],
+  ["them","ahh"],["them","780 na po"],["me","800"],["them","seen"]
+ ]},
+
+ classbuyer:{kind:"inbox",name:"random buyer • migs",preview:"available pa po yung calculator?",msgs:[
+  ["them","available pa po yung calculator?"],["me","yes"],["them","hm po"],["me","600"],
+  ["them","fx-991ex po ba"],["me","yeah"],["them","orig? lol"],["me","yes"],["them","500 pickup"],
+  ["me","550"],["them","deal"],["them","tomorrow po"],["me","okay"],["them","salamat"]
+ ]},
+
+ laundry:{kind:"inbox",name:"laundry ate",preview:"sir ready na po",msgs:[
+  ["them","sir ready na po laundry"],["me","until what time"],["them","9pm po"],["me","pickup 8"],["them","okay po"],
+  ["them","may isang medyas po walang partner"],["me","keep him safe"],["them","HAHAHA"],["them","sige sir"]
+ ]},
+
+ kuyaallan:{kind:"inbox",name:"kuya allan • court",preview:"may court saturday",msgs:[
+  ["them","may court saturday"],["me","what time"],["them","6pm"],["me","covered?"],["them","oo"],
+  ["me","good ulan nanaman"],["them","dala bola"],["me","ken has it"],["them","sabihin mo"],["me","noted"]
+ ]},
+
+ wrongnumber:{kind:"inbox",name:"unknown • 0917",preview:"sir nasaan na po order ko",msgs:[
+  ["them","sir nasaan na po order ko"],["me","wrong number po"],["them","ay sorry"],["me","np"],
+  ["them","sure po hindi kayo rider"],["me","very sure"],["them","okay sorry ulit"],["me","good luck sa order"]
  ]},
 
  celine:{kind:"archived",name:"enilec",preview:"don't message me again",msgs:[
@@ -4797,6 +5409,43 @@ const chats={
   ["them","then stop doing it"],["me","okay"],["them","thank you"]
  ]},
 
+ angel:{kind:"archived",name:"legna",preview:"u only message when you're bored",msgs:[
+  ["them","u only message when you're bored"],["me","not true"],["them","mhm"],["me","what"],
+  ["them","you disappear for days then 'hey stranger'"],["me","busy"],["them","of course"],["me","u don't reply fast either"],
+  ["them","there it is"],["them","you complain about replies then leave people on delivered"],["me","different"],
+  ["them","sure niko"],["them","anyway i'm not fighting about this"],["me","okay"]
+ ]},
+
+ trixie:{kind:"archived",name:"eixirt",preview:"the movie was good btw",msgs:[
+  ["them","the movie was good btw"],["me","told u"],["them","ending sucked"],["me","wrong opinion"],
+  ["them","you recommend depressing shit then vanish"],["me","cinema"],["them","did u watch the one i sent"],["me","not yet"],
+  ["them","fake friend"],["me","tonight"],["them","u said that monday"],["me","tonight for real"]
+ ]},
+
+ sam:{kind:"archived",name:"mas",preview:"thanks for the reviewer",msgs:[
+  ["them","thanks for the reviewer"],["me","np"],["them","where'd u get problem 6"],["me","old quiz"],
+  ["them","send source"],["me","later"],["them","there's the famous later"],["me","everyone attacks me for this"],
+  ["them","because you deserve it"],["me","fair"]
+ ]},
+
+ ela:{kind:"archived",name:"ale",preview:"stop heart reacting everything",msgs:[
+  ["them","stop heart reacting everything"],["me","why"],["them","because then i think u actually have something to say"],
+  ["me","❤️"],["them","NIKO"],["me","sorry"],["them","you're annoying"],["me","noted"],
+  ["them","also are u going saturday"],["me","maybe"],["them","of course maybe"]
+ ]},
+
+ patricia:{kind:"archived",name:"aicirtap",preview:"you still owe me ₱120",msgs:[
+  ["them","you still owe me ₱120"],["me","for what"],["them","coffee + print"],["me","oh"],
+  ["them","OH"],["me","send gcash"],["them","same number"],["me","sent"],["them","received"],
+  ["them","wow debt cleared after 900 years"],["me","growth"]
+ ]},
+
+ joy:{kind:"archived",name:"yoj",preview:"did u ever fix ur sleep",msgs:[
+  ["them","did u ever fix ur sleep"],["me","no"],["them","shocking"],["me","working on it"],
+  ["them","u said that months ago"],["me","long project"],["them","apparently"],["them","take care of yourself idiot"],
+  ["me","yes ma'am"]
+ ]},
+
  girlrequest:{kind:"requests",name:"sophie",preview:"hey are you niko?",msgs:[
   ["them","hey are you niko?"],["them","vince gave me your ig before"],["them","you were at the bar friday right"],
   ["them","nvm sorry if wrong person"],["them","wait blue hoodie?"],["them","yeah probably you"]
@@ -4810,6 +5459,16 @@ const chats={
  kate:{kind:"requests",name:"kate",preview:"your friend gave me this account",msgs:[
   ["them","your friend gave me this account"],["them","said you play 2Kay"],["them","need one more for a private lobby later"]
  ]},
+ fbmarket2:{kind:"requests",name:"marketplace • aya",preview:"available pa po?",msgs:[
+  ["them","available pa po?"],["them","hm last"],["them","can meetup manila"],["them","hello po"]
+ ]},
+ printerclient:{kind:"requests",name:"unknown • print",preview:"magkano po 40 pages?",msgs:[
+  ["them","magkano po 40 pages?"],["them","black white po"],["them","pwede rush"],["them","sorry wrong account ba"]
+ ]},
+ gamerandom:{kind:"requests",name:"ezra",preview:"rain seven later?",msgs:[
+  ["them","rain seven later?"],["them","toni said u play"],["them","need 1"],["them","nvm full na"]
+ ]},
+
  seller:{kind:"requests",name:"marketplace seller",preview:"still interested in mouse?",msgs:[
   ["them","still interested in mouse?"],["them","can do 900 last price"],["them","pickup only"]
  ]}
@@ -4861,7 +5520,7 @@ function renderChats(filter=""){
   }
   chatList.innerHTML=keys.map(k=>{
     const c=chats[k];
-    const unread={lia:3,maria:12,vince:4,cam:5,celine:2,drreyes:4}[k]||0;
+    const unread={lia:5,mama:7,bea:4,familygc:6,unclejojo:9,rhea:2,mae:37,maria:12,vince:4,cam:5,celine:2,drreyes:4}[k]||0;
     return `<div class="chat-row" onclick="openChat('${k}')"><strong>${c.name}</strong>${unread?`<span class="unread">${unread}</span>`:""}<small>${c.preview}</small></div>`;
   }).join("") || `<div class="bubble sys" style="margin:20px">${chatMode==="requests"?"no message requests loaded":"no cached chats in this section"}</div>`;
 }
@@ -4884,6 +5543,8 @@ function openChat(k){
     addReply("where did niko go after the bar?",()=>replyVince(2));
   }else if((k==="lia"||k==="mama"||k==="vince")&&!hotspotOn){
     replyBar.innerHTML=`<span class="muted" style="font-size:11px">${storyFlags.hotspotUnlocked?"offline cached chat • connect alon's hotspot to send a message":"offline cached chat • hotspot unavailable until you speak with terminal security"}</span>`;
+  }else if(k==="unclejojo"){
+    replyBar.innerHTML=`<button onclick="reactUncleThumb()">👍</button><span class="muted" style="font-size:11px">quick reaction • local UI only</span>`;
   }else{
     replyBar.innerHTML=`<span class="muted" style="font-size:11px">${hotspotOn?"online • maybe don't message random people":"offline cached chat • maybe don't message random people"}</span>`;
   }
@@ -4971,6 +5632,14 @@ function pushMsg(who,text){
 }
 function pushPresentMsg(text){
   const d=document.createElement("div");d.className="bubble me";d.innerHTML=`<span>${text}</span><div style="font-size:9px;opacity:.68;margin-top:4px">you • sent from niko's laptop</div>`;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
+}
+function reactUncleThumb(){
+  const d=document.createElement("div");
+  d.className="bubble sys";
+  d.textContent="👍 reacted";
+  messages.appendChild(d);
+  messages.scrollTop=messages.scrollHeight;
+  setTimeout(()=>{if(d&&d.parentNode)d.remove();},1800);
 }
 function showTypingPause(label="typing…",duration=1600){
   const d=document.createElement("div");d.className="bubble sys";d.textContent=label;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
@@ -5617,17 +6286,168 @@ price may have changed.`],
  ["music","your monthly listening recap",`top genre: hip hop
 top playlist: late commute`],
  ["food delivery","we miss you",`free delivery voucher expires soon.`],
+
+ ["mae r.","₱500 — seriously?",`niko,
+
+you said you'd reserve the item when i sent you ₱500.
+you stopped answering right after and the listing disappeared.
+
+i've messaged you on messynger and instacam already.
+if you sold it to someone else, fine. just send my money back.
+
+mae`],
+
+ ["mae r.","following up AGAIN — ₱500",`hello again.
+
+yes this is another email.
+
+₱500 refund.
+that is literally the entire email.
+
+mae`],
+
+ ["mae r.","day 4: refund pls",`niko,
+
+i'm going to keep sending these until you reply.
+
+you have my gcash details already.
+₱500.
+
+thanks.`],
+
+ ["mae r.","customer support ticket #000500",`hi niko customer support,
+
+issue: seller disappeared after receiving reservation payment
+amount: ₱500
+status: still waiting
+customer mood: getting worse
+
+please resolve immediately.
+
+— mae`],
+
+ ["vapor","your weekly gaming digest",`this week on vapor:
+
+2 friends started Alive by Nightlight
+3 friends played Rain Seven Siege
+Elden Bracelet is back in your recent activity
+12 wishlist items are discounted
+
+open Vapor to see the full list.`],
+
+ ["rain seven siege","season update available",`new season update ready.
+
+download size: 8.7 gb
+ranked playlists updated
+operator balance changes
+map rotation refreshed
+
+automatic update paused while offline.`],
+
+ ["elden bracelet","server maintenance notice",`scheduled maintenance:
+
+aug 18 • 2:00 am–4:00 am
+
+online features may be unavailable.
+offline play is unaffected.`],
+
+ ["ValoRant","patch notes 12.04",`patch 12.04 is live.
+
+agent balance adjustments
+competitive queue fixes
+anti-cheat update required
+
+launcher must reconnect before updating.`],
+
+ ["alive by nightlight","new chapter announcement",`a new chapter is available this week.
+
+new survivor
+new killer
+limited-time cosmetics
+
+your game client has not downloaded the update yet.`],
+
+ ["miningblocks realms","monthly realm renewal",`your realm subscription renews aug 22.
+
+amount: ₱299
+payment method ending 41
+
+manage subscription from your account page.`],
+
+ ["spotifake","premium receipt",`thanks for your payment.
+
+spotifake premium
+₱149
+billing date: aug 12`],
+
+ ["viewtube","weekly channel digest",`new uploads from channels you follow:
+
+civil engineering shortcuts
+basketball film room
+camera gear on a budget
+Rain Seven Siege clips
+street photography manila`],
+
+ ["autodraft","student license reminder",`your student license remains active.
+
+verify enrollment before september 30 to continue using educational access.`],
+
+ ["civil engineering weekly","august digest",`this week's topics:
+
+reinforced concrete detailing
+common surveying mistakes
+site drainage basics
+student internship board`],
+
+ ["sneaker drop","raffle result",`you were not selected.
+
+thanks for entering the draw.
+yes, again.`],
+
+ ["camera club manila","friday photo walk",`meetup this friday.
+
+theme: reflections after rain
+meeting point: escolta
+bring an umbrella.`],
+
+ ["food app","subscription renewal",`delivery plus renews aug 25.
+
+monthly price: ₱99
+cancel anytime in account settings.`],
+
+ ["cloud storage","weekly backup summary",`1,842 files backed up
+14 files pending
+3 uploads paused
+
+sync will resume when the device reconnects.`],
+
+ ["security","weekly account activity",`sign-ins this week: 6
+new devices: 1
+password changes: 0
+blocked attempts: 2
+
+review activity if anything looks unfamiliar.`],
+
  ["mindwell clinic","appointment reminder",`appointment with dr. andrea reyes
 aug 17 • 4:00 pm
 
 reply or call the clinic if you need to reschedule.`]
 ];
-function renderMail(){
-  mailIndex.innerHTML=mails.map((m,i)=>[m,i]).filter(([m])=>story.act>=4||m[0]!=="mindwell clinic").map(([m,i])=>`<div class="index-row" onclick="openMail(${i})"><b>${m[0]}</b><small>${m[1]}</small></div>`).join("");
+function renderMail(filter=""){
+  const q=(filter||"").trim().toLowerCase();
+  const rows=mails.map((m,i)=>[m,i]).filter(([m])=>story.act>=4||m[0]!=="mindwell clinic").filter(([m])=>!q||(m[0]+" "+m[1]+" "+m[2]).toLowerCase().includes(q));
+  mailIndex.innerHTML=`<div class="detail" style="padding:8px"><input style="width:100%" placeholder="search mail" value="${filter.replace(/"/g,'&quot;')}" oninput="renderMail(this.value)"></div>`+rows.map(([m,i])=>`<div class="index-row" onclick="openMail(${i})"><b>${mailUnread.has(i)?"● ":""}${m[0]}</b><button class="soft" style="float:right;padding:2px 6px" onclick="event.stopPropagation();toggleMailStar(${i})">${mailStars.has(i)?"★":"☆"}</button><small>${m[1]}</small></div>`).join("");
+}
+function toggleMailStar(i){
+  if(mailStars.has(i))mailStars.delete(i);else mailStars.add(i);
+  renderMail(document.querySelector('#mailIndex input')?.value||"");if(typeof saveGame==="function")saveGame(false);
+}
+function markMailUnreadAgain(i){
+  mailUnread.add(i);renderMail();toast("mail","marked unread");if(typeof saveGame==="function")saveGame(false);
 }
 function openMail(i){
-  markSeen("mail_"+i);
-  mailView.innerHTML=`<h3>${mails[i][1]}</h3><p class="muted">from ${mails[i][0]}</p><div style="white-space:pre-line">${mails[i][2]}</div>`;mailView.scrollTop=0;
+  markSeen("mail_"+i);mailUnread.delete(i);
+  mailView.innerHTML=`<h3>${mails[i][1]}</h3><p class="muted">from ${mails[i][0]}</p><div style="white-space:pre-line">${mails[i][2]}</div><div class="social-tabs" style="margin-top:14px"><button onclick="toggleMailStar(${i});openMail(${i})">${mailStars.has(i)?"★ starred":"☆ star"}</button><button onclick="markMailUnreadAgain(${i})">mark unread</button></div>`;mailView.scrollTop=0;
   if(i===5)addJournal("food receipt shows two drinks and two meals on aug 16.");
 }
 
@@ -5657,12 +6477,33 @@ const contacts=[
  ["delivery","food delivery","service"],
  ["barber","barber","service"],
  ["dentist","dental clinic","service"],
+ ["rhea","rhea","no label"],
+ ["jessa","jessa","surveying class"],
+ ["denise","denise","marketplace"],
+ ["rina","rina","old classmate"],
+ ["kevin","kevin","marketplace"],
+ ["migs","migs","marketplace"],
+ ["laundry","laundry ate","service"],
+ ["kuyaallan","kuya allan","basketball court"],
+ ["angel","angel","no label"],
+ ["trixie","trixie","no label"],
+ ["sam","sam","school"],
+ ["ela","ela","no label"],
+ ["patricia","patricia","school / print"],
+ ["joy","joy","old contact"],
+ ["mae","mae","no label"],
  ["enilec","enilec","archived alias"],
  ["hsa","hsa","archived alias"],
  ["airam","airam","archived alias"],
  ["alleb","alleb","archived alias"],
  ["enaj","enaj","archived alias"],
- ["anail","anail","archived alias"]
+ ["anail","anail","archived alias"],
+ ["legna","legna","archived alias"],
+ ["eixirt","eixirt","archived alias"],
+ ["mas","mas","archived alias"],
+ ["ale","ale","archived alias"],
+ ["aicirtap","aicirtap","archived alias"],
+ ["yoj","yoj","archived alias"]
 ];
 function renderContacts(){
   contactIndex.innerHTML=contacts.map((c,i)=>[c,i]).filter(([c])=>isContactUnlocked(c[0])).map(([c,i])=>`<div class="index-row" onclick="openContact(${i})"><b>${c[1]}</b><small>${c[2]}</small></div>`).join("");
@@ -5688,7 +6529,16 @@ function openContact(i){
   if(c[0]==="profsantos")extra=`<p>structural analysis instructor.</p>`;
   if(c[0]==="printshop")extra=`<p>cousin's print shop.</p><p>note: "help weekends if needed"</p>`;
   if(c[0]==="bartender")extra=`<p>number has no profile image.</p><p>saved from bar receipt / staff contact.</p>`;
-  if(["enilec","hsa","airam","alleb","enaj","anail"].includes(c[0]))extra=`<p>name looks intentionally reversed.</p><p>no surname shown.</p><p>last edited this month.</p>`;
+  if(c[0]==="rhea")extra=`<p>no label.</p><p>frequent casual messages.</p>`;
+  if(c[0]==="jessa")extra=`<p>surveying classmate.</p>`;
+  if(c[0]==="denise")extra=`<p>marketplace chat.</p><p>saved during keyboard sale.</p>`;
+  if(c[0]==="rina")extra=`<p>old classmate.</p>`;
+  if(c[0]==="kevin"||c[0]==="migs")extra=`<p>marketplace buyer.</p><p>no other notes.</p>`;
+  if(c[0]==="laundry")extra=`<p>laundry shop contact.</p>`;
+  if(c[0]==="kuyaallan")extra=`<p>basketball court contact.</p>`;
+  if(["angel","trixie","sam","ela","patricia","joy"].includes(c[0]))extra=`<p>no special label.</p><p>older contact.</p>`;
+  if(c[0]==="mae")extra=`<p>no special label.</p><p>recent messages mention an unresolved ₱500 payment.</p>`;
+  if(["enilec","hsa","airam","alleb","enaj","anail","legna","eixirt","mas","ale","aicirtap","yoj"].includes(c[0]))extra=`<p>name looks intentionally reversed.</p><p>no surname shown.</p><p>last edited this month.</p>`;
   contactView.innerHTML=`<h3>${c[1]}</h3><p class="muted">${c[2]}</p>${extra}`;contactView.scrollTop=0;
   if(c[0]==="celine"||c[0]==="c2")addJournal("celine is saved twice under different names.");
 }
@@ -6509,15 +7359,144 @@ const instagramDMs={
   ]},
   "kei.s":{name:"kei",preview:"lol thanks",status:"replied then quiet",msgs:[
     ["me","hair looks nice"],["them","lol thanks"],["me","new cut?"],["system","seen 8 hours ago"]
+  ]},
+
+  "mae.r":{name:"mae",preview:"give me my ₱500 back",status:"seen by niko • no reply",msgs:[
+    ["them","niko"],
+    ["them","give me my ₱500 back"],
+    ["them","u said you'd reserve the item if i sent 500"],
+    ["them","then u deleted the listing and stopped replying"],
+    ["them","don't view my story if you're gonna ignore my messages"],
+    ["them","i already messaged your messynger"],
+    ["them","i'm emailing you too because this is ridiculous"],
+    ["them","send the 500 back"],
+    ["system","seen by niko • no reply"],
+    ["them","oh so we're doing the ignore thing here too"],
+    ["them","nice"],
+    ["them","very professional marketplace experience"],
+    ["them","⭐"],
+    ["them","one star"],
+    ["them","i can literally SEE you viewed my story"],
+    ["them","stop viewing my stories and refund me"],
+    ["them","why are u online"],
+    ["them","why are u liking reels"],
+    ["them","WHY ARE U FOLLOWING PEOPLE"],
+    ["them","but my ₱500 message is apparently invisible"],
+    ["them","niko"],
+    ["them","niko"],
+    ["them","niko"],
+    ["them","i'll message again tomorrow don't worry"],
+    ["system","cached through aug 17 • no reply"]
+  ]},
+
+  "aly.jpg":{name:"aly",preview:"seen 2d ago",status:"seen",msgs:[
+    ["me","ur hair actually looks good like that"],
+    ["them","thankss"],
+    ["me","u always wear it straight?"],
+    ["system","seen 2 days ago"]
+  ]},
+
+  "nica.mp4":{name:"nica",preview:"sent 4d ago",status:"no reply",msgs:[
+    ["me","wait where is this place"],
+    ["me","the view is nice"],
+    ["system","sent 4 days ago • no reply"]
+  ]},
+
+  "dani.dc":{name:"dani",preview:"HAHAHA",status:"replied then vanished",msgs:[
+    ["me","u look familiar"],
+    ["them","HAHAHA"],
+    ["me","that's not an answer"],
+    ["them","maybe u saw me at school"],
+    ["me","what course"],
+    ["system","seen 3 days ago"]
+  ]},
+
+  "mikha.jpg":{name:"mikha",preview:"liked your message",status:"seen",msgs:[
+    ["me","pretty ng fit"],
+    ["system","liked your message"],
+    ["me","where'd u get the jacket"],
+    ["system","seen yesterday"]
+  ]},
+
+  "chloe.wav":{name:"chloe",preview:"😭",status:"dry reply",msgs:[
+    ["me","ur dog looks mad at u"],
+    ["them","😭"],
+    ["me","what's his name"],
+    ["system","seen 6 hours ago"]
+  ]},
+
+  "bea.notmysister":{name:"bea p.",preview:"sent 1w ago",status:"no reply",msgs:[
+    ["me","random but are u from the same uni too"],
+    ["system","sent 1 week ago • no reply"]
+  ]},
+
+  "hazel.06":{name:"hazel",preview:"mhm",status:"replied then quiet",msgs:[
+    ["me","u always online this late"],
+    ["them","mhm"],
+    ["me","same unfortunately"],
+    ["system","seen 2 days ago"]
+  ]},
+
+  "lea.archive":{name:"lea",preview:"who are u again",status:"replied",msgs:[
+    ["me","hey"],
+    ["them","who are u again"],
+    ["me","damn"],
+    ["them","SORRY"],
+    ["me","we had one class last year"],
+    ["them","ohhhh"],
+    ["me","confidence destroyed"],
+    ["them","my bad 😭"]
+  ]},
+
+  "kaye.jpeg":{name:"kaye",preview:"seen 5h ago",status:"seen",msgs:[
+    ["me","that cafe any good"],
+    ["them","yeah"],
+    ["me","what'd u order"],
+    ["system","seen 5 hours ago"]
+  ]},
+
+  "sophi.mp3":{name:"sophi",preview:"sent 6d ago",status:"no reply",msgs:[
+    ["me","u still play Rain Seven Siege"],
+    ["me","we need one"],
+    ["system","sent 6 days ago • no reply"]
+  ]},
+
+  "elle2.jpg":{name:"elle",preview:"HAHA",status:"replied then quiet",msgs:[
+    ["me","that caption is insane"],
+    ["them","HAHA"],
+    ["me","defending it?"],
+    ["system","seen yesterday"]
+  ]},
+
+  "ara.png":{name:"ara",preview:"ty",status:"dry reply",msgs:[
+    ["me","nice pic"],
+    ["them","ty"],
+    ["me","camera or phone"],
+    ["system","seen 11 hours ago"]
+  ]},
+
+  "mikaela.r":{name:"mikaela",preview:"sent 9d ago",status:"no reply",msgs:[
+    ["me","u disappeared from the gc"],
+    ["me","everything good?"],
+    ["system","sent 9 days ago • no reply"]
   ]}
 };
 const instagramFollowing=[
   ["ela.jpg","private • follows you","dm"],["sammyyy","public • follows you","dm"],["kyla.wav","private • follows you","dm"],["ria.s","public • follows you","dm"],["trishh","private • follows you","dm"],["faith.exe","public • follows you","dm"],["jen.jpg","private • doesn't follow back","dm"],["mari.mp3","public • follows you","dm"],["nixie","private • follows you","dm"],["aiah.exe","public • follows you","dm"],["cass.jpg","public • doesn't follow back","dm"],["kei.s","private • follows you","dm"],
   ["nationalballerassociation","public • sports"],["houseoflowlights","public • sports"],["autodesk","public • software"],["civilengineeringdaily","public • engineering"],["formulawon","public • sports"],["royalmadrid","public • football"],["ladodgems","public • baseball"],["sneakerfiles","public • shoes"],
-  ["architectureposts","public • design"],["structuralengineering","public • engineering"],["filmgrain.jpg","public • photography"],["nightdrives","public • cars"]
+  ["architectureposts","public • design"],["structuralengineering","public • engineering"],["filmgrain.jpg","public • photography"],["nightdrives","public • cars"],
+  ["mae.r","private • follows you","dm"],["aly.jpg","private • follows you","dm"],["nica.mp4","public • doesn't follow back","dm"],
+  ["dani.dc","private • follows you","dm"],["mikha.jpg","public • follows you","dm"],["chloe.wav","private • follows you","dm"],
+  ["bea.notmysister","public • doesn't follow back","dm"],["hazel.06","private • follows you","dm"],["lea.archive","private • follows you","dm"],
+  ["kaye.jpeg","public • follows you","dm"],["sophi.mp3","private • doesn't follow back","dm"],["elle2.jpg","public • follows you","dm"],
+  ["ara.png","public • doesn't follow back","dm"],["mikaela.r","private • follows you","dm"],
+  ["manilacoffee.jpg","public • cafe"],["ceplatesdaily","public • engineering"],["hoopsclips247","public • basketball"],["streetfilm.ph","public • photography"]
 ];
 const instagramFollowers=[
-  ["ken.irl","friend"],["vince.jpg","friend"],["camcam","friend"],["bea.dc","sister"],["mika.exe","mutual"],["sammyyy","mutual"],["kyla.wav","mutual"],["faith.exe","mutual"],["mari.mp3","mutual"],["joaqhoops","basketball"],["mara.ce","classmate"],["rj.17","friend"],["elle.jpg","mutual"],["aiah.exe","mutual"],["trishh","mutual"],["random_ce_student","classmate"],["sitecoffee","local cafe"],["civilmemesdaily","meme account"]
+  ["ken.irl","friend"],["vince.jpg","friend"],["camcam","friend"],["bea.dc","sister"],["mika.exe","mutual"],["sammyyy","mutual"],["kyla.wav","mutual"],["faith.exe","mutual"],["mari.mp3","mutual"],["joaqhoops","basketball"],["mara.ce","classmate"],["rj.17","friend"],["elle.jpg","mutual"],["aiah.exe","mutual"],["trishh","mutual"],["random_ce_student","classmate"],["sitecoffee","local cafe"],["civilmemesdaily","meme account"],
+  ["mae.r","mutual"],["aly.jpg","mutual"],["dani.dc","mutual"],["mikha.jpg","mutual"],["chloe.wav","mutual"],
+  ["hazel.06","mutual"],["lea.archive","mutual"],["kaye.jpeg","mutual"],["elle2.jpg","mutual"],["mikaela.r","mutual"],
+  ["cebatch2026","school"],["manilarainmemes","meme account"],["nightcourt.ph","basketball"],["miso_fanclub","bea's joke account"]
 ];
 
 function renderInstagram(tab="profile"){
@@ -6525,7 +7504,7 @@ function renderInstagram(tab="profile"){
   const body=document.getElementById("instagramBody");if(!body)return;
   const tabs=`<div class="social-tabs"><button class="${tab==="profile"?"active":""}" onclick="renderInstagram('profile')">profile</button><button class="${tab==="messages"?"active":""}" onclick="renderInstagram('messages')">messages</button><button class="${tab==="following"?"active":""}" onclick="renderInstagram('following')">following</button><button class="${tab==="followers"?"active":""}" onclick="renderInstagram('followers')">followers</button></div>`;
   if(tab==="profile"){
-    body.innerHTML=`${tabs}<div class="detail"><div class="social-profile-head"><div class="social-avatar">📷</div><div><h3 style="margin:0">@niko.dc05</h3><div class="social-stats"><span><b>12</b>posts</span><span><b>329</b>followers</span><span><b>321</b>following</span></div></div></div><p><b>Niko de la Cruz</b> • 21 • Civil Engineering</p><p>6'2 • 78 kg • basketball / games / cameras / plates</p><p class="muted">cached profile • last successful sync aug 17, 11:37 pm</p></div><div class="ig-post-grid">${instagramPosts.map((p,i)=>`<div class="ig-post" onclick="openInstagramPost(${i})"><span>${p.cap}</span></div>`).join("")}</div>`;
+    body.innerHTML=`${tabs}<div class="detail"><div class="social-profile-head"><div class="social-avatar">📷</div><div><h3 style="margin:0">@niko.dc05</h3><div class="social-stats"><span><b>12</b>posts</span><span><b>347</b>followers</span><span><b>366</b>following</span></div></div></div><p><b>Niko de la Cruz</b> • 21 • Civil Engineering</p><p>6'2 • 78 kg • basketball / games / cameras / plates</p><p class="muted">cached profile • last successful sync aug 17, 11:37 pm</p></div><div class="ig-post-grid">${instagramPosts.map((p,i)=>`<div class="ig-post" onclick="openInstagramPost(${i})"><span>${p.cap}</span></div>`).join("")}</div>`;
     return;
   }
   if(tab==="messages"){
@@ -6533,22 +7512,35 @@ function renderInstagram(tab="profile"){
     return;
   }
   const data=tab==="following"?instagramFollowing:instagramFollowers;
-  const total=tab==="following"?321:329;
+  const total=tab==="following"?366:347;
   body.innerHTML=`${tabs}<div class="detail"><b>${total} ${tab}</b><p class="muted">showing a small locally cached slice, not the full online list.</p></div>`+data.map((x,i)=>`<div class="index-row" onclick="openInstagramPerson('${tab}',${i})"><b>@${x[0]}</b><small>${x[1]}</small></div>`).join("");
+}
+function toggleInstagramPost(i,kind){
+  const set=kind==="like"?instagramLikedPosts:instagramSavedPosts;
+  if(set.has(i))set.delete(i);else set.add(i);
+  openInstagramPost(i);if(typeof saveGame==="function")saveGame(false);
 }
 function openInstagramPost(i){
   const p=instagramPosts[i];if(!p)return;markExtra("ig_post_"+i);
-  showWindowDetail("instagram",`<div class="detail"><h4>@niko.dc05</h4><div class="ig-post" style="max-width:360px;margin:0 auto 14px"><span>${p.cap}</span></div><p>${p.cap}</p><p class="muted">${p.meta}</p><p><b>cached comments</b></p>${p.comments.map(c=>`<p>${c}</p>`).join("")}<button class="soft" onclick="toast('instagram','offline cache • cannot like or comment right now')">♡ like</button></div>`,`post ${i+1}`);
+  showWindowDetail("instagram",`<div class="detail"><h4>@niko.dc05</h4><div class="ig-post" style="max-width:360px;margin:0 auto 14px"><span>${p.cap}</span></div><p>${p.cap}</p><p class="muted">${p.meta}</p><p><b>cached comments</b></p>${p.comments.map(c=>`<p>${c}</p>`).join("")}<div class="social-tabs"><button onclick="toggleInstagramPost(${i},'like')">${instagramLikedPosts.has(i)?"♥ liked":"♡ like"}</button><button onclick="toggleInstagramPost(${i},'save')">${instagramSavedPosts.has(i)?"★ saved":"☆ save"}</button></div><p class="muted">local browsing controls only.</p></div>`,`post ${i+1}`);
+}
+function toggleInstagramDMReaction(key){
+  if(instagramReactedDMs.has(key))instagramReactedDMs.delete(key);else instagramReactedDMs.add(key);
+  openInstagramDM(key);if(typeof saveGame==="function")saveGame(false);
+}
+function toggleInstagramProfileBookmark(key,tab,i){
+  if(instagramBookmarkedProfiles.has(key))instagramBookmarkedProfiles.delete(key);else instagramBookmarkedProfiles.add(key);
+  openInstagramPerson(tab,i);if(typeof saveGame==="function")saveGame(false);
 }
 function openInstagramDM(key){
   const c=instagramDMs[key];if(!c)return;markExtra("ig_dm_"+key);
   const rows=c.msgs.map(m=>m[0]==="system"?`<div class="social-bubble system">${m[1]}</div>`:`<div class="social-bubble ${m[0]==="me"?"mine":""}">${m[1]}</div>`).join("");
-  showWindowDetail("instagram",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">◎</div><div><h4 style="margin:0">@${key}</h4><div>${c.name}</div><div class="social-row-meta">${c.status}</div></div></div></div><div class="social-chat">${rows}</div><div class="detail"><p class="muted">offline cache. sending a new message is unavailable until the account reconnects, and these social threads do not count as final-night case evidence.</p></div>`,"@"+key);
+  showWindowDetail("instagram",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">◎</div><div><h4 style="margin:0">@${key}</h4><div>${c.name}</div><div class="social-row-meta">${c.status}</div></div></div></div><div class="social-chat">${rows}</div><div class="detail"><button class="soft" onclick="toggleInstagramDMReaction('${key}')">${instagramReactedDMs.has(key)?"♥ reaction saved":"♡ react to last"}</button><p class="muted">offline cache. this reaction is only a local player marker; it does not send anything from niko's account.</p></div>`,`@${key}`);
 }
 function openInstagramPerson(tab,i){
   const x=(tab==="following"?instagramFollowing:instagramFollowers)[i];if(!x)return;markExtra("ig_person_"+tab+"_"+i);
   const key=x[0],chat=instagramDMs[key];
-  showWindowDetail("instagram",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">◎</div><div><h4 style="margin:0">@${key}</h4><div class="social-row-meta">${x[1]}</div></div></div><p>${chat?"cached DM history exists on this laptop.":"no cached DM thread in this local slice."}</p>${chat?`<button class="soft" onclick="openInstagramDM('${key}')">open messages</button>`:""}</div>`,`@${key}`);
+  showWindowDetail("instagram",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">◎</div><div><h4 style="margin:0">@${key}</h4><div class="social-row-meta">${x[1]}</div></div></div><p>${chat?"cached DM history exists on this laptop.":"no cached DM thread in this local slice."}</p><div class="social-tabs">${chat?`<button onclick="openInstagramDM('${key}')">open messages</button>`:""}<button onclick="toggleInstagramProfileBookmark('${key}','${tab}',${i})">${instagramBookmarkedProfiles.has(key)?"★ bookmarked":"☆ bookmark"}</button></div></div>`,`@${key}`);
 }
 
 function renderMemes(){
@@ -6707,8 +7699,7 @@ function openMetaMeme(){
   showWindowDetail("memes",`<div class="detail"><h4>found_weird_desktop_game.png</h4><div class="mini-desktop"><div class="mini-icons"><span>📁</span><span>💬</span><span>🚏</span><span>🖼️</span><span>🌐</span><span>✉️</span><span>🎙️</span><span>🗑️</span><span>🧮</span><span>😂</span></div><div class="mini-badge">12:59 am<br>heavy rain • ~33 waiting</div></div><p>POV u find someone's unlocked laptop and suddenly think you're a detective</p><p class="muted">comments:</p><p>just turn it in</p><p>op opened the recycle bin before contacts</p><p>average civil engineering student</p><p class="extra-warning">optional joke • not evidence</p></div>`);
 }
 
-function renderGames(){
-  const games=[
+function getInstalledGames(){return [
     ["ValoRant","last played aug 16, 1:42 am"],
     ["Rain Seven Siege","last played aug 16, 2:41 am"],
     ["National Baller Association 2Kay","last played aug 17, 8:06 pm"],
@@ -6721,31 +7712,81 @@ function renderGames(){
     ["Doki Doki Homework Club","last played jul 12"],
     ["Counter-Hug 2","last played jul 29"],
     ["MiningBlocks","last played aug 11"]
-  ];
-  gamesBody.innerHTML="<h3 style='margin-top:0'>installed games</h3><div class='detail'><b>launchers offline</b><p>local shortcuts only. Vapor has the fuller playtime cache.</p></div>"+games.map((g,i)=>`<div class="index-row" onclick="markSeen('game_${i}');toast('games','${g[0]} cannot launch while offline.')"><b>${g[0]}</b><small>${g[1]}</small></div>`).join("");
+  ];}
+function renderGames(){
+  const games=getInstalledGames();
+  gamesBody.innerHTML="<h3 style='margin-top:0'>installed games</h3><div class='detail'><b>launchers offline</b><p>local shortcuts only. Vapor has the fuller playtime cache.</p></div>"+games.map((g,i)=>`<div class="index-row" onclick="openGameShortcut(${i})"><b>${gameFavorites.has(i)?"★ ":""}${g[0]}</b><small>${g[1]}</small></div>`).join("");
+}
+function toggleGameFavorite(i){
+  if(gameFavorites.has(i))gameFavorites.delete(i);else gameFavorites.add(i);
+  renderGames();openGameShortcut(i);if(typeof saveGame==="function")saveGame(false);
+}
+function openGameShortcut(i){
+  const g=getInstalledGames()[i];if(!g)return;markSeen('game_'+i);
+  showWindowDetail("games",`<div class="detail"><h4>${g[0]}</h4><p>${g[1]}</p><button class="soft" onclick="toggleGameFavorite(${i})">${gameFavorites.has(i)?"★ favorite":"☆ favorite"}</button> <button class="soft" onclick="toast('games','${g[0]} cannot launch while offline.')">▶ try launch</button></div>`,g[0]);
 }
 
 const discordChats=[
- ["ken","sent the file already"],
- ["group vc","join later"],
- ["vince","u still coming tonight?"],
- ["cam","where are you"],
- ["random server","offline cached messages"]
+ ["ken","sent the file already",`<p><b>ken:</b> sent the file already</p><p><b>niko:</b> got it</p><p><b>ken:</b> also Rain Seven later?</p><p><b>niko:</b> after plates</p><p><b>ken:</b> that means 3am</p><p><b>niko:</b> correct</p>`,1,false],
+
+ ["group vc","join later",`<p><b>joaq:</b> vc?</p><p><b>ken:</b> niko is doing plates again</p><p><b>niko:</b> i'm literally here</p><p><b>joaq:</b> then join</p><p><b>niko:</b> maybe after</p><p><b>ken:</b> famous last words</p><p><b>migs:</b> he will join at 2:47 am and ask why everyone left</p><p><b>niko:</b> u know me</p>`,1,false],
+
+ ["rain seven squad","STOP SOLO QUEUEING",`<p><b>vince:</b> STOP SOLO QUEUEING</p><p><b>niko:</b> i had one bad game</p><p><b>ken:</b> 2-8</p><p><b>niko:</b> support stats</p><p><b>joaq:</b> you were entry</p><p><b>niko:</b> spiritually support</p><p><b>migs:</b> get on tonight</p><p><b>niko:</b> depends on rain</p><p><b>ken:</b> we're online. weather cannot stop us</p><p><b>niko:</b> internet can</p>`,1,false],
+
+ ["alive by nightlight","WHY DID U DROP PALLET",`<p><b>cass:</b> WHY DID U DROP PALLET</p><p><b>niko:</b> panic</p><p><b>cass:</b> ON ME</p><p><b>niko:</b> strategic sacrifice</p><p><b>cass:</b> i hope the killer finds u irl</p><p><b>niko:</b> harsh</p><p><b>cass:</b> queue again</p><p><b>niko:</b> obviously</p>`,1,false],
+
+ ["elden bracelet help","miso beat the boss apparently",`<p><b>niko:</b> finally beat him</p><p><b>ken:</b> after 47 tries?</p><p><b>niko:</b> 6</p><p><b>ken:</b> vapor says 3 hours in that area</p><p><b>niko:</b> exploration</p><p><b>mika:</b> didn't miso step on your keyboard during one attempt</p><p><b>niko:</b> yes and somehow lived longer than me</p><p><b>ken:</b> miso carried</p>`,1,false],
+
+ ["vapor bargain hunters","₱73 game nobody will play",`<p><b>toni:</b> legal company ₱73</p><p><b>niko:</b> buy</p><p><b>toni:</b> are we actually playing</p><p><b>niko:</b> irrelevant</p><p><b>paolo:</b> this is why your library has 23 games</p><p><b>niko:</b> investment portfolio</p><p><b>toni:</b> 19 uninstalled</p><p><b>niko:</b> diversified</p>`,1,false],
+
+ ["civil survivors","autodraft crashed again",`<p><b>mara:</b> autodraft crashed again</p><p><b>niko:</b> save every 3 seconds</p><p><b>mara:</b> normal software behavior</p><p><b>jessa:</b> who has final dwg</p><p><b>niko:</b> final_final2_real.dwg</p><p><b>jessa:</b> i hate you</p><p><b>ken:</b> he has final_final_REAL_NEW too</p><p><b>niko:</b> different file</p><p><b>mara:</b> jail</p>`,2,false],
+
+ ["miningblocks realm","bea stole my diamonds",`<p><b>niko:</b> bea stole my diamonds</p><p><b>bea_dc:</b> PROVE IT</p><p><b>niko:</b> u logged into my chest</p><p><b>bea_dc:</b> shared resources</p><p><b>niko:</b> communist server apparently</p><p><b>ken:</b> family dispute happening in miningblocks</p><p><b>bea_dc:</b> stay out of this</p>`,2,false],
+
+ ["potholes speedrun","portal but legally worse",`<p><b>migs:</b> potholes 2 tonight</p><p><b>niko:</b> portal but legally worse</p><p><b>migs:</b> stop saying portal</p><p><b>niko:</b> potholes</p><p><b>migs:</b> thank you</p><p><b>ken:</b> 2 hour co-op puzzle becomes 5 hours because niko refuses hints</p><p><b>niko:</b> hints are defeat</p>`,2,false],
+
+ ["basketball + gaming","2kay sold me AGAIN",`<p><b>joaq:</b> 2kay sold me AGAIN</p><p><b>niko:</b> ur build has no defense</p><p><b>joaq:</b> YOURS IS 6'2</p><p><b>niko:</b> speed</p><p><b>ken:</b> both of u made traffic cones</p><p><b>niko:</b> national baller association legends</p><p><b>joaq:</b> run it back</p>`,2,false],
+
+ ["cass","queue again or coward",`<p><b>cass:</b> queue again or coward</p><p><b>niko:</b> u literally said u hope the killer finds me irl</p><p><b>cass:</b> game stays in game</p><p><b>niko:</b> convenient</p><p><b>cass:</b> alive by nightlight. now.</p><p><b>niko:</b> plates</p><p><b>cass:</b> your plates have been "almost done" for 4 hours</p><p><b>niko:</b> progress is nonlinear</p>`,1,false],
+
+ ["mika","miso > your elden bracelet build",`<p><b>mika:</b> miso > your elden bracelet build</p><p><b>niko:</b> blocked</p><p><b>mika:</b> he survived the boss longer than u</p><p><b>niko:</b> he had no responsibilities</p><p><b>mika:</b> cat privilege</p><p><b>niko:</b> exactly</p>`,1,false],
+
+ ["ria","your forza car is ugly",`<p><b>ria:</b> your forza car is ugly</p><p><b>niko:</b> objectively false</p><p><b>ria:</b> neon green wheels</p><p><b>niko:</b> visual identity</p><p><b>ria:</b> visual crime</p><p><b>niko:</b> jealous</p><p><b>ria:</b> extremely not</p>`,1,false],
+
+ ["kaye","rain seven tonight?",`<p><b>kaye:</b> rain seven tonight?</p><p><b>niko:</b> maybe after 11</p><p><b>kaye:</b> that means 2am in niko time</p><p><b>niko:</b> timezone difference</p><p><b>kaye:</b> we live in the same city</p><p><b>niko:</b> unfortunate detail</p>`,1,false],
+
+ ["ysa","stop stealing my miningblocks horse",`<p><b>ysa:</b> STOP STEALING MY HORSE</p><p><b>niko:</b> borrowing</p><p><b>ysa:</b> u named it NIKO'S CAR</p><p><b>niko:</b> temporary branding</p><p><b>ysa:</b> i'm putting lava around your house</p><p><b>niko:</b> hostile server admin</p>`,1,false],
+
+ ["mei","legal company sale was your fault",`<p><b>mei:</b> legal company sale was your fault</p><p><b>niko:</b> ₱73</p><p><b>mei:</b> and now i have 9 hours</p><p><b>niko:</b> value</p><p><b>mei:</b> u screamed louder than me</p><p><b>niko:</b> misinformation</p><p><b>mei:</b> clip saved</p><p><b>niko:</b> delete evidence</p>`,2,false],
+
+ ["lara","potholes 2 made me hate u",`<p><b>lara:</b> potholes 2 made me hate u</p><p><b>niko:</b> because i solved it</p><p><b>lara:</b> after refusing my answer for 20 mins</p><p><b>niko:</b> independent verification</p><p><b>lara:</b> you're unbearable</p><p><b>niko:</b> but correct</p><p><b>lara:</b> unfortunately</p>`,2,false],
+
+ ["nix","u invited me then went afk",`<p><b>nix:</b> u invited me then went afk</p><p><b>niko:</b> mom called</p><p><b>nix:</b> for THIRTY minutes?</p><p><b>niko:</b> filipino parent call</p><p><b>nix:</b> valid actually</p><p><b>niko:</b> thank u</p><p><b>nix:</b> still kicked u tho</p>`,2,false],
+
+ ["vince","u still coming tonight?",`<p><b>vince:</b> u still coming tonight?</p><p><b>niko:</b> yeah around 10</p><p><b>vince:</b> aight gray hoodie ako</p><p><b>vince:</b> when u get there tell me exactly where you're standing. side bench or shed?</p><p><b>niko:</b> probably waiting shed</p><p><b>vince:</b> aight easier to spot u in this rain</p>`,5,true],
+
+ ["cam","where are you",`<p><b>cam:</b> where are you</p><p><b>niko:</b> inside</p><p><b>cam:</b> can't see u</p><p><b>niko:</b> wait</p>`,5,true],
+
+ ["random server","offline cached messages",`<p><b>server:</b> 482 unread messages</p><p><b>randomguy92:</b> miningblocks update ruined redstone</p><p><b>catdad:</b> skill issue</p><p><b>ce_student:</b> anyone here play rain seven</p><p><b>niko:</b> unfortunately</p><p><b>system:</b> cached server history ends here.</p>`,1,false]
 ];
 function renderDiscord(){
-  discordIndex.innerHTML=discordChats.map((d,i)=>[d,i]).filter(([d,i])=>story.act>=5||i<2).map(([d,i])=>`<div class="index-row" onclick="openDiscord(${i})"><b>${d[0]}</b><small>${d[1]}</small></div>`).join("");
+  const rows=discordChats.map((d,i)=>[d,i]).filter(([d])=>story.act>=d[3]);
+  rows.sort((a,b)=>(discordPins.has(b[1])?1:0)-(discordPins.has(a[1])?1:0));
+  discordIndex.innerHTML=rows.map(([d,i])=>`<div class="index-row" onclick="openDiscord(${i})"><b>${discordPins.has(i)?"📌 ":""}${d[0]}</b><small>${d[1]}${discordReactions[i]?` • ${discordReactions[i]}`:""}</small></div>`).join("");
+}
+function toggleDiscordPin(i){
+  if(discordPins.has(i))discordPins.delete(i);else discordPins.add(i);
+  renderDiscord();openDiscord(i);if(typeof saveGame==="function")saveGame(false);
+}
+function reactDiscord(i,emoji){
+  discordReactions[i]=discordReactions[i]===emoji?"":emoji;
+  renderDiscord();openDiscord(i);if(typeof saveGame==="function")saveGame(false);
 }
 function openDiscord(i){
   markSeen("discord_"+i);
-  const msgs=[
-    `<p><b>ken:</b> sent the file already</p><p><b>niko:</b> got it</p>`,
-    `<p><b>group vc:</b> join later?</p><p><b>niko:</b> maybe after</p>`,
-    `<p><b>vince:</b> u still coming tonight?</p><p><b>niko:</b> yeah around 10</p><p><b>vince:</b> aight gray hoodie ako</p><p><b>vince:</b> when u get there tell me exactly where you're standing. side bench or shed?</p><p><b>niko:</b> probably waiting shed</p><p><b>vince:</b> aight easier to spot u in this rain</p>`,
-    `<p><b>cam:</b> where are you</p><p><b>niko:</b> inside</p><p><b>cam:</b> can't see u</p><p><b>niko:</b> wait</p>`,
-    `<p class="muted">cached server messages unavailable beyond the last sync.</p>`
-  ][i];
-  discordView.innerHTML=`<div class="detail"><b>offline cache</b>${msgs}</div>`;discordView.scrollTop=0;
-  if(i===2||i===3)addJournal("cached dischord messages connect vince and cam to niko's night out.");
+  const d=discordChats[i];if(!d)return;
+  discordView.innerHTML=`<div class="detail"><b>offline cache</b>${d[2]}</div><div class="detail"><button class="soft" onclick="toggleDiscordPin(${i})">${discordPins.has(i)?"📌 unpin":"📌 pin"}</button> <button class="soft" onclick="reactDiscord(${i},'👍')">👍</button> <button class="soft" onclick="reactDiscord(${i},'😂')">😂</button> <button class="soft" onclick="reactDiscord(${i},'🎮')">🎮</button>${discordReactions[i]?`<p class="muted">local reaction: ${discordReactions[i]}</p>`:""}</div>`;discordView.scrollTop=0;
+  if(d[4])addJournal("cached dischord messages connect vince and cam to niko's night out.");
 }
 
 function renderWeatherCache(){
@@ -6882,7 +7923,7 @@ let autosaveSteps=0;
 
 function createSaveData(){
   return {
-    version:23,
+    version:24,
     savedAt:new Date().toISOString(),
     exploreCount,
     creepStage:0,
@@ -6896,7 +7937,12 @@ function createSaveData(){
     talkIndex,
     hintIndex,
     storyMinutes,storyStage,hotspotOn,batteryPercent,storyFlags:{...storyFlags},story:{...story},evidence:[...evidence],
-    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex},noteViewCounts:{...noteViewCounts},confidenceTags:{...confidenceTags},bookmarkedEvidence:[...bookmarkedEvidence],reviewedComparisons:[...reviewedComparisons]
+    playerCharacter:playerCharacter||"jc",completedPerspective:{...completedPerspective},extrasSeen:[...extrasSeen],extraClicks:{...extraClicks},relationshipTalkIndex:{...relationshipTalkIndex},ambientSceneIndex:{...ambientSceneIndex},noteViewCounts:{...noteViewCounts},confidenceTags:{...confidenceTags},bookmarkedEvidence:[...bookmarkedEvidence],reviewedComparisons:[...reviewedComparisons],
+    appUI:{
+      mailStars:[...mailStars],mailUnread:[...mailUnread],instagramLikedPosts:[...instagramLikedPosts],instagramSavedPosts:[...instagramSavedPosts],
+      instagramBookmarkedProfiles:[...instagramBookmarkedProfiles],instagramReactedDMs:[...instagramReactedDMs],discordPins:[...discordPins],discordReactions:{...discordReactions},
+      gameFavorites:[...gameFavorites],maeSpamIndex
+    }
   };
 }
 
@@ -6987,6 +8033,17 @@ function applySaveData(data){
   Object.assign(confidenceTags,data.confidenceTags||{});
   bookmarkedEvidence.clear();(data.bookmarkedEvidence||[]).forEach(k=>bookmarkedEvidence.add(k));
   reviewedComparisons.clear();(data.reviewedComparisons||[]).forEach(k=>reviewedComparisons.add(k));
+  const ui=data.appUI||{};
+  mailStars.clear();(ui.mailStars||[]).forEach(x=>mailStars.add(Number(x)));
+  mailUnread.clear();(ui.mailUnread||[]).forEach(x=>mailUnread.add(Number(x)));
+  instagramLikedPosts.clear();(ui.instagramLikedPosts||[]).forEach(x=>instagramLikedPosts.add(Number(x)));
+  instagramSavedPosts.clear();(ui.instagramSavedPosts||[]).forEach(x=>instagramSavedPosts.add(Number(x)));
+  instagramBookmarkedProfiles.clear();(ui.instagramBookmarkedProfiles||[]).forEach(x=>instagramBookmarkedProfiles.add(x));
+  instagramReactedDMs.clear();(ui.instagramReactedDMs||[]).forEach(x=>instagramReactedDMs.add(x));
+  discordPins.clear();(ui.discordPins||[]).forEach(x=>discordPins.add(Number(x)));
+  Object.keys(discordReactions).forEach(k=>delete discordReactions[k]);Object.assign(discordReactions,ui.discordReactions||{});
+  gameFavorites.clear();(ui.gameFavorites||[]).forEach(x=>gameFavorites.add(Number(x)));
+  maeSpamIndex=Number(ui.maeSpamIndex||0);
   if(Object.keys(confidenceTags).some(k=>confidenceTags[k]))storyFlags.usedConfidence=true;
   if(bookmarkedEvidence.size)storyFlags.usedBookmark=true;
   if(reviewedComparisons.size)storyFlags.reviewedComparison=true;
@@ -7042,6 +8099,8 @@ function applySaveData(data){
   renderYoutube();
   renderSports();
   renderSteam();
+  renderInstagram();
+  if(hotspotOn&&maeSpamIndex<12)setTimeout(startMaeLiveSpam,700);
   renderMemes();
   renderSnips();
   renderNews(currentNewsFilter);
