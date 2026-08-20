@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lost Phone v69</title>
+<title>Lost Phone v70</title>
 <!-- v44: clean spoiler-free README + detailed gameplay-focused How to Play. -->
 <!-- v34: expanded multi-sport agenda archive; National Baller Association/football/Major League Basebrawl takes and prediction graveyards; sports-rant notes; preserves v33 CE identity, v32 gamer/gross-downloads pass, and v31 dialogue continuity -->
 <style>
@@ -1179,6 +1179,17 @@ button,.desktop-icon,.task-btn,.chat-row,.index-row,.side-item,.news-card,.news-
 .market-detail-head{display:flex;gap:13px;align-items:center;margin-bottom:12px}.market-detail-pic{width:92px;height:92px;border-radius:9px;background:linear-gradient(135deg,#2a3b4c,#202a34);display:grid;place-items:center;font-size:30px}.market-detail-head h2{margin:0 0 4px}.market-detail-head p{margin:2px 0;color:#98a1aa;font-size:10px}
 .market-empty{padding:35px;text-align:center;color:#7e8892}
 @media(max-width:700px){.marketplace-shell{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}.market-side{display:flex;gap:4px;overflow-x:auto;border-right:0;border-bottom:1px solid #252b31;padding:7px}.market-logo,.market-rule,.market-side-label{display:none}.market-nav{width:auto;white-space:nowrap;padding:7px 9px}.market-main{grid-row:2}.market-stats{grid-template-columns:repeat(2,1fr)}.market-meetup{grid-template-columns:1fr}}
+
+
+/* v70 • canonical social timestamps */
+.canon-thread-time{float:right;font-size:8px;opacity:.58;font-weight:500;margin-left:8px;white-space:nowrap}
+.canon-msg-time{display:block;font-size:8px;opacity:.55;margin-top:4px;line-height:1.15}
+.canon-day{align-self:center;text-align:center;font-size:8px;letter-spacing:.04em;text-transform:lowercase;opacity:.58;padding:7px 10px;margin:4px auto;clear:both}
+.index-row .canon-thread-time,.sf-msg-row .canon-thread-time{float:right}
+.market-thread-meta .canon-thread-time{float:none;display:block;margin:2px 0 0}
+.discord-stamped p{margin:8px 0}
+.discord-stamped .canon-msg-time{margin-left:2px}
+.mail-canon-time{font-size:9px;opacity:.62;margin:3px 0 10px}
 
 </style>
 </head>
@@ -2549,8 +2560,9 @@ function unlockHotspotFromSecurity(){
 function setBattery(n){batteryPercent=Math.max(5,Math.min(100,n));updateConnectionUI()}
 function addIncoming(k,text){
   if(!chats[k])return;
-  chats[k].msgs.push(["them",text]);
-  if(currentChat===k){pushMsg("them",text)}
+  const stamp=canonLiveIso();
+  chats[k].msgs.push(["them",text,stamp]);
+  if(currentChat===k){pushMsg("them",text,stamp)}
   renderChats(document.getElementById('msgSearch')?.value||'');
 }
 function syncLiveMessages(){
@@ -2590,7 +2602,7 @@ function startMaeLiveSpam(){
     const msg=burst[maeSpamIndex++];
     addIncoming("mae",msg);
     if(instagramDMs["mae.r"] && maeSpamIndex%3===0){
-      instagramDMs["mae.r"].msgs.push(["them",msg]);
+      instagramDMs["mae.r"].msgs.push(["them",msg,canonLiveIso()]);
       instagramDMs["mae.r"].preview=msg;
       instagramDMs["mae.r"].status="new message";
     }
@@ -2653,7 +2665,7 @@ function openWindow(name){
   if(name==="yourphone")markExtra("your_phone_open");else markSeen("app_"+name);
   if(name==="browser") browserHome();
   if(name==="files") renderFolder(currentFileFolder||"recent");
-  if(name==="messenger"){renderChats(document.getElementById('msgSearch')?.value||''); if(!currentChat){const first=Object.keys(chats).find(k=>chats[k].kind===chatMode&&isChatUnlocked(k));if(first)setTimeout(()=>openChat(first),0);}}
+  if(name==="messenger"){renderChats(document.getElementById('msgSearch')?.value||''); if(!currentChat){const first=Object.keys(chats).filter(k=>chats[k].kind===chatMode&&isChatUnlocked(k)).sort((a,b)=>canonEpoch(canonLast(messengerCanon[b],chats[b].msgs))-canonEpoch(canonLast(messengerCanon[a],chats[a].msgs)))[0];if(first)setTimeout(()=>openChat(first),0);}}
   if(name==="marketplace")renderMarketplace(document.getElementById("marketSearch")?.value||"");
   if(name==="news") renderNews(currentNewsFilter||'all');
   if(name==="videos") renderVideos();
@@ -4615,15 +4627,6 @@ function openFile(k){
 let chatMode="inbox";
 const chats={
  lia:{kind:"inbox",name:"lia ❤️",preview:"you home na?",msgs:[
-  ["them","you home na?"],["them","niko"],["them","don't disappear again pls"],["me","on my way home"],
-  ["them","okay ingat"],["them","message me pag nasa house ka na"],["them","also don't forget tomorrow"],["me","i won't"],
-  ["them","btw i finally finished that stupid presentation"],["me","the group one?"],["them","YES they changed my slides three times"],["me","good luck tomorrow"],["them","i need a new group not luck"],
-  ["them","you said that last time"],["me","i know i know"],["them","what time are you leaving tomorrow"],["me","around 2 maybe"],
-  ["them","maybe??"],["me","2"],["them","better"],["them","also did you eat"],["me","yeah"],["them","actual food?"],
-  ["me","yes mom"],["them","shut up"],["them","also u barely slept last night"],["me","i'm fine"],
-  ["them","you've been asking me weird stuff like if i saw the same car outside"],["me","forget it"],
-  ["them","i'm not mad. i'm worried. just sleep when u get home"],["me","okay"],
-  ["them","call me when you're home if i'm still awake"],["me","okay"],["them","goodnight if i pass out"],["me","goodnight ❤️"],
   ["them","btw u still owe me coffee from last week"],
   ["me","i bought last time"],
   ["them","THAT WAS WATER"],
@@ -4741,7 +4744,42 @@ const chats={
   ["them","HAHAHAHA"],
   ["me","i can literally see three green things from here"],
   ["them","city branding"],
-  ["me","city threat"]
+  ["me","city threat"],
+  ["them","you home na?"],
+  ["them","niko"],
+  ["them","don't disappear again pls"],
+  ["me","on my way home"],
+  ["them","okay ingat"],
+  ["them","message me pag nasa house ka na"],
+  ["them","also don't forget tomorrow"],
+  ["me","i won't"],
+  ["them","btw i finally finished that stupid presentation"],
+  ["me","the group one?"],
+  ["them","YES they changed my slides three times"],
+  ["me","good luck tomorrow"],
+  ["them","i need a new group not luck"],
+  ["them","you said that last time"],
+  ["me","i know i know"],
+  ["them","what time are you leaving tomorrow"],
+  ["me","around 2 maybe"],
+  ["them","maybe??"],
+  ["me","2"],
+  ["them","better"],
+  ["them","also did you eat"],
+  ["me","yeah"],
+  ["them","actual food?"],
+  ["me","yes mom"],
+  ["them","shut up"],
+  ["them","also u barely slept last night"],
+  ["me","i'm fine"],
+  ["them","you've been asking me weird stuff like if i saw the same car outside"],
+  ["me","forget it"],
+  ["them","i'm not mad. i'm worried. just sleep when u get home"],
+  ["me","okay"],
+  ["them","call me when you're home if i'm still awake"],
+  ["me","okay"],
+  ["them","goodnight if i pass out"],
+  ["me","goodnight ❤️"]
  ]},
  mama:{kind:"inbox",name:"mama",preview:"did you eat?",msgs:[
   ["them","did you eat?"],["me","later"],["them","wag puro coffee"],["me","yeah ma"],["them","bring umbrella"],["me","i have one"],
@@ -5874,6 +5912,27 @@ function setChatMode(mode){
   const tab=document.getElementById('tab-'+mode);if(tab)tab.classList.add('active');
   renderChats(document.getElementById('msgSearch')?.value||'');
 }
+
+const SOCIAL_CANON_TZ="Asia/Manila";
+const messengerCanon={"lia":{"start":"2025-11-12T22:10:00+08:00","end":"2026-08-17T23:20:00+08:00","segments":[{"from":0,"to":117,"start":"2025-11-12T22:10:00+08:00","end":"2026-08-16T23:10:00+08:00"},{"from":118,"to":152,"start":"2026-08-17T21:44:00+08:00","end":"2026-08-17T23:20:00+08:00"}]},"mama":{"start":"2026-03-01T08:15:00+08:00","end":"2026-08-17T23:12:00+08:00","segments":[{"from":0,"to":76,"start":"2026-03-01T08:15:00+08:00","end":"2026-08-16T21:20:00+08:00"},{"from":77,"to":82,"start":"2026-08-17T21:50:00+08:00","end":"2026-08-17T23:12:00+08:00"}]},"bea":{"start":"2026-04-02T18:20:00+08:00","end":"2026-08-17T22:54:00+08:00","segments":[{"from":0,"to":66,"start":"2026-04-02T18:20:00+08:00","end":"2026-08-16T22:18:00+08:00"},{"from":67,"to":68,"start":"2026-08-17T22:45:00+08:00","end":"2026-08-17T22:54:00+08:00"}]},"drreyes":{"start":"2026-04-07T16:02:00+08:00","end":"2026-08-17T17:22:00+08:00","segments":[{"from":0,"to":25,"start":"2026-04-07T16:02:00+08:00","end":"2026-08-10T16:54:00+08:00"},{"from":26,"to":31,"start":"2026-08-17T15:48:00+08:00","end":"2026-08-17T17:22:00+08:00"}]},"mika":{"start":"2026-06-08T19:28:00+08:00","end":"2026-08-17T20:42:00+08:00"},"paolo":{"start":"2026-06-30T21:26:00+08:00","end":"2026-07-24T22:10:00+08:00"},"toni":{"start":"2026-07-25T18:06:00+08:00","end":"2026-07-27T18:44:00+08:00"},"familygc":{"start":"2026-03-20T19:38:00+08:00","end":"2026-08-17T21:52:00+08:00"},"unclejojo":{"start":"2026-05-03T20:43:00+08:00","end":"2026-07-12T22:03:00+08:00"},"titalena":{"start":"2026-06-23T12:20:00+08:00","end":"2026-07-17T13:14:00+08:00"},"dad":{"start":"2026-03-20T19:02:00+08:00","end":"2026-08-17T21:10:00+08:00"},"cousins2":{"start":"2026-06-14T19:15:00+08:00","end":"2026-07-08T20:11:00+08:00"},"mara":{"start":"2026-07-20T18:14:00+08:00","end":"2026-08-13T19:10:00+08:00"},"ken":{"start":"2026-03-20T19:48:00+08:00","end":"2026-08-17T22:18:00+08:00"},"group":{"start":"2026-07-19T22:28:00+08:00","end":"2026-08-12T23:18:00+08:00"},"boys":{"start":"2026-03-15T20:05:00+08:00","end":"2026-08-12T22:05:00+08:00"},"ballgc":{"start":"2026-06-10T21:08:00+08:00","end":"2026-07-04T21:54:00+08:00"},"twok":{"start":"2026-06-27T01:38:00+08:00","end":"2026-06-29T02:16:00+08:00"},"cousins":{"start":"2026-06-20T22:26:00+08:00","end":"2026-06-22T23:04:00+08:00"},"jerome":{"start":"2026-05-22T19:30:00+08:00","end":"2026-06-15T20:16:00+08:00"},"ari":{"start":"2026-06-26T00:35:00+08:00","end":"2026-07-20T01:15:00+08:00"},"rj":{"start":"2026-08-17T20:50:00+08:00","end":"2026-08-17T22:35:00+08:00"},"vince":{"start":"2026-08-17T21:34:00+08:00","end":"2026-08-17T23:51:00+08:00"},"cam":{"start":"2026-08-17T23:42:00+08:00","end":"2026-08-17T23:58:00+08:00"},"barber":{"start":"2026-08-07T13:48:00+08:00","end":"2026-08-09T14:20:00+08:00"},"pcrepair":{"start":"2026-08-05T17:17:00+08:00","end":"2026-08-07T17:55:00+08:00"},"rhea":{"start":"2026-06-07T19:35:00+08:00","end":"2026-08-16T20:55:00+08:00"},"jessa":{"start":"2026-07-22T17:48:00+08:00","end":"2026-08-15T18:44:00+08:00"},"rina":{"start":"2026-05-15T21:52:00+08:00","end":"2026-06-08T22:42:00+08:00"},"mae":{"start":"2026-08-13T09:40:00+08:00","end":"2026-08-17T23:31:00+08:00"},"laundry":{"start":"2026-08-03T09:24:00+08:00","end":"2026-08-05T09:42:00+08:00"},"kuyaallan":{"start":"2026-07-30T18:57:00+08:00","end":"2026-08-01T19:17:00+08:00"},"wrongnumber":{"start":"2026-07-28T16:34:00+08:00","end":"2026-07-30T16:52:00+08:00"},"celine":{"start":"2026-07-11T22:28:00+08:00","end":"2026-08-04T23:30:00+08:00"},"ash":{"start":"2026-07-10T20:30:00+08:00","end":"2026-08-03T21:12:00+08:00"},"maria":{"start":"2026-05-24T00:18:00+08:00","end":"2026-08-02T02:08:00+08:00"},"bella":{"start":"2026-07-14T22:31:00+08:00","end":"2026-07-28T23:05:00+08:00"},"jane":{"start":"2026-07-08T20:09:00+08:00","end":"2026-07-22T20:31:00+08:00"},"liana":{"start":"2026-07-04T22:08:00+08:00","end":"2026-07-18T22:40:00+08:00"},"sarah":{"start":"2026-06-22T22:47:00+08:00","end":"2026-07-06T23:19:00+08:00"},"nicole":{"start":"2026-06-18T19:47:00+08:00","end":"2026-07-02T20:07:00+08:00"},"kyla":{"start":"2026-06-13T22:02:00+08:00","end":"2026-06-27T22:20:00+08:00"},"trisha":{"start":"2026-06-06T21:03:00+08:00","end":"2026-06-20T21:33:00+08:00"},"grace":{"start":"2026-05-29T18:35:00+08:00","end":"2026-06-12T18:55:00+08:00"},"angel":{"start":"2026-05-20T23:50:00+08:00","end":"2026-06-04T00:18:00+08:00"},"trixie":{"start":"2026-05-11T20:45:00+08:00","end":"2026-05-25T21:09:00+08:00"},"sam":{"start":"2026-05-03T22:11:00+08:00","end":"2026-05-17T22:31:00+08:00"},"ela":{"start":"2026-04-24T19:51:00+08:00","end":"2026-05-08T20:13:00+08:00"},"patricia":{"start":"2026-04-15T19:24:00+08:00","end":"2026-04-29T19:46:00+08:00"},"joy":{"start":"2026-04-04T21:44:00+08:00","end":"2026-04-18T22:02:00+08:00"},"camillemeet":{"start":"2026-08-13T19:52:00+08:00","end":"2026-08-15T20:20:00+08:00"},"alyssameet":{"start":"2026-08-12T19:04:00+08:00","end":"2026-08-14T19:32:00+08:00"},"danameet":{"start":"2026-08-14T21:12:00+08:00","end":"2026-08-16T21:40:00+08:00"},"yssameet":{"start":"2026-08-11T22:16:00+08:00","end":"2026-08-13T22:40:00+08:00"},"carlameet":{"start":"2026-08-14T18:06:00+08:00","end":"2026-08-16T18:30:00+08:00"},"mikaymeet":{"start":"2026-03-27T20:22:00+08:00","end":"2026-04-10T20:40:00+08:00"},"nicolemeet":{"start":"2026-08-12T17:50:00+08:00","end":"2026-08-14T18:12:00+08:00"},"trinameet":{"start":"2026-03-16T17:58:00+08:00","end":"2026-03-30T18:18:00+08:00"},"hazelmeet":{"start":"2026-03-04T22:52:00+08:00","end":"2026-03-18T23:10:00+08:00"},"meimeet":{"start":"2026-08-13T22:46:00+08:00","end":"2026-08-15T23:10:00+08:00"},"girlrequest":{"start":"2026-08-11T18:22:00+08:00","end":"2026-08-11T18:40:00+08:00"},"girlrequest2":{"start":"2026-08-08T20:56:00+08:00","end":"2026-08-08T21:14:00+08:00"},"nina":{"start":"2026-07-10T17:08:00+08:00","end":"2026-07-10T17:26:00+08:00"},"kate":{"start":"2026-06-25T19:20:00+08:00","end":"2026-06-25T19:38:00+08:00"},"printerclient":{"start":"2026-05-18T16:04:00+08:00","end":"2026-05-18T16:22:00+08:00"},"gamerandom":{"start":"2026-04-08T00:54:00+08:00","end":"2026-04-08T01:12:00+08:00"}};
+const marketplaceCanon={"mae_reservation":{"start":"2026-08-13T19:14:00+08:00","end":"2026-08-13T19:48:00+08:00"},"denise":{"start":"2026-08-17T19:39:00+08:00","end":"2026-08-17T20:22:00+08:00"},"monitorbuyer":{"start":"2026-08-15T17:17:00+08:00","end":"2026-08-15T18:09:00+08:00"},"headsetbuyer":{"start":"2026-08-13T14:55:00+08:00","end":"2026-08-13T15:56:00+08:00"},"controllerbuyer":{"start":"2026-08-11T12:33:00+08:00","end":"2026-08-11T13:43:00+08:00"},"bookbuyer":{"start":"2026-08-09T10:58:00+08:00","end":"2026-08-09T12:17:00+08:00"},"standbuyer":{"start":"2026-08-07T19:30:00+08:00","end":"2026-08-07T20:04:00+08:00"},"lensseller":{"start":"2026-08-05T17:08:00+08:00","end":"2026-08-05T17:51:00+08:00"},"chairseller":{"start":"2026-08-03T14:46:00+08:00","end":"2026-08-03T15:38:00+08:00"},"weirdtrade":{"start":"2026-08-01T13:11:00+08:00","end":"2026-08-01T14:12:00+08:00"},"oldphonebuyer":{"start":"2026-07-30T10:49:00+08:00","end":"2026-07-30T11:59:00+08:00"},"bicutanbuyer":{"start":"2026-07-28T18:27:00+08:00","end":"2026-07-28T19:46:00+08:00"},"bicutanseller":{"start":"2026-07-26T17:46:00+08:00","end":"2026-07-26T18:20:00+08:00"},"taftgreen":{"start":"2026-07-24T15:24:00+08:00","end":"2026-07-24T16:07:00+08:00"},"lrtbuyer":{"start":"2026-07-22T13:02:00+08:00","end":"2026-07-22T13:54:00+08:00"},"taftseller":{"start":"2026-07-20T10:40:00+08:00","end":"2026-07-20T11:41:00+08:00"},"festivalbuyer":{"start":"2026-07-18T19:05:00+08:00","end":"2026-07-18T20:15:00+08:00"},"atcbuyer":{"start":"2026-07-16T16:43:00+08:00","end":"2026-07-16T18:02:00+08:00"},"alabanglowball":{"start":"2026-07-14T15:15:00+08:00","end":"2026-07-14T15:49:00+08:00"},"sucatbuyer":{"start":"2026-07-12T12:53:00+08:00","end":"2026-07-12T13:36:00+08:00"},"pasayrotunda":{"start":"2026-07-10T11:18:00+08:00","end":"2026-07-10T12:10:00+08:00"},"moabuyer":{"start":"2026-07-08T18:56:00+08:00","end":"2026-07-08T19:57:00+08:00"},"baclaranbuyer":{"start":"2026-07-06T16:34:00+08:00","end":"2026-07-06T17:44:00+08:00"},"magallanesbuyer":{"start":"2026-07-04T14:59:00+08:00","end":"2026-07-04T16:18:00+08:00"},"alabangchair":{"start":"2026-07-02T13:31:00+08:00","end":"2026-07-02T14:05:00+08:00"},"cubaobuyer":{"start":"2026-06-30T11:09:00+08:00","end":"2026-06-30T11:52:00+08:00"},"monumentobuyer":{"start":"2026-06-28T18:47:00+08:00","end":"2026-06-28T19:39:00+08:00"},"guadalupebuyer":{"start":"2026-06-26T17:12:00+08:00","end":"2026-06-26T18:13:00+08:00"},"shawbuyer":{"start":"2026-06-24T14:50:00+08:00","end":"2026-06-24T16:00:00+08:00"},"ortigasbuyer":{"start":"2026-06-22T12:28:00+08:00","end":"2026-06-22T13:47:00+08:00"},"quiapobuyer":{"start":"2026-06-20T11:47:00+08:00","end":"2026-06-20T12:21:00+08:00"},"divisoriabuyer":{"start":"2026-06-18T19:25:00+08:00","end":"2026-06-18T20:08:00+08:00"},"espanabuyer":{"start":"2026-06-16T17:03:00+08:00","end":"2026-06-16T17:55:00+08:00"},"bgcbuyer":{"start":"2026-06-14T14:41:00+08:00","end":"2026-06-14T15:42:00+08:00"},"oneayalabuyer":{"start":"2026-06-12T13:06:00+08:00","end":"2026-06-12T14:16:00+08:00"},"pitxbuyer":{"start":"2026-06-10T10:44:00+08:00","end":"2026-06-10T12:03:00+08:00"},"laspinasbuyer":{"start":"2026-06-08T19:16:00+08:00","end":"2026-06-08T19:50:00+08:00"},"southmallbuyer":{"start":"2026-06-06T16:54:00+08:00","end":"2026-06-06T17:37:00+08:00"},"makatiseller":{"start":"2026-06-04T15:19:00+08:00","end":"2026-06-04T16:11:00+08:00"},"mandabuyer":{"start":"2026-06-02T12:57:00+08:00","end":"2026-06-02T13:58:00+08:00"},"marketbuyer":{"start":"2026-05-31T10:35:00+08:00","end":"2026-05-31T11:45:00+08:00"},"classbuyer":{"start":"2026-05-29T19:00:00+08:00","end":"2026-05-29T20:19:00+08:00"},"cubaoreq":{"start":"2026-05-27T17:32:00+08:00","end":"2026-05-27T18:06:00+08:00"},"monumentoreq":{"start":"2026-05-25T15:10:00+08:00","end":"2026-05-25T15:53:00+08:00"},"guadareq":{"start":"2026-05-23T12:48:00+08:00","end":"2026-05-23T13:40:00+08:00"},"quiaporeq":{"start":"2026-05-21T11:13:00+08:00","end":"2026-05-21T12:14:00+08:00"},"bgcreq":{"start":"2026-05-19T18:51:00+08:00","end":"2026-05-19T20:01:00+08:00"},"pitxreq":{"start":"2026-05-17T16:29:00+08:00","end":"2026-05-17T17:48:00+08:00"},"southmallreq":{"start":"2026-05-15T15:48:00+08:00","end":"2026-05-15T16:22:00+08:00"},"bicutanreq":{"start":"2026-05-13T13:26:00+08:00","end":"2026-05-13T14:09:00+08:00"},"taftreq":{"start":"2026-05-11T11:04:00+08:00","end":"2026-05-11T11:56:00+08:00"},"alabangreq":{"start":"2026-05-09T18:42:00+08:00","end":"2026-05-09T19:43:00+08:00"},"lrtcheap":{"start":"2026-05-07T17:07:00+08:00","end":"2026-05-07T18:17:00+08:00"},"sucatreq":{"start":"2026-05-05T14:45:00+08:00","end":"2026-05-05T16:04:00+08:00"},"marketmouse":{"start":"2026-05-03T13:17:00+08:00","end":"2026-05-03T13:51:00+08:00"},"marketdesk":{"start":"2026-05-01T10:55:00+08:00","end":"2026-05-01T11:38:00+08:00"},"marketcam":{"start":"2026-04-29T19:20:00+08:00","end":"2026-04-29T20:12:00+08:00"},"marketcalc2":{"start":"2026-04-27T16:58:00+08:00","end":"2026-04-27T17:59:00+08:00"},"marketspeaker":{"start":"2026-04-25T14:36:00+08:00","end":"2026-04-25T15:46:00+08:00"},"fbmarket2":{"start":"2026-04-23T13:01:00+08:00","end":"2026-04-23T14:20:00+08:00"},"seller":{"start":"2026-04-21T11:33:00+08:00","end":"2026-04-21T12:07:00+08:00"},"airportwallbuyer":{"start":"2026-04-19T19:11:00+08:00","end":"2026-04-19T19:54:00+08:00"},"subdivisiongatebuyer":{"start":"2026-04-17T16:49:00+08:00","end":"2026-04-17T17:41:00+08:00"},"greenmallbuyer":{"start":"2026-04-15T15:14:00+08:00","end":"2026-04-15T16:15:00+08:00"},"airportterminalbuyer":{"start":"2026-04-13T12:52:00+08:00","end":"2026-04-13T14:02:00+08:00"},"coastalroadbuyer":{"start":"2026-04-11T10:30:00+08:00","end":"2026-04-11T11:49:00+08:00"},"furnituremazebuyer":{"start":"2026-04-09T19:02:00+08:00","end":"2026-04-09T19:36:00+08:00"},"tollroadmallbuyer":{"start":"2026-04-07T17:27:00+08:00","end":"2026-04-07T18:10:00+08:00"},"elevatedroadbuyer":{"start":"2026-04-05T15:05:00+08:00","end":"2026-04-05T15:57:00+08:00"},"churchmarketbuyer":{"start":"2026-04-03T12:43:00+08:00","end":"2026-04-03T13:44:00+08:00"},"universitybeltbuyer":{"start":"2026-04-01T11:08:00+08:00","end":"2026-04-01T12:18:00+08:00"},"northcirclebuyer":{"start":"2026-03-30T18:46:00+08:00","end":"2026-03-30T20:05:00+08:00"},"buscarouselbuyer":{"start":"2026-03-28T17:18:00+08:00","end":"2026-03-28T17:52:00+08:00"},"southmainroadbuyer":{"start":"2026-03-26T14:56:00+08:00","end":"2026-03-26T15:39:00+08:00"},"airportsidegpu":{"start":"2026-03-24T13:21:00+08:00","end":"2026-03-24T14:13:00+08:00"},"warehousebuyer":{"start":"2026-03-22T10:59:00+08:00","end":"2026-03-22T12:00:00+08:00"},"villagegatebuyer":{"start":"2026-03-20T18:37:00+08:00","end":"2026-03-20T19:47:00+08:00"},"coastalterminalbuyer":{"start":"2026-03-18T17:02:00+08:00","end":"2026-03-18T18:21:00+08:00"},"bgc_highstreet_keyboard":{"start":"2026-03-16T15:34:00+08:00","end":"2026-03-16T16:08:00+08:00"},"bgc_marketmarket_controller":{"start":"2026-03-14T13:12:00+08:00","end":"2026-03-14T13:55:00+08:00"},"bgc_uptown_lens":{"start":"2026-03-12T10:50:00+08:00","end":"2026-03-12T11:42:00+08:00"},"bgc_oneboni_headset":{"start":"2026-03-10T19:15:00+08:00","end":"2026-03-10T20:16:00+08:00"},"bgc_serendra_mouse":{"start":"2026-03-08T16:53:00+08:00","end":"2026-03-08T18:03:00+08:00"},"bgc_32nd_monitor":{"start":"2026-03-06T14:31:00+08:00","end":"2026-03-06T15:50:00+08:00"},"bgc_burgos_mouse":{"start":"2026-03-04T13:03:00+08:00","end":"2026-03-04T13:37:00+08:00"},"bgc_5thave_ssd":{"start":"2026-03-02T11:28:00+08:00","end":"2026-03-02T12:11:00+08:00"},"bgc_kalayaan_gpu":{"start":"2026-02-28T19:06:00+08:00","end":"2026-02-28T19:58:00+08:00"},"bgc_busstop_phone":{"start":"2026-02-26T16:44:00+08:00","end":"2026-02-26T17:45:00+08:00"},"bgc_uptownparade_flash":{"start":"2026-02-24T15:09:00+08:00","end":"2026-02-24T16:19:00+08:00"},"bgc_highstreet_book":{"start":"2026-02-22T12:47:00+08:00","end":"2026-02-22T14:06:00+08:00"},"bgc_weekend_buyer":{"start":"2026-02-20T11:19:00+08:00","end":"2026-02-20T11:53:00+08:00"},"bgc_lunch_req":{"start":"2026-02-18T18:57:00+08:00","end":"2026-02-18T19:40:00+08:00"},"buyer_makati_circuit":{"start":"2026-02-16T17:22:00+08:00","end":"2026-02-16T18:14:00+08:00"},"seller_sanjuan":{"start":"2026-02-14T15:00:00+08:00","end":"2026-02-14T16:01:00+08:00"},"buyer_qc_trinoma":{"start":"2026-02-12T12:38:00+08:00","end":"2026-02-12T13:48:00+08:00"},"seller_marikinashoes":{"start":"2026-02-10T11:03:00+08:00","end":"2026-02-10T12:22:00+08:00"},"buyer_mandaluyongmall":{"start":"2026-02-08T19:35:00+08:00","end":"2026-02-08T20:09:00+08:00"},"seller_pateros":{"start":"2026-02-06T17:13:00+08:00","end":"2026-02-06T17:56:00+08:00"},"buyer_pasig":{"start":"2026-02-04T14:51:00+08:00","end":"2026-02-04T15:43:00+08:00"},"buyer_manila_paco":{"start":"2026-02-02T13:16:00+08:00","end":"2026-02-02T14:17:00+08:00"},"buyer_asks_home1":{"start":"2026-01-31T10:54:00+08:00","end":"2026-01-31T12:04:00+08:00"},"buyer_asks_home2":{"start":"2026-01-29T18:32:00+08:00","end":"2026-01-29T19:51:00+08:00"},"seller_asks_home":{"start":"2026-01-27T17:04:00+08:00","end":"2026-01-27T17:38:00+08:00"}};
+const instagramCanon={"ela.jpg":{"start":"2026-08-17T21:28:00+08:00","end":"2026-08-17T21:48:00+08:00"},"sammyyy":{"start":"2026-08-13T19:05:00+08:00","end":"2026-08-13T19:37:00+08:00"},"kyla.wav":{"start":"2026-08-09T16:42:00+08:00","end":"2026-08-09T17:26:00+08:00"},"ria.s":{"start":"2026-08-05T14:19:00+08:00","end":"2026-08-05T15:15:00+08:00"},"trishh":{"start":"2026-08-01T19:56:00+08:00","end":"2026-08-01T21:04:00+08:00"},"faith.exe":{"start":"2026-07-28T19:24:00+08:00","end":"2026-07-28T19:44:00+08:00"},"jen.jpg":{"start":"2026-07-24T17:01:00+08:00","end":"2026-07-24T17:33:00+08:00"},"mari.mp3":{"start":"2026-07-20T14:38:00+08:00","end":"2026-07-20T15:22:00+08:00"},"nixie":{"start":"2026-07-16T20:15:00+08:00","end":"2026-07-16T21:11:00+08:00"},"aiah.exe":{"start":"2026-07-12T17:52:00+08:00","end":"2026-07-12T19:00:00+08:00"},"cass.jpg":{"start":"2026-07-08T17:20:00+08:00","end":"2026-07-08T17:40:00+08:00"},"kei.s":{"start":"2026-07-04T14:57:00+08:00","end":"2026-07-04T15:29:00+08:00"},"mae.r":{"start":"2026-08-14T10:18:00+08:00","end":"2026-08-17T23:20:00+08:00"},"aly.jpg":{"start":"2026-06-26T18:11:00+08:00","end":"2026-06-26T19:07:00+08:00"},"nica.mp4":{"start":"2026-06-22T16:39:00+08:00","end":"2026-06-22T17:47:00+08:00"},"dani.dc":{"start":"2026-06-18T15:16:00+08:00","end":"2026-06-18T15:36:00+08:00"},"mikha.jpg":{"start":"2026-06-14T20:53:00+08:00","end":"2026-06-14T21:25:00+08:00"},"chloe.wav":{"start":"2026-06-10T18:30:00+08:00","end":"2026-06-10T19:14:00+08:00"},"bea.notmysister":{"start":"2026-06-06T16:07:00+08:00","end":"2026-06-06T17:03:00+08:00"},"hazel.06":{"start":"2026-06-02T14:35:00+08:00","end":"2026-06-02T15:43:00+08:00"},"lea.archive":{"start":"2026-05-29T21:12:00+08:00","end":"2026-05-29T21:32:00+08:00"},"kaye.jpeg":{"start":"2026-05-25T18:49:00+08:00","end":"2026-05-25T19:21:00+08:00"},"sophi.mp3":{"start":"2026-05-21T16:26:00+08:00","end":"2026-05-21T17:10:00+08:00"},"elle2.jpg":{"start":"2026-05-17T14:03:00+08:00","end":"2026-05-17T14:59:00+08:00"},"ara.png":{"start":"2026-05-13T20:31:00+08:00","end":"2026-05-13T21:39:00+08:00"},"mikaela.r":{"start":"2026-05-09T19:08:00+08:00","end":"2026-05-09T19:28:00+08:00"}};
+const steamCanon={"mika.exe":{"start":"2026-08-16T23:00:00+08:00","end":"2026-08-16T23:18:00+08:00"},"elle.jpg":{"start":"2026-08-07T21:42:00+08:00","end":"2026-08-07T22:11:00+08:00"},"sammyyy":{"start":"2026-07-29T20:24:00+08:00","end":"2026-07-29T21:04:00+08:00"},"kyla.wav":{"start":"2026-07-20T22:06:00+08:00","end":"2026-07-20T22:57:00+08:00"},"ashley.jpg":{"start":"2026-07-11T21:32:00+08:00","end":"2026-07-11T21:50:00+08:00"},"jules ♡":{"start":"2026-07-02T20:14:00+08:00","end":"2026-07-02T20:43:00+08:00"},"riaa":{"start":"2026-06-23T21:56:00+08:00","end":"2026-06-23T22:36:00+08:00"},"cass ♡":{"start":"2026-06-14T21:21:00+08:00","end":"2026-06-14T22:12:00+08:00"},"aly.jpg":{"start":"2026-06-05T20:47:00+08:00","end":"2026-06-05T21:05:00+08:00"},"dani.wav":{"start":"2026-05-27T22:29:00+08:00","end":"2026-05-27T22:58:00+08:00"},"jen.jpg":{"start":"2026-05-18T21:11:00+08:00","end":"2026-05-18T21:51:00+08:00"},"faith.exe":{"start":"2026-05-09T19:53:00+08:00","end":"2026-05-09T20:44:00+08:00"}};
+const spotifakeCanon=[{"start":"2026-08-17T18:28:00+08:00","end":"2026-08-17T18:44:00+08:00"},{"start":"2026-08-11T17:12:00+08:00","end":"2026-08-11T17:35:00+08:00"},{"start":"2026-08-05T15:56:00+08:00","end":"2026-08-05T16:26:00+08:00"},{"start":"2026-07-30T17:40:00+08:00","end":"2026-07-30T18:17:00+08:00"},{"start":"2026-07-24T16:24:00+08:00","end":"2026-07-24T17:08:00+08:00"},{"start":"2026-07-18T16:24:00+08:00","end":"2026-07-18T16:40:00+08:00"},{"start":"2026-07-12T18:08:00+08:00","end":"2026-07-12T18:31:00+08:00"},{"start":"2026-07-06T16:52:00+08:00","end":"2026-07-06T17:22:00+08:00"},{"start":"2026-06-30T15:36:00+08:00","end":"2026-06-30T16:13:00+08:00"},{"start":"2026-06-24T17:20:00+08:00","end":"2026-06-24T18:04:00+08:00"},{"start":"2026-06-18T17:20:00+08:00","end":"2026-06-18T17:36:00+08:00"},{"start":"2026-06-12T16:04:00+08:00","end":"2026-06-12T16:27:00+08:00"},{"start":"2026-06-06T17:48:00+08:00","end":"2026-06-06T18:18:00+08:00"},{"start":"2026-05-31T16:32:00+08:00","end":"2026-05-31T17:09:00+08:00"},{"start":"2026-05-25T15:57:00+08:00","end":"2026-05-25T16:41:00+08:00"},{"start":"2026-05-19T18:16:00+08:00","end":"2026-05-19T18:32:00+08:00"},{"start":"2026-05-13T17:00:00+08:00","end":"2026-05-13T17:23:00+08:00"},{"start":"2026-05-07T15:44:00+08:00","end":"2026-05-07T16:14:00+08:00"},{"start":"2026-05-01T17:28:00+08:00","end":"2026-05-01T18:05:00+08:00"},{"start":"2026-04-25T16:53:00+08:00","end":"2026-04-25T17:37:00+08:00"},{"start":"2026-04-19T16:12:00+08:00","end":"2026-04-19T16:28:00+08:00"}];
+const discordCanon=[{"start":"2026-08-15T23:08:00+08:00","end":"2026-08-15T23:30:00+08:00"},{"start":"2026-08-08T21:54:00+08:00","end":"2026-08-08T22:25:00+08:00"},{"start":"2026-08-01T20:40:00+08:00","end":"2026-08-01T21:20:00+08:00"},{"start":"2026-07-25T19:26:00+08:00","end":"2026-07-25T20:15:00+08:00"},{"start":"2026-07-18T22:12:00+08:00","end":"2026-07-18T23:10:00+08:00"},{"start":"2026-07-11T21:43:00+08:00","end":"2026-07-11T22:05:00+08:00"},{"start":"2026-07-04T20:29:00+08:00","end":"2026-07-04T21:00:00+08:00"},{"start":"2026-06-27T19:15:00+08:00","end":"2026-06-27T19:55:00+08:00"},{"start":"2026-06-20T22:40:00+08:00","end":"2026-06-20T23:29:00+08:00"},{"start":"2026-06-13T21:26:00+08:00","end":"2026-06-13T22:24:00+08:00"},{"start":"2026-06-06T20:57:00+08:00","end":"2026-06-06T21:19:00+08:00"},{"start":"2026-05-30T19:43:00+08:00","end":"2026-05-30T20:14:00+08:00"},{"start":"2026-05-23T22:29:00+08:00","end":"2026-05-23T23:09:00+08:00"},{"start":"2026-05-16T21:15:00+08:00","end":"2026-05-16T22:04:00+08:00"},{"start":"2026-05-09T20:01:00+08:00","end":"2026-05-09T20:59:00+08:00"},{"start":"2026-05-02T19:32:00+08:00","end":"2026-05-02T19:54:00+08:00"},{"start":"2026-04-25T22:57:00+08:00","end":"2026-04-25T23:28:00+08:00"},{"start":"2026-04-18T21:43:00+08:00","end":"2026-04-18T22:23:00+08:00"},{"start":"2026-08-17T21:52:00+08:00","end":"2026-08-17T22:08:00+08:00"},{"start":"2026-08-17T23:43:00+08:00","end":"2026-08-17T23:48:00+08:00"},{"start":"2026-03-28T22:46:00+08:00","end":"2026-03-28T23:08:00+08:00"}];
+const mailCanon=["2026-08-17T14:58:00+08:00","2026-08-17T13:12:00+08:00","2026-08-17T16:22:00+08:00","2026-08-17T15:05:00+08:00","2026-08-16T22:10:00+08:00","2026-08-16T20:34:00+08:00","2026-07-30T17:59:00+08:00","2026-08-15T01:04:00+08:00","2026-08-17T23:52:00+08:00","2026-08-16T09:00:00+08:00","2026-08-16T18:12:00+08:00","2026-07-15T16:24:00+08:00","2026-07-12T19:58:00+08:00","2026-07-09T18:51:00+08:00","2026-08-01T09:00:00+08:00","2026-07-03T16:37:00+08:00","2026-08-14T10:20:00+08:00","2026-08-15T11:05:00+08:00","2026-08-16T10:14:00+08:00","2026-08-17T09:32:00+08:00","2026-06-18T19:43:00+08:00","2026-06-15T18:36:00+08:00","2026-06-12T17:29:00+08:00","2026-06-09T16:22:00+08:00","2026-06-06T19:56:00+08:00","2026-06-03T18:49:00+08:00","2026-08-12T08:03:00+08:00","2026-05-28T16:35:00+08:00","2026-05-25T19:28:00+08:00","2026-05-22T18:21:00+08:00","2026-05-19T17:55:00+08:00","2026-05-16T16:48:00+08:00","2026-05-13T19:41:00+08:00","2026-05-10T18:34:00+08:00","2026-05-07T17:27:00+08:00","2026-08-17T09:00:00+08:00"];
+function canonEpoch(v){const n=Date.parse(v||"");return Number.isFinite(n)?n:0}
+function canonFmtDate(v){if(!v)return "";return new Intl.DateTimeFormat("en-US",{timeZone:SOCIAL_CANON_TZ,month:"short",day:"numeric",year:"numeric"}).format(new Date(v)).toLowerCase()}
+function canonFmtTime(v){if(!v)return "";return new Intl.DateTimeFormat("en-US",{timeZone:SOCIAL_CANON_TZ,hour:"numeric",minute:"2-digit",hour12:true}).format(new Date(v)).toLowerCase()}
+function canonFmtThread(v){if(!v)return "";const d=new Date(v),y=new Intl.DateTimeFormat("en-US",{timeZone:SOCIAL_CANON_TZ,year:"numeric"}).format(d),md=new Intl.DateTimeFormat("en-US",{timeZone:SOCIAL_CANON_TZ,month:"short",day:"numeric"}).format(d).toLowerCase();return y==="2026"?md:`${md}, ${y}`}
+function canonEsc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/\n/g,"<br>")}
+function canonCleanRelative(v){return String(v??"").replace(/seen\s+\d+\s*hours?\s+ago/gi,"seen").replace(/seen\s+\d+h\s+ago/gi,"seen").replace(/seen\s+\d+\s*days?\s+ago/gi,"seen").replace(/seen\s+\d+d\s+ago/gi,"seen").replace(/seen\s+yesterday/gi,"seen").replace(/sent\s+\d+\s*days?\s+ago\s*•\s*no reply/gi,"sent • no reply").replace(/sent\s+\d+d\s+ago\s*•\s*no reply/gi,"sent • no reply").replace(/sent\s+\d+\s*days?\s+ago/gi,"sent").replace(/sent\s+\d+d\s+ago/gi,"sent")}
+function canonMessageStamp(meta,i,count){if(!meta)return "";if(Array.isArray(meta.segments)){const seg=meta.segments.find(s=>i>=s.from&&i<=s.to);if(seg){const span=Math.max(1,seg.to-seg.from),f=(i-seg.from)/span;return new Date(canonEpoch(seg.start)+(canonEpoch(seg.end)-canonEpoch(seg.start))*f).toISOString()}}const a=canonEpoch(meta.start),b=canonEpoch(meta.end),f=count<=1?1:i/(count-1);return new Date(a+(b-a)*f).toISOString()}
+function canonLast(meta,msgs){const live=Array.isArray(msgs)&&msgs.length&&msgs[msgs.length-1]?.[2];return live||meta?.end||""}
+function canonLiveIso(extraMinutes=0){const base=Date.parse("2026-08-18T00:23:00+08:00"),mins=Math.max(0,Number(typeof storyMinutes!=="undefined"?storyMinutes:0))+Number(extraMinutes||0);return new Date(base+mins*60000).toISOString()}
+function canonTimedMessages(msgs,meta,flavor){let day="";return (msgs||[]).map((m,i)=>{const who=m[0],raw=canonCleanRelative(m[1]),stamp=m[2]||canonMessageStamp(meta,i,msgs.length),thisDay=canonFmtDate(stamp),sep=thisDay&&thisDay!==day?`<div class="canon-day">${thisDay}</div>`:"";if(thisDay)day=thisDay;const time=`<span class="canon-msg-time">${canonFmtTime(stamp)}</span>`;if(flavor==="messenger")return sep+`<div class="bubble ${who==="me"?"me":who==="system"?"sys":""}">${canonEsc(raw)}${time}</div>`;if(flavor==="market")return sep+`<div class="market-bubble ${who==="me"?"me":who==="system"?"system":""}">${canonEsc(raw)}${time}</div>`;return sep+`<div class="social-bubble ${who==="me"?"mine":who==="system"?"system":""}">${canonEsc(raw)}${time}</div>`}).join("")}
+function canonDiscordHtml(html,meta){const count=(String(html||"").match(/<p>/g)||[]).length;let i=0,day="";return `<div class="discord-stamped">`+String(html||"").replace(/<p>(.*?)<\/p>/g,(all,inside)=>{const stamp=canonMessageStamp(meta,i++,count),d=canonFmtDate(stamp),sep=d&&d!==day?`<div class="canon-day">${d}</div>`:"";if(d)day=d;return sep+`<p>${inside}<span class="canon-msg-time">${canonFmtTime(stamp)}</span></p>`})+`</div>`}
+
 function renderChats(filter=""){
   if(!isChatModeAvailable(chatMode))chatMode="inbox";
   if(currentChat&&(!chats[currentChat]||!isChatUnlocked(currentChat)||!isChatModeAvailable(chats[currentChat].kind))){
@@ -5887,6 +5946,7 @@ function renderChats(filter=""){
   document.getElementById('tab-'+chatMode)?.classList.add('active');
   const q=(filter||"").trim().toLowerCase();
   let keys=Object.keys(chats).filter(k=>chats[k].kind===chatMode && isChatModeAvailable(chats[k].kind) && isChatUnlocked(k));
+  keys.sort((a,b)=>canonEpoch(canonLast(messengerCanon[b],chats[b].msgs))-canonEpoch(canonLast(messengerCanon[a],chats[a].msgs)));
   if(q){
     keys=keys.filter(k=>{
       const c=chats[k];
@@ -5897,7 +5957,8 @@ function renderChats(filter=""){
   chatList.innerHTML=keys.map(k=>{
     const c=chats[k];
     const unread={lia:5,mama:7,bea:4,familygc:6,unclejojo:9,rhea:2,mae:37,camillemeet:1,danameet:2,carlameet:1,nicolemeet:1,meimeet:2,maria:12,vince:4,cam:5,celine:2,drreyes:4}[k]||0;
-    return `<div class="chat-row" onclick="openChat('${k}')"><strong>${c.name}</strong>${unread?`<span class="unread">${unread}</span>`:""}<small>${c.preview}</small></div>`;
+    const last=canonLast(messengerCanon[k],c.msgs);
+    return `<div class="chat-row" onclick="openChat('${k}')"><strong>${c.name}</strong>${unread?`<span class="unread">${unread}</span>`:""}<span class="canon-thread-time">${canonFmtThread(last)}</span><small>${canonCleanRelative(c.preview)}</small></div>`;
   }).join("") || `<div class="bubble sys" style="margin:20px">${chatMode==="requests"?"no message requests loaded":"no cached chats in this section"}</div>`;
 }
 function openChat(k){
@@ -5905,7 +5966,7 @@ function openChat(k){
   currentChat=k;
   markSeen("chat_"+k);
   chatHead.textContent=chats[k].name;
-  messages.innerHTML=chats[k].msgs.map(([who,t])=>`<div class="bubble ${who==="me"?"me":""}">${t}</div>`).join("");
+  messages.innerHTML=canonTimedMessages(chats[k].msgs,messengerCanon[k],"messenger");
   replyBar.innerHTML="";
 
   if(k==="lia" && hotspotOn){
@@ -6003,11 +6064,12 @@ function openChat(k){
 function addReply(label,fn){
   const b=document.createElement("button");b.textContent=label;b.onclick=fn;replyBar.appendChild(b);
 }
-function pushMsg(who,text){
-  const d=document.createElement("div");d.className="bubble "+(who==="me"?"me":"");d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
+function pushMsg(who,text,stamp=canonLiveIso()){
+  const d=document.createElement("div");d.className="bubble "+(who==="me"?"me":"");d.innerHTML=`<span>${canonEsc(text)}</span><span class="canon-msg-time">${canonFmtTime(stamp)}</span>`;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
 }
 function pushPresentMsg(text){
-  const d=document.createElement("div");d.className="bubble me";d.innerHTML=`<span>${text}</span><div style="font-size:9px;opacity:.68;margin-top:4px">you • sent from niko's laptop</div>`;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
+  const stamp=canonLiveIso();
+  const d=document.createElement("div");d.className="bubble me";d.innerHTML=`<span>${canonEsc(text)}</span><div style="font-size:9px;opacity:.68;margin-top:4px">you • sent from niko's laptop</div><span class="canon-msg-time">${canonFmtTime(stamp)}</span>`;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;
 }
 function reactUncleThumb(){
   const d=document.createElement("div");
@@ -6824,8 +6886,8 @@ reply or call the clinic if you need to reschedule.`]
 ];
 function renderMail(filter=""){
   const q=(filter||"").trim().toLowerCase();
-  const rows=mails.map((m,i)=>[m,i]).filter(([m])=>story.act>=4||m[0]!=="mindwell clinic").filter(([m])=>!q||(m[0]+" "+m[1]+" "+m[2]).toLowerCase().includes(q));
-  mailIndex.innerHTML=`<div class="detail" style="padding:8px"><input style="width:100%" placeholder="search mail" value="${filter.replace(/"/g,'&quot;')}" oninput="renderMail(this.value)"></div>`+rows.map(([m,i])=>`<div class="index-row" onclick="openMail(${i})"><b>${mailUnread.has(i)?"● ":""}${m[0]}</b><button class="soft" style="float:right;padding:2px 6px" onclick="event.stopPropagation();toggleMailStar(${i})">${mailStars.has(i)?"★":"☆"}</button><small>${m[1]}</small></div>`).join("");
+  const rows=mails.map((m,i)=>[m,i]).filter(([m])=>story.act>=4||m[0]!=="mindwell clinic").filter(([m])=>!q||(m[0]+" "+m[1]+" "+m[2]).toLowerCase().includes(q)).sort((a,b)=>canonEpoch(mailCanon[b[1]])-canonEpoch(mailCanon[a[1]]));
+  mailIndex.innerHTML=`<div class="detail" style="padding:8px"><input style="width:100%" placeholder="search mail" value="${filter.replace(/"/g,'&quot;')}" oninput="renderMail(this.value)"></div>`+rows.map(([m,i])=>`<div class="index-row" onclick="openMail(${i})"><b>${mailUnread.has(i)?"● ":""}${m[0]}</b><button class="soft" style="float:right;padding:2px 6px" onclick="event.stopPropagation();toggleMailStar(${i})">${mailStars.has(i)?"★":"☆"}</button><span class="canon-thread-time">${canonFmtThread(mailCanon[i])}</span><small>${m[1]}</small></div>`).join("");
 }
 function toggleMailStar(i){
   if(mailStars.has(i))mailStars.delete(i);else mailStars.add(i);
@@ -6836,7 +6898,7 @@ function markMailUnreadAgain(i){
 }
 function openMail(i){
   markSeen("mail_"+i);mailUnread.delete(i);
-  mailView.innerHTML=`<h3>${mails[i][1]}</h3><p class="muted">from ${mails[i][0]}</p><div style="white-space:pre-line">${mails[i][2]}</div><div class="social-tabs" style="margin-top:14px"><button onclick="toggleMailStar(${i});openMail(${i})">${mailStars.has(i)?"★ starred":"☆ star"}</button><button onclick="markMailUnreadAgain(${i})">mark unread</button></div>`;mailView.scrollTop=0;
+  mailView.innerHTML=`<h3>${mails[i][1]}</h3><p class="muted">from ${mails[i][0]}</p><div class="mail-canon-time">${canonFmtDate(mailCanon[i])} • ${canonFmtTime(mailCanon[i])}</div><div style="white-space:pre-line">${mails[i][2]}</div><div class="social-tabs" style="margin-top:14px"><button onclick="toggleMailStar(${i});openMail(${i})">${mailStars.has(i)?"★ starred":"☆ star"}</button><button onclick="markMailUnreadAgain(${i})">mark unread</button></div>`;mailView.scrollTop=0;
   if(i===5)addJournal("food receipt shows two drinks and two meals on aug 16.");
 }
 
@@ -7305,7 +7367,8 @@ function spotifakeSearchResults(q){
   host.innerHTML=`<h2 class="sf-section-title">songs</h2>${spotifakeTrackTable(matches.slice(0,50).map(x=>x[1]))}<h2 class="sf-section-title">artists</h2><div class="sf-card-grid">${artists.map(a=>`<div class="sf-card" onclick="openSpotifakeArtist(${sfArg(a)})">${spotifakeCoverHtml({album:a,artist:a},spotifakeHash(a),"card")}<b>${a}</b><small>artist</small></div>`).join("")}</div>`;
 }
 function spotifakeMessagesView(){
-  return `<h1 style="margin:3px 0 13px">song messages</h1><div class="sf-message-grid"><div class="sf-msg-list">${spotifakeMessages.map((m,i)=>`<div class="sf-msg-row" onclick="openSpotifakeMessage(${i})"><b>${spotifakeMessageReactions.has(i)?"♥ ":""}${m.name}</b><small>${m.preview}</small></div>`).join("")}</div><div id="spotifakeMessagePane"><div class="sf-empty">pick a thread.</div></div></div>`;
+  const ordered=spotifakeMessages.map((m,i)=>[m,i]).sort((a,b)=>canonEpoch(spotifakeCanon[b[1]]?.end)-canonEpoch(spotifakeCanon[a[1]]?.end));
+  return `<h1 style="margin:3px 0 13px">song messages</h1><div class="sf-message-grid"><div class="sf-msg-list">${ordered.map(([m,i])=>`<div class="sf-msg-row" onclick="openSpotifakeMessage(${i})"><b>${spotifakeMessageReactions.has(i)?"♥ ":""}${m.name}</b><span class="canon-thread-time">${canonFmtThread(spotifakeCanon[i]?.end)}</span><small>${canonCleanRelative(m.preview)}</small></div>`).join("")}</div><div id="spotifakeMessagePane"><div class="sf-empty">pick a thread.</div></div></div>`;
 }
 function spotifakeLocalView(){
   const tracks=getLocalAudioTracks();
@@ -7359,8 +7422,8 @@ function renderSpotifakePlayer(){
 function toggleSpotifakeMessageReaction(i){if(spotifakeMessageReactions.has(i))spotifakeMessageReactions.delete(i);else spotifakeMessageReactions.add(i);openSpotifakeMessage(i);if(typeof saveGame==="function")saveGame(false)}
 function openSpotifakeMessage(i){
   const m=spotifakeMessages[i];if(!m)return;markExtra("spotifake_msg_"+i);if(spotifakeTab!=="messages"){spotifakeTab="messages";renderMusic()}
-  const pane=document.getElementById("spotifakeMessagePane");if(!pane)return;const rows=m.msgs.map(x=>`<div class="social-bubble ${x[0]==="me"?"mine":x[0]==="system"?"system":""}">${x[1]}</div>`).join(""),t=spotifakeTracks[m.track];
-  pane.innerHTML=`<h2 style="margin-top:0">${m.name}</h2><div class="social-chat">${rows}</div><div class="detail"><div style="display:flex;gap:10px;align-items:center">${spotifakeCoverHtml(t,m.track)}<div><b>${t.title}</b><p class="muted" style="margin:2px 0">${t.artist}</p></div></div><div class="social-tabs" style="margin-top:10px"><button onclick="playSpotifakeTrack(${m.track})">▶ play song</button><button onclick="toggleSpotifakeMessageReaction(${i})">${spotifakeMessageReactions.has(i)?"♥ reaction saved":"♡ react"}</button></div></div>`;
+  const pane=document.getElementById("spotifakeMessagePane");if(!pane)return;const rows=canonTimedMessages(m.msgs,spotifakeCanon[i],"social"),t=spotifakeTracks[m.track];
+  pane.innerHTML=`<h2 style="margin-top:0">${m.name}</h2><p class="muted">${canonFmtDate(spotifakeCanon[i]?.end)} • ${canonFmtTime(spotifakeCanon[i]?.end)}</p><div class="social-chat">${rows}</div><div class="detail"><div style="display:flex;gap:10px;align-items:center">${spotifakeCoverHtml(t,m.track)}<div><b>${t.title}</b><p class="muted" style="margin:2px 0">${t.artist}</p></div></div><div class="social-tabs" style="margin-top:10px"><button onclick="playSpotifakeTrack(${m.track})">▶ play song</button><button onclick="toggleSpotifakeMessageReaction(${i})">${spotifakeMessageReactions.has(i)?"♥ reaction saved":"♡ react"}</button></div></div>`;
 }
 function getLocalAudioTracks(){
   const t=[
@@ -8067,13 +8130,13 @@ function openSteamFriend(i){
 }
 function openSteamMessages(){
   markExtra("steam_messages");
-  const rows=Object.entries(steamChats).map(([name,c])=>`<div class="index-row" onclick="openSteamChatByName('${name.replace(/'/g,"\\'")}')"><b>${name}</b>${steamStatusBadge(c.status)}<small>${c.preview}</small></div>`).join("");
+  const rows=Object.entries(steamChats).sort((a,b)=>canonEpoch(steamCanon[b[0]]?.end)-canonEpoch(steamCanon[a[0]]?.end)).map(([name,c])=>`<div class="index-row" onclick="openSteamChatByName('${name.replace(/'/g,"\\'")}')"><b>${name}</b>${steamStatusBadge(canonCleanRelative(c.status))}<span class="canon-thread-time">${canonFmtThread(steamCanon[name]?.end)}</span><small>${canonCleanRelative(c.preview)}</small></div>`).join("");
   showWindowDetail("steam",`<div class="detail"><h4>Vapor chat</h4><p class="muted">offline cached direct messages. some people replied. some very clearly did not.</p></div>${rows}`,"messages");
 }
 function openSteamChatByName(name){
   const c=steamChats[name];if(!c)return;markExtra("steam_chat_"+name);
-  const rows=c.msgs.map(m=>m[0]==="system"?`<div class="social-bubble system">${m[1]}</div>`:`<div class="social-bubble ${m[0]==="me"?"mine":""}">${m[1]}</div>`).join("");
-  showWindowDetail("steam",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">💬</div><div><h4 style="margin:0">${name}</h4><div class="social-row-meta">${c.status}</div></div></div></div><div class="social-chat">${rows}</div><p class="extra-warning">ordinary Vapor messages • not case evidence</p>`,name);
+  const rows=canonTimedMessages(c.msgs,steamCanon[name],"social");
+  showWindowDetail("steam",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">💬</div><div><h4 style="margin:0">${name}</h4><div class="social-row-meta">${canonCleanRelative(c.status)} • ${canonFmtDate(steamCanon[name]?.end)} • ${canonFmtTime(steamCanon[name]?.end)}</div></div></div></div><div class="social-chat">${rows}</div><p class="extra-warning">ordinary Vapor messages • not case evidence</p>`,name);
 }
 
 const steamLibrary=[
@@ -8139,7 +8202,7 @@ const instagramDMs={
   "ela.jpg":{name:"ela",preview:"HAHA the coffee was mid",status:"replied",msgs:[
     ["me","u always find the best cafes"],["them","HAHA the coffee was mid"],["me","pictures fooled me"],["them","that's literally the point"]
   ]},
-  "sammyyy":{name:"sam",preview:"seen 19h ago",status:"seen",msgs:[
+  "sammyyy":{name:"sam",preview:"seen",status:"seen",msgs:[
     ["me","pretty"],["them","tyy"],["me","u free fri?"],["system","seen 19 hours ago"]
   ]},
   "kyla.wav":{name:"kyla",preview:"send me the cursed bracket",status:"replied",msgs:[
@@ -8154,19 +8217,19 @@ const instagramDMs={
   "faith.exe":{name:"faith",preview:"okay mr civil engineer",status:"replied",msgs:[
     ["me","site visit cooked me"],["them","okay mr civil engineer"],["me","respect the vest"],["them","never"]
   ]},
-  "jen.jpg":{name:"jen",preview:"sent 3d ago",status:"no reply",msgs:[
+  "jen.jpg":{name:"jen",preview:"sent • no reply",status:"no reply",msgs:[
     ["me","random but ur playlist was good"],["me","what was the second song"],["system","sent 3 days ago • no reply"]
   ]},
   "mari.mp3":{name:"mari",preview:"accident daw",status:"replied",msgs:[
     ["them","why are u liking my old posts"],["me","accident"],["them","THREE accidents?"],["me","phone slipped multiple times"],["them","liar"]
   ]},
-  "nixie":{name:"nix",preview:"seen 5d ago",status:"seen",msgs:[
+  "nixie":{name:"nix",preview:"seen",status:"seen",msgs:[
     ["me","ur story scared the shit out of me"],["me","what game was that"],["system","seen 5 days ago"]
   ]},
   "aiah.exe":{name:"aiah",preview:"maybe next week",status:"replied",msgs:[
     ["me","u still play grand gift auto v"],["them","sometimes"],["me","join us later"],["them","maybe next week"],["me","bet"]
   ]},
-  "cass.jpg":{name:"cass",preview:"sent 1d ago",status:"no reply",msgs:[
+  "cass.jpg":{name:"cass",preview:"sent • no reply",status:"no reply",msgs:[
     ["me","that sunset pic is crazy"],["system","sent 1 day ago • no reply"]
   ]},
   "kei.s":{name:"kei",preview:"lol thanks",status:"replied then quiet",msgs:[
@@ -8208,7 +8271,7 @@ const instagramDMs={
     ["system","seen 2 days ago"]
   ]},
 
-  "nica.mp4":{name:"nica",preview:"sent 4d ago",status:"no reply",msgs:[
+  "nica.mp4":{name:"nica",preview:"sent • no reply",status:"no reply",msgs:[
     ["me","wait where is this place"],
     ["me","the view is nice"],
     ["system","sent 4 days ago • no reply"]
@@ -8260,14 +8323,14 @@ const instagramDMs={
     ["them","my bad 😭"]
   ]},
 
-  "kaye.jpeg":{name:"kaye",preview:"seen 5h ago",status:"seen",msgs:[
+  "kaye.jpeg":{name:"kaye",preview:"seen",status:"seen",msgs:[
     ["me","that cafe any good"],
     ["them","yeah"],
     ["me","what'd u order"],
     ["system","seen 5 hours ago"]
   ]},
 
-  "sophi.mp3":{name:"sophi",preview:"sent 6d ago",status:"no reply",msgs:[
+  "sophi.mp3":{name:"sophi",preview:"sent • no reply",status:"no reply",msgs:[
     ["me","u still play Rain Seven Siege"],
     ["me","we need one"],
     ["system","sent 6 days ago • no reply"]
@@ -8287,7 +8350,7 @@ const instagramDMs={
     ["system","seen 11 hours ago"]
   ]},
 
-  "mikaela.r":{name:"mikaela",preview:"sent 9d ago",status:"no reply",msgs:[
+  "mikaela.r":{name:"mikaela",preview:"sent • no reply",status:"no reply",msgs:[
     ["me","u disappeared from the gc"],
     ["me","everything good?"],
     ["system","sent 9 days ago • no reply"]
@@ -8320,7 +8383,8 @@ function renderInstagram(tab="profile"){
     return;
   }
   if(tab==="messages"){
-    body.innerHTML=`${tabs}<div class="detail"><b>direct messages</b><p class="muted">cached threads only. some replies are present; some messages are just sitting there.</p></div>`+Object.entries(instagramDMs).map(([k,c])=>`<div class="index-row" onclick="openInstagramDM('${k}')"><b>@${k}</b><span class="social-badge ${c.status.includes("replied")?"replied":c.status==="seen"?"seen":""}">${c.status}</span><small>${c.preview}</small></div>`).join("");
+    const ordered=Object.entries(instagramDMs).sort((a,b)=>canonEpoch(canonLast(instagramCanon[b[0]],b[1].msgs))-canonEpoch(canonLast(instagramCanon[a[0]],a[1].msgs)));
+    body.innerHTML=`${tabs}<div class="detail"><b>direct messages</b><p class="muted">cached threads only • exact dates are from the laptop cache.</p></div>`+ordered.map(([k,c])=>{const last=canonLast(instagramCanon[k],c.msgs),status=canonCleanRelative(c.status);return `<div class="index-row" onclick="openInstagramDM('${k}')"><b>@${k}</b><span class="social-badge ${status.includes("replied")?"replied":status==="seen"?"seen":""}">${status}</span><span class="canon-thread-time">${canonFmtThread(last)}</span><small>${canonCleanRelative(c.preview)}</small></div>`}).join("");
     return;
   }
   const data=tab==="following"?instagramFollowing:instagramFollowers;
@@ -8346,8 +8410,8 @@ function toggleInstagramProfileBookmark(key,tab,i){
 }
 function openInstagramDM(key){
   const c=instagramDMs[key];if(!c)return;markExtra("ig_dm_"+key);
-  const rows=c.msgs.map(m=>m[0]==="system"?`<div class="social-bubble system">${m[1]}</div>`:`<div class="social-bubble ${m[0]==="me"?"mine":""}">${m[1]}</div>`).join("");
-  showWindowDetail("instagram",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">◎</div><div><h4 style="margin:0">@${key}</h4><div>${c.name}</div><div class="social-row-meta">${c.status}</div></div></div></div><div class="social-chat">${rows}</div><div class="detail"><button class="soft" onclick="toggleInstagramDMReaction('${key}')">${instagramReactedDMs.has(key)?"♥ reaction saved":"♡ react to last"}</button><p class="muted">offline cache. this reaction is only a local player marker; it does not send anything from niko's account.</p></div>`,`@${key}`);
+  const rows=canonTimedMessages(c.msgs,instagramCanon[key],"social");
+  showWindowDetail("instagram",`<div class="detail"><div class="social-profile-head"><div class="social-avatar">◎</div><div><h4 style="margin:0">@${key}</h4><div>${c.name}</div><div class="social-row-meta">${canonCleanRelative(c.status)} • ${canonFmtDate(canonLast(instagramCanon[key],c.msgs))} • ${canonFmtTime(canonLast(instagramCanon[key],c.msgs))}</div></div></div></div><div class="social-chat">${rows}</div><div class="detail"><button class="soft" onclick="toggleInstagramDMReaction('${key}')">${instagramReactedDMs.has(key)?"♥ reaction saved":"♡ react to last"}</button><p class="muted">offline cache. this reaction is only a local player marker; it does not send anything from niko's account.</p></div>`,`@${key}`);
 }
 function openInstagramPerson(tab,i){
   const x=(tab==="following"?instagramFollowing:instagramFollowers)[i];if(!x)return;markExtra("ig_person_"+tab+"_"+i);
@@ -8583,8 +8647,8 @@ const discordChats=[
 ];
 function renderDiscord(){
   const rows=discordChats.map((d,i)=>[d,i]).filter(([d])=>story.act>=d[3]);
-  rows.sort((a,b)=>(discordPins.has(b[1])?1:0)-(discordPins.has(a[1])?1:0));
-  discordIndex.innerHTML=rows.map(([d,i])=>`<div class="index-row" onclick="openDiscord(${i})"><b>${discordPins.has(i)?"📌 ":""}${d[0]}</b><small>${d[1]}${discordReactions[i]?` • ${discordReactions[i]}`:""}</small></div>`).join("");
+  rows.sort((a,b)=>((discordPins.has(b[1])?1:0)-(discordPins.has(a[1])?1:0)) || (canonEpoch(discordCanon[b[1]]?.end)-canonEpoch(discordCanon[a[1]]?.end)));
+  discordIndex.innerHTML=rows.map(([d,i])=>`<div class="index-row" onclick="openDiscord(${i})"><b>${discordPins.has(i)?"📌 ":""}${d[0]}</b><span class="canon-thread-time">${canonFmtThread(discordCanon[i]?.end)}</span><small>${d[1]}${discordReactions[i]?` • ${discordReactions[i]}`:""}</small></div>`).join("");
 }
 function toggleDiscordPin(i){
   if(discordPins.has(i))discordPins.delete(i);else discordPins.add(i);
@@ -8597,7 +8661,7 @@ function reactDiscord(i,emoji){
 function openDiscord(i){
   markSeen("discord_"+i);
   const d=discordChats[i];if(!d)return;
-  discordView.innerHTML=`<div class="detail"><b>offline cache</b>${d[2]}</div><div class="detail"><button class="soft" onclick="toggleDiscordPin(${i})">${discordPins.has(i)?"📌 unpin":"📌 pin"}</button> <button class="soft" onclick="reactDiscord(${i},'👍')">👍</button> <button class="soft" onclick="reactDiscord(${i},'😂')">😂</button> <button class="soft" onclick="reactDiscord(${i},'🎮')">🎮</button>${discordReactions[i]?`<p class="muted">local reaction: ${discordReactions[i]}</p>`:""}</div>`;discordView.scrollTop=0;
+  discordView.innerHTML=`<div class="detail"><b>offline cache</b><p class="muted">${canonFmtDate(discordCanon[i]?.end)} • ${canonFmtTime(discordCanon[i]?.end)} • cached thread history</p>${canonDiscordHtml(d[2],discordCanon[i])}</div><div class="detail"><button class="soft" onclick="toggleDiscordPin(${i})">${discordPins.has(i)?"📌 unpin":"📌 pin"}</button> <button class="soft" onclick="reactDiscord(${i},'👍')">👍</button> <button class="soft" onclick="reactDiscord(${i},'😂')">😂</button> <button class="soft" onclick="reactDiscord(${i},'🎮')">🎮</button>${discordReactions[i]?`<p class="muted">local reaction: ${discordReactions[i]}</p>`:""}</div>`;discordView.scrollTop=0;
   if(d[4])addJournal("cached dischord messages connect vince and cam to niko's night out.");
 }
 
@@ -8899,7 +8963,7 @@ function marketplaceCard(x){
 function marketplaceThreadRow(t){
   const st=marketplaceThreadStatus(t),saved=marketplaceSaved.has("thread:"+t.id);
   const other=t.role==="selling"?"buyer":"seller";
-  return `<div class="market-thread-row" onclick="openMarketplaceThread('${t.id}')"><div class="market-avatar">${t.role==="buying"?"🧾":"💸"}</div><div><b>${saved?"★ ":""}${t.name}</b><small>${t.item} • ${t.preview}</small></div><div class="market-thread-meta">📍 ${other} pin<br>${t.location}<br>${st}</div></div>`
+  return `<div class="market-thread-row" onclick="openMarketplaceThread('${t.id}')"><div class="market-avatar">${t.role==="buying"?"🧾":"💸"}</div><div><b>${saved?"★ ":""}${t.name}</b><small>${t.item} • ${canonCleanRelative(t.preview)}</small></div><div class="market-thread-meta">📍 ${other} pin<br>${t.location}<span class="canon-thread-time">${canonFmtThread(marketplaceCanon[t.id]?.end)}</span><br>${st}</div></div>`
 }
 function marketplaceFilteredThreads(filter="",mode="all"){
   const q=String(filter||"").trim().toLowerCase();
@@ -8911,7 +8975,7 @@ function marketplaceFilteredThreads(filter="",mode="all"){
     if(mode==="saved"&&!marketplaceSaved.has("thread:"+t.id))return false;
     const hay=[t.name,t.preview,t.location,t.item,t.role,...t.msgs.map(x=>x[1])].join(" ").toLowerCase();
     return !q||hay.includes(q);
-  })
+  }).sort((a,b)=>canonEpoch(marketplaceCanon[b.id]?.end)-canonEpoch(marketplaceCanon[a.id]?.end))
 }
 function renderMarketplace(filter=""){
   const body=document.getElementById("marketplaceBody");if(!body)return;
@@ -8949,7 +9013,7 @@ function renderMarketplace(filter=""){
     body.innerHTML=`<h1>saved</h1><h2 class="market-section-title">listings</h2><div class="market-grid">${ls.map(marketplaceCard).join("")||`<div class="market-empty">no saved listings.</div>`}</div><h2 class="market-section-title">chats</h2>${ts.map(marketplaceThreadRow).join("")||`<div class="market-empty">no saved chats.</div>`}`;return
   }
   if(marketplaceTab==="meetups"){
-    const rows=marketplaceThreads.filter(t=>t.location&&t.location!=="Metro Manila"&&(!q||[t.location,t.name,t.item,t.preview].join(" ").toLowerCase().includes(q.toLowerCase())));
+    const rows=marketplaceThreads.filter(t=>t.location&&t.location!=="Metro Manila"&&(!q||[t.location,t.name,t.item,t.preview].join(" ").toLowerCase().includes(q.toLowerCase()))).sort((a,b)=>canonEpoch(marketplaceCanon[b.id]?.end)-canonEpoch(marketplaceCanon[a.id]?.end));
     body.innerHTML=`<h1>meetup list</h1><p class="muted">cities, malls, stations and meetup pins from buyers/sellers. this is not a map of niko's home.</p>`+(rows.map(t=>`<div class="market-meetup" onclick="openMarketplaceThread('${t.id}')"><div>📍 <b>${t.location}</b><small>${t.role==="selling"?"buyer pin / meetup":"seller pin / meetup"}</small></div><div>${t.item}<small>${t.preview}</small></div><div>${t.role==="selling"?"buyer":"seller"}</div></div>`).join("")||`<div class="market-empty">no matches.</div>`);return
   }
 }
@@ -8964,8 +9028,8 @@ function cycleMarketplaceListing(id){
 }
 function marketplaceFindRelated(term){closeWindowDetail("marketplace");marketplaceTab="messages";const input=document.getElementById("marketSearch");if(input)input.value=term;renderMarketplace(term)}
 function openMarketplaceThread(id){
-  const t=marketplaceThreadById(id);if(!t)return;const rows=t.msgs.map(([who,msg])=>`<div class="market-bubble ${who==="me"?"me":who==="system"?"system":""}">${msg}</div>`).join(""),saved=marketplaceSaved.has("thread:"+id),arch=marketplaceArchived.has(id),note=marketplaceOfferNotes[id]||"";
-  showWindowDetail("marketplace",`<div class="detail"><h2>${t.name}</h2><p>${t.item}</p><p><b>📍 ${t.role==="selling"?"buyer":"seller"} pinned area:</b> ${t.location}</p><p class="muted">niko's home location is not shown. this pin is the other user's area or an agreed meetup point.</p><span class="market-status ${marketplaceThreadStatus(t)}">${marketplaceThreadStatus(t)}</span></div><div class="market-chat">${rows}</div><div class="market-offer"><b>local meetup / offer note</b><div class="market-offer-row"><span>rough asking price</span><strong>${marketplacePrice(t.price)}</strong></div><input id="marketNoteInput" style="width:100%" placeholder="e.g. 7:30 • exact cash • station exit" value="${String(note).replace(/"/g,"&quot;")}"></div><div class="market-actions"><button onclick="toggleMarketplaceSaved('thread:${id}');openMarketplaceThread('${id}')">${saved?"★ saved":"☆ save chat"}</button><button onclick="toggleMarketplaceArchive('${id}')">${arch?"restore":"archive"}</button><button onclick="saveMarketplaceNote('${id}')">save note</button><button onclick="marketplaceCounterOffer('${id}')">draft counter</button></div><p class="muted">drafts/notes are local only. Alon and Haraya are not messaging buyers from Niko's account.</p>`,"market chat")
+  const t=marketplaceThreadById(id);if(!t)return;const rows=canonTimedMessages(t.msgs,marketplaceCanon[id],"market"),saved=marketplaceSaved.has("thread:"+id),arch=marketplaceArchived.has(id),note=marketplaceOfferNotes[id]||"";
+  showWindowDetail("marketplace",`<div class="detail"><h2>${t.name}</h2><p>${t.item}</p><p><b>📍 ${t.role==="selling"?"buyer":"seller"} pinned area:</b> ${t.location}</p><p class="muted">niko's home location is not shown. this pin is the other user's area or an agreed meetup point.</p><p class="muted">last activity: ${canonFmtDate(marketplaceCanon[id]?.end)} • ${canonFmtTime(marketplaceCanon[id]?.end)}</p><span class="market-status ${marketplaceThreadStatus(t)}">${marketplaceThreadStatus(t)}</span></div><div class="market-chat">${rows}</div><div class="market-offer"><b>local meetup / offer note</b><div class="market-offer-row"><span>rough asking price</span><strong>${marketplacePrice(t.price)}</strong></div><input id="marketNoteInput" style="width:100%" placeholder="e.g. 7:30 • exact cash • station exit" value="${String(note).replace(/"/g,"&quot;")}"></div><div class="market-actions"><button onclick="toggleMarketplaceSaved('thread:${id}');openMarketplaceThread('${id}')">${saved?"★ saved":"☆ save chat"}</button><button onclick="toggleMarketplaceArchive('${id}')">${arch?"restore":"archive"}</button><button onclick="saveMarketplaceNote('${id}')">save note</button><button onclick="marketplaceCounterOffer('${id}')">draft counter</button></div><p class="muted">drafts/notes are local only. Alon and Haraya are not messaging buyers from Niko's account.</p>`,"market chat")
 }
 function toggleMarketplaceArchive(id){if(marketplaceArchived.has(id))marketplaceArchived.delete(id);else marketplaceArchived.add(id);renderMarketplace(document.getElementById("marketSearch")?.value||"");openMarketplaceThread(id);if(typeof saveGame==="function")saveGame(false)}
 function saveMarketplaceNote(id){marketplaceOfferNotes[id]=document.getElementById("marketNoteInput")?.value||"";toast("marketplace","note saved locally");if(typeof saveGame==="function")saveGame(false)}
